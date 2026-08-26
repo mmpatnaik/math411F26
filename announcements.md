@@ -12,7 +12,9 @@
 # stay on the page as a running log.
 
 ## 2026-09-02
-Welcome to MATH 411. Lecture notes will be posted here after each class,
-and problem sets appear under **Problem sets** as the term goes on.
+Welcome to MATH 411! Lecture notes will be posted here after each class,
+and problem sets appear under **Problem sets** as the term goes on. Note that problem sets are not to be turned in.
 
-Office hours are Fridays from 11:00 AM to 12:00 PM.
+I will use Canvas to send emails and to store your midterm and final exam grades. Other aspects of the course will be handled on this website. 
+
+Office hours will start on the *second week* of classes. 
