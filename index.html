@@ -1,0 +1,546 @@
+<meta charset="utf-8">
+<title>MATH 411: Honors Complex Variables</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,450..700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --paper: #f4f6f4;
+    --paper-raised: #ffffff;
+    --ink: #16231c;
+    --ink-soft: #4b5a52;
+    --ink-faint: #7c8a82;
+    --accent: #1f6e46;
+    --accent-ink: #0f4029;
+    --accent-soft: #e4eee7;
+    --gold: #a5761f;
+    --gold-soft: #f4ead2;
+    --line: #d7ded8;
+    --line-strong: #b9c4bc;
+    --shadow: 0 1px 2px rgba(20, 30, 24, 0.04), 0 8px 24px rgba(20, 30, 24, 0.05);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #10150f;
+      --paper-raised: #161d16;
+      --ink: #e7ede8;
+      --ink-soft: #a9b6ad;
+      --ink-faint: #77857c;
+      --accent: #5cb885;
+      --accent-ink: #bfe8d2;
+      --accent-soft: #1a2a1f;
+      --gold: #dcae55;
+      --gold-soft: #2c2416;
+      --line: #263029;
+      --line-strong: #37433a;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #10150f;
+    --paper-raised: #161d16;
+    --ink: #e7ede8;
+    --ink-soft: #a9b6ad;
+    --ink-faint: #77857c;
+    --accent: #5cb885;
+    --accent-ink: #bfe8d2;
+    --accent-soft: #1a2a1f;
+    --gold: #dcae55;
+    --gold-soft: #2c2416;
+    --line: #263029;
+    --line-strong: #37433a;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: "Fraunces", ui-serif, Georgia, serif;
+    font-weight: 600;
+    text-wrap: balance;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  a { color: var(--accent-ink); text-decoration-color: var(--line-strong); text-underline-offset: 3px; }
+  a:hover { text-decoration-color: currentColor; }
+  a:focus-visible, button:focus-visible, .navlink:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+  }
+
+  .wrap { max-width: 74rem; margin-inline: auto; padding-inline: clamp(1.25rem, 4vw, 2.5rem); }
+
+  /* ---------- Nav ---------- */
+  header.site {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 0.85rem;
+  }
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 0.55rem;
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .brand .mark {
+    display: inline-grid;
+    place-items: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 6px;
+    background: var(--accent);
+    color: var(--paper-raised);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  nav.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.8rem;
+  }
+  .navlink {
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 0.4rem 0.65rem;
+    border-radius: 5px;
+    white-space: nowrap;
+  }
+  .navlink:hover { color: var(--ink); background: var(--accent-soft); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    padding-block: clamp(3rem, 8vw, 5.5rem) clamp(2.5rem, 6vw, 4rem);
+    border-bottom: 1px solid var(--line);
+  }
+  .hero-inner { max-width: 44rem; }
+  .hero h1 { font-size: clamp(2.6rem, 6vw, 3.9rem); line-height: 1.03; margin-top: 0.6rem; }
+  .hero p.lede {
+    margin-top: 1.1rem;
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+    max-width: 38rem;
+  }
+
+  .instructor-card {
+    margin-top: 2.2rem;
+    display: inline-grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.35rem 1.1rem;
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.1rem 1.4rem;
+    box-shadow: var(--shadow);
+    font-size: 0.92rem;
+  }
+  .instructor-card dt {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    align-self: center;
+  }
+  .instructor-card dd { margin: 0; align-self: center; color: var(--ink); }
+
+  /* ---------- Sections ---------- */
+  section.block { padding-block: clamp(3rem, 7vw, 4.5rem); border-bottom: 1px solid var(--line); }
+  section.block:last-of-type { border-bottom: none; }
+  section.block.tint { background: var(--paper-raised); }
+
+  .section-head { display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 2.2rem; max-width: 40rem; }
+  .section-head h2 { font-size: clamp(1.7rem, 3.4vw, 2.2rem); }
+  .section-head p { color: var(--ink-soft); margin: 0; }
+
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1.75rem; }
+
+  .card {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.4rem 1.5rem;
+  }
+  section.block.tint .card { background: var(--paper); }
+  .card h3 { font-size: 1.05rem; margin-bottom: 0.6rem; }
+  .card p { margin: 0; color: var(--ink-soft); font-size: 0.95rem; }
+  .card ul { margin: 0.6rem 0 0; padding-left: 1.1rem; color: var(--ink-soft); font-size: 0.95rem; }
+  .card li + li { margin-top: 0.35rem; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+  .table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+  th, td { text-align: left; padding: 0.75rem 1rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  thead th {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    background: var(--accent-soft);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: var(--accent-soft); }
+  td.num, th.num { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .tba {
+    display: inline-block;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+    color: var(--gold);
+    background: var(--gold-soft);
+    border-radius: 5px;
+    padding: 0.1rem 0.45rem;
+  }
+
+  .exam-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 1.5rem 2rem; margin-top: 1.75rem; }
+  .exam-meta dt { font-family: "IBM Plex Mono", monospace; font-size: 0.7rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-faint); margin: 0 0 0.35rem; }
+  .exam-meta dd { margin: 0; font-size: 1.02rem; }
+
+  .announce-list { display: flex; flex-direction: column; gap: 1rem; max-width: 46rem; }
+  .announce {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--line-strong);
+    border-radius: 10px;
+    padding: 1.1rem 1.35rem;
+  }
+  .announce.latest { border-left-color: var(--accent); }
+  .announce time {
+    display: block;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 0.5rem;
+  }
+  .announce.latest time { color: var(--accent-ink); }
+  .announce p { margin: 0; color: var(--ink-soft); font-size: 0.95rem; }
+  .announce p + p { margin-top: 0.6rem; }
+  .announce-empty { color: var(--ink-faint); font-size: 0.95rem; }
+
+  .divider-note {
+    margin-top: 1.75rem;
+    padding: 0.9rem 1.1rem;
+    border-left: 3px solid var(--gold);
+    background: var(--gold-soft);
+    border-radius: 0 8px 8px 0;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+  }
+  .divider-note code {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.85em;
+    background: var(--paper-raised);
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+  }
+
+  .doc-card {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    max-width: 30rem;
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.15rem 1.35rem;
+    text-decoration: none;
+    box-shadow: var(--shadow);
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .doc-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .doc-card[aria-disabled="true"] { box-shadow: none; }
+  .doc-card[aria-disabled="true"]:hover { border-color: var(--line); transform: none; }
+  .doc-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    flex: none;
+    border-radius: 9px;
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .doc-text { display: flex; flex-direction: column; gap: 0.2rem; flex: 1; min-width: 0; }
+  .doc-title { font-family: "Fraunces", serif; font-weight: 600; font-size: 1.05rem; color: var(--ink); }
+  .doc-sub { font-family: "IBM Plex Mono", monospace; font-size: 0.72rem; letter-spacing: 0.03em; color: var(--ink-faint); }
+  .doc-cta {
+    flex: none;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    color: var(--accent-ink);
+  }
+
+  footer.site {
+    padding-block: 2.75rem;
+    background: var(--paper-raised);
+    border-top: 1px solid var(--line);
+  }
+  .footer-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+  .footer-row .eyebrow { display: block; margin-bottom: 0.4rem; }
+  footer.site p { margin: 0; color: var(--ink-soft); font-size: 0.88rem; max-width: 30rem; }
+  footer address { font-style: normal; color: var(--ink-soft); font-size: 0.9rem; line-height: 1.7; }
+</style>
+
+<header class="site">
+  <div class="wrap navbar">
+    <a class="brand" href="#top"><span class="mark">&#8450;</span> MATH 411: Honors Complex Variables</a>
+    <nav class="links">
+      <a class="navlink" href="#announcements">Announcements</a>
+      <a class="navlink" href="#syllabus">Syllabus</a>
+      <a class="navlink" href="#schedule">Schedule &amp; Notes</a>
+      <a class="navlink" href="#homework">Homework</a>
+      <a class="navlink" href="#midterm1">Midterm 1</a>
+      <a class="navlink" href="#midterm2">Midterm 2</a>
+      <a class="navlink" href="#final">Final Exam</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <p class="eyebrow">University of Alberta &#183; Fall Term 2026</p>
+      <h1>MATH 411: Honors Complex Variables</h1>
+      <p class="lede">Complex numbers and analytic functions; Cauchy’s integral theorem and formula; the maximum modulus principle; Taylor and Laurent expansions; harmonic functions; residues and their applications; the argument principle; Rouché’s theorem; analytic continuation; and optional advanced topics such as normal families, the Riemann mapping theorem, and Picard’s theorem.</p>
+
+      <dl class="instructor-card">
+        <dt>Instructor</dt><dd>Manish Patnaik</dd>
+        <dt>Email</dt><dd><a href="mailto:patnaik@ualberta.ca">patnaik@ualberta.ca</a></dd>
+        <dt>Office</dt><dd>UCOMM 5-254</dd>
+        <dt>Office hours</dt><dd>Friday, 11:00 AM&#8211;12:00 PM</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="block tint" id="announcements">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Announcements</p>
+        <h2>Class announcements</h2>
+      </div>
+      <!--ANNOUNCEMENTS-->
+    </div>
+  </section>
+
+  <section class="block" id="syllabus">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Syllabus</p>
+        <h2>Course information</h2>
+      </div>
+
+      <dl class="exam-meta" style="margin-top: 0; margin-bottom: 2rem;">
+        <div><dt>Meets</dt><dd>MWF, 3:00 &#8211; 3:50 PM</dd></div>
+        <div><dt>Location</dt><dd>CAB 369</dd></div>
+      </dl>
+
+      <!--SYLLABUS-CARD-->
+      <p class="eyebrow" style="margin-top: 2rem; margin-bottom: 0.75rem;">Grading</p>
+      <div class="table-scroll" style="max-width: 24rem;">
+        <table>
+          <thead>
+            <tr><th>Component</th><th class="num">Weight</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Midterm 1</td><td class="num">25%</td></tr>
+            <tr><td>Midterm 2</td><td class="num">25%</td></tr>
+            <tr><td>Final exam</td><td class="num">50%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="block tint" id="schedule">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Schedule &amp; Notes</p>
+        <h2>Lecture schedule</h2>
+      </div>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th class="num">Lecture</th><th>Date</th><th>Topic</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="num">1</td><td class="num">Wed, Sep 2</td><td>&#8212;</td><td data-lecture="01">&#8212;</td></tr>
+            <tr><td class="num">2</td><td class="num">Fri, Sep 4</td><td>&#8212;</td><td data-lecture="02">&#8212;</td></tr>
+            <tr><td class="num">3</td><td class="num">Wed, Sep 9</td><td>&#8212;</td><td data-lecture="03">&#8212;</td></tr>
+            <tr><td class="num">4</td><td class="num">Fri, Sep 11</td><td>&#8212;</td><td data-lecture="04">&#8212;</td></tr>
+            <tr><td class="num">5</td><td class="num">Mon, Sep 14</td><td>&#8212;</td><td data-lecture="05">&#8212;</td></tr>
+            <tr><td class="num">6</td><td class="num">Wed, Sep 16</td><td>&#8212;</td><td data-lecture="06">&#8212;</td></tr>
+            <tr><td class="num">7</td><td class="num">Fri, Sep 18</td><td>&#8212;</td><td data-lecture="07">&#8212;</td></tr>
+            <tr><td class="num">8</td><td class="num">Mon, Sep 21</td><td>&#8212;</td><td data-lecture="08">&#8212;</td></tr>
+            <tr><td class="num">9</td><td class="num">Wed, Sep 23</td><td>&#8212;</td><td data-lecture="09">&#8212;</td></tr>
+            <tr><td class="num">10</td><td class="num">Fri, Sep 25</td><td>&#8212;</td><td data-lecture="10">&#8212;</td></tr>
+            <tr><td class="num">11</td><td class="num">Mon, Sep 28</td><td>&#8212;</td><td data-lecture="11">&#8212;</td></tr>
+            <tr><td class="num">12</td><td class="num">Fri, Oct 2</td><td>&#8212;</td><td data-lecture="12">&#8212;</td></tr>
+            <tr><td class="num">13</td><td class="num">Mon, Oct 5</td><td>&#8212;</td><td data-lecture="13">&#8212;</td></tr>
+            <tr><td class="num">14</td><td class="num">Wed, Oct 7</td><td>&#8212;</td><td data-lecture="14">&#8212;</td></tr>
+            <tr><td class="num">15</td><td class="num">Fri, Oct 9</td><td><strong>Midterm 1</strong></td><td><a href="#midterm1">Details &#8594;</a></td></tr>
+            <tr><td class="num">16</td><td class="num">Wed, Oct 14</td><td>&#8212;</td><td data-lecture="16">&#8212;</td></tr>
+            <tr><td class="num">17</td><td class="num">Fri, Oct 16</td><td>&#8212;</td><td data-lecture="17">&#8212;</td></tr>
+            <tr><td class="num">18</td><td class="num">Mon, Oct 19</td><td>&#8212;</td><td data-lecture="18">&#8212;</td></tr>
+            <tr><td class="num">19</td><td class="num">Wed, Oct 21</td><td>&#8212;</td><td data-lecture="19">&#8212;</td></tr>
+            <tr><td class="num">20</td><td class="num">Fri, Oct 23</td><td>&#8212;</td><td data-lecture="20">&#8212;</td></tr>
+            <tr><td class="num">21</td><td class="num">Mon, Oct 26</td><td>&#8212;</td><td data-lecture="21">&#8212;</td></tr>
+            <tr><td class="num">22</td><td class="num">Wed, Oct 28</td><td>&#8212;</td><td data-lecture="22">&#8212;</td></tr>
+            <tr><td class="num">23</td><td class="num">Fri, Oct 30</td><td>&#8212;</td><td data-lecture="23">&#8212;</td></tr>
+            <tr><td class="num">24</td><td class="num">Mon, Nov 2</td><td>&#8212;</td><td data-lecture="24">&#8212;</td></tr>
+            <tr><td class="num">25</td><td class="num">Wed, Nov 4</td><td>&#8212;</td><td data-lecture="25">&#8212;</td></tr>
+            <tr><td class="num">26</td><td class="num">Fri, Nov 6</td><td><strong>Midterm 2</strong></td><td><a href="#midterm2">Details &#8594;</a></td></tr>
+            <tr><td class="num">27</td><td class="num">Mon, Nov 16</td><td>&#8212;</td><td data-lecture="27">&#8212;</td></tr>
+            <tr><td class="num">28</td><td class="num">Wed, Nov 18</td><td>&#8212;</td><td data-lecture="28">&#8212;</td></tr>
+            <tr><td class="num">29</td><td class="num">Fri, Nov 20</td><td>&#8212;</td><td data-lecture="29">&#8212;</td></tr>
+            <tr><td class="num">30</td><td class="num">Mon, Nov 23</td><td><strong>No class</strong></td><td>&#8212;</td></tr>
+            <tr><td class="num">31</td><td class="num">Wed, Nov 25</td><td>&#8212;</td><td data-lecture="31">&#8212;</td></tr>
+            <tr><td class="num">32</td><td class="num">Fri, Nov 27</td><td>&#8212;</td><td data-lecture="32">&#8212;</td></tr>
+            <tr><td class="num">33</td><td class="num">Mon, Nov 30</td><td>&#8212;</td><td data-lecture="33">&#8212;</td></tr>
+            <tr><td class="num">34</td><td class="num">Wed, Dec 2</td><td>&#8212;</td><td data-lecture="34">&#8212;</td></tr>
+            <tr><td class="num">35</td><td class="num">Fri, Dec 4</td><td>&#8212;</td><td data-lecture="35">&#8212;</td></tr>
+            <tr><td class="num">36</td><td class="num">Mon, Dec 7</td><td>&#8212;</td><td data-lecture="36">&#8212;</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="homework">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Homework</p>
+        <h2>Problem sets</h2>
+        <p>Practice problems to test your understanding. These are not to be turned in. Please attempt as many as you can!</p>
+      </div>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th class="num">Set</th><th>Covers</th><th>PDF</th><th>Solutions</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="num">HW 1</td><td><span class="tba">Topics TBA</span></td><td data-hw="01"><span class="tba">Not yet posted</span></td><td data-hw-sol="01"><span class="tba">Not yet posted</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="block tint" id="midterm1">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Assessment</p>
+        <h2>Midterm 1</h2>
+        <p>Held during the regular class period.</p>
+      </div>
+      <dl class="exam-meta">
+        <div><dt>Date &amp; time</dt><dd>Friday, October 9, 2026 &#183; In class</dd></div>
+        <div><dt>Format</dt><dd>In class, closed book</dd></div>
+        <div><dt>Coverage</dt><dd>Lectures 1&#8211;14</dd></div>
+        <div><dt>Review materials</dt><dd><span class="tba">Posted closer to the exam</span></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="block" id="midterm2">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Assessment</p>
+        <h2>Midterm 2</h2>
+        <p>Held during the regular class period.</p>
+      </div>
+      <dl class="exam-meta">
+        <div><dt>Date &amp; time</dt><dd>Friday, November 6, 2026 &#183; In class</dd></div>
+        <div><dt>Format</dt><dd>In class, closed book</dd></div>
+        <div><dt>Coverage</dt><dd>Lectures 1&#8211;25</dd></div>
+        <div><dt>Review materials</dt><dd><span class="tba">Posted closer to the exam</span></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="block tint" id="final">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Assessment</p>
+        <h2>Final exam</h2>
+        <p><span class="tba">Details to be announced</span></p>
+      </div>
+      <dl class="exam-meta">
+        <div><dt>Date &amp; time</dt><dd><span class="tba">Set by the registrar &#8212; TBA</span></dd></div>
+        <div><dt>Format</dt><dd><span class="tba">TBA</span></dd></div>
+        <div><dt>Coverage</dt><dd><span class="tba">TBA</span></dd></div>
+        <div><dt>Review materials</dt><dd><span class="tba">Posted in the last week of term</span></dd></div>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap footer-row">
+    <div>
+      <span class="eyebrow">MATH 411: Honors Complex Variables &#183; Fall Term 2026</span>
+      <p>Maintained by the instructor. Sections marked <span class="tba" style="vertical-align:1px;">TBA</span> will be updated as the term calendar is finalized.</p>
+    </div>
+    <address>
+      Manish Patnaik<br>
+      <a href="mailto:patnaik@ualberta.ca">patnaik@ualberta.ca</a><br>
+      UCOMM 5-254 &#183; University of Alberta
+    </address>
+  </div>
+</footer>

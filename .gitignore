@@ -1,0 +1,19 @@
+# Compiled output - built by CI, not committed
+_site/
+notes/*.pdf
+hw/*.pdf
+
+# LaTeX intermediates
+*.aux
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.toc
+*.nav
+*.snm
+*.vrb
+
+# macOS
+.DS_Store
