@@ -20,7 +20,10 @@ SITE.mkdir()
 
 html = (ROOT / "index.html").read_text(encoding="utf-8")
 linked = []
-syllabus = ROOT / "syllabus.pdf"
+SYLLABUS_URL = (
+    "https://ualberta.simplesyllabusca.com/doc/o2lysbfjv/"
+    "Fall-2026-MATH-411-A1-%2851336%29-HONORS-COMPLEX-VARIABLES?mode=view"
+)
 
 
 def link_cell(attr, pdf_path_for):
@@ -109,14 +112,7 @@ html = html.replace("<!--ANNOUNCEMENTS-->", rendered)
 
 # --- syllabus -------------------------------------------------------------
 
-card_tag = (f'<a class="doc-card" href="syllabus.pdf" target="_blank" '
-            f'rel="noopener">' if syllabus.exists()
-            else '<div class="doc-card" aria-disabled="true">')
-card_close = '</a>' if syllabus.exists() else '</div>'
-card_status = ('PDF &#183; available' if syllabus.exists()
-               else 'PDF &#183; <span class="tba">not yet posted</span>')
-card_cta = 'Download &#8594;' if syllabus.exists() else 'Coming soon'
-syllabus_card = f'''{card_tag}
+syllabus_card = f'''<a class="doc-card" href="{SYLLABUS_URL}" target="_blank" rel="noopener">
         <span class="doc-icon" aria-hidden="true">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -125,15 +121,15 @@ syllabus_card = f'''{card_tag}
         </span>
         <span class="doc-text">
           <span class="doc-title">Honors Complex Variables syllabus</span>
-          <span class="doc-sub">{card_status}</span>
+          <span class="doc-sub">Official course syllabus</span>
         </span>
-        <span class="doc-cta">{card_cta}</span>
-      {card_close}'''
+        <span class="doc-cta">View syllabus &#8594;</span>
+      </a>'''
 html = html.replace("<!--SYLLABUS-CARD-->", syllabus_card)
 
 (SITE / "index.html").write_text(html, encoding="utf-8")
 
-# Copy the compiled PDFs and the syllabus alongside it.
+# Copy the compiled PDFs alongside it.
 for folder in ("notes", "hw"):
     src = ROOT / folder
     if not src.is_dir():
@@ -143,9 +139,6 @@ for folder in ("notes", "hw"):
         (SITE / folder).mkdir(exist_ok=True)
         for pdf in pdfs:
             shutil.copy2(pdf, SITE / folder / pdf.name)
-
-if syllabus.exists():
-    shutil.copy2(syllabus, SITE / "syllabus.pdf")
 
 print(f"Built _site/ with {len(announcements)} announcement(s) "
       f"and {len(linked)} linked PDF(s):")
