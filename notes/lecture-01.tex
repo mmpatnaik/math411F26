@@ -6,23 +6,49 @@
 \usepackage{microtype}
 \usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage[dvipsnames]{xcolor}
+\usepackage[most]{tcolorbox}
 \usepackage{tikz}
 \usepackage{enumitem}
+\usepackage{tocloft}
 \usepackage[hidelinks]{hyperref}
 
 \definecolor{courseblue}{HTML}{1F4E79}
 \definecolor{lightblue}{HTML}{EAF2F8}
+\definecolor{lightgreen}{HTML}{EAF7EA}
 \definecolor{darkgray}{HTML}{333333}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.65em}
 \setlist[itemize]{topsep=0.25em,itemsep=0.15em}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
 
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
 \theoremstyle{definition}
-\newtheorem{definition}{Definition}
-\newtheorem{example}{Example}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
+
+\tcolorboxenvironment{definition}{
+  enhanced,
+  colback=lightgreen,
+  colframe=ForestGreen,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\numberwithin{equation}{section}
+
+\newcommand{\be}{\begin{eqnarray}}
+\newcommand{\ee}{\end{eqnarray}}
 
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\R}{\mathbb{R}}
@@ -45,22 +71,28 @@
     \end{minipage}}
 \end{center}
 
-\section{Complex Numbers}
+\tableofcontents
+\vspace{0.45em}
+
+
+
+\section{Basics of Complex Numbers}
+
 
 \begin{definition}
 The set of \emph{complex numbers} is
-\[
-  \C=\{a+ib : a,b\in\R\},
-\]
+\be
+  \C=\{a+ib\mid a,b\in\R\},
+\ee
 where $i^2=-1$.  For $z=a+ib$, we write
-\[
+\be
   \RePart(z)=a \qquad\text{and}\qquad \ImPart(z)=b.
-\]
+\ee
 \end{definition}
 
 The set $\C$ comes with the following algebraic operations.  If
 $z_1=a_1+ib_1$, $z_2=a_2+ib_2$, and $c\in\R$, then
-\begin{align*}
+\begin{align}
   z_1+z_2
     &= (a_1+a_2)+i(b_1+b_2),\\
   c z_1
@@ -68,39 +100,37 @@ $z_1=a_1+ib_1$, $z_2=a_2+ib_2$, and $c\in\R$, then
   z_1z_2
     &= (a_1+ib_1)(a_2+ib_2)\\
     &= (a_1a_2-b_1b_2)+i(b_1a_2+a_1b_2).
-\end{align*}
+\end{align}
 The last identity follows by expanding and using $i^2=-1$.
 
 The additive identity is $0$, and the multiplicative identity is $1$:
-\[
+\be
   0+z=z+0=z,
   \qquad
   1\cdot z=z\cdot 1=z.
-\]
+\ee
 We regard $\R$ as a subset of $\C$ by identifying $a\in\R$ with
 $a+i0\in\C$.
 
-\subsection{Complex Conjugation and Inverses}
-
 \begin{definition}
 If $z=a+ib$, its \emph{complex conjugate} is
-\[
+\be
   \overline{z}=a-ib.
-\]
+\ee
 \end{definition}
 
 Multiplying a complex number by its conjugate gives
-\[
+\be
   z\overline{z}=(a+ib)(a-ib)=a^2+b^2\in\R_{\ge 0}.
-\]
+\ee
 If $z\ne 0$, then $z\overline z=a^2+b^2>0$, and hence
-\[
+\be
   z^{-1}=\frac{\overline z}{a^2+b^2}.
-\]
+\ee
 Thus every nonzero complex number has a multiplicative inverse.  In
 particular, $\C$ is a field, much like $\R$.
 
-\subsection{The Complex Plane and the Modulus}
+\subsection*{The Complex Plane and the Modulus}
 
 We identify $\C$ with $\R^2$ by sending $z=a+ib$ to the point $(a,b)$.
 Under this identification, the real part is the horizontal coordinate and
@@ -120,17 +150,17 @@ the imaginary part is the vertical coordinate.
 
 \begin{definition}
 The \emph{modulus} (or absolute value) of $z=a+ib$ is
-\[
+\be
   |z|=\sqrt{z\overline z}=\sqrt{a^2+b^2}.
-\]
+\ee
 Geometrically, $|z|$ is the length of the vector in $\R^2$ represented by
 $z$.
 \end{definition}
 
 The triangle inequality in $\R^2$ becomes the triangle inequality in $\C$:
-\[
+\be
   |z_1+z_2|\le |z_1|+|z_2|.
-\]
+\ee
 Addition of complex numbers is simply vector addition.
 
 \begin{center}
@@ -148,25 +178,25 @@ Addition of complex numbers is simply vector addition.
 \end{tikzpicture}
 \end{center}
 
-\section{Polar Form}
+\subsection*{Polar Form}
 
 Let $z=a+ib\ne 0$.  Write $r=|z|$ and let $\theta$ be the angle measured
 counterclockwise from the positive real axis to the vector representing $z$.
 Then
-\[
+\be
   a=r\cos\theta,
   \qquad
   b=r\sin\theta.
-\]
+\ee
 Euler's formula is
-\[
+\be
   e^{i\theta}=\cos\theta+i\sin\theta.
-\]
+\ee
 It allows us to write $z$ in \emph{polar form}:
-\[
+\be
   \boxed{z=re^{i\theta}}
   =r\cos\theta+i r\sin\theta.
-\]
+\ee
 Here $r=|z|$ is the modulus of $z$, and $\theta$ is an argument of $z$.
 
 \begin{center}
@@ -185,29 +215,29 @@ Here $r=|z|$ is the modulus of $z$, and $\theta$ is an argument of $z$.
 Every $z\in\C\setminus\{0\}$ can be written as $z=re^{i\theta}$ with
 $r>0$ and $\theta\in\R$.  The modulus $r$ is unique, while the argument is
 unique only modulo $2\pi$:
-\[
+\be
   e^{i(\theta+2\pi k)}=e^{i\theta}
   \qquad (k\in\mathbb Z).
-\]
+\ee
 If we require $\theta\in[0,2\pi)$, then the argument is uniquely specified.
 
-\subsection{Multiplication in Polar Form}
+\subsection*{Multiplication in Polar Form}
 
 Suppose
-\[
+\be
   z_1=re^{i\theta}
   \qquad\text{and}\qquad
   z_2=se^{i\varphi}.
-\]
+\ee
 Then
-\[
+\be
   z_1z_2=(rs)e^{i(\theta+\varphi)}.
-\]
+\ee
 Thus multiplication of complex numbers \emph{multiplies moduli and adds
 arguments}.
 
 To verify this directly, expand using Euler's formula:
-\begin{align*}
+\begin{align}
   e^{i\theta}e^{i\varphi}
   &= (\cos\theta+i\sin\theta)(\cos\varphi+i\sin\varphi)\\
   &= \bigl(\cos\theta\cos\varphi-\sin\theta\sin\varphi\bigr)\\
@@ -215,60 +245,60 @@ To verify this directly, expand using Euler's formula:
      +i\bigl(\sin\theta\cos\varphi+\cos\theta\sin\varphi\bigr)\\
   &= \cos(\theta+\varphi)+i\sin(\theta+\varphi)\\
   &= e^{i(\theta+\varphi)}.
-\end{align*}
+\end{align}
 
-\section{The Complex Exponential}
+\subsection*{The Complex Exponential}
 
 \begin{definition}
 For $z=a+ib\in\C$, define
-\[
+\be
   e^z=e^a e^{ib}.
-\]
+\ee
 \end{definition}
 
-The familiar exponential law continues to hold:
-\[
+The familiar exponential law continues to hold; verify it as an exercise:
+\be
   e^\alpha e^\beta=e^{\alpha+\beta}
   \qquad (\alpha,\beta\in\C).
-\]
+\ee
 
 \begin{remark}
 For complex $z$, the number $e^z$ need not be real or positive.  In fact,
 $e^{ib}$ lies on the unit circle.
 \end{remark}
 
-\section{The \texorpdfstring{$n$}{n}-th Roots of a Complex Number}
+\subsection*{The \texorpdfstring{$n$}{n}-th Roots of a Complex Number}
 
 \begin{example}
 Let $z\in\C\setminus\{0\}$ and let $n$ be a positive integer.  We solve
-\[
+\be
   w^n=z.
-\]
+\ee
 Write
-\[
+\be
   w=te^{i\varphi}
   \qquad\text{and}\qquad
   z=re^{i\theta},
-\]
+\ee
 where $t,r>0$.  Then
-\[
+\be
   w^n=t^n e^{in\varphi}=re^{i\theta}.
-\]
+\ee
 Comparing moduli gives $t^n=r$, so $t=r^{1/n}$.  Comparing arguments modulo
 $2\pi$ gives
-\[
+\be
   n\varphi=\theta+2\pi k,
   \qquad\text{so}\qquad
   \varphi=\frac{\theta}{n}+\frac{2\pi k}{n}.
-\]
+\ee
 Consequently, the $n$ distinct solutions are
-\[
+\be
   \boxed{
     w_k=r^{1/n}
     e^{\,i\left(\frac{\theta}{n}+\frac{2\pi k}{n}\right)}
   },
   \qquad k=0,1,\ldots,n-1.
-\]
+\ee
 \end{example}
 
 The points $w_0,\ldots,w_{n-1}$ are equally spaced on the circle of radius
@@ -289,5 +319,96 @@ $r^{1/n}$, so they form the vertices of a regular $n$-gon.
     \footnotesize (The case $n=6$ is shown.)};
 \end{tikzpicture}
 \end{center}
+
+\section{Stereographic Projection}
+
+
+It is often useful to add one point, denoted by $\infty$, to the complex
+plane.
+
+\begin{definition}
+The \emph{extended complex plane} is
+\be
+  \widehat{\C}=\C\cup\{\infty\}.
+\ee
+\end{definition}
+
+For $a,b\in\C$, we use the conventions
+\be
+  a+\infty=\infty+a=\infty,
+  \qquad
+  b\cdot\infty=\infty\cdot b=\infty\quad (b\ne0),
+\ee
+and
+\be
+  \frac{a}{0}=\infty\quad (a\ne0),
+  \qquad
+  \frac{b}{\infty}=0.
+\ee
+Expressions such as $\infty-\infty$, $0\cdot\infty$, $\infty/\infty$, and
+$0/0$ remain undefined.
+
+Now let
+\be
+  S^2=\{(x_1,x_2,x_3)\in\R^3\mid x_1^2+x_2^2+x_3^2=1\}
+\ee
+be the unit sphere, and let $N=(0,0,1)$ be its north pole.  For
+$P\in S^2\setminus\{N\}$, draw the line through $N$ and $P$.  It intersects
+the plane $x_3=0$ in a unique point $Q$.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.75,>=stealth]
+  \fill[lightblue,opacity=0.75]
+    (-3.4,-0.25) -- (3.5,-0.25) -- (2.35,0.45) -- (-2.25,0.45) -- cycle;
+  \draw[darkgray]
+    (-3.4,-0.25) -- (3.5,-0.25) -- (2.35,0.45) -- (-2.25,0.45) -- cycle;
+  \draw[courseblue,thick] (0,1.55) circle (1.55);
+  \draw[courseblue,dashed] (-1.55,1.55) arc[start angle=180,end angle=360,
+    x radius=1.55,y radius=0.38];
+  \draw[courseblue] (1.55,1.55) arc[start angle=0,end angle=180,
+    x radius=1.55,y radius=0.38];
+  \coordinate (N) at (0,3.10);
+  \coordinate (P) at (1.08,1.90);
+  \coordinate (Q) at (2.78,0.02);
+  \draw[very thick,BrickRed] (N) -- (Q);
+  \fill[BrickRed] (N) circle (2.4pt) node[above] {$N$};
+  \fill[courseblue] (P) circle (2.4pt) node[above right] {$P$};
+  \fill[darkgray] (Q) circle (2.4pt) node[right] {$Q$};
+  \node at (2.75,-0.55) {$x_3=0$};
+\end{tikzpicture}
+\end{center}
+
+Identifying the $x_1x_2$-plane with $\C$, the point $Q$ corresponds to
+\be
+  \boxed{\displaystyle
+    z=\frac{x_1+i x_2}{1-x_3}
+  },
+  \qquad P=(x_1,x_2,x_3).
+\ee
+
+\begin{definition}
+The map
+\be
+  \pi:S^2\setminus\{N\}\longrightarrow\C,
+  \qquad
+  P\longmapsto z,
+\ee
+is called \emph{stereographic projection}.
+\end{definition}
+
+The map $\pi$ is a bijection.  It extends to a bijection
+\be
+  \widehat\pi:S^2\longrightarrow\widehat\C
+  \qquad\text{by setting}\qquad
+  \widehat\pi(N)=\infty.
+\ee
+Thus the extended complex plane may be viewed as a sphere.  Under
+stereographic projection, circles on $S^2$ become circles or lines in
+$\widehat\C$; circles through $N$ become lines in $\C$.
+
+\begin{remark}
+Substituting the equation of the line through $N$ and $P$ and imposing
+$x_3=0$ verifies the displayed formula for $z$.
+\end{remark}
 
 \end{document}
