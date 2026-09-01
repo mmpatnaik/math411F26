@@ -18,3 +18,5 @@ and problem sets appear under **Problem sets** as the term goes on. Note that pr
 I will use Canvas to send emails and to store your midterm and final exam grades. Other aspects of the course will be handled on this website. 
 
 Office hours will start on the *second week* of classes. 
+
+## Lecture notes 1 have been posed
