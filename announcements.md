@@ -20,4 +20,4 @@ I will use Canvas to send emails and to store your midterm and final exam grades
 Office hours will start on the *second week* of classes. 
 
 ## 2026-09-01
-Lecture 1 notes have been posted.
+Lecture 1 notes have been posted. Homework 1 posted.
