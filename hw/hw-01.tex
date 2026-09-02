@@ -1,0 +1,165 @@
+\documentclass[12pt, reqno]{amsart}	
+\usepackage{latexsym, amssymb, amscd, xypic, amsthm, setspace}
+\input xy
+\xyoption{all}
+
+%%: Font = times
+\usepackage{mathptmx} % rm & math
+\usepackage[scaled=0.90]{helvet} % ss
+\usepackage{courier} % tt
+\normalfont
+\usepackage[T1]{fontenc}
+\pagestyle{plain}
+
+
+\newtheorem{theorem}{Theorem}[subsection]
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+
+\theoremstyle{definition}
+\newtheorem{de}[theorem]{Definition}
+\newtheorem{notation}{Notation}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{examples}{Examples}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{remarks}{Remarks}
+\newtheorem{question}{Question}
+
+
+\newtheorem*{nthm}{Theorem}
+\newtheorem*{nlem}{Lemma}
+\newtheorem*{nprop}{Proposition}
+\newtheorem*{ncor}{Corollary}
+\newtheorem*{nclaim}{Claim}
+\newtheorem*{nde}{Definition}
+\newtheorem*{nex}{Example}
+
+\newtheoremstyle{test}{3pt}{3pt}{\itshape}{\parindent}{\bfseries}{---}{  }{\thmnote{#3}} \theoremstyle{test}
+\newtheorem*{mythm}{}
+
+
+%: paragraphs
+
+\newcommand{\point}{\vspace{3mm}\par \noindent (\refstepcounter{subsection}{\bf \thesubsection) } }
+
+\newcommand{\tpoint}[1]{\vspace{3mm}\par \noindent \refstepcounter{subsubsection}{\bf \thesubsubsection.} 
+  {\em #1. ---} }
+\newcommand{\epoint}[1]{\vspace{3mm}\par \noindent \refstepcounter{subsection}{\bf \thesubsection.} 
+  {\em #1.} }
+\newcommand{\spoint}{\vspace{3mm}\par \noindent \refstepcounter{subsection}{\bf \thesubsection.} }
+
+\newcommand{\bpoint}[1]{\vspace{3mm}\par \noindent \refstepcounter{subsection}{\bf \thesubsection.} 
+  {\bf #1.} }
+
+
+
+%: numbering and margins
+
+\numberwithin{equation}{subsection}
+
+\setlength{\oddsidemargin}{0cm} \setlength{\evensidemargin}{0cm}
+\setlength{\marginparwidth}{0in}
+\setlength{\marginparsep}{0in}
+\setlength{\marginparpush}{0in}
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\footskip}{.3in}
+\setlength{\textheight}{9.2in}
+\setlength{\textwidth}{6.5in}
+\setlength{\parskip}{0.25pt}
+\setlength{\parindent}{0.25in}
+
+%: math shortcuts 
+
+
+\DeclareMathOperator{\inv}{inv}
+\DeclareMathOperator{\out}{Out}
+\DeclareMathOperator{\gal}{Gal}
+\renewcommand{\mod}{\mathrm{\, mod \, }}
+\renewcommand{\d}[1]{{}^{#1}}
+\renewcommand{\b}[1]{\mathbf{{#1}}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\be}[1]{\begin{eqnarray} \label{#1}}
+\newcommand{\ee}{\end{eqnarray}}
+\newcommand{\re}{\mathsf{Re}}
+\newcommand{\im}{\mathsf{Im}} 
+\newcommand{\rr}{\rightarrow}
+
+\newcommand{\n}{\mathbb{N}}
+\newcommand{\zee}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\pr}{\mathbb{P}}
+\renewcommand{\gcd}[2]{\mathsf{gcd}(#1, #2)}
+\newcommand{\ov}[1]{\overline{#1}}
+\renewcommand{\Re}{\mathrm{Re}}
+\renewcommand{\Im}{\mathrm{Im}}
+
+
+
+\title{Problem Set 1 \\ MATH 411: Honors Complex Variables, Fall 2026}
+\date{last compiled: \today}
+
+\numberwithin{equation}{section}
+\refstepcounter{section}
+
+\begin{document}						%%
+\maketitle
+
+
+
+\begin{enumerate}
+
+\item
+\begin{enumerate} 
+
+\item Put $-1 - i$ into polar form
+\item Put $e^{- 5 i \pi /4}$ into the form $x + i y$.
+\item Find the real and imaginary parts of $i^{1/4}$, taking the fourth root whose angle lies between $0$ and $\pi/2$.
+\item Describe geometrically the set of points $z \in \mathbb{C}$ such that $|z| = \Re(z)+1$.
+\end{enumerate} 
+\item Let $f(z) = e^z$. Describe the image under $f$ of the following sets 
+\begin{enumerate}
+\item The set of $z = x + i y $ such that $x \leq 1$ and $0 \leq y \leq \pi$
+\item The set of $z = x + i y $ such that $0 \leq y \leq \pi$ (no condition on $x$)
+\end{enumerate}
+
+\item Let $f$ be the function defined by $$ f(z) = \lim_{ n \rr \infty} \frac{1}{1 + n^2 z} .$$
+ Show that $f$ is the characteristic function of the set $\{ 0 \}$, i.e. $f(0)=1$ and $f(z)=0$ otherwise. 
+ 
+ \item \begin{enumerate}
+\item Let $z, w$ be two complex numbers such that $\overline{z} w \neq 1$. Prove that $$ \left| \frac{w -z }{1 - \overline{w} z} \right| < 1 \text{ if } |z| < 1 \text{ and } |w| < 1 $$ and also that $$ \left| \frac{w -z }{1 - \overline{w} z} \right| = 1 \text{ if } |z| = 1 \text{ or } |w| = 1 $$ 
+
+\emph{Hint: reduce to the case where $z$ is real, say $z=r$, in which case it suffices to prove that $$ (r - w) (r - \overline{w}) \leq ( 1- rw) (1 - r \overline{w}) $$ with equality when $|r|=1$ or $|w|=1$.}
+
+\item Prove that for a fixed $w$ in the unit disc $\mathbb{D}$ the mapping $$ F: z \mapsto \frac{w - z}{1 - \overline{w} z} $$ satisfies the following conditions: 
+
+\begin{enumerate} 
+\item $F$ maps $\mathbb{D}$ to itself and is holomorphic on $\mathbb{D}$
+\item $F$ interchanges $0$ and $w$ (i.e. $F(0)=w$ and $F(w)=0$)
+\item $|F(z)|=1$ if $|z|=1$
+\item $F: \mathbb{D} \rr \mathbb{D}$ is bijective (Hint: calculate $F \circ F$).
+\end{enumerate}
+
+
+\end{enumerate}
+
+\item Show that in polar coordinates, i.e. if $F(x, y)$ is regarded as $F(r, \theta)= ( u(r,\theta), v(r, \theta))$, the Cauchy--Riemann equations take the form  $$ \frac{\partial u}{\partial r}  = \frac{1}{r} \frac{ \partial v}{\partial \theta} \text{ and } \frac{1}{r} \frac{ \partial u}{\partial \theta} = - \frac{\partial v}{\partial r}.$$  Use these equations to show that the logarithm function defined as $$ \log(z) := \log (r) + i \theta \text{ where } z = r e^{ i \theta} \text{ with } - \pi < \theta < \pi $$ is holomorphic in the region $r > 0$ and $- \pi < \theta < \pi$. 
+
+\item \begin{enumerate}
+\item Show that $$4 \frac{\partial}{\partial z} \frac{\partial}{\partial \overline{z}} = 4 \frac{\partial}{\partial \overline{z}} \frac{\partial}{\partial z} = \Delta $$ where $\Delta$ is the Laplacian, $$ \Delta = \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} .$$ \item Show that if $f$ is holomorphic on an open set $U \subset \mathbb{C}$, then $\psi(x, y) = \Re(f)$ and $\phi(x, y) = \Im(f)$ are both harmonic functions (i.e. they satisfy $\Delta \psi = \Delta \phi = 0$).
+\end{enumerate}
+
+\item Show that $f(x+ i y) = \sqrt{|x| | y |}$ satisfies the Cauchy-Riemann equations at the origin but that $f$ is not holomorphic at $0$
+
+\item Suppose that $f$ is holomorphic in an open disc $\mathcal{D} \subset \mathbb{C}$, say $f= u(x, y) +  i v(x, y)$. Prove that \begin{enumerate} 
+\item if $|f|^2 = u^2 + v^2$ is constant, then $f$ is constant;
+\item if there exist real, non-zero constants $a, b,$ and $c$ such that $$ a u (x, y) + b v (x, y) = c, $$ then $f$ is constant. 
+\end{enumerate}
+
+\end{enumerate}
+
+
+\end{document}
