@@ -256,11 +256,12 @@ For $z=a+ib\in\C$, define
 \ee
 \end{definition}
 
-The familiar exponential law continues to hold; verify it as an exercise:
+The familiar exponential law continues to hold: for all
+$\alpha,\beta\in\C$,
 \be
-  e^\alpha e^\beta=e^{\alpha+\beta}
-  \qquad (\alpha,\beta\in\C).
+  e^\alpha e^\beta=e^{\alpha+\beta}.
 \ee
+Verify this identity as an exercise.
 
 \begin{remark}
 For complex $z$, the number $e^z$ need not be real or positive.  In fact,
@@ -386,7 +387,18 @@ Identifying the $x_1x_2$-plane with $\C$, the point $Q$ corresponds to
   \qquad P=(x_1,x_2,x_3).
 \ee
 
-This is easy to see: consider the line $\ell_P$ through $N$ and passing through $P$. It has parametric form \be{} \ell: P + t ( P - N) =  (t x_1, tx_2, 1 + t(x_3-1)). \ee This line intersects the horizontal plane passing through the origin for \be{} 1 + t (x_3-1) =0. \ee Unravelling this, we obtain the above formula.
+To verify this formula, parametrize the line through $N$ and $P$ by
+\be
+  \ell_P(t)=N+t(P-N)
+  =(t x_1,t x_2,1+t(x_3-1)).
+\ee
+This line meets the plane $x_3=0$ when $1+t(x_3-1)=0$, so
+$t=1/(1-x_3)$.  Therefore
+\be
+  Q=\ell_P\left(\frac{1}{1-x_3}\right)
+  =\left(\frac{x_1}{1-x_3},\frac{x_2}{1-x_3},0\right),
+\ee
+which corresponds to the displayed complex number $z$.
 
 \begin{definition}
 The map
@@ -407,9 +419,5 @@ The map $\pi$ is a bijection.  It extends to a bijection
 Thus the extended complex plane may be viewed as a sphere.  Under
 stereographic projection, circles on $S^2$ become circles or lines in
 $\widehat\C$; circles through $N$ become lines in $\C$.
-
-
-Substituting the equation of the line through $N$ and $P$ and imposing
-$x_3=0$ verifies the displayed formula for $z$.
 
 \end{document}
