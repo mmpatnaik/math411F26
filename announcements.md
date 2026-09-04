@@ -21,3 +21,7 @@ Office hours will start on the *second week* of classes.
 
 ## 2026-09-01
 Lecture 1 notes have been posted. Homework 1 posted.
+
+## 2026-09-03
+Lecture 2 notes have been posted. 
+
