@@ -89,9 +89,9 @@
 \tableofcontents
 \vspace{0.45em}
 
-\section{Review and Steorographic Projection}
+\section{Review and Stereographic Projection}
 
-Last time we ended with discussion of the extended complex plane \be
+Last time we ended with a discussion of the extended complex plane \be
 \widehat{\C}=\C\cup\{\infty\}.
 \ee together with the stereographic projection  \be
 \pi:S^2\setminus\{N\}\longrightarrow\C,
@@ -129,11 +129,12 @@ In coordinates,  identifying the $x_1x_2$-plane with $\C$, if $P=(x_1, x_2, x_3)
 \qquad P=(x_1,x_2,x_3).
 \ee
 
-Geometrically, it is clear that $\pi$ is a bijection, and extends to give a bijective correspondence.
+Geometrically, it is clear that $\pi$ is a bijection.  It extends to a
+bijection
 \be
-\widehat\pi:S^2\longrightarrow\widehat\C
+\widehat{\pi}:S^2\longrightarrow\widehat{\C}
 \qquad\text{by setting}\qquad
-\widehat\pi(N)=\infty.
+\widehat{\pi}(N)=\infty.
 \ee
 
 \begin{exercise}
@@ -149,7 +150,8 @@ point
 \ee
 \end{exercise}
 
-Using steorographic projection, you can try to take `natural' operations on $S^2$ and see what they mean on $\widehat \C$ or vice versa. For example, you can try:
+Using stereographic projection, we can transport natural operations on
+$S^2$ to $\widehat{\C}$, or vice versa.  For example:
 
 \begin{exercise}
 Show that under stereographic projection the antipodal map
@@ -212,7 +214,7 @@ half-turn about the origin.
     \draw[BrickRed,thin] (-0.43,-0.26) -- (-0.95,-0.70);
     \node[BrickRed,anchor=east] at (-0.95,-0.70)
       {$-1/\overline z$};
-    \node at (0.25,-2.05) {inversion in the unit circle};
+    \node at (0.25,-2.05) {inversion, then a half-turn};
   \end{scope}
 \end{tikzpicture}
 \end{center}
@@ -276,7 +278,8 @@ Thus
 \end{example}
 
 \begin{example}[Power maps]
-For $f(z)=z^n$, write $z=re^{i\theta}$.  Then
+For $f(z)=z^n$, where $n$ is a positive integer, write
+$z=re^{i\theta}$.  Then
 \be
   f(z)=r^n e^{in\theta}
       =r^n\cos(n\theta)+i\,r^n\sin(n\theta).
@@ -439,7 +442,7 @@ $z_0=1+i$.  Their images under $w=z^2$ are respectively
     \draw[->] (-2.2,0) -- (2.45,0) node[right] {$x$};
     \draw[->] (0,-2.2) -- (0,2.45) node[above] {$y$};
     \draw[courseblue,very thick] (1,-2.0) -- (1,2.1)
-      node[pos=0.87,right,courseblue] {$x=1$};
+      node[pos=0.18,right,courseblue] {$x=1$};
     \draw[BrickRed,very thick] (-2.0,1) -- (2.1,1)
       node[pos=0.18,above,BrickRed] {$y=1$};
     \fill[darkgray] (1,1) circle (2.5pt)
