@@ -164,9 +164,8 @@ corresponds to the map
 \be
   z\longmapsto-\frac{1}{\overline z}
 \ee
-on $\widehat\C$.  The map $z\mapsto 1/\overline z$ is inversion in the
-unit circle; thus the displayed map is unit-circle inversion followed by a
-half-turn about the origin.
+on $\widehat\C$, which  is inversion in the
+unit circle followed by a half-turn.
 
 \begin{center}
 \begin{tikzpicture}[scale=0.78,>=stealth]
@@ -219,10 +218,13 @@ half-turn about the origin.
 \end{tikzpicture}
 \end{center}
 \end{exercise}
-Under
-stereographic projection, circles on $S^2$ become circles or lines in
-$\widehat\C$; circles through $N$ become lines in $\C$.
 
+
+By a circle in $S^2$ we mean the intersection of a plane in $\R^3$ with $S^2$.
+
+\begin{exercise} Show that under stereographic projection, circles on $S^2$ are sent to either circles or lines in $\widehat\C$. When does a circle in $S^2$ flatten out to a line? Can you get every circle or line in $\C$ from stereographic projection?
+
+\end{exercise}
 \section{Functions of a Complex Variable}
 
 Let $S\subseteq\C$.  A function of a complex variable is a map
@@ -303,6 +305,37 @@ The relations
 are the \emph{Cauchy--Riemann equations}.  The squaring map satisfies them,
 whereas complex conjugation does not.  We will study their significance
 later.
+
+
+\begin{exercise}
+	Let
+	\be
+	z=re^{i\theta}
+	\qquad\text{and}\qquad
+	f(z)=u(r,\theta)+i\,v(r,\theta),
+	\ee
+	where $r>0$.  Show that the Cartesian Cauchy--Riemann equations
+	\be
+	u_x=v_y,
+	\qquad
+	u_y=-v_x
+	\ee
+	are equivalent to the polar Cauchy--Riemann equations
+	\be
+	\boxed{
+		u_r=\frac{1}{r}v_\theta,
+		\qquad
+		v_r=-\frac{1}{r}u_\theta
+	}.
+	\ee
+	Then verify directly that $f(z)=z^n$, with
+	\be
+	u(r,\theta)=r^n\cos(n\theta),
+	\qquad
+	v(r,\theta)=r^n\sin(n\theta),
+	\ee
+	satisfies these equations.
+\end{exercise}
 
 \section{Visualizing Complex-Valued Functions}
 
@@ -477,6 +510,8 @@ The upper intersection is $w_0=z_0^2=2i$.  The right angle is preserved
 because $z\mapsto z^2$ is conformal at $z_0\ne0$.  The second intersection,
 at $-2i$, occurs because the points $1-i$ on $x=1$ and $-1+i$ on $y=1$
 are negatives of one another and therefore have the same square.
+
+
 
 \section{Basic Topology in the Complex Plane}
 
