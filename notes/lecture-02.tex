@@ -6,23 +6,63 @@
 \usepackage{microtype}
 \usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage[dvipsnames]{xcolor}
+\usepackage[most]{tcolorbox}
 \usepackage{tikz}
 \usepackage{enumitem}
+\usepackage{tocloft}
 \usepackage[hidelinks]{hyperref}
 
 \definecolor{courseblue}{HTML}{1F4E79}
 \definecolor{lightblue}{HTML}{EAF2F8}
+\definecolor{lightgreen}{HTML}{EAF7EA}
+\definecolor{lightpink}{HTML}{FCE8EF}
 \definecolor{darkgray}{HTML}{333333}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.65em}
 \setlist[itemize]{topsep=0.25em,itemsep=0.15em}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
 
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
 \theoremstyle{definition}
-\newtheorem{definition}{Definition}
-\newtheorem{example}{Example}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
+
+\tcolorboxenvironment{definition}{
+  enhanced,
+  colback=lightgreen,
+  colframe=ForestGreen,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{exercise}{
+  enhanced,
+  colback=lightpink,
+  colframe=WildStrawberry,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\numberwithin{equation}{section}
+
+\newcommand{\be}{\begin{eqnarray}}
+\newcommand{\ee}{\end{eqnarray}}
 
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\R}{\mathbb{R}}
@@ -46,187 +86,217 @@
     \end{minipage}}
 \end{center}
 
-\section{The Extended Complex Plane}
+\tableofcontents
+\vspace{0.45em}
 
-Recall that every $z\in\C$ may be written in Cartesian or polar form:
-\[
-  z=a+ib=re^{i\theta},
-  \qquad
-  a=\RePart(z),\quad b=\ImPart(z),\quad r>0,\quad \theta\in\R.
-\]
-Its complex conjugate and modulus are
-\[
-  \overline z=a-ib,
-  \qquad
-  |z|=\sqrt{z\overline z}=\sqrt{a^2+b^2}.
-\]
+\section{Review and Steorographic Projection}
 
-It is often useful to add one point, denoted by $\infty$, to the complex
-plane.
-
-\begin{definition}
-The \emph{extended complex plane} is
-\[
-  \widehat{\C}=\C\cup\{\infty\}.
-\]
-\end{definition}
-
-For $a,b\in\C$, we use the conventions
-\[
-  a+\infty=\infty+a=\infty,
-  \qquad
-  b\cdot\infty=\infty\cdot b=\infty\quad (b\ne0),
-\]
-and
-\[
-  \frac{a}{0}=\infty\quad (a\ne0),
-  \qquad
-  \frac{b}{\infty}=0.
-\]
-Expressions such as $\infty-\infty$, $0\cdot\infty$, $\infty/\infty$, and
-$0/0$ remain undefined.
-
-\section{Stereographic Projection}
-
-Let
-\[
-  S^2=\{(x_1,x_2,x_3)\in\R^3:x_1^2+x_2^2+x_3^2=1\}
-\]
-be the unit sphere, and let $N=(0,0,1)$ be its north pole.  For
-$P\in S^2\setminus\{N\}$, draw the line through $N$ and $P$.  It intersects
-the plane $x_3=0$ in a unique point $Q$.
+Last time we ended with discussion of the extended complex plane \be
+\widehat{\C}=\C\cup\{\infty\}.
+\ee together with the stereographic projection  \be
+\pi:S^2\setminus\{N\}\longrightarrow\C,
+\qquad
+P\longmapsto Q,
+\ee defined by the following figure:
 
 \begin{center}
-\begin{tikzpicture}[scale=1.05,>=stealth]
-  \fill[lightblue,opacity=0.75]
-    (-3.4,-0.25) -- (3.5,-0.25) -- (2.35,0.45) -- (-2.25,0.45) -- cycle;
-  \draw[darkgray]
-    (-3.4,-0.25) -- (3.5,-0.25) -- (2.35,0.45) -- (-2.25,0.45) -- cycle;
-  \draw[courseblue,thick] (0,1.55) circle (1.55);
-  \draw[courseblue,dashed] (-1.55,1.55) arc[start angle=180,end angle=360,
-    x radius=1.55,y radius=0.38];
-  \draw[courseblue] (1.55,1.55) arc[start angle=0,end angle=180,
-    x radius=1.55,y radius=0.38];
-  \coordinate (N) at (0,3.10);
-  \coordinate (P) at (1.08,1.90);
-  \coordinate (Q) at (2.78,0.02);
-  \draw[very thick,BrickRed] (N) -- (Q);
-  \fill[BrickRed] (N) circle (2.4pt) node[above] {$N$};
-  \fill[courseblue] (P) circle (2.4pt) node[above right] {$P$};
-  \fill[darkgray] (Q) circle (2.4pt) node[right] {$Q$};
-  \node at (2.75,-0.55) {$x_3=0$};
-\end{tikzpicture}
+	\begin{tikzpicture}[scale=0.75,>=stealth]
+		\fill[lightblue,opacity=0.75]
+		(-3.4,1.15) -- (3.5,1.15) -- (2.35,1.95) -- (-2.25,1.95) -- cycle;
+		\draw[darkgray]
+		(-3.4,1.15) -- (3.5,1.15) -- (2.35,1.95) -- (-2.25,1.95) -- cycle;
+		\draw[courseblue,thick] (0,1.55) circle (1.55);
+		\draw[courseblue,dashed] (-1.55,1.55) arc[start angle=180,end angle=360,
+		x radius=1.55,y radius=0.38];
+		\draw[courseblue] (1.55,1.55) arc[start angle=0,end angle=180,
+		x radius=1.55,y radius=0.38];
+		\coordinate (N) at (0,3.10);
+		\coordinate (P) at (1.34,2.33);
+		\coordinate (Q) at (2.69,1.55);
+		\draw[very thick,BrickRed] (N) -- (Q);
+		\fill[BrickRed] (N) circle (2.4pt) node[above] {$N$};
+		\fill[courseblue] (P) circle (2.4pt) node[above right] {$P$};
+		\fill[darkgray] (Q) circle (2.4pt) node[right] {$Q$};
+		\node at (3.05,0.88) {$x_3=0$};
+	\end{tikzpicture}
 \end{center}
 
-Identifying the $x_1x_2$-plane with $\C$, the point $Q$ corresponds to
-\[
-  \boxed{\displaystyle
-    z=\frac{x_1+i x_2}{1-x_3}
-  },
-  \qquad P=(x_1,x_2,x_3).
-\]
+In coordinates,  identifying the $x_1x_2$-plane with $\C$, if $P=(x_1, x_2, x_3) \in S^2$, the point $Q$ corresponds to
+\be
+\boxed{\displaystyle
+	z=\frac{x_1+i x_2}{1-x_3}
+},
+\qquad P=(x_1,x_2,x_3).
+\ee
 
-\begin{definition}
-The map
-\[
-  \pi:S^2\setminus\{N\}\longrightarrow\C,
+Geometrically, it is clear that $\pi$ is a bijection, and extends to give a bijective correspondence.
+\be
+\widehat\pi:S^2\longrightarrow\widehat\C
+\qquad\text{by setting}\qquad
+\widehat\pi(N)=\infty.
+\ee
+
+\begin{exercise}
+Given $z=a+ib\in\C$, prove that the preimage of $z$ under $\pi$ is the
+point
+\be
+  \pi^{-1}(z)
+  =\left(
+    \frac{2a}{1+|z|^2},
+    \frac{2b}{1+|z|^2},
+    \frac{|z|^2-1}{1+|z|^2}
+  \right)\in S^2.
+\ee
+\end{exercise}
+
+Using steorographic projection, you can try to take `natural' operations on $S^2$ and see what they mean on $\widehat \C$ or vice versa. For example, you can try:
+
+\begin{exercise}
+Show that under stereographic projection the antipodal map
+\be
+  A:S^2\longrightarrow S^2,
   \qquad
-  P\longmapsto Q,
-\]
-is called \emph{stereographic projection}.
-\end{definition}
+  (x_1,x_2,x_3)\longmapsto(-x_1,-x_2,-x_3),
+\ee
+corresponds to the map
+\be
+  z\longmapsto-\frac{1}{\overline z}
+\ee
+on $\widehat\C$.  The map $z\mapsto 1/\overline z$ is inversion in the
+unit circle; thus the displayed map is unit-circle inversion followed by a
+half-turn about the origin.
 
-The map $\pi$ is a bijection.  It extends to a bijection
-\[
-  \widehat\pi:S^2\longrightarrow\widehat\C
-  \qquad\text{by setting}\qquad
-  \widehat\pi(N)=\infty.
-\]
-Thus the extended complex plane may be viewed as a sphere.  Under
+\begin{center}
+\begin{tikzpicture}[scale=0.78,>=stealth]
+  % Antipodal map on the sphere.
+  \begin{scope}[xshift=-3.7cm]
+    \draw[courseblue,thick] (0,0) circle (1.45);
+    \draw[courseblue,dashed] (-1.45,0) arc[start angle=180,end angle=360,
+      x radius=1.45,y radius=0.34];
+    \draw[courseblue] (1.45,0) arc[start angle=0,end angle=180,
+      x radius=1.45,y radius=0.34];
+    \coordinate (P) at (35:1.45);
+    \coordinate (AP) at (215:1.45);
+    \draw[darkgray,dashed] (P) -- (AP);
+    \fill[courseblue] (P) circle (2.5pt)
+      node[above right] {$P$};
+    \fill[BrickRed] (AP) circle (2.5pt)
+      node[below left] {$A(P)=-P$};
+    \fill[darkgray] (0,0) circle (1.7pt) node[above left] {$O$};
+    \draw[->,very thick,BrickRed]
+      (1.25,0.95) to[bend left=38] (-1.22,-0.92);
+    \node[BrickRed] at (0,1.85) {$A$};
+    \node at (0,-2.05) {antipodal map on $S^2$};
+  \end{scope}
+
+  % Unit-circle inversion and the extra half-turn.
+  \begin{scope}[xshift=3.5cm]
+    \draw[->] (-2.25,0) -- (2.75,0) node[right] {$\RePart z$};
+    \draw[->] (0,-1.85) -- (0,1.95) node[above] {$\ImPart z$};
+    \draw[courseblue,thick] (0,0) circle (1.15);
+    \node[courseblue] at (1.0,-0.82) {$|z|=1$};
+    \coordinate (Z) at (1.91,1.10);
+    \coordinate (IZ) at (0.39,0.23);
+    \coordinate (JZ) at (-0.39,-0.23);
+    \draw[darkgray,dashed] (-0.7,-0.40) -- (2.18,1.26);
+    \fill[darkgray] (Z) circle (2.5pt) node[above right] {$z$};
+    \fill[ForestGreen] (IZ) circle (2.5pt);
+    \fill[BrickRed] (JZ) circle (2.5pt);
+    \draw[->,very thick,ForestGreen]
+      (1.78,0.98) to[bend right=20] (0.48,0.29);
+    \draw[->,very thick,BrickRed]
+      (0.30,0.32) to[bend right=45] (-0.42,-0.13);
+    \draw[ForestGreen,thin] (0.43,0.26) -- (0.88,0.55);
+    \node[ForestGreen,anchor=west] at (0.88,0.55)
+      {$I(z)=1/\overline z$};
+    \draw[BrickRed,thin] (-0.43,-0.26) -- (-0.95,-0.70);
+    \node[BrickRed,anchor=east] at (-0.95,-0.70)
+      {$-1/\overline z$};
+    \node at (0.25,-2.05) {inversion in the unit circle};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\end{exercise}
+Under
 stereographic projection, circles on $S^2$ become circles or lines in
 $\widehat\C$; circles through $N$ become lines in $\C$.
-
-\begin{remark}
-Substituting the equation of the line through $N$ and $P$ and imposing
-$x_3=0$ verifies the displayed formula for $z$.
-\end{remark}
 
 \section{Functions of a Complex Variable}
 
 Let $S\subseteq\C$.  A function of a complex variable is a map
-\[
+\be
   f:S\longrightarrow\C,
   \qquad z\longmapsto w=f(z).
-\]
+\ee
 Write
-\[
+\be
   z=x+iy
   \qquad\text{and}\qquad
   w=u+iv.
-\]
+\ee
 Then a complex-valued function can be expressed as
-\[
+\be
   f(z)=u(x,y)+i\,v(x,y),
-\]
+\ee
 where $u$ and $v$ are real-valued functions of the two real variables
 $x$ and $y$.
 
 \begin{example}[The squaring map]
 For $f(z)=z^2$,
-\[
+\be
   f(x+iy)=(x+iy)^2=(x^2-y^2)+i(2xy).
-\]
+\ee
 Hence
-\[
+\be
   u(x,y)=x^2-y^2,
   \qquad
   v(x,y)=2xy.
-\]
+\ee
 Their first partial derivatives are
-\[
+\be
   u_x=2x,\quad u_y=-2y,
   \qquad
   v_x=2y,\quad v_y=2x.
-\]
+\ee
 \end{example}
 
 \begin{example}[Complex conjugation]
 For $f(z)=\overline z$,
-\[
+\be
   f(x+iy)=x-iy,
   \qquad
   u(x,y)=x,\quad v(x,y)=-y.
-\]
+\ee
 Thus
-\[
+\be
   u_x=1,\quad u_y=0,
   \qquad
   v_x=0,\quad v_y=-1.
-\]
+\ee
 \end{example}
 
 \begin{example}[Power maps]
 For $f(z)=z^n$, write $z=re^{i\theta}$.  Then
-\[
+\be
   f(z)=r^n e^{in\theta}
       =r^n\cos(n\theta)+i\,r^n\sin(n\theta).
-\]
+\ee
 Consequently,
-\[
+\be
   u(r,\theta)=r^n\cos(n\theta),
   \qquad
   v(r,\theta)=r^n\sin(n\theta).
-\]
+\ee
 The corresponding Cartesian formulas can be obtained by substituting
 $r=\sqrt{x^2+y^2}$ and an argument $\theta$ of $x+iy$.
 \end{example}
 
 The relations
-\[
+\be
   u_x=v_y,
   \qquad
   u_y=-v_x,
-\]
+\ee
 are the \emph{Cauchy--Riemann equations}.  The squaring map satisfies them,
 whereas complex conjugation does not.  We will study their significance
 later.
@@ -238,16 +308,19 @@ dimensions, so it cannot be drawn in an ordinary three-dimensional plot.
 Instead, we study how familiar subsets of the $z$-plane are transformed
 into subsets of the $w$-plane.
 
+
+\subsection*{Images of Vertical Lines: $w=z^2$}
+
 For the squaring map $w=z^2$, consider the vertical line $x=x_0$.  Since
-\[
+\be
   u=x_0^2-y^2,
   \qquad
   v=2x_0y,
-\]
+\ee
 we may eliminate $y$ (when $x_0\ne0$) to obtain
-\[
+\be
   u=x_0^2-\frac{v^2}{4x_0^2}.
-\]
+\ee
 Thus vertical lines in the $z$-plane are mapped to parabolas in the
 $w$-plane.
 
@@ -285,39 +358,147 @@ $w$-plane.
 \end{center}
 
 In particular, for $x_0=1$ the image parabola is
-\[
+\be
   u=1-\left(\frac v2\right)^2,
-\]
+\ee
 while for $x_0=2$ it is
-\[
+\be
   u=4-\left(\frac v4\right)^2.
-\]
+\ee
 The strip $1<x<2$ maps to the region between these two parabolas.
+
+\subsection*{Images of Horizontal Lines: $w=z^2$}
+
+Now consider the horizontal line $y=b$.  Writing $z=x+ib$ and
+$w=u+iv=z^2$, we have
+\be
+  u=x^2-b^2,
+  \qquad
+  v=2bx.
+\ee
+If $b\ne0$, eliminating $x$ gives
+\be
+  \boxed{u=\frac{v^2}{4b^2}-b^2}.
+\ee
+Thus a horizontal line maps to a parabola with vertex $(-b^2,0)$, axis the
+real axis, and opening to the right.  The lines $y=b$ and $y=-b$ have the
+same image, traced with opposite orientations.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.78,>=stealth]
+  \begin{scope}
+    \draw[->] (-2.3,0) -- (2.5,0) node[right] {$x$};
+    \draw[->] (0,-0.5) -- (0,2.8) node[above] {$y$};
+    \fill[lightblue] (-2.1,1) rectangle (2.1,2);
+    \draw[courseblue,very thick] (-2.1,1) -- (2.1,1)
+      node[pos=0.82,below,courseblue] {$y=1$};
+    \draw[BrickRed,very thick] (-2.1,2) -- (2.1,2)
+      node[pos=0.82,above,BrickRed] {$y=2$};
+    \node at (0,-1.0) {$z$-plane};
+  \end{scope}
+
+  \draw[->,very thick] (3.0,0.9) -- (4.2,0.9)
+    node[midway,above] {$w=z^2$};
+
+  \begin{scope}[xshift=9cm]
+    \draw[->] (-4.9,0) -- (1.8,0) node[right] {$u$};
+    \draw[->] (0,-2.5) -- (0,2.5) node[above] {$v$};
+    \path[fill=lightblue]
+      plot[domain=-2.2:2.2,samples=70] ({(\x*\x)/4-1},{\x})
+      -- plot[domain=2.2:-2.2,samples=70] ({(\x*\x)/16-4},{\x})
+      -- cycle;
+    \draw[courseblue,very thick,domain=-2.2:2.2,samples=70]
+      plot ({(\x*\x)/4-1},{\x});
+    \draw[BrickRed,very thick,domain=-2.2:2.2,samples=70]
+      plot ({(\x*\x)/16-4},{\x});
+    \node[courseblue] at (-0.35,1.75) {$b=1$};
+    \node[BrickRed] at (-3.75,1.75) {$b=2$};
+    \node at (-1.7,-2.85) {$w$-plane};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+
+For example, $y=1$ maps to $u=v^2/4-1$, while $y=2$ maps to
+$u=v^2/16-4$.  The strip $1<y<2$ maps to the region between these two
+parabolas.  When $b=0$, the real axis maps to the nonnegative real axis,
+since $w=x^2\ge0$.
+
+\subsection*{Intersecting Horizontal and Vertical Lines}
+
+Consider the lines $x=1$ and $y=1$, which intersect at
+$z_0=1+i$.  Their images under $w=z^2$ are respectively
+\be
+  u=1-\frac{v^2}{4}
+  \qquad\text{and}\qquad
+  u=\frac{v^2}{4}-1.
+\ee
+
+\begin{center}
+\begin{tikzpicture}[scale=0.84,>=stealth]
+  \begin{scope}
+    \draw[->] (-2.2,0) -- (2.45,0) node[right] {$x$};
+    \draw[->] (0,-2.2) -- (0,2.45) node[above] {$y$};
+    \draw[courseblue,very thick] (1,-2.0) -- (1,2.1)
+      node[pos=0.87,right,courseblue] {$x=1$};
+    \draw[BrickRed,very thick] (-2.0,1) -- (2.1,1)
+      node[pos=0.18,above,BrickRed] {$y=1$};
+    \fill[darkgray] (1,1) circle (2.5pt)
+      node[above right] {$z_0=1+i$};
+    \draw[darkgray] (1,1) -- (1.18,1) -- (1.18,1.18) -- (1,1.18);
+    \node at (0,-2.65) {$z$-plane};
+  \end{scope}
+
+  \draw[->,very thick] (3.0,0) -- (4.2,0)
+    node[midway,above] {$w=z^2$};
+
+  \begin{scope}[xshift=8.7cm]
+    \draw[->] (-2.15,0) -- (2.35,0) node[right] {$u$};
+    \draw[->] (0,-2.75) -- (0,2.75) node[above] {$v$};
+    \draw[courseblue,very thick,domain=-2.45:2.45,samples=80]
+      plot ({1-(\x*\x)/4},{\x});
+    \draw[BrickRed,very thick,domain=-2.45:2.45,samples=80]
+      plot ({(\x*\x)/4-1},{\x});
+    \node[courseblue] at (1.25,1.15) {$x=1$};
+    \node[BrickRed] at (-1.25,1.15) {$y=1$};
+    \fill[darkgray] (0,2) circle (2.5pt)
+      node[above right] {$w_0=2i$};
+    \fill[darkgray] (0,-2) circle (2.5pt)
+      node[below right] {$-2i$};
+    \draw[darkgray] (-0.14,1.86) -- (0,1.72) -- (0.14,1.86);
+    \node at (0,-3.18) {$w$-plane};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+
+The upper intersection is $w_0=z_0^2=2i$.  The right angle is preserved
+because $z\mapsto z^2$ is conformal at $z_0\ne0$.  The second intersection,
+at $-2i$, occurs because the points $1-i$ on $x=1$ and $-1+i$ on $y=1$
+are negatives of one another and therefore have the same square.
 
 \section{Basic Topology in the Complex Plane}
 
 \begin{definition}
 For $\alpha\in\C$ and $r>0$, the \emph{open disc} centered at $\alpha$ with
 radius $r$ is
-\[
+\be
   D(\alpha,r)=\{z\in\C:|z-\alpha|<r\}.
-\]
+\ee
 The corresponding \emph{closed disc} is
-\[
+\be
   \overline{D}(\alpha,r)=\{z\in\C:|z-\alpha|\le r\}.
-\]
+\ee
 The open unit disc is denoted by
-\[
+\be
   \D=D(0,1).
-\]
+\ee
 \end{definition}
 
 \begin{definition}
 A subset $U\subseteq\C$ is \emph{open} if, for every $\alpha\in U$, there is
 an $r>0$ such that
-\[
+\be
   D(\alpha,r)\subseteq U.
-\]
+\ee
 A subset $F\subseteq\C$ is \emph{closed} if its complement $\C\setminus F$
 is open.
 \end{definition}
@@ -338,21 +519,20 @@ Every interior point and every boundary point of $S$ is adherent to $S$.
 Indeed, the set of adherent points is the closure of $S$, which is the union
 of the interior of $S$ and its boundary.
 
-\section{Limits}
 
 \begin{definition}
 Let $S\subseteq\C$, let $f:S\to\C$, and suppose $\alpha$ is adherent to
 $S\setminus\{\alpha\}$.  We say that
-\[
+\be
   \lim_{\substack{z\to\alpha\\ z\in S}} f(z)=w
-\]
+\ee
 if, for every $\varepsilon>0$, there exists $\delta>0$ such that, for every
 $z\in S$,
-\[
+\be
   0<|z-\alpha|<\delta
   \quad\Longrightarrow\quad
   |f(z)-w|<\varepsilon.
-\]
+\ee
 \end{definition}
 
 This is the same $\varepsilon$--$\delta$ definition used for functions of a
