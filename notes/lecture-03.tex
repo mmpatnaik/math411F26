@@ -1,0 +1,392 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{tocloft}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{courseblue}{HTML}{1F4E79}
+\definecolor{lightblue}{HTML}{EAF2F8}
+\definecolor{lightgreen}{HTML}{EAF7EA}
+\definecolor{lightpink}{HTML}{FCE8EF}
+\definecolor{darkgray}{HTML}{333333}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\tcolorboxenvironment{definition}{
+  enhanced,
+  colback=lightgreen,
+  colframe=ForestGreen,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{exercise}{
+  enhanced,
+  colback=lightpink,
+  colframe=WildStrawberry,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\numberwithin{equation}{section}
+
+% Numbered display.  (equation rather than the deprecated eqnarray;
+% same output, and it respects amsmath spacing.)
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{center}
+  \colorbox{lightblue}{%
+    \begin{minipage}{0.94\textwidth}
+      \vspace{0.55em}
+      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr}
+        {\color{courseblue}\bfseries\LARGE Lecture 3} &
+        {\color{courseblue}\bfseries\LARGE MATH 411}\\[0.35em]
+        \textbf{Fall 2026} & \textbf{Date: Sep 9, 2026}\\
+        & \textbf{Instructor: Manish Patnaik}
+      \end{tabular*}
+      \vspace{0.45em}
+    \end{minipage}}
+\end{center}
+
+\tableofcontents
+\vspace{0.45em}
+
+\section{Complex Differentiability}
+
+Let $U\subseteq\C$ be open and let $f:U\to\C$.
+
+\begin{definition}
+We say that $f$ is \emph{complex differentiable} at $z_0\in U$ if the
+limit
+\be
+  \lim_{\substack{h\to0\\ h\in\C\setminus\{0\}}}
+  \frac{f(z_0+h)-f(z_0)}{h}
+\ee
+exists.  (Since $U$ is open, $z_0+h\in U$ for all sufficiently small
+$h$, so the quotient makes sense.)  When the limit exists it is denoted
+by $f'(z_0)$ and is called the \emph{derivative} of $f$ at $z_0$.
+
+If $f$ is complex differentiable at every point of the open set $U$, we
+say that $f$ is \emph{holomorphic} on $U$.
+\end{definition}
+
+The condition $h\to0$ is a limit in the complex plane: $h$ may approach
+$0$ from any direction.  This makes complex differentiability much more
+restrictive than ordinary one-variable differentiability, as the second
+example below shows.
+
+\begin{example}[The identity map]
+For $f(z)=z$ and every $z_0\in\C$,
+\[
+  \frac{f(z_0+h)-f(z_0)}{h}
+  =\frac{z_0+h-z_0}{h}=1.
+\]
+Thus $f$ is holomorphic on $\C$ and $f'(z)=1$.
+\end{example}
+
+\begin{example}[Complex conjugation]
+Let $f(z)=\overline z$.  At any $z_0\in\C$,
+\[
+  \frac{f(z_0+h)-f(z_0)}{h}
+  =\frac{\overline h}{h}.
+\]
+Writing $h=re^{i\theta}$ gives
+\[
+  \frac{\overline h}{h}=e^{-2i\theta}.
+\]
+The value depends only on the direction of approach, and it varies with
+that direction: along the real axis ($\theta=0$) the quotient is
+$1$, while along the imaginary axis ($\theta=\pi/2$) it is $-1$.  Hence
+the limit does not exist, and complex conjugation is nowhere complex
+differentiable.
+
+Note that as a map of $\R^2$, $(x,y)\mapsto(x,-y)$ is linear, hence
+as smooth as a function can be.  Complex differentiability is a
+different, stronger, condition.  In Lecture~2 we computed for this
+function that $u_x=1\ne-1=v_y$; we will see in Section~\ref{sec:CR} that
+this is exactly the obstruction.
+\end{example}
+
+\begin{exercise}
+Let $f(z)=|z|^2=z\overline z$.  Show that $f$ is complex differentiable
+at $z_0=0$, with $f'(0)=0$, but at no other point of $\C$.  In particular
+$f$ is not holomorphic on any open set, which is why the definition of
+``holomorphic'' insists on differentiability throughout an open set.
+\end{exercise}
+
+\section{Basic Properties}
+
+\begin{proposition}
+If $f$ is complex differentiable at $z_0$, then $f$ is continuous at
+$z_0$.
+\end{proposition}
+
+\begin{proof}
+For $z\ne z_0$ we have
+\be
+  f(z)-f(z_0)
+  =\frac{f(z)-f(z_0)}{z-z_0}\,(z-z_0).
+\ee
+As $z\to z_0$, the first factor tends to $f'(z_0)$ and the second tends
+to $0$.  Therefore $f(z)\to f(z_0)$.
+\end{proof}
+
+\begin{proposition}[Differentiation rules]\label{prop:rules}
+Suppose $f$ and $g$ are complex differentiable at $z_0$ and let
+$c\in\C$.  Then $cf$, $f+g$ and $fg$ are complex differentiable at
+$z_0$, and
+\begin{align*}
+  (cf)'(z_0)&=c\,f'(z_0),\\
+  (f+g)'(z_0)&=f'(z_0)+g'(z_0),\\
+  (fg)'(z_0)&=f'(z_0)g(z_0)+f(z_0)g'(z_0).
+\end{align*}
+If moreover $g(z_0)\ne0$, then $g\neq 0$ on a neighbourhood of $z_0$
+(by continuity), the quotient $f/g$ is complex differentiable at $z_0$,
+and
+\be
+  \left(\frac{f}{g}\right)'(z_0)
+  =\frac{g(z_0)f'(z_0)-f(z_0)g'(z_0)}{g(z_0)^2}.
+\ee
+\end{proposition}
+
+\begin{proof}
+The proofs are word for word the same as for real functions of one
+variable; they use only the algebra of limits and the continuity of $f$
+and $g$ at $z_0$.
+For example, try the proof of the product rule for yourself. (Hint: add and subtract
+$f(z_0+h)g(z_0)$ in the numerator.)
+\end{proof}
+
+\begin{corollary}\label{cor:poly}
+Every polynomial $p(z)=a_nz^n+\dots+a_1z+a_0$ is holomorphic on $\C$,
+with
+\be
+  p'(z)=na_nz^{n-1}+\dots+2a_2z+a_1.
+\ee
+Every rational function $p/q$ is holomorphic on the open set
+$\{z\in\C: q(z)\ne0\}$.
+\end{corollary}
+
+\begin{proof}
+Constants and the identity map are holomorphic on $\C$ (with derivatives
+$0$ and $1$), so by induction on $n$ and the product rule,
+$(z^n)'=nz^{n-1}$.  The rest follows from
+Proposition~\ref{prop:rules}.
+\end{proof}
+
+\begin{theorem}[Chain rule]\label{thm:chain}
+Let $U,V\subseteq\C$ be open.  Suppose $f:U\to V$ is complex
+differentiable at $z\in U$ and $g:V\to\C$ is complex differentiable at
+$f(z)$.  Then $g\circ f$ is complex differentiable at $z$, and
+\be
+  (g\circ f)'(z)=g'(f(z))\,f'(z).
+\ee
+\end{theorem}
+
+To prove the chain rule cleanly, it is useful to reformulate the
+definition of differentiability.
+
+\begin{lemma}[Linear approximation]\label{lem:linear}
+A function $f$ is complex differentiable at $z$ if and only if there are
+$\alpha\in\C$ and a function $\varphi$, defined on a neighbourhood of
+$0$, such that
+\be\label{eq:linear}
+  f(z+h)-f(z)=\alpha h+h\,\varphi(h)
+  \qquad\text{for all small $h$, including $h=0$,}
+\ee
+and $\varphi$ is continuous at $0$ with $\varphi(0)=0$.  In this case
+$\alpha=f'(z)$.
+\end{lemma}
+
+\begin{proof}
+If $f$ is differentiable at $z$, put $\alpha=f'(z)$, and for $h\ne0$
+define
+\be
+  \varphi(h)=\frac{f(z+h)-f(z)}{h}-f'(z),
+\ee
+and set $\varphi(0)=0$.  Then~\eqref{eq:linear} holds for all small $h$
+(trivially at $h=0$), and $\varphi(h)\to0=\varphi(0)$ by the definition
+of $f'(z)$.  Conversely, dividing~\eqref{eq:linear} by $h\ne0$ and
+letting $h\to0$ shows that the difference quotient tends to $\alpha$.
+\end{proof}
+
+\begin{proof}[Proof of the chain rule]
+Put $w=f(z)$ and $k=f(z+h)-f(z)$, so that $f(z+h)=w+k$.  Applying the
+lemma to $f$ at $z$ and to $g$ at $w$, we get functions $\varphi,\psi$,
+each continuous at $0$ and vanishing there, with
+\begin{align*}
+  k&=f'(z)\,h+h\,\varphi(h),\\
+  g(w+k)-g(w)&=g'(w)\,k+k\,\psi(k).
+\end{align*}
+The second identity holds for all small $k$, \emph{including $k=0$};
+this matters, because $k$ can vanish for $h\ne0$ (for instance if $f$ is
+constant).  Since $f$ is continuous at $z$, $k\to0$ as $h\to0$, and
+hence $\psi(k)\to\psi(0)=0$.  Also $k/h\to f'(z)$.  Therefore, for
+$h\ne0$,
+\begin{align*}
+ \frac{g(f(z+h))-g(f(z))}{h}
+ &=g'(w)\,\frac{k}{h}+\frac{k}{h}\,\psi(k)\\
+ &\longrightarrow g'(w)f'(z)+f'(z)\cdot0
+ = g'(f(z))\,f'(z).
+\end{align*}
+This is the desired formula.
+\end{proof}
+
+\begin{remark}
+The familiar ``proof'' from calculus, which writes
+\[
+  \frac{g(f(z+h))-g(f(z))}{h}
+  =\frac{g(w+k)-g(w)}{k}\cdot\frac{k}{h},
+\]
+is not valid as written: the first factor is undefined whenever $k=0$.
+The linear approximation lemma is precisely the device that avoids
+dividing by $k$.
+\end{remark}
+
+\section{Real Total Differentiability}
+
+Write $z=x+iy$ and
+\be
+  f(z)=u(x,y)+i\,v(x,y).
+\ee
+Identifying $\C$ with $\R^2$, the function $f$ corresponds to
+\be
+  F:U\subseteq\R^2\longrightarrow\R^2,
+  \qquad
+  F(x,y)=\begin{pmatrix}u(x,y)\\v(x,y)\end{pmatrix}.
+\ee
+
+\begin{definition}
+The map $F$ is \emph{totally differentiable} at
+$\mathbf a\in U$ if there is a real $2\times2$ matrix $D_{\mathbf a}$ such
+that
+\be
+  \lim_{\mathbf h\to\mathbf0}
+  \frac{\|F(\mathbf a+\mathbf h)-F(\mathbf a)-D_{\mathbf a}\mathbf h\|}
+       {\|\mathbf h\|}=0.
+\ee
+The matrix $D_{\mathbf a}$ is unique and is called the derivative, or
+Jacobian matrix, of $F$ at $\mathbf a$.
+\end{definition}
+
+If $F$ is totally differentiable at $\mathbf a$, then taking
+$\mathbf h=t\mathbf e_1$ and $\mathbf h=t\mathbf e_2$ with $t\to0$ shows
+that the first partial derivatives of $u$ and $v$ exist at $\mathbf a$
+and that the derivative matrix is necessarily
+\be
+  D_{\mathbf a}=J_F(\mathbf a)
+  =\begin{pmatrix}
+      u_x&u_y\\
+      v_x&v_y
+    \end{pmatrix}_{\mathbf a}.
+\ee
+More generally, the directional derivative of $F$ at $\mathbf a$ in the
+direction $\mathbf h$ is then $D_{\mathbf a}\mathbf h$.  The converse
+fails: the existence of all directional derivatives at $\mathbf a$
+does not by itself imply total differentiability at $\mathbf a$.
+
+\begin{exercise}
+Let $F:\R^2\to\R^2$ be given by $F(0,0)=(0,0)$ and
+\[
+  F(x,y)=\Bigl(\frac{xy^2}{x^2+y^4},\,0\Bigr)
+  \qquad\text{for }(x,y)\ne(0,0).
+\]
+Show that every directional derivative of $F$ at the origin exists
+(and that $J_F(0,0)$ is the zero matrix), but that $F$ is not even
+continuous at the origin.  (Consider the curve $x=y^2$.)
+\end{exercise}
+
+\begin{remark}
+A standard criterion from real analysis says that if the first partial
+derivatives of $u$ and $v$ exist in a neighbourhood of $\mathbf a$ and
+are continuous at $\mathbf a$, then $F$ is totally differentiable at
+$\mathbf a$.
+\end{remark}
+
+\section{Relation with Real Analysis}\label{sec:CR}
+
+Complex differentiability is real total differentiability with an extra
+compatibility condition.  In the next lecture we will prove the following
+precise statement.
+
+\begin{theorem}\label{thm:CR}
+Let $f=u+iv$ and let $F=(u,v)$.  Then $f$ is complex differentiable at
+$z=x+iy$ if and only if $F$ is totally differentiable at $(x,y)$ and
+\be
+  \boxed{
+    u_x=v_y,
+    \qquad
+    u_y=-v_x
+  }
+\ee
+hold at $(x,y)$.  These are the \emph{Cauchy--Riemann equations}.  In
+that case
+\be
+  f'(z)=u_x+i\,v_x=v_y-i\,u_y .
+\ee
+\end{theorem}
+
+\begin{remark}[What the Cauchy--Riemann equations mean]
+The Cauchy--Riemann equations say exactly that the Jacobian matrix has
+the special form
+\be
+  J_F=\begin{pmatrix} a&-b\\ b&a\end{pmatrix},
+  \qquad a=u_x,\quad b=v_x .
+\ee
+Under the identification $\C\cong\R^2$, multiplication by the complex
+number $a+ib$ is the real-linear map with precisely this matrix.  So
+Theorem~\ref{thm:CR} can be summarized as follows: \emph{$f$ is complex
+differentiable at $z$ if and only if $F$ is totally differentiable at
+$z$ and its derivative $D_z$ is not merely $\R$-linear but
+$\C$-linear}, namely multiplication by $f'(z)$.  Geometrically, a
+matrix of the form above with $(a,b)\ne(0,0)$ is a rotation composed
+with a scaling by $\sqrt{a^2+b^2}=|f'(z)|$.  This is the source of the
+angle-preserving (``conformal'') behaviour of holomorphic maps that we
+will study later.
+\end{remark}
+
+\begin{exercise}
+Using the partial derivatives computed in Lecture~2, check that
+$f(z)=z^2$ satisfies the Cauchy--Riemann equations at every point and
+that $f(z)=\overline z$ satisfies them nowhere.  Then compute $u,v$ for
+$f(z)=|z|^2$ and show that the equations hold only at $z=0$.  Compare with the first section of
+this lecture, and, for $z^2$, verify that
+$u_x+i\,v_x$ agrees with the derivative $2z$ from
+Corollary~\ref{cor:poly}.
+\end{exercise}
+
+\end{document}

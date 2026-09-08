@@ -1,0 +1,307 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{tocloft}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{courseblue}{HTML}{1F4E79}
+\definecolor{lightblue}{HTML}{EAF2F8}
+\definecolor{lightgreen}{HTML}{EAF7EA}
+\definecolor{lightpink}{HTML}{FCE8EF}
+\definecolor{darkgray}{HTML}{333333}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\setlist[itemize]{topsep=0.25em,itemsep=0.15em}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\tcolorboxenvironment{definition}{
+  enhanced,
+  colback=lightgreen,
+  colframe=ForestGreen,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{exercise}{
+  enhanced,
+  colback=lightpink,
+  colframe=WildStrawberry,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\numberwithin{equation}{section}
+
+\newcommand{\be}{\begin{eqnarray}}
+\newcommand{\ee}{\end{eqnarray}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{center}
+  \colorbox{lightblue}{%
+    \begin{minipage}{0.94\textwidth}
+      \vspace{0.55em}
+      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr}
+        {\color{courseblue}\bfseries\LARGE Lecture 4} &
+        {\color{courseblue}\bfseries\LARGE MATH 411}\\[0.35em]
+        \textbf{Fall 2026} & \textbf{Date: Sep 11, 2026}\\
+        & \textbf{Instructor: Manish Patnaik}
+      \end{tabular*}
+      \vspace{0.45em}
+    \end{minipage}}
+\end{center}
+
+\tableofcontents
+\vspace{0.45em}
+
+\section{Review}
+
+Let $U\subseteq\C$ be open and let $f:U\to\C$.  The function $f$ is
+complex differentiable at $w\in U$ when
+\be
+  f'(w)=\lim_{h\to0}\frac{f(w+h)-f(w)}{h}
+\ee
+exists.  Equivalently, there is a function $\sigma$, defined near $0$,
+such that
+\be
+  f(w+h)-f(w)=f'(w)h+\sigma(h)h,
+  \qquad
+  \lim_{h\to0}\sigma(h)=0.
+\ee
+
+Now write $w=x+iy$ and
+\be
+  f(w)=u(x,y)+i\,v(x,y),
+\ee
+and identify $f$ with the real map
+\be
+  F(x,y)=\begin{pmatrix}u(x,y)\\v(x,y)\end{pmatrix}.
+\ee
+The map $F$ is totally differentiable at $\mathbf w=(x,y)$ if there is a
+real matrix $D_{\mathbf w}$ such that
+\be
+  \lim_{\mathbf h\to\mathbf0}
+  \frac{\|F(\mathbf w+\mathbf h)-F(\mathbf w)
+  -D_{\mathbf w}\mathbf h\|}{\|\mathbf h\|}=0.
+\ee
+When the first partial derivatives exist, the matrix must be
+\be
+  D_{\mathbf w}=J_F(\mathbf w)
+  =\begin{pmatrix}u_x&u_y\\v_x&v_y\end{pmatrix}_{\mathbf w}.
+\ee
+A standard sufficient condition for total differentiability is that all
+four first partial derivatives exist in a neighbourhood of $\mathbf w$
+and are continuous at $\mathbf w$.
+
+\section{The Cauchy--Riemann Criterion}
+
+It is not enough for $F$ merely to be totally differentiable.  Its real
+derivative must also represent multiplication by a complex number.
+
+\begin{theorem}[Cauchy--Riemann criterion]
+Let $f=u+iv$ and $F=(u,v)$.  The function $f$ is complex differentiable at
+$w=x+iy$ if and only if
+\begin{enumerate}[label=\textup{(\roman*)}]
+  \item $F$ is totally differentiable at $(x,y)$, and
+  \item the Cauchy--Riemann equations hold at $(x,y)$:
+  \be
+    \boxed{u_x=v_y,\qquad u_y=-v_x}.
+  \ee
+\end{enumerate}
+In this case
+\be
+  f'(w)=u_x+i v_x=v_y-i u_y.
+\ee
+\end{theorem}
+
+\begin{proof}
+Suppose first that $f$ is complex differentiable at $w$.  Write
+\be
+  f(w+h)-f(w)=\alpha h+\sigma(h)h,
+  \qquad \sigma(h)\longrightarrow0,
+\ee
+where $\alpha=f'(w)=a+ib$.  If $h=r+is$, multiplication by $\alpha$ is
+the real linear map
+\be
+  \begin{pmatrix}r\\s\end{pmatrix}
+  \longmapsto
+  \begin{pmatrix}a&-b\\b&a\end{pmatrix}
+  \begin{pmatrix}r\\s\end{pmatrix}.
+\ee
+Moreover,
+\be
+  \frac{|\sigma(h)h|}{|h|}=|\sigma(h)|\longrightarrow0.
+\ee
+Taking real and imaginary parts therefore shows that $F$ is totally
+differentiable, with
+\be
+  D_{\mathbf w}
+  =\begin{pmatrix}a&-b\\b&a\end{pmatrix}.
+\ee
+Comparing this with the Jacobian matrix gives
+\be
+  u_x=a=v_y,
+  \qquad
+  v_x=b=-u_y,
+\ee
+which are the Cauchy--Riemann equations.
+
+Conversely, suppose that $F$ is totally differentiable at $\mathbf w$ and
+that the Cauchy--Riemann equations hold there.  Put
+\be
+  a=u_x=v_y,
+  \qquad
+  b=v_x=-u_y.
+\ee
+Then
+\be
+  D_{\mathbf w}
+  =\begin{pmatrix}a&-b\\b&a\end{pmatrix},
+\ee
+which is precisely multiplication by $\alpha=a+ib$.  Total
+differentiability now gives
+\be
+  f(w+h)-f(w)=\alpha h+o(|h|).
+\ee
+Dividing by $h\ne0$ and taking the limit yields
+\be
+  \lim_{h\to0}\frac{f(w+h)-f(w)}{h}=\alpha.
+\ee
+Thus $f$ is complex differentiable at $w$, with
+$f'(w)=\alpha=u_x+i v_x$.
+\end{proof}
+
+The necessity of the Cauchy--Riemann equations can also be seen directly.
+Approaching along the horizontal direction gives
+\be
+  f'(w)=u_x+i v_x,
+\ee
+whereas approaching vertically, with an increment $ih$, gives
+\be
+  f'(w)=\frac{u_y+i v_y}{i}=v_y-i u_y.
+\ee
+Equality of these two expressions gives $u_x=v_y$ and $u_y=-v_x$.
+
+\section{Holomorphic and Entire Functions}
+
+\begin{definition}
+A function $f:U\to\C$ is \emph{holomorphic on $U$} if it is complex
+differentiable at every point of the open set $U$.  We denote the set of
+holomorphic functions on $U$ by $\mathcal H(U)$.
+
+A function holomorphic on all of $\C$ is called \emph{entire}.
+\end{definition}
+
+\begin{example}[The exponential function]
+Define
+\be
+  e^z=e^{x+iy}=e^x(\cos y+i\sin y).
+\ee
+Thus
+\be
+  u(x,y)=e^x\cos y,
+  \qquad
+  v(x,y)=e^x\sin y.
+\ee
+All first partial derivatives are continuous, and
+\begin{align*}
+  u_x&=e^x\cos y, & u_y&=-e^x\sin y,\\
+  v_x&=e^x\sin y, & v_y&=e^x\cos y.
+\end{align*}
+Hence the Cauchy--Riemann equations hold everywhere.  The exponential
+function is entire and
+\be
+  (e^z)'=e^z.
+\ee
+\end{example}
+
+\begin{example}[The Cauchy--Riemann equations alone are not sufficient]
+Define
+\be
+  f(z)=
+  \begin{cases}
+    \displaystyle\frac{z^5}{|z|^4},&z\ne0,\\[0.7em]
+    0,&z=0.
+  \end{cases}
+\ee
+Along the real and imaginary axes, $f(x)=x$ and $f(iy)=iy$.  Therefore
+the first partial derivatives at the origin satisfy
+\be
+  u_x(0,0)=v_y(0,0)=1,
+  \qquad
+  u_y(0,0)=v_x(0,0)=0.
+\ee
+Thus the Cauchy--Riemann equations hold at $0$.  Nevertheless, if
+$h=re^{i\theta}$, then
+\be
+  \frac{f(h)-f(0)}{h}
+  =\frac{h^4}{|h|^4}=e^{4i\theta},
+\ee
+which depends on the direction of approach.  Hence $f$ is not complex
+differentiable at $0$.  The missing hypothesis is total differentiability
+of the associated real map.
+\end{example}
+
+\section{Polar Form of the Cauchy--Riemann Equations}
+
+Suppose $z=re^{i\theta}$ with $r>0$, and write
+\be
+  f(z)=u(r,\theta)+i\,v(r,\theta).
+\ee
+Using
+\be
+  r_x=\cos\theta,
+  \quad r_y=\sin\theta,
+  \quad \theta_x=-\frac{\sin\theta}{r},
+  \quad \theta_y=\frac{\cos\theta}{r},
+\ee
+the chain rule converts the Cartesian Cauchy--Riemann equations into
+\be
+  \boxed{
+    u_r=\frac1r v_\theta,
+    \qquad
+    v_r=-\frac1r u_\theta
+  }.
+\ee
+
+\begin{exercise}
+Derive the polar Cauchy--Riemann equations from the Cartesian equations.
+Then verify them directly for
+\be
+  f(z)=z^n
+  =r^n\cos(n\theta)+i\,r^n\sin(n\theta).
+\ee
+\end{exercise}
+
+\end{document}

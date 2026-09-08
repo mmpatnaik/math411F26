@@ -11,6 +11,9 @@
 # The site sorts by date and shows the newest first, so old announcements
 # stay on the page as a running log.
 
+## 2026-09-08
+Lecture 3 notes have been posted.
+
 ## 2026-09-02
 Welcome to MATH 411! Lecture notes will be posted here after each class,
 and problem sets appear under **Problem sets** as the term goes on. Note that problem sets are not to be turned in.
