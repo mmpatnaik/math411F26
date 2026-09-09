@@ -337,47 +337,119 @@ are continuous at $\mathbf a$, then $F$ is totally differentiable at
 $\mathbf a$.
 \end{remark}
 
-\section{Relation with Real Analysis}\label{sec:CR}
+
+\section{The Cauchy--Riemann Criterion}
 
 Complex differentiability is real total differentiability with an extra
-compatibility condition.  In the next lecture we will prove the following
-precise statement.
+compatibility condition.
+
+
 
 \begin{theorem}\label{thm:CR}
-Let $f=u+iv$ and let $F=(u,v)$.  Then $f$ is complex differentiable at
-$z=x+iy$ if and only if $F$ is totally differentiable at $(x,y)$ and
-\be
-  \boxed{
-    u_x=v_y,
-    \qquad
-    u_y=-v_x
-  }
-\ee
-hold at $(x,y)$.  These are the \emph{Cauchy--Riemann equations}.  In
-that case
-\be
-  f'(z)=u_x+i\,v_x=v_y-i\,u_y .
-\ee
+	Let $f=u+iv$ and let $F=(u,v)$.  Then $f$ is complex differentiable at
+	$z=x+iy$ if and only if $F$ is totally differentiable at $(x,y)$ and
+	\be
+	\boxed{
+		u_x=v_y,
+		\qquad
+		u_y=-v_x
+	}
+	\ee
+	hold at $(x,y)$.  These are the \emph{Cauchy--Riemann equations}.  In
+	that case
+	\be
+	f'(z)=u_x+i\,v_x=v_y-i\,u_y .
+	\ee
 \end{theorem}
 
+
+
 \begin{remark}[What the Cauchy--Riemann equations mean]
-The Cauchy--Riemann equations say exactly that the Jacobian matrix has
-the special form
-\be
-  J_F=\begin{pmatrix} a&-b\\ b&a\end{pmatrix},
-  \qquad a=u_x,\quad b=v_x .
-\ee
-Under the identification $\C\cong\R^2$, multiplication by the complex
-number $a+ib$ is the real-linear map with precisely this matrix.  So
-Theorem~\ref{thm:CR} can be summarized as follows: \emph{$f$ is complex
-differentiable at $z$ if and only if $F$ is totally differentiable at
-$z$ and its derivative $D_z$ is not merely $\R$-linear but
-$\C$-linear}, namely multiplication by $f'(z)$.  Geometrically, a
-matrix of the form above with $(a,b)\ne(0,0)$ is a rotation composed
-with a scaling by $\sqrt{a^2+b^2}=|f'(z)|$.  This is the source of the
-angle-preserving (``conformal'') behaviour of holomorphic maps that we
-will study later.
+	The Cauchy--Riemann equations say exactly that the Jacobian matrix has
+	the special form
+	\be
+	J_F=\begin{pmatrix} a&-b\\ b&a\end{pmatrix},
+	\qquad a=u_x,\quad b=v_x .
+	\ee
+	Under the identification $\C\cong\R^2$, multiplication by the complex
+	number $a+ib$ is the real-linear map with precisely this matrix. So
+	Theorem~\ref{thm:CR} can be summarized as follows: \emph{$f$ is complex
+		differentiable at $z$ if and only if $F$ is totally differentiable at
+		$z$ and its derivative $D_z$ is not merely $\R$-linear but
+		$\C$-linear}, namely multiplication by $f'(z)$.  
 \end{remark}
+
+%\begin{proof}
+%	Suppose first that $f$ is complex differentiable at $w$.  Write
+%	\be
+%	f(w+h)-f(w)=\alpha h+\sigma(h)h,
+%	\qquad \sigma(h)\longrightarrow0,
+%	\ee
+%	where $\alpha=f'(w)=a+ib$.  If $h=r+is$, multiplication by $\alpha$ is
+%	the real linear map
+%	\be
+%	\begin{pmatrix}r\\s\end{pmatrix}
+%	\longmapsto
+%	\begin{pmatrix}a&-b\\b&a\end{pmatrix}
+%	\begin{pmatrix}r\\s\end{pmatrix}.
+%	\ee
+%	Moreover,
+%	\be
+%	\frac{|\sigma(h)h|}{|h|}=|\sigma(h)|\longrightarrow0.
+%	\ee
+%	Taking real and imaginary parts therefore shows that $F$ is totally
+%	differentiable, with
+%	\be
+%	D_{\mathbf w}
+%	=\begin{pmatrix}a&-b\\b&a\end{pmatrix}.
+%	\ee
+%	Comparing this with the Jacobian matrix gives
+%	\be
+%	u_x=a=v_y,
+%	\qquad
+%	v_x=b=-u_y,
+%	\ee
+%	which are the Cauchy--Riemann equations.
+%	
+%	Conversely, suppose that $F$ is totally differentiable at $\mathbf w$ and
+%	that the Cauchy--Riemann equations hold there.  Put
+%	\be
+%	a=u_x=v_y,
+%	\qquad
+%	b=v_x=-u_y.
+%	\ee
+%	Then
+%	\be
+%	D_{\mathbf w}
+%	=\begin{pmatrix}a&-b\\b&a\end{pmatrix},
+%	\ee
+%	which is precisely multiplication by $\alpha=a+ib$.  Total
+%	differentiability now gives
+%	\be
+%	f(w+h)-f(w)=\alpha h+o(|h|).
+%	\ee
+%	Dividing by $h\ne0$ and taking the limit yields
+%	\be
+%	\lim_{h\to0}\frac{f(w+h)-f(w)}{h}=\alpha.
+%	\ee
+%	Thus $f$ is complex differentiable at $w$, with
+%	$f'(w)=\alpha=u_x+i v_x$.
+%\end{proof}
+%
+%The necessity of the Cauchy--Riemann equations can also be seen directly.
+%Approaching along the horizontal direction gives
+%\be
+%f'(w)=u_x+i v_x,
+%\ee
+%whereas approaching vertically, with an increment $ih$, gives
+%\be
+%f'(w)=\frac{u_y+i v_y}{i}=v_y-i u_y.
+%\ee
+%Equality of these two expressions gives $u_x=v_y$ and $u_y=-v_x$.
+%
+%
+
+
 
 \begin{exercise}
 Using the partial derivatives computed in Lecture~2, check that

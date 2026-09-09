@@ -1,100 +1,31 @@
 \documentclass[11pt]{article}
-
 \usepackage[margin=1in]{geometry}
 \usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage{microtype}
-\usepackage{amsmath,amssymb,amsthm,mathtools}
-\usepackage[dvipsnames]{xcolor}
-\usepackage[most]{tcolorbox}
+\usepackage{lmodern,microtype,amsmath,amssymb,amsthm}
 \usepackage{tikz}
-\usepackage{enumitem}
-\usepackage{tocloft}
 \usepackage[hidelinks]{hyperref}
-
-\definecolor{courseblue}{HTML}{1F4E79}
-\definecolor{lightblue}{HTML}{EAF2F8}
-\definecolor{lightgreen}{HTML}{EAF7EA}
-\definecolor{lightpink}{HTML}{FCE8EF}
-\definecolor{darkgray}{HTML}{333333}
-
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.65em}
-\setlist[itemize]{topsep=0.25em,itemsep=0.15em}
-\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
-\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
-
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{lemma}[theorem]{Lemma}
-\theoremstyle{definition}
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{example}[theorem]{Example}
-\newtheorem{exercise}[theorem]{Exercise}
-\theoremstyle{remark}
-\newtheorem*{remark}{Remark}
-
-\tcolorboxenvironment{definition}{
-  enhanced,
-  colback=lightgreen,
-  colframe=ForestGreen,
-  boxrule=0.7pt,
-  arc=2pt,
-  left=6pt,
-  right=6pt,
-  top=5pt,
-  bottom=5pt
-}
-
-\tcolorboxenvironment{exercise}{
-  enhanced,
-  colback=lightpink,
-  colframe=WildStrawberry,
-  boxrule=0.7pt,
-  arc=2pt,
-  left=6pt,
-  right=6pt,
-  top=5pt,
-  bottom=5pt
-}
-
-\numberwithin{equation}{section}
-
-\newcommand{\be}{\begin{eqnarray}}
-\newcommand{\ee}{\end{eqnarray}}
-\newcommand{\C}{\mathbb{C}}
-\newcommand{\R}{\mathbb{R}}
-
+\setlength{\parskip}{0.6em}
+\newcommand{\C}{\mathbb C}
+\newcommand{\R}{\mathbb R}
 \newcommand{\ww}{\mathbf w}
 \newcommand{\hh}{\mathbf h}
 \DeclareMathOperator{\Real}{Re}
 \DeclareMathOperator{\Imag}{Im}
-\tcbset{breakable}
+\newtheorem*{theorem}{Theorem}
+\title{MATH 411 --- Lecture 4}
+\author{}
+\date{September 12 (date on the handwritten notes)}
 \begin{document}
-
-\begin{center}
-  \colorbox{lightblue}{%
-    \begin{minipage}{0.94\textwidth}
-      \vspace{0.55em}
-      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr}
-        {\color{courseblue}\bfseries\LARGE Lecture 4} &
-        {\color{courseblue}\bfseries\LARGE MATH 411}\\[0.35em]
-        \textbf{Fall 2026} & \textbf{Date: Sep 11, 2026}\\
-        & \textbf{Instructor: Manish Patnaik}
-      \end{tabular*}
-      \vspace{0.45em}
-    \end{minipage}}
-\end{center}
-
-\tableofcontents
-\vspace{0.45em}
-
-
+\maketitle
+\vspace{-2em}
+\textit{Transcribed from all seven handwritten pages, retaining the order and
+intermediate calculations. Abbreviations have been expanded. A correction to
+the real-analysis criterion is explicitly noted below; supplementary details
+completing arguments only stated in the handwriting are identified as such.}
 
 % Handwritten page 1.
-\section{Review: complex differentiability and total differentiability}
-\begin{definition}
+\section{Complex differentiability and total differentiability}
 Let $f:U\to\C$, where $U\subseteq\C$ is open. The function $f$ is
 \emph{complex differentiable at $w\in U$} if
 \[
@@ -108,11 +39,10 @@ neighbourhood of $0\in\C$ and a complex number $\xi\in\C$ such that
 \item $f(w+h)-f(w)-\xi h=\sigma(h)h$;
 \item $\displaystyle\lim_{h\to0}\sigma(h)=0$.
 \end{enumerate}
-The neighbourhood is chosen small enough that $w+h\in U$.
+The neighbourhood is chosen small enough that $w+h\in U$. The small sketch
+in the notes indicates that $\sigma$ is defined around the origin.
 In this formulation $\xi=f'(w)$.
-\end{definition}
 
-\begin{definition}
 Now let $F$ be a function on an open set $U\subseteq\R^2$, with
 \[
  F:U\to\R^2,\qquad
@@ -120,7 +50,7 @@ Now let $F$ be a function on an open set $U\subseteq\R^2$, with
  \begin{pmatrix}u(x,y)\\v(x,y)\end{pmatrix}.
 \]
 The function $F$ is said to be \emph{totally differentiable} at the point
-$\ww=\begin{pmatrix}x\\y\end{pmatrix}\in U$ if there exists a real $2\times2$ matrix
+$\ww=\begin{pmatrix}x\\y\end{pmatrix}$ if there exists a real matrix
 $D_{\ww}$ such that
 \[
  \lim_{\|\hh\|\to0}
@@ -128,7 +58,6 @@ $D_{\ww}$ such that
  =\begin{pmatrix}0\\0\end{pmatrix}.
 \]
 Here $\hh$ is a vector in $\R^2$, and $\|\hh\|$ is its Euclidean norm.
-\end{definition}
 
 % Handwritten page 2.
 \subsection*{Criterion from real analysis}
@@ -139,15 +68,15 @@ at $\ww$, and its derivative matrix is the Jacobian
  D_{\ww}=J_F(\ww)=
  \begin{pmatrix}u_x&u_y\\v_x&v_y\end{pmatrix}_{\ww}.
 \]
-Note that continuity of the partial derivatives is a sufficient condition, but it is not a necessary condition for total
-differentiability at a point. Total differentiability at $\ww$ does, however,
-imply that all first partial derivatives exist at $\ww$ and form the matrix
-$D_{\ww}$, even when those partial derivatives are not continuous there.
+\textit{Correction to the handwriting:} the notes put an
+``if and only if'' between total differentiability and the existence and
+continuity of the partial derivatives. Continuity of the partial derivatives
+is a sufficient condition, but it is not a necessary condition for total
+differentiability at a point.
 
-\section{The Cauchy--Riemann criterion}
+\section{The relation between the two notions of differentiability}
 What is the relation between total differentiability of $F$ and complex
-differentiability of $f$? Identify $\C$ with $\R^2$ via
-$x+iy\leftrightarrow(x,y)$, and let $U$ be open. Write
+differentiability of $f$? Write
 \[
  f:U\to\C,\qquad f(x+iy)=u(x,y)+iv(x,y),\qquad
  F(x,y)=\begin{pmatrix}u(x,y)\\v(x,y)\end{pmatrix}.
@@ -169,7 +98,17 @@ $\ww=\begin{pmatrix}x\\y\end{pmatrix}$ and
 at $(x,y)$. These are the \emph{Cauchy--Riemann equations}.
 \end{theorem}
 
-\section{Proof of the theorem}
+\subsection*{Notation: holomorphic and entire functions}
+If $f:U\to\C$ is complex differentiable at every point $w\in U$, we say
+that $f$ is \emph{holomorphic on $U$}. We write
+\[
+ \mathcal H(U)=\{\text{all holomorphic functions on }U\}.
+\]
+% Handwritten page 3.
+A function in $\mathcal H(\C)$, that is, a function holomorphic at every
+$z\in\C$, is called \emph{entire}.
+
+\section{Proof of the theorem: the forward implication}
 Suppose $f$ is complex differentiable at $w=x+iy$, and write
 $f(x+iy)=u(x,y)+iv(x,y)$. We want to show that
 \[
@@ -262,8 +201,7 @@ differentiability of $F$ at $\ww$.
 % Handwritten page 5.
 \subsection{Why do the Cauchy--Riemann equations hold?}
 We now verify that the components $u$ and $v$ of the associated real
-function satisfy the Cauchy--Riemann equations at the point under
-consideration. For this calculation, denote that same point by $z=x+iy$ and write
+function satisfy the Cauchy--Riemann equations. Write $z=x+iy$ and
 \[
  f(z)=u(x,y)+iv(x,y).
 \]
@@ -330,10 +268,13 @@ Equating real and imaginary parts gives
 \]
 This proves the forward implication: complex differentiability of $f$
 implies total differentiability of $F$ and the Cauchy--Riemann equations.
-The reverse implication is proved next.
+The handwritten notes now use the theorem as established. In particular,
+existence and continuity of the first partial derivatives, together with
+the Cauchy--Riemann equations, imply complex differentiability.
 
-\subsection*{The reverse implication}
-
+\subsection*{Supplementary completion: the reverse implication}
+\textit{The handwriting does not work out this direction. It is included
+here to complete the stated equivalence without leaving steps implicit.}
 Suppose $F$ is totally differentiable at $\ww$ and the Cauchy--Riemann
 equations hold there. Its derivative matrix is
 \[
@@ -347,7 +288,7 @@ Set $\alpha=a+ib$ and let
  =\begin{pmatrix}E_1(\hh)\\E_2(\hh)\end{pmatrix}.
 \]
 Total differentiability means $\|E(\hh)\|/\|\hh\|\to0$.
-For $h=r+is$ corresponding to $\hh=\begin{pmatrix}r \\ s \ \end{pmatrix} $, the matrix
+For $h=r+is$ corresponding to $\hh=(r,s)^{\mathsf T}$, the matrix
 calculation above gives
 \[
  f(w+h)-f(w)-\alpha h=E_1(\hh)+iE_2(\hh).
@@ -363,7 +304,7 @@ Thus $f'(w)$ exists and equals $\alpha=u_x+iv_x$.
 
 \section{Examples}
 \subsection{The exponential function is entire}
-Let $z=x+iy$. Use the theorem to prove that $e^z$ is entire. It is sufficient to
+Let $z=x+iy$. Use the theorem to prove that $e^z$ is entire. We must
 verify that the first partial derivatives exist and are continuous, and
 that $u$ and $v$ satisfy the Cauchy--Riemann equations.
 \begin{align*}
@@ -395,8 +336,8 @@ Hence the theorem shows that $e^z$ is entire. The derivative formula also gives
 
 % Handwritten page 7.
 \subsection{The Cauchy--Riemann equations alone do not suffice}
-Just because $u$ and $v$ satisfy the Cauchy--Riemann equations at a point
-does not mean that $f(z)=u(x,y)+iv(x,y)$ is complex differentiable there. For example, let
+Just because $u$ and $v$ satisfy the Cauchy--Riemann equations does not
+mean that $f(z)=u(x,y)+iv(x,y)$ is complex differentiable. For example, let
 \[
  f(z)=\begin{cases}
  \dfrac{z^5}{|z|^4},&z\ne0,\\[0.6em]
@@ -426,14 +367,14 @@ $u(0,0)=v(0,0)=0$. Consequently,
 \end{align*}
 Hence $u_x(0,0)=v_y(0,0)$ and $u_y(0,0)=-v_x(0,0)$.
 
-For $h\ne0$, the difference quotient is
+The handwritten difference-quotient calculation is
 \begin{align*}
- \frac{f(0+h)-f(0)}h
- &=\frac{f(h)}h\\
- &=\frac{h^5/|h|^4}{h}\\
- &=\frac{h^4}{|h|^4}.
+ \lim_{h\to0}\frac{f(0+h)-f(0)}h
+ &=\lim_{h\to0}\frac{f(h)}h\\
+ &=\lim_{h\to0}\frac{h^5/|h|^4}{h}\\
+ &=\lim_{h\to0}\frac{h^4}{|h|^4},
 \end{align*}
-Its limit as $h\to0$ does not exist. To see this explicitly, write
+which does not exist. To make that last assertion explicit, write
 $h=re^{i\theta}$, where $r>0$. Then
 \[
  \frac{h^4}{|h|^4}=\frac{r^4e^{4i\theta}}{r^4}=e^{4i\theta}.
@@ -444,43 +385,30 @@ Both paths approach the origin as $r\to0$, but give different limits.
 Therefore $f'(0)$ does not exist.
 
 \subsection{Polar form of the Cauchy--Riemann equations}
-Suppose $f(z)=u(x,y)+iv(x,y)$ is written in polar coordinates, with
-$z=re^{i\theta}$ and $r>0$. Define the real-valued functions
+Suppose $f$ is written in polar coordinates, with $z=re^{i\theta}$ and $r>0$:
 \[
- \widetilde u(r,\theta)=u(r\cos\theta,r\sin\theta),\qquad
- \widetilde v(r,\theta)=v(r\cos\theta,r\sin\theta).
+ f(r,\theta)=u(r,\theta)+iv(r,\theta).
 \]
-Then
+The Cauchy--Riemann equations take the form stated in the notes:
 \[
- f(re^{i\theta})=\widetilde u(r,\theta)+i\widetilde v(r,\theta).
+ \boxed{u_r=\frac1r v_\theta,\qquad
+ \frac1r u_\theta=-v_r.}
 \]
-Assume the Cartesian functions $u$ and $v$ are totally differentiable
-at the point in question, so that the chain rule applies. The
-Cauchy--Riemann equations take the polar form
-\[
- \boxed{\widetilde u_r=\frac1r\widetilde v_\theta,\qquad
- \frac1r\widetilde u_\theta=-\widetilde v_r.}
-\]
-The handwritten notes use $u$ and $v$ for both coordinate representations;
-the tildes here distinguish the polar functions from the Cartesian ones.
-
 \textit{Supplementary derivation of the displayed formula.}
 Since $x=r\cos\theta$ and $y=r\sin\theta$, the chain rule gives
 \begin{align*}
- \widetilde u_r&=u_x\cos\theta+u_y\sin\theta,\\
- \widetilde v_r&=v_x\cos\theta+v_y\sin\theta,\\
- \widetilde u_\theta&=-r u_x\sin\theta+r u_y\cos\theta,\\
- \widetilde v_\theta&=-r v_x\sin\theta+r v_y\cos\theta.
+ u_r&=u_x\cos\theta+u_y\sin\theta,\\
+ v_r&=v_x\cos\theta+v_y\sin\theta,\\
+ u_\theta&=-r u_x\sin\theta+r u_y\cos\theta,\\
+ v_\theta&=-r v_x\sin\theta+r v_y\cos\theta.
 \end{align*}
-Here the Cartesian partial derivatives on the right are evaluated at
-$(x,y)=(r\cos\theta,r\sin\theta)$.
 Substituting $v_x=-u_y$ and $v_y=u_x$ yields
 \begin{align*}
- \frac1r\widetilde v_\theta
+ \frac1r v_\theta
  &=-v_x\sin\theta+v_y\cos\theta\\
- &=u_y\sin\theta+u_x\cos\theta=\widetilde u_r,\\[0.3em]
- \frac1r\widetilde u_\theta
+ &=u_y\sin\theta+u_x\cos\theta=u_r,\\[0.3em]
+ \frac1r u_\theta
  &=-u_x\sin\theta+u_y\cos\theta\\
- &=-v_y\sin\theta-v_x\cos\theta=-\widetilde v_r.
+ &=-v_y\sin\theta-v_x\cos\theta=-v_r.
 \end{align*}
 \end{document}
