@@ -191,6 +191,43 @@ differentiability at a point. Total differentiability at $\ww$ does, however,
 imply that all first partial derivatives exist at $\ww$ and form the matrix
 $D_{\ww}$, even when those partial derivatives are not continuous there.
 
+\begin{example}[Total differentiability without continuous partial derivatives]
+Define
+\be
+ g(t)=\begin{cases}
+ t^2\sin(1/t),&t\ne0,\\
+ 0,&t=0,
+ \end{cases}
+ \qquad
+ F(x,y)=\begin{pmatrix}g(x)\\g(y)\end{pmatrix}.
+\ee
+Since $|g(t)|\le t^2$, for $\hh=(x,y)\ne(0,0)$ we have
+\be
+ \frac{\|F(x,y)-F(0,0)\|}{\sqrt{x^2+y^2}}
+ \le\frac{\sqrt{x^4+y^4}}{\sqrt{x^2+y^2}}
+ \le\sqrt{x^2+y^2}\longrightarrow0.
+\ee
+Thus $F$ is totally differentiable at the origin, with derivative matrix
+$D_{\mathbf 0}=0$.
+
+However, $g'(0)=\lim_{t\to0}t\sin(1/t)=0$, while for $t\ne0$,
+\be
+ g'(t)=2t\sin(1/t)-\cos(1/t).
+\ee
+Writing $F=(u,v)$, all four partial derivatives exist everywhere:
+\be
+ u_x(x,y)=g'(x),\qquad u_y(x,y)=0,\qquad
+ v_x(x,y)=0,\qquad v_y(x,y)=g'(y).
+\ee
+For $t_n=1/(2\pi n)$, $n\ge1$, we have $t_n\to0$ but
+$g'(t_n)=-1$. Hence $u_x(t_n,0)=-1$ does not tend to $u_x(0,0)=0$,
+and $v_y(0,t_n)=-1$ does not tend to $v_y(0,0)=0$.
+Thus $u_x$ and $v_y$ are not continuous at the origin, even though
+$F$ is totally differentiable there. This shows that the continuity
+hypothesis in Theorem~\ref{thm:total-differentiability-criterion}
+is sufficient but not necessary.
+\end{example}
+
 \section{The Cauchy--Riemann criterion}
 What is the relation between total differentiability of $F$ and complex
 differentiability of $f$? Identify $\C$ with $\R^2$ via
