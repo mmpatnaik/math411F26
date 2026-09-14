@@ -1,0 +1,383 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{tocloft}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{courseblue}{HTML}{1F4E79}
+\definecolor{lightblue}{HTML}{EAF2F8}
+\definecolor{lightgreen}{HTML}{EAF7EA}
+\definecolor{lightpink}{HTML}{FCE8EF}
+\definecolor{darkgray}{HTML}{333333}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\setlist[itemize]{topsep=0.25em,itemsep=0.15em}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{fact}{Fact}
+
+\tcolorboxenvironment{definition}{
+  enhanced,
+  colback=lightgreen,
+  colframe=ForestGreen,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{exercise}{
+  enhanced,
+  colback=lightpink,
+  colframe=WildStrawberry,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\numberwithin{equation}{section}
+
+\newcommand{\be}{\begin{eqnarray}}
+\newcommand{\ee}{\end{eqnarray}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+
+\DeclareMathOperator{\Hol}{\mathcal{H}\mathrm{ol}}
+\DeclareMathOperator{\Real}{Re}
+\DeclareMathOperator{\Imag}{Im}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\CT}{\C[[T]]}
+\newcommand{\CLT}{\C((T))}
+\tcbset{breakable}
+\begin{document}
+
+\begin{center}
+  \colorbox{lightblue}{%
+    \begin{minipage}{0.94\textwidth}
+      \vspace{0.55em}
+      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr}
+        {\color{courseblue}\bfseries\LARGE Lecture 7} &
+        {\color{courseblue}\bfseries\LARGE MATH 411}\\[0.35em]
+        \textbf{Fall 2026} & \textbf{Date: Sep 18, 2026}\\
+        & \textbf{Instructor: Manish Patnaik}
+      \end{tabular*}
+      \vspace{0.45em}
+    \end{minipage}}
+\end{center}
+
+\setcounter{tocdepth}{1}
+\tableofcontents
+\vspace{0.45em}
+
+% Handwritten page 1.
+\section{Last time}
+\begin{itemize}
+\item Convergence of a sequence $\{z_n\}$, $z_n\in\C$, and of series
+$\sum a_n$, $\sum|a_n|$.
+\item For $S\subseteq\C$ and $f:S\to\C$ bounded, the sup norm
+\be
+ \|f\|_S=\sup_{z\in S}|f(z)|,
+\ee
+and $f_n$ a sequence of functions on $S$.
+\end{itemize}
+
+What does $f_n\to f$ mean?
+\begin{itemize}
+\item \emph{Pointwise convergence}: for any $z\in S$,
+$f_n(z)\to f(z)$, i.e.\ $|f(z)-f_n(z)|\to0$ as $n\to\infty$.
+\item \emph{Uniform convergence}: $\|f-f_n\|_S\to0$ as $n\to\infty$.
+\end{itemize}
+
+\section{Uniform limits of continuous functions}
+\begin{theorem}
+\label{thm:unif-cts}
+Suppose $\{f_n\}$ are continuous functions on $S$ and suppose $f_n\to f$
+uniformly. Then $f$ is also continuous.
+\end{theorem}
+
+% Handwritten page 2.
+\begin{proof}
+Fix $z\in S$. We want to show $f$ is continuous at $z$, i.e.
+\be
+ \lim_{w\to z}f(w)=f(z):
+\ee
+given $\epsilon>0$, there exists $\delta>0$ such that if $|w-z|<\delta$ then
+$|f(z)-f(w)|<\epsilon$.
+
+\textbf{Step 1.} Given $\epsilon/3$, by uniformity there exists $n_0$ such
+that if $n\ge n_0$ then
+\be
+ \|f-f_n\|_S<\frac\epsilon3.
+\ee
+
+\textbf{Step 2.} Since each $f_n$ is continuous, pick some $n\ge n_0$;
+continuity of $f_n$ at $z$ means there exists $\delta>0$ such that if
+$|z-w|<\delta$ then
+\be
+ |f_n(z)-f_n(w)|<\frac\epsilon3.
+\ee
+
+\textbf{Step 3.} Now for that same $\delta$, we know that whenever
+$|z-w|<\delta$,
+\begin{align*}
+ |f(z)-f(w)|
+ &\le\underbrace{|f(z)-f_n(z)|}_{\le\ \epsilon/3\ \text{(uniformity)}}
+ +\underbrace{|f_n(z)-f_n(w)|}_{<\ \epsilon/3\ \text{($f_n$ continuous)}}
+ +\underbrace{|f_n(w)-f(w)|}_{\le\ \epsilon/3\ \text{(uniformity)}}\\
+ &<\epsilon.
+\end{align*}
+Hence $f$ is continuous at $z$, and since $z\in S$ was arbitrary, $f$ is
+continuous on $S$.
+\end{proof}
+
+% Handwritten page 3.
+\section{Uniformly Cauchy sequences}
+Another useful notion: $\{f_n\}$, a sequence of functions, is
+\emph{uniformly Cauchy on $S$} if given $\epsilon>0$ there exists $n_0$
+such that if $n,m\ge n_0$ then
+\be
+ \|f_n-f_m\|_S<\epsilon.
+\ee
+
+\begin{lemma}
+\label{lem:unif-cauchy}
+Let $\{f_n\}$ be uniformly Cauchy on $S$. Then
+\begin{enumerate}
+\item[(a)] $\displaystyle f(z)=\lim_{n\to\infty}f_n(z)$ exists for each
+$z\in S$;
+\item[(b)] $f_n\to f$ uniformly.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+\textbf{(a)} Use that, for fixed $z\in S$,
+\be
+ |f_n(z)-f_m(z)|\le\|f_n-f_m\|_S.
+\ee
+So $\{f_n(z)\}$ is a Cauchy sequence of complex numbers, and hence
+converges. Call the limit $f(z)$.
+
+\textbf{(b)} Recall that $f_n\to f$ uniformly means: given $\epsilon>0$
+there exists $n_0$ such that if $n\ge n_0$ then $\|f_n-f\|_S<\epsilon$.
+
+Since $\{f_n\}$ is uniformly Cauchy, there exists $N=N(S)$ such that
+\be
+ \|f_n-f_m\|_S<\frac\epsilon2\qquad\text{if }n,m\ge N.
+\ee
+% Handwritten page 4.
+Now fix $z\in S$ and pick any $n\ge N$. By part (a), $f_m(z)\to f(z)$, so we
+may choose $m\ge N$, \emph{depending on $z$}, with
+\be
+ |f(z)-f_m(z)|<\frac\epsilon2.
+\ee
+Then for any such $m$,
+\be
+ |f(z)-f_n(z)|\le\underbrace{|f(z)-f_m(z)|}_{<\ \epsilon/2}
+ +\underbrace{|f_m(z)-f_n(z)|}_{<\ \epsilon/2}<\epsilon.
+\ee
+
+\emph{The point:} for our $z\in S$, we found an $N$ such that
+\be
+ |f(z)-f_n(z)|<\epsilon\qquad\text{for all }n\ge N,
+\ee
+and $N$ \emph{does not depend on the choice of $z$} --- only the auxiliary
+index $m$ did. Hence $\|f-f_n\|_S\le\epsilon$ for all $n\ge N$, which is
+uniform convergence.
+\end{proof}
+
+% Handwritten page 5.
+\section{Series of functions}
+\subsection*{Applications}
+What we are interested in is convergence of power series of the form
+\be
+ \sum a_nz^n,\qquad a_n\in\C,
+\ee
+whose partial sums
+\be
+ S_n=\sum_{j=0}^{n}a_jz^j
+\ee
+are functions on $S$; we are interested in when they converge to a function
+$f$ on $S$.
+
+\begin{definition}[Notation]
+Given functions $f_j$ on $S$, we write
+\be
+ \sum f_j\longrightarrow f
+ \qquad\text{\emph{pointwise}, \emph{uniformly}, or \emph{absolutely},}
+\ee
+to mean that the partial sums
+\be
+ S_d=\sum_{j=1}^{d}f_j\longrightarrow\sum_{j=1}^{\infty}f_j
+\ee
+converge pointwise, uniformly, etc. Here \emph{absolutely} means that
+$\sum|f_j|$ converges.
+\end{definition}
+
+% Handwritten page 6.
+\begin{theorem}[Comparison test for series of functions]
+\label{thm:M-test}
+Let $\{c_n\}$ be a sequence of positive real numbers such that
+$\displaystyle\sum_{n=1}^{\infty}c_n$ converges. Given $\{f_n\}$, a
+sequence of functions on $S$ such that
+\be
+ \|f_n\|_S\le c_n,
+\ee
+then $\sum f_n$ converges uniformly and absolutely on $S$. If moreover the
+$f_n$ are continuous, then the limit is continuous.
+\end{theorem}
+
+\begin{proof}
+For $m<n$ the partial sums satisfy
+\be
+ \|S_n-S_m\|_S=\Bigl\|\sum_{j=m+1}^{n}f_j\Bigr\|_S
+ \le\sum_{j=m+1}^{n}\|f_j\|_S\le\sum_{j=m+1}^{n}c_j,
+\ee
+which is small for $m,n$ large because $\sum c_n$ converges (its partial
+sums are Cauchy). So $\{S_n\}$ is uniformly Cauchy, and
+Lemma~\ref{lem:unif-cauchy} gives a limit $f$ with $S_n\to f$ uniformly.
+The same estimate applied to $\sum|f_j|$, using $\||f_j|\|_S=\|f_j\|_S\le c_j$,
+gives absolute convergence. Continuity of the limit is
+Theorem~\ref{thm:unif-cts}.
+\end{proof}
+
+\begin{theorem}
+\label{thm:power-series-disc}
+Let $\{a_n\}$ be a sequence of complex numbers and let $r>0$ be a real,
+positive number. If
+\be
+ \sum|a_n|r^n\quad\text{converges,}
+\ee
+then $\sum a_nz^n$ converges absolutely and uniformly on
+\be
+ D(0,r)=\{z\in\C:|z|<r\}
+\ee
+to a continuous function.
+\end{theorem}
+
+% Handwritten page 7.
+\begin{proof}
+Put $f_n=a_nz^n$ on $D(0,r)$. Then
+\be
+ \|f_n\|_{D(0,r)}\le|a_n|r^n\qquad\text{on }D(0,r).
+\ee
+Use the comparison test (Theorem~\ref{thm:M-test}) with $c_n=|a_n|r^n$:
+it follows that $\sum a_nz^n$ converges uniformly and absolutely on
+$D(0,r)$, and the limit is continuous since each $f_n$ is.
+\end{proof}
+
+\begin{example}
+Consider
+\be
+ \sum_{n=0}^{\infty}\frac{z^n}{n!},
+ \qquad\text{so } a_nz^n=\frac{z^n}{n!},\quad a_n=\frac1{n!}.
+\ee
+\textbf{Claim.} $\sum a_nr^n$ converges for all $r>0$, i.e.\ $e^r$ exists.
+
+\emph{Proof:} compare to a geometric series. Fix an integer $N\ge2r$. For
+$n>N$,
+\be
+ \frac{r^n}{n!}=\frac{r^N}{N!}\cdot\frac{r^{n-N}}{(N+1)(N+2)\cdots n}
+ \le\frac{r^N}{N!}\left(\frac rN\right)^{n-N}
+ \le\frac{r^N}{N!}\left(\frac12\right)^{n-N},
+\ee
+and $\sum(1/2)^{n-N}$ converges. So by the comparison test for series of
+complex numbers (Lecture 6) the series converges.
+
+Therefore, by Theorem~\ref{thm:power-series-disc},
+\be
+ \boxed{\ e^z:=\sum_{n=0}^{\infty}\frac{z^n}{n!}\ }
+\ee
+exists for all $z\in\C$, and defines a continuous function on $\C$.
+\end{example}
+
+% Handwritten page 8.
+\section{Radius of convergence}
+Let $f(T)\in\CT$, say
+\be
+ f(T)=\sum a_nT^n.
+\ee
+
+\begin{theorem}[Radius of convergence]
+\label{thm:radius}
+Given any $f(T)\in\CT$, there exists $r$ with $0\le r\le\infty$ such that
+\begin{itemize}
+\item $\sum a_nz^n$ converges absolutely for $|z|<r$, and uniformly on
+$D(0,s)$ for every $s<r$;
+\item $\sum a_nz^n$ diverges for all $|z|>r$.
+\end{itemize}
+\end{theorem}
+
+\begin{proof}
+Assume $f(T)$ converges for some $z\in\C$ but not for all $z\in\C$ (the
+two extreme cases give $r=0$ and $r=\infty$). Let
+\be
+ r=\text{l.u.b.\ of the set of all }s>0\text{ such that }
+ \sum|a_n|s^n\text{ converges.}
+\ee
+We know $0<r<\infty$.
+
+If $z\in\C$ with $|z|>r$, then $\sum|a_n|\,|z|^n$ diverges, by the
+definition of the least upper bound. So $\sum a_nz^n$ cannot converge
+absolutely for this $|z|$.
+% Handwritten page 9.
+
+If $|z|<r$, then by definition of the least upper bound there is $s$ with
+$|z|<s\le r$ such that $\sum|a_n|s^n$ converges. But then, by
+Theorem~\ref{thm:power-series-disc},
+\be
+ \sum a_nz^n\quad\text{converges uniformly and absolutely on }D(0,s),
+\ee
+and in particular at our $z$. Since every $z$ with $|z|<r$ lies in such a
+disc, $\sum a_nz^n$ converges absolutely on $D(0,r)$ and uniformly on each
+$D(0,s)$ with $s<r$.
+\end{proof}
+
+\begin{remark}[Abel's lemma: divergence, not just non-absolute convergence]
+The argument above shows directly that $\sum a_nz^n$ fails to converge
+\emph{absolutely} when $|z|>r$. In fact the series genuinely diverges there.
+Indeed, suppose $\sum a_nw^n$ converged for some $w$. Then its terms are
+bounded, say $|a_nw^n|\le M$ for all $n$. For any $z$ with $|z|<|w|$,
+\be
+ \sum|a_n|\,|z|^n
+ =\sum|a_nw^n|\left(\frac{|z|}{|w|}\right)^n
+ \le M\sum\left(\frac{|z|}{|w|}\right)^n<\infty,
+\ee
+a convergent geometric series. Taking $z=s$ real shows that
+$\sum|a_n|s^n$ converges for every $s<|w|$, so $r\ge s$ for all such $s$,
+i.e.\ $|w|\le r$. Contrapositively, if $|w|>r$ then $\sum a_nw^n$ diverges.
+\end{remark}
+
+\begin{remark}
+Uniform convergence on all of $D(0,r)$ can fail, which is why the statement
+is made on the discs $D(0,s)$, $s<r$. For instance $\sum z^n$ has $r=1$, and
+the convergence is uniform on each $D(0,s)$ with $s<1$, but not on $D(0,1)$.
+\end{remark}
+
+\end{document}
