@@ -16,6 +16,8 @@
 \definecolor{lightblue}{HTML}{EAF2F8}
 \definecolor{lightgreen}{HTML}{EAF7EA}
 \definecolor{lightpink}{HTML}{FCE8EF}
+\definecolor{lightyellow}{HTML}{FFF8D6}
+\definecolor{warningyellow}{HTML}{D6A000}
 \definecolor{darkgray}{HTML}{333333}
 
 \setlength{\parindent}{0pt}
@@ -36,6 +38,7 @@
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
 \newtheorem*{fact}{Fact}
+\newtheorem*{warning}{Warning}
 
 \tcolorboxenvironment{definition}{
   enhanced,
@@ -53,6 +56,18 @@
   enhanced,
   colback=lightpink,
   colframe=WildStrawberry,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{warning}{
+  enhanced,
+  colback=lightyellow,
+  colframe=warningyellow,
   boxrule=0.7pt,
   arc=2pt,
   left=6pt,
@@ -123,7 +138,8 @@ The main theorem of this part of the course is that these two classes
 coincide: $\Hol(U)=\A(U)$.
 
 \begin{fact}[``proved'' last time using Green's theorem]
-Let $\gamma$ be a closed curve in $U$ and let $f\in\Hol(U)$. Then
+Let $\gamma\colon[a,b]\to U$ be a piecewise smooth, simple closed curve whose
+interior lies in $U$, and let $f\in\Hol(U)$. Then
 \be
  \int_\gamma f=0,
  \qquad\text{where}\qquad
@@ -190,9 +206,9 @@ that is,
 Note that each coefficient is a \emph{finite} sum, so this makes sense
 without any convergence hypothesis.
 
-\subsection{Dividing}
-What about $\dfrac fg$? Equivalently: given $f\in\CT$, can I find
-$g\in\CT$ such that $f\cdot g=1$?
+\subsection{Inversion}
+When does $f\in\CT$ have a multiplicative inverse? Equivalently, when can we
+find $g\in\CT$ such that $f\cdot g=1$?
 
 Take $f$ fixed and $f,g$ as before. We want
 \be
@@ -214,10 +230,8 @@ and in general, having solved for $b_0,\dots,b_{n-1}$,
 
 % Handwritten page 4.
 \begin{proposition}
-In general, a power series $f=a_0+a_1T+\cdots\in\CT$ has an inverse
-\be
- \Longleftrightarrow\qquad a_0\ne0.
-\ee
+A power series $f=a_0+a_1T+\cdots\in\CT$ has an inverse if and only if
+$a_0\ne0$.
 \end{proposition}
 
 \begin{example}
@@ -264,16 +278,21 @@ Let $f=1+T+T^2+\cdots$ and $g(T)=1$. Then
 does not exist: the constant coefficient is an infinite sum of $1$'s.
 \end{example}
 
-\begin{fact}
+\begin{proposition}
 Assume $g(T)$ has no constant term, i.e.\ $b_0=0$. Then $f\circ g$ exists as
 a power series.
-\end{fact}
+\end{proposition}
 
 % Handwritten page 6.
-Indeed, $\sum_{n\ge0}a_ng(T)^n$ has to be re-expanded as a series in $T$
-with finite coefficients, and since $b_0=0$ the series $g(T)^n$ is divisible
-by $T^n$; hence only the terms with $n\le m$ contribute to the coefficient
-of $T^m$, which is therefore a finite sum.
+\begin{proof}
+The expression $\sum_{n\ge0}a_ng(T)^n$ must be re-expanded as a series in
+$T$ with well-defined coefficients. Since $b_0=0$, the series $g(T)^n$ is
+divisible by $T^n$. Hence only the terms with $n\le m$ contribute to the
+coefficient of $T^m$, so that coefficient is a finite sum.
+\end{proof}
+
+\subsection{Factorization}
+Finally we state, without proof, the following simple observation.
 
 \begin{proposition}
 Every $f(T)\in\CLT$, $f \neq 0$, can be written as
@@ -285,12 +304,13 @@ where $u(T)=1+a_1T+a_2T^2+\cdots$ is a power series with constant term $1$
 (hence invertible).
 \end{proposition}
 
-\section{Next: assigning a radius to a power series}
-We want to assign to each $f(T)\in\CT$ a number $r\ge0$ so that if
+\section*{Next goal: assigning a radius to a power series}
+We want to assign to each $f(T)\in\CT$ a radius $r\in[0,\infty]$ so that if
 \be
  z\in D(0,r)=\{z\in\C:|z|<r\},
 \ee
-then $f(z)$ exists, and if $|z|>r$ then $f(z)$ does not exist.
+then the series $f(z)=\sum_{n\ge0}a_nz^n$ converges, while if $|z|>r$ it
+diverges.
 
 \begin{center}
 \begin{tikzpicture}[scale=1.0]
@@ -302,15 +322,26 @@ then $f(z)$ exists, and if $|z|>r$ then $f(z)$ does not exist.
 \end{tikzpicture}
 \end{center}
 
-The number $r$ is called the \emph{radius of convergence} of $f$. To make
-sense of all this we first need to recall convergence in $\C$.
+The extended nonnegative number $r$ is called the \emph{radius of
+convergence} of $f$. To make sense of all this, we first need to recall
+convergence in $\C$.
+
+\begin{warning}
+When $r<\infty$, we make no assertion about convergence on the circle
+$|z|=r$; in fact, almost anything can happen there!
+\end{warning}
 
 % Handwritten page 7.
 \section{Sequences and convergence}
-Let $\{z_n\}$ be a sequence of complex numbers.
+
+We first review some standard notions concerning convergence of series,
+phrased in the setting of complex numbers.
+
 
 \begin{definition}
-We write
+Let $\{z_n\}$ be a sequence of complex numbers.
+\begin{enumerate}
+\item We write
 \be
  \boxed{\ w=\lim_{n\to\infty}z_n\ }
 \ee
@@ -318,14 +349,13 @@ if, given any $\epsilon>0$, there exists $n_0$ such that if $n>n_0$ then
 \be
  |w-z_n|<\epsilon.
 \ee
-\end{definition}
-
-\begin{definition}
-$\{z_n\}$ is a \emph{Cauchy sequence} if, given any $\epsilon>0$, there
-exists $n_0$ such that if $m,n>n_0$ then
+\item We say that $\{z_n\}$ is a \emph{Cauchy sequence} if, given any
+$\epsilon>0$, there exists $n_0$ such that if $m,n>n_0$ then
 \be
  |z_m-z_n|<\epsilon.
 \ee
+
+\end{enumerate}
 \end{definition}
 
 \begin{remark}
@@ -347,12 +377,12 @@ Show that $\{z_n\}$ converges $\Longleftrightarrow$ $\{z_n\}$ is Cauchy.
 (Use the same argument as in $\R$-analysis together with the remark above.)
 \end{exercise}
 
-% Handwritten page 8.
-\section{Convergent series}
-Let $a_n\in\C$.
+Next, we turn to the notion of convergence of a series.
+
 
 \begin{definition}
-\begin{itemize}
+Let $a_n\in\C$.
+\begin{enumerate}
 \item $\displaystyle\sum_{n=0}^{\infty}a_n$ \emph{converges} if the sequence
 $\{S_n\}$ of \emph{partial sums} converges, where
 \be
@@ -361,63 +391,86 @@ $\{S_n\}$ of \emph{partial sums} converges, where
 \ee
 \item $\displaystyle\sum_{n=0}^{\infty}a_n$ is \emph{absolutely convergent}
 if $\displaystyle\sum_{n=0}^{\infty}|a_n|$ is convergent.
-\end{itemize}
+\end{enumerate}
 \end{definition}
 
-\begin{fact}
-If $\sum a_n$ is absolutely convergent, then $\sum a_n$ is convergent.
-\end{fact}
+Observe that, just as in real analysis, if $\sum a_n$ is absolutely
+convergent, then it is convergent. Let
+\be
+ S_n:=\sum_{i=0}^n a_i
+ \qquad\text{and}\qquad
+ T_n:=\sum_{i=0}^n |a_i|.
+\ee
+Since $\sum |a_n|$ converges, the sequence $\{T_n\}$ is Cauchy. If $n>m$,
+then
+\be
+ |S_n-S_m|
+ =\left|\sum_{i=m+1}^n a_i\right|
+ \leq\sum_{i=m+1}^n |a_i|
+ =T_n-T_m
+ =|T_n-T_m|.
+\ee
+Thus $\{S_n\}$ is Cauchy and therefore converges. Hence $\sum a_n$
+converges.
+
+
 
 \begin{theorem}[Comparison test]
 \label{thm:comparison}
-If $\sum c_n$ is a convergent series of real, positive numbers $c_n\ge0$,
-and $\sum a_n$ is a series such that $|a_n|\le c_n$ for each $n$, then
+If $\sum c_n$ is a convergent series of nonnegative real numbers $c_n\ge0$,
+and $\sum a_n$ is a series such that $|a_n|\le c_n$ for every $n\ge0$, then
 $\sum a_n$ converges.
 \end{theorem}
 
 % Handwritten page 9.
 \begin{proof}
-By assumption,
+The partial sums $\sum_{k=0}^{n}c_k$ are bounded above, since $\sum c_n$
+converges. Moreover,
 \be
- \sum_{k=1}^{n}|a_k|\le\sum_{k=1}^{n}c_k.
+ \sum_{k=0}^{n}|a_k|\le\sum_{k=0}^{n}c_k.
 \ee
-But the partial sums $\sum_{k=1}^{n}c_k$ are bounded for all $n$, since
-$\sum c_n$ converges. Hence the partial sums of $\sum_{n=1}^{\infty}|a_n|$
-are all bounded.
+Thus the partial sums of $\sum_{n=0}^{\infty}|a_n|$ are bounded above.
 
-From $\R$-analysis: if $\{b_n\}$ is a sequence of positive numbers such
-that the partial sums $t_k=\sum_{n=1}^{k}b_n$ are bounded, then by the
-least upper bound property the $t_k$ converge (they are increasing and
-bounded above). Applying this to $b_n=|a_n|$ shows $\sum|a_n|$ converges,
+From $\R$-analysis: if $\{b_n\}$ is a sequence of nonnegative numbers such
+that the partial sums $t_k=\sum_{n=0}^{k}b_n$ are bounded above, then by the
+least upper bound property\footnote{Every nonempty subset of $\R$ that is
+bounded above has a least upper bound (supremum) in $\R$. More precisely, if
+$S\subseteq\R$ is nonempty and bounded above, then there exists
+$s=\sup S\in\R$ such that $x\le s$ for every $x\in S$, and for every
+$\epsilon>0$ there exists $x\in S$ such that $s-\epsilon<x\le s$.} the
+sequence $\{t_k\}$ converges because it is increasing and bounded above.
+Applying this to $b_n=|a_n|$ shows $\sum|a_n|$ converges,
 i.e.\ $\sum a_n$ converges absolutely, and hence converges.
 \end{proof}
 
 \section{Sequences of functions}
-Let $S\subseteq\C$ and let $f_n:S\to\C$. Assume the $f_n$ are bounded on
-$S$, so that the \emph{sup norm}
+Let $S\subseteq\C$ be nonempty. For a bounded function $h:S\to\C$, define
+its \emph{sup norm} by
 \be
- \|f_n\|_S:=\sup_{z\in S}|f_n(z)|
+ \|h\|_S:=\sup_{z\in S}|h(z)|.
 \ee
-exists.
 
 % Handwritten page 10.
 \begin{definition}
+Let $f_n,f:S\to\C$.
 \begin{itemize}
-\item We say $f_n\to f$ \emph{converges pointwise} if
-$f_n(z)\to f(z)$ for all $z\in S$.
-\item We say $f_n\to f$ \emph{converges uniformly} if $f_n\to f$ ``in sup
-norm'', i.e.\ given $\epsilon>0$ there exists $n_0$ such that if $n\ge n_0$
-then
+\item We say $f_n$ \emph{converges pointwise} to $f$ if $f_n(z)\to f(z)$
+for all $z\in S$.
+\item We say $f_n$ \emph{converges uniformly} to $f$ if, given
+$\epsilon>0$, there exists $n_0$ such that if $n\ge n_0$, then
 \be
- \|f_n-f\|_S<\epsilon.
+ |f_n(z)-f(z)|<\epsilon
+ \qquad\text{for every }z\in S.
 \ee
+Equivalently, for every $\epsilon>0$, there exists $n_0$ such that
+$\|f_n-f\|_S<\epsilon$ whenever $n\ge n_0$.
 \end{itemize}
 \end{definition}
 
 \begin{definition}
-$\{f_n\}$ is \emph{uniformly Cauchy} if $\{f_n\}$ is Cauchy under
-$\|\cdot\|_S$, i.e.\ given $\epsilon>0$ there is $n_0$ such that
-$\|f_n-f_m\|_S<\epsilon$ whenever $m,n\ge n_0$.
+The sequence $\{f_n\}$ is \emph{uniformly Cauchy} if, given $\epsilon>0$,
+there is $n_0$ such that $|f_n(z)-f_m(z)|<\epsilon$ for every $z\in S$
+whenever $m,n\ge n_0$. Equivalently, $\|f_n-f_m\|_S<\epsilon$.
 \end{definition}
 
 \begin{remark}
