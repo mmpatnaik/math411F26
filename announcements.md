@@ -28,3 +28,5 @@ Lecture 1 notes have been posted. Homework 1 posted.
 ## 2026-09-03
 Lecture 2 notes have been posted. 
 
+## 2026-09-16
+Lecture 6 posted. Office hours changed to 11:30-12:30pm on Fridays
