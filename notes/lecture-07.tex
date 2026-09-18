@@ -97,7 +97,7 @@
 \vspace{0.45em}
 
 % Handwritten page 1.
-\section{Last time}
+\section{Recollections from last time}
 \begin{itemize}
 \item Convergence of a sequence $\{z_n\}$, $z_n\in\C$, and of series
 $\sum a_n$, $\sum|a_n|$.
@@ -105,15 +105,45 @@ $\sum a_n$, $\sum|a_n|$.
 \be
  \|f\|_S=\sup_{z\in S}|f(z)|,
 \ee
-and $f_n$ a sequence of functions on $S$.
+
 \end{itemize}
 
-What does $f_n\to f$ mean?
-\begin{itemize}
-\item \emph{Pointwise convergence}: for any $z\in S$,
-$f_n(z)\to f(z)$, i.e.\ $|f(z)-f_n(z)|\to0$ as $n\to\infty$.
-\item \emph{Uniform convergence}: $\|f-f_n\|_S\to0$ as $n\to\infty$.
-\end{itemize}
+Given $f_n$ a sequence of functions on $S$, what does $f_n\to f$ mean?
+
+\begin{definition}
+	Let $f_n,f:S\to\C$.
+	\begin{itemize}
+		\item We say $f_n$ \emph{converges pointwise} to $f$ if $f_n(z)\to f(z)$
+		for all $z\in S$.
+		\item We say $f_n$ \emph{converges uniformly} to $f$ if, given
+		$\epsilon>0$, there exists $n_0$ such that if $n\ge n_0$, then
+		\be
+		|f_n(z)-f(z)|<\epsilon
+		\qquad\text{for every }z\in S.
+		\ee
+		Equivalently, for every $\epsilon>0$, there exists $n_0$ such that
+		$\|f_n-f\|_S<\epsilon$ whenever $n\ge n_0$.
+	\end{itemize}
+\end{definition}
+%
+%\begin{definition}
+%	The sequence $\{f_n\}$ is \emph{uniformly Cauchy} if, given $\epsilon>0$,
+%	there is $n_0$ such that $|f_n(z)-f_m(z)|<\epsilon$ for every $z\in S$
+%	whenever $m,n\ge n_0$. Equivalently, $\|f_n-f_m\|_S<\epsilon$.
+%\end{definition}
+
+\begin{remark}
+	The difference between the two notions of convergence is the order of the
+	quantifiers: for pointwise convergence the index $n_0$ may depend on the
+	point $z\in S$, whereas for uniform convergence a single $n_0$ must work
+	for every $z\in S$ at once.
+\end{remark}
+%
+%\begin{itemize}
+%\item \emph{Pointwise convergence}: for any $z\in S$,
+%$f_n(z)\to f(z)$, i.e.\ $|f(z)-f_n(z)|\to0$ as $n\to\infty$.
+%\item \emph{Uniform convergence}: $\|f-f_n\|_S\to0$ as $n\to\infty$.
+%\end{itemize}
 
 \section{Uniform limits of continuous functions}
 \begin{theorem}
@@ -159,13 +189,14 @@ continuous on $S$.
 
 % Handwritten page 3.
 \section{Uniformly Cauchy sequences}
-Another useful notion: $\{f_n\}$, a sequence of functions, is
-\emph{uniformly Cauchy on $S$} if given $\epsilon>0$ there exists $n_0$
-such that if $n,m\ge n_0$ then
+Another useful notion is the following,
+
+\begin{definition} Let $\{f_n\}$, a sequence of functions on $S$. We say that $\{ f_n \}$ is
+\emph{uniformly Cauchy on $S$} if given $\epsilon>0$ there exists $n_0$ such that if $n,m\ge n_0$ then
 \be
  \|f_n-f_m\|_S<\epsilon.
 \ee
-
+\end{definition}
 \begin{lemma}
 \label{lem:unif-cauchy}
 Let $\{f_n\}$ be uniformly Cauchy on $S$. Then
@@ -269,8 +300,7 @@ Theorem~\ref{thm:unif-cts}.
 
 \begin{theorem}
 \label{thm:power-series-disc}
-Let $\{a_n\}$ be a sequence of complex numbers and let $r>0$ be a real,
-positive number. If
+Let $\{a_n\}$ be a sequence of complex numbers and let $r>0$ . If
 \be
  \sum|a_n|r^n\quad\text{converges,}
 \ee
@@ -346,7 +376,19 @@ We know $0<r<\infty$.
 If $z\in\C$ with $|z|>r$, then $\sum|a_n|\,|z|^n$ diverges, by the
 definition of the least upper bound. So $\sum a_nz^n$ cannot converge
 absolutely for this $|z|$.
-% Handwritten page 9.
+
+
+In fact the series does not just diverge absolutely, but it diverges genuinely as well.  Indeed, suppose $\sum a_nw^n$ converged for some $w$. Then its terms are
+bounded, say $|a_nw^n|\le M$ for all $n$. For any $z$ with $|z|<|w|$,
+\be
+\sum|a_n|\,|z|^n
+=\sum|a_nw^n|\left(\frac{|z|}{|w|}\right)^n
+\le M\sum\left(\frac{|z|}{|w|}\right)^n<\infty,
+\ee
+a convergent geometric series. Taking $z=s$ real shows that
+$\sum|a_n|s^n$ converges for every $s<|w|$, so $r\ge s$ for all such $s$,
+i.e.\ $|w|\le r$. Contrapositively, if $|w|>r$ then $\sum a_nw^n$ diverges.
+
 
 If $|z|<r$, then by definition of the least upper bound there is $s$ with
 $|z|<s\le r$ such that $\sum|a_n|s^n$ converges. But then, by
@@ -359,20 +401,9 @@ disc, $\sum a_nz^n$ converges absolutely on $D(0,r)$ and uniformly on each
 $D(0,s)$ with $s<r$.
 \end{proof}
 
-\begin{remark}[Abel's lemma: divergence, not just non-absolute convergence]
-The argument above shows directly that $\sum a_nz^n$ fails to converge
-\emph{absolutely} when $|z|>r$. In fact the series genuinely diverges there.
-Indeed, suppose $\sum a_nw^n$ converged for some $w$. Then its terms are
-bounded, say $|a_nw^n|\le M$ for all $n$. For any $z$ with $|z|<|w|$,
-\be
- \sum|a_n|\,|z|^n
- =\sum|a_nw^n|\left(\frac{|z|}{|w|}\right)^n
- \le M\sum\left(\frac{|z|}{|w|}\right)^n<\infty,
-\ee
-a convergent geometric series. Taking $z=s$ real shows that
-$\sum|a_n|s^n$ converges for every $s<|w|$, so $r\ge s$ for all such $s$,
-i.e.\ $|w|\le r$. Contrapositively, if $|w|>r$ then $\sum a_nw^n$ diverges.
-\end{remark}
+
+
+
 
 \begin{remark}
 Uniform convergence on all of $D(0,r)$ can fail, which is why the statement
