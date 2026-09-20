@@ -11,6 +11,9 @@
 # The site sorts by date and shows the newest first, so old announcements
 # stay on the page as a running log.
 
+## 2026-09-20
+[Homework 2](hw/hw-02.pdf) is posted. It covers Lectures 6-8; the suggested completion date is October 5.
+
 ## 2026-09-08
 Lecture 3 notes have been posted.
 

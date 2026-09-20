@@ -1,0 +1,166 @@
+\documentclass[12pt, reqno]{amsart}
+\usepackage{latexsym, amssymb, amscd, xypic, amsthm, setspace}
+\input xy
+\xyoption{all}
+
+%%: Font = times
+\usepackage{mathptmx} % rm & math
+\usepackage[scaled=0.90]{helvet} % ss
+\usepackage{courier} % tt
+\normalfont
+\usepackage[T1]{fontenc}
+\pagestyle{plain}
+
+
+\newtheorem{theorem}{Theorem}[subsection]
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+
+\theoremstyle{definition}
+\newtheorem{de}[theorem]{Definition}
+\newtheorem{notation}{Notation}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{examples}{Examples}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{remarks}{Remarks}
+\newtheorem{question}{Question}
+
+
+\newtheorem*{nthm}{Theorem}
+\newtheorem*{nlem}{Lemma}
+\newtheorem*{nprop}{Proposition}
+\newtheorem*{ncor}{Corollary}
+\newtheorem*{nclaim}{Claim}
+\newtheorem*{nde}{Definition}
+\newtheorem*{nex}{Example}
+
+\newtheoremstyle{test}{3pt}{3pt}{\itshape}{\parindent}{\bfseries}{---}{  }{\thmnote{#3}} \theoremstyle{test}
+\newtheorem*{mythm}{}
+
+
+%: paragraphs
+
+\newcommand{\point}{\vspace{3mm}\par \noindent (\refstepcounter{subsection}{\bf \thesubsection) } }
+
+\newcommand{\tpoint}[1]{\vspace{3mm}\par \noindent \refstepcounter{subsubsection}{\bf \thesubsubsection.}
+  {\em #1. ---} }
+\newcommand{\epoint}[1]{\vspace{3mm}\par \noindent \refstepcounter{subsection}{\bf \thesubsection.}
+  {\em #1.} }
+\newcommand{\spoint}{\vspace{3mm}\par \noindent \refstepcounter{subsection}{\bf \thesubsection.} }
+
+\newcommand{\bpoint}[1]{\vspace{3mm}\par \noindent \refstepcounter{subsection}{\bf \thesubsection.}
+  {\bf #1.} }
+
+
+
+%: numbering and margins
+
+\numberwithin{equation}{subsection}
+
+\setlength{\oddsidemargin}{0cm} \setlength{\evensidemargin}{0cm}
+\setlength{\marginparwidth}{0in}
+\setlength{\marginparsep}{0in}
+\setlength{\marginparpush}{0in}
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\footskip}{.3in}
+\setlength{\textheight}{9.2in}
+\setlength{\textwidth}{6.5in}
+\setlength{\parskip}{0.25pt}
+\setlength{\parindent}{0.25in}
+
+%: math shortcuts
+
+
+\DeclareMathOperator{\inv}{inv}
+\DeclareMathOperator{\out}{Out}
+\DeclareMathOperator{\gal}{Gal}
+\renewcommand{\mod}{\mathrm{\, mod \, }}
+\renewcommand{\d}[1]{{}^{#1}}
+\renewcommand{\b}[1]{\mathbf{{#1}}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\be}[1]{\begin{eqnarray} \label{#1}}
+\newcommand{\ee}{\end{eqnarray}}
+\newcommand{\re}{\mathsf{Re}}
+\newcommand{\im}{\mathsf{Im}}
+\newcommand{\rr}{\rightarrow}
+
+\newcommand{\n}{\mathbb{N}}
+\newcommand{\zee}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\pr}{\mathbb{P}}
+\renewcommand{\gcd}[2]{\mathsf{gcd}(#1, #2)}
+\newcommand{\ov}[1]{\overline{#1}}
+\renewcommand{\Re}{\mathrm{Re}}
+\renewcommand{\Im}{\mathrm{Im}}
+
+
+
+\title{Problem Set 2 \\ MATH 411: Honors Complex Variables, Fall 2026}
+\date{last compiled: \today}
+
+\numberwithin{equation}{section}
+\refstepcounter{section}
+
+\begin{document} %%
+\maketitle
+\begin{center}
+Suggested completion date: Oct 5, 2026
+\end{center}
+
+
+
+\begin{enumerate}
+
+
+\item Give the terms of order $\leq 3$ in the power series (using the expressions for $\cos(T)$, $\sin(T)$, and $e^T$ given in lecture):
+\begin{enumerate}
+\item $\dfrac{\sin T}{\cos T}$;
+\item $\dfrac{e^T}{\sin T}$.
+\end{enumerate}
+
+\item Given complex numbers $a_0,a_1,u_1,u_2$, define $a_n$ for $n\geq 2$ by
+\[
+a_n=u_1a_{n-1}+u_2a_{n-2}.
+\]
+If
+\[
+T^2-u_1T-u_2=(T-\alpha)(T-\alpha')
+\]
+with $\alpha\neq\alpha'$, show that
+\[
+a_n=A\alpha^n+B(\alpha')^n
+\]
+for suitable $A,B$. Find $A,B$ in terms of $a_0,a_1,\alpha,\alpha'$. Consider the power series
+\[
+F(T)=\sum_{n=0}^{\infty}a_nT^n.
+\]
+Show that it represents a rational function $f(T)/g(T)$, where $f(T)$ and $g(T)$ are polynomials with $g(T)\neq 0$. Give the partial fraction decomposition of this rational function.
+
+\item Determine the radius of convergence of the following series:
+\begin{enumerate}
+\item $\displaystyle\sum n^2z^n$;
+\item $\displaystyle\sum \frac{n!}{n}z^n$;
+\item If $f=\sum a_nz^n$ has radius of convergence $r>0$, show that $\sum n^da_nz^n$ has the same radius of convergence for any positive integer $d$.
+\end{enumerate}
+
+\item Prove the following:
+\begin{enumerate}
+\item The power series $\sum nz^n$ has radius of convergence $1$ but does not converge at any point of the unit circle.
+\item The power series $\sum \frac{z^n}{n^2}$ has radius of convergence $1$ and converges at every point of the unit circle.
+\item The power series $\sum \frac{z^n}{n}$ converges at every point of the unit circle except $z=1$.
+\end{enumerate}
+
+\item Find the terms of order $\leq 3$ in the power series expansion of
+\[
+f(z)=\frac{z-2}{(z+3)(z+2)}
+\]
+at $z=1$.
+
+\end{enumerate}
+
+
+\end{document}

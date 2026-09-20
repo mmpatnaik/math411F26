@@ -44,9 +44,9 @@ Lecture 8 will be rescheduled; details to follow.
 ```
 
 Then commit and push. Entries are sorted by date automatically (so it doesn't
-actually matter where in the file you put them), the newest is highlighted, and
-older ones stay below as a running log. Blank lines start a new paragraph, and
-you can use `**bold**`, `*italic*`, and `[links](https://example.com)` —
+actually matter where in the file you put them), the newest is shown, and older
+ones are available under “Earlier announcements.” Blank lines start a new
+paragraph, and you can use `**bold**`, `*italic*`, and `[links](https://example.com)` —
 including in-page ones like `[Problem sets](#homework)`.
 
 Nothing is ever deleted unless you delete it, so the section doubles as the

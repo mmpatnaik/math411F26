@@ -1,0 +1,408 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{tocloft}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{courseblue}{HTML}{1F4E79}
+\definecolor{lightblue}{HTML}{EAF2F8}
+\definecolor{lightgreen}{HTML}{EAF7EA}
+\definecolor{lightpink}{HTML}{FCE8EF}
+\definecolor{lightyellow}{HTML}{FFF8D6}
+\definecolor{warningyellow}{HTML}{D6A000}
+\definecolor{exercisebg}{HTML}{D6E6F5}
+\definecolor{exerciseframe}{HTML}{1F4E79}
+\definecolor{examplebg}{HTML}{F4FAFE}
+\definecolor{exampleframe}{HTML}{85C1E9}
+\definecolor{darkgray}{HTML}{333333}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\setlist[itemize]{topsep=0.25em,itemsep=0.15em}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{fact}{Fact}
+\newtheorem*{warning}{Warning}
+
+\tcolorboxenvironment{definition}{
+  enhanced,
+  colback=lightgreen,
+  colframe=ForestGreen,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{warning}{
+  enhanced,
+  colback=lightyellow,
+  colframe=warningyellow,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{exercise}{
+  enhanced,
+  colback=exercisebg,
+  colframe=exerciseframe,
+  boxrule=1pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{example}{
+  enhanced,
+  colback=examplebg,
+  colframe=exampleframe,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\numberwithin{equation}{section}
+
+\newcommand{\be}{\begin{eqnarray}}
+\newcommand{\ee}{\end{eqnarray}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+
+\DeclareMathOperator{\Hol}{\mathcal{H}\mathrm{ol}}
+\DeclareMathOperator{\Real}{Re}
+\DeclareMathOperator{\Imag}{Im}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\CT}{\C[[T]]}
+\newcommand{\CLT}{\C((T))}
+\tcbset{breakable}
+\begin{document}
+
+\begin{center}
+  \colorbox{lightblue}{%
+    \begin{minipage}{0.94\textwidth}
+      \vspace{0.55em}
+      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr}
+        {\color{courseblue}\bfseries\LARGE Lecture 8} &
+        {\color{courseblue}\bfseries\LARGE MATH 411}\\[0.35em]
+        \textbf{Fall 2026} & \textbf{Date: Sep 21, 2026}\\
+        & \textbf{Instructor: Manish Patnaik}
+      \end{tabular*}
+      \vspace{0.45em}
+    \end{minipage}}
+\end{center}
+
+\setcounter{tocdepth}{1}
+\tableofcontents
+\vspace{0.45em}
+
+% Handwritten page 1.
+\section{What does it mean to plug a complex number into a formal power series?}
+
+Let $f\in\CT$ be a formal power series,
+\be
+ f=\sum_{n\ge0}a_nT^n,\qquad a_n\in\C.
+\ee
+The symbol $T$ is an indeterminate: so far nothing has been substituted for
+it. The question driving this lecture is: \emph{what sense does it make to
+``plug in'' a number $z\in\C$?}
+
+The answer goes through series of functions. Let $S$ be a set and let
+$f_n\colon S\to\C$ be functions on $S$; we consider
+\be
+ \sum_{n} f_n.
+\ee
+The case we actually care about is
+\be
+ f_n(z)=a_nz^n,\qquad S=D(0,r),
+\ee
+so that the partial sums are the truncations of the power series.
+
+\begin{definition}[The three modes of convergence]
+Write $S_k=\sum_{n=0}^{k}f_n$ for the $k$-th partial sum. We say that
+$\sum f_n$
+\begin{itemize}
+\item converges \emph{pointwise} if, for each $z\in S$, the sequence of
+complex numbers $\{S_k(z)\}$ converges;
+\item converges \emph{uniformly} if $\{S_k\}$ converges with respect to the
+sup norm $\|\cdot\|_S$;
+\item converges \emph{absolutely} if, setting
+$\displaystyle V_k(z)=\sum_{n=0}^{k}|f_n(z)|$, the sequence $\{V_k(z)\}$
+converges for each $z\in S$.
+\end{itemize}
+\end{definition}
+
+% Handwritten page 2.
+What we care about is the implication
+\be
+ \sum |a_n|r^n<\infty
+ \quad\Longrightarrow\quad
+ \sum a_nz^n\text{ converges uniformly and absolutely on }
+ \overline{D(0,r)},
+\ee
+which is an instance of the comparison test.
+
+\section{The basic tool: the comparison test}
+
+\begin{theorem}[Comparison test]
+\label{thm:comparison}
+Let $c_n\ge0$ be real numbers with $\sum c_n$ convergent, let $S\subseteq\C$,
+and let $\{f_n\}$ be functions on $S$ with
+\be
+ \|f_n\|_S\le c_n\qquad\text{for all }n.
+\ee
+Then $\sum f_n$ converges uniformly and absolutely on $S$.
+\end{theorem}
+
+\begin{proof}
+For $m>k$,
+\be
+ \left\|\sum_{n=k+1}^{m}f_n\right\|_S
+ \leq \sum_{n=k+1}^{m}\|f_n\|_S
+ \leq \sum_{n=k+1}^{m}c_n.
+\ee
+Since $\sum c_n$ converges, its tails tend to $0$. Thus the partial sums of
+$\sum f_n$ are uniformly Cauchy. At each $z\in S$ they therefore converge to
+some value $f(z)$, and the same tail estimate shows that the convergence to
+$f$ is uniform. Moreover, for each $z\in S$,
+\be
+ \sum_n|f_n(z)|\leq\sum_n c_n<\infty,
+\ee
+so the convergence is absolute at every point of $S$.
+\end{proof}
+
+\begin{corollary}[Application]
+\label{cor:closed-disc}
+Suppose $\sum|a_n|r^n$ converges for some $r>0$. Then $\sum a_nz^n$
+converges uniformly and absolutely on the \emph{closed} disc
+$\overline{D(0,r)}$.
+\end{corollary}
+
+\begin{proof}
+Let $S=\overline{D(0,r)}=\{z\in\C:|z|\le r\}$ and put $f_n(z)=a_nz^n$. Then
+\be
+ \|f_n\|_S\le|a_n|\,r^n,
+\ee
+so Theorem~\ref{thm:comparison} applies with $c_n=|a_n|r^n$.
+\end{proof}
+
+% Handwritten page 3.
+\section{The radius of convergence}
+
+For a power series $\sum a_nz^n$, let
+\be
+ T=\{0\}\cup
+ \{s>0 \;:\; \textstyle\sum|a_n|s^n\text{ converges}\},
+\ee
+and let $r_0=\sup T\in[0,\infty]$.
+
+\begin{definition}[Radius of convergence]
+The extended nonnegative number $r_0$ above is called the \emph{radius of
+convergence} (R.O.C.) of $\sum a_nz^n$. Since $0\in T$, every power series
+has a well-defined radius of convergence. The extreme cases are:
+\begin{itemize}
+\item $r_0=\infty$: the series converges absolutely at every $z\in\C$ and
+uniformly on every closed disc;
+\item $r_0=0$: the series does not converge anywhere except at $z=0$.
+\end{itemize}
+\end{definition}
+
+\begin{proposition}
+The series $\sum a_nz^n$ converges absolutely at every point of $D(0,r_0)$
+and uniformly on every closed disc $\overline{D(0,s)}$ with $s<r_0$. It
+diverges for $|z|>r_0$.
+\end{proposition}
+
+\begin{proof}
+If $0\leq s<r_0$, the definition of the supremum gives some $q\in T$ with
+$s<q$. For $|z|\leq s$,
+\be
+ |a_nz^n|\leq |a_n|s^n\leq |a_n|q^n,
+\ee
+so the comparison test gives uniform and absolute convergence on
+$\overline{D(0,s)}$.
+
+Now suppose $|z|>r_0$ and $\sum a_nz^n$ converges. Its terms are bounded, so
+$|a_nz^n|\leq M$ for some $M>0$. Choose $q$ with $r_0<q<|z|$. Then
+\be
+ \sum_{n\geq0}|a_n|q^n
+ \leq M\sum_{n\geq0}\left(\frac q{|z|}\right)^n<\infty,
+\ee
+which says $q\in T$, contradicting $q>\sup T=r_0$.
+\end{proof}
+
+\begin{warning}
+When $0<r_0<\infty$, nothing above says what happens on the circle
+$|z|=r_0$ itself. The behaviour there genuinely depends on the series: it may
+converge at every boundary point, at none, or at some but not others.
+\end{warning}
+
+% Handwritten page 4.
+\section{Interlude: \texorpdfstring{$\limsup$}{limsup}}
+
+Hadamard's theorem, stated below, computes $r_0$ directly from the
+coefficients, but it is phrased using $\limsup$. So: what does $\limsup$
+mean?
+
+\begin{definition}[Accumulation point]
+Let $\{t_n\}$ be a sequence of nonnegative real numbers. An \emph{accumulation
+point} of $\{t_n\}$ is a point $t\in\R$ such that every interval around $t$
+contains $t_n$ for infinitely many indices $n$.
+\end{definition}
+
+\begin{fact}
+Every bounded sequence in $\R$ has a convergent subsequence and hence an
+accumulation point.
+\end{fact}
+
+\begin{definition}[$\limsup$]
+Suppose $\{t_n\}$ is bounded, and let $S$ be the set of all its accumulation
+points. Then
+\be
+ \limsup_{n} t_n=\text{l.u.b.}(S).
+\ee
+\end{definition}
+
+A practical way of viewing $\limsup$ is that it is the number
+$\lambda\in\R$ characterised by: for every $\epsilon>0$,
+\begin{itemize}
+\item[(A)] there exist only \emph{finitely many} $n$ with
+$t_n\ge\lambda+\epsilon$;
+\item[(B)] there exist \emph{infinitely many} $n$ with
+$t_n\ge\lambda-\epsilon$.
+\end{itemize}
+
+% Handwritten page 5.
+\begin{definition}[Convention]
+If $\{t_n\}$ is unbounded, we set $\limsup_n t_n=\infty$.
+\end{definition}
+
+\begin{exercise}
+Let $\{t_n\},\{s_n\}$ be bounded sequences of nonnegative real numbers and set
+$t=\limsup_n t_n$, $s=\limsup_n s_n$. Verify:
+\begin{itemize}
+\item $\displaystyle\limsup_n(t_n+s_n)\le t+s$;
+\item $\displaystyle\limsup_n(t_ns_n)\le t\cdot s$;
+\item if $\displaystyle\lim_{n\to\infty}t_n$ exists, then
+$\displaystyle\limsup_n t_n=\lim_{n\to\infty}t_n$.
+\end{itemize}
+\end{exercise}
+
+\section{Hadamard's criterion}
+
+\begin{theorem}[Hadamard]
+\label{thm:hadamard}
+Let $r$ be the radius of convergence of $\sum a_nz^n$. Then
+\be
+ \frac1r=\limsup_{n}|a_n|^{1/n}.
+\ee
+Here we use the conventions $1/0=\infty$ and $1/\infty=0$.
+\end{theorem}
+
+\begin{proof}
+Let $t=\limsup_{n\to\infty}|a_n|^{1/n}$ and assume $0<t<\infty$ (the extreme
+cases are treated in the remark below). We must show that $\sum a_nz^n$
+converges for $|z|<1/t$ and diverges for $|z|>1/t$; this identifies the
+radius of convergence as $r=1/t$.
+
+% Handwritten page 6.
+\textbf{Convergence.} By characterisation (A) above, for any $\epsilon>0$
+there are only finitely many $n$ with
+\be
+ |a_n|^{1/n}\ge t+\epsilon,
+ \qquad\text{i.e.}\qquad |a_n|\ge(t+\epsilon)^n.
+\ee
+Equivalently,
+\be
+\label{eq:club}
+ |a_n|<(t+\epsilon)^n\qquad\text{for almost all }n.
+\ee
+Let $z\in\C$ with $|z|<1/t$. Choose $\epsilon>0$ small enough that
+\be
+ |z|(t+\epsilon)<1,\qquad\text{i.e.}\qquad |z|<\frac1{t+\epsilon}.
+\ee
+Then, using~\eqref{eq:club} for all but finitely many terms (the finitely
+many exceptions contribute a constant $c$),
+\be
+ \sum|a_n||z|^n\le c+\sum\bigl((t+\epsilon)|z|\bigr)^n,
+\ee
+and the latter is a convergent geometric series since
+$(t+\epsilon)|z|<1$. By comparison, $\sum|a_n||z|^n$ converges.
+
+\textbf{Divergence.} Assume $|z|>1/t$ and choose $\epsilon$ with
+$0<\epsilon<t$ such that $|z|=\dfrac1{t-\epsilon}$.
+% Handwritten page 7.
+For this $\epsilon>0$, characterisation (B) gives infinitely many $n$ with
+\be
+ |a_n|^{1/n}\ge t-\epsilon,\qquad\text{hence}\qquad |a_n|\ge(t-\epsilon)^n.
+\ee
+Therefore, for infinitely many $n$,
+\be
+ |a_nz^n|\geq (t-\epsilon)^n\cdot\frac1{(t-\epsilon)^n}=1.
+\ee
+In particular, the terms $a_nz^n$ do not tend to $0$, so $\sum a_nz^n$
+diverges.
+\end{proof}
+
+\begin{remark}
+If the limsup in Hadamard's criterion is zero, then the series converges
+everywhere, so $r=\infty$. If the limsup is infinite, then $r=0$.
+\end{remark}
+
+\begin{example}
+Consider
+\be
+ \sum_{n\ge0}\frac{z^n}{n!},\qquad a_n=\frac1{n!}.
+\ee
+To apply Hadamard, look at $\displaystyle\limsup_n\left(\frac1{n!}\right)^{1/n}$.
+By Stirling's formula, $n!=n^ne^{-n}u_n$ with
+$\displaystyle\lim_{n\to\infty}u_n^{1/n}=1$. Plugging this in gives
+\be
+ \limsup_{n}\left(\frac1{n!}\right)^{1/n}=0,
+\ee
+so the radius of convergence is $\infty$: the exponential series converges
+on all of $\C$, as we saw last lecture.
+\end{example}
+
+% Handwritten page 8.
+\section*{Next time}
+Let $f(z)=\sum a_nz^n$ have radius of convergence $r$. What is the radius of
+convergence of the formally differentiated series
+\be
+ \sum_{n\geq1} n\,a_nz^{n-1}\,?
+\ee
+It turns out to be $r$ again --- and this is the first step towards showing
+that a convergent power series defines a $\C$-differentiable function.
+
+\end{document}

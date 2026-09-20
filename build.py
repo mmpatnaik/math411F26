@@ -90,19 +90,37 @@ def parse_announcements(path):
 announcements = parse_announcements(ROOT / "announcements.md")
 
 if announcements:
-    blocks = []
-    for i, (when, paragraphs) in enumerate(announcements):
-        cls = "announce latest" if i == 0 else "announce"
+    def render_announcement(entry, latest=False):
+        when, paragraphs = entry
+        cls = "announce latest" if latest else "announce"
         body = "\n        ".join(f"<p>{inline(p)}</p>" for p in paragraphs)
-        blocks.append(
+        return (
             f'      <div class="{cls}">\n'
             f'        <time datetime="{when.isoformat()}">'
             f'{when.strftime("%A, %B %-d, %Y")}</time>\n'
             f'        {body}\n'
             f'      </div>'
         )
-    rendered = ('    <div class="announce-list">\n'
-                + "\n".join(blocks) + "\n    </div>")
+
+    latest = render_announcement(announcements[0], latest=True)
+    history = ""
+    if len(announcements) > 1:
+        earlier = "\n".join(
+            render_announcement(entry) for entry in announcements[1:]
+        )
+        history = (
+            '\n      <details class="announce-history">\n'
+            '        <summary>Earlier announcements</summary>\n'
+            '        <div class="announce-list">\n'
+            f'{earlier}\n'
+            '        </div>\n'
+            '      </details>'
+        )
+    rendered = (
+        '    <div class="announce-list">\n'
+        f'{latest}{history}\n'
+        '    </div>'
+    )
 else:
     rendered = ('    <p class="announce-empty">'
                 'No announcements yet.</p>')

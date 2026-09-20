@@ -263,6 +263,20 @@
   .announce.latest time { color: var(--accent-ink); }
   .announce p { margin: 0; color: var(--ink-soft); font-size: 0.95rem; }
   .announce p + p { margin-top: 0.6rem; }
+  .announce-history summary {
+    width: fit-content;
+    padding: 0.65rem 0;
+    color: var(--accent-ink);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .announce-history summary:hover { text-decoration: underline; }
+  .announce-history summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 3px;
+  }
+  .announce-history[open] > summary { margin-bottom: 0.5rem; }
   .announce-empty { color: var(--ink-faint); font-size: 0.95rem; }
 
   .divider-note {
@@ -474,10 +488,11 @@
       <div class="table-scroll">
         <table>
           <thead>
-            <tr><th class="num">Set</th><th>Covers</th><th>PDF</th><th>Solutions</th></tr>
+            <tr><th class="num">Set</th><th>Covers</th><th>Suggested completion date</th><th>PDF</th><th>Solutions</th></tr>
           </thead>
           <tbody>
-            <tr><td class="num">HW 1</td><td>Lectures 1&ndash;4, 1.1&ndash;1.6</td><td data-hw="01"><span class="tba">Not yet posted</span></td><td data-hw-sol="01"><span class="tba">Not yet posted</span></td></tr>
+            <tr><td class="num">HW 1</td><td>Lectures 1&ndash;4, 1.1&ndash;1.6</td><td>Sep 18</td><td data-hw="01"><span class="tba">Not yet posted</span></td><td data-hw-sol="01"><span class="tba">Not yet posted</span></td></tr>
+            <tr><td class="num">HW 2</td><td>Lectures 6&ndash;8</td><td>Oct 5</td><td data-hw="02"><a href="hw/hw-02.pdf">PDF</a></td><td data-hw-sol="02"><span class="tba">Not yet posted</span></td></tr>
           </tbody>
         </table>
       </div>
