@@ -16,6 +16,12 @@
 \definecolor{lightblue}{HTML}{EAF2F8}
 \definecolor{lightgreen}{HTML}{EAF7EA}
 \definecolor{lightpink}{HTML}{FCE8EF}
+\definecolor{lightyellow}{HTML}{FFF8D6}
+\definecolor{warningyellow}{HTML}{D6A000}
+\definecolor{exercisebg}{HTML}{D6E6F5}
+\definecolor{exerciseframe}{HTML}{1F4E79}
+\definecolor{examplebg}{HTML}{F4FAFE}
+\definecolor{exampleframe}{HTML}{85C1E9}
 \definecolor{darkgray}{HTML}{333333}
 
 \setlength{\parindent}{0pt}
@@ -36,6 +42,7 @@
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
 \newtheorem*{fact}{Fact}
+\newtheorem*{warning}{Warning}
 
 \tcolorboxenvironment{definition}{
   enhanced,
@@ -49,10 +56,34 @@
   bottom=5pt
 }
 
+\tcolorboxenvironment{warning}{
+  enhanced,
+  colback=lightyellow,
+  colframe=warningyellow,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
 \tcolorboxenvironment{exercise}{
   enhanced,
-  colback=lightpink,
-  colframe=WildStrawberry,
+  colback=exercisebg,
+  colframe=exerciseframe,
+  boxrule=1pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{example}{
+  enhanced,
+  colback=examplebg,
+  colframe=exampleframe,
   boxrule=0.7pt,
   arc=2pt,
   left=6pt,

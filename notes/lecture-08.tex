@@ -160,6 +160,7 @@ sup norm $\|\cdot\|_S$;
 \item converges \emph{absolutely} if, setting
 $\displaystyle V_k(z)=\sum_{n=0}^{k}|f_n(z)|$, the sequence $\{V_k(z)\}$
 converges for each $z\in S$.
+
 \end{itemize}
 \end{definition}
 
@@ -171,9 +172,8 @@ What we care about is the implication
  \sum a_nz^n\text{ converges uniformly and absolutely on }
  \overline{D(0,r)},
 \ee
-which is an instance of the comparison test.
+which is an instance of the comparison test that we proved last time:
 
-\section{The basic tool: the comparison test}
 
 \begin{theorem}[Comparison test]
 \label{thm:comparison}
@@ -184,23 +184,25 @@ and let $\{f_n\}$ be functions on $S$ with
 \ee
 Then $\sum f_n$ converges uniformly and absolutely on $S$.
 \end{theorem}
+%
+%\begin{proof}
+%For $m>k$,
+%\be
+% \left\|\sum_{n=k+1}^{m}f_n\right\|_S
+% \leq \sum_{n=k+1}^{m}\|f_n\|_S
+% \leq \sum_{n=k+1}^{m}c_n.
+%\ee
+%Since $\sum c_n$ converges, its tails tend to $0$. Thus the partial sums of
+%$\sum f_n$ are uniformly Cauchy. At each $z\in S$ they therefore converge to
+%some value $f(z)$, and the same tail estimate shows that the convergence to
+%$f$ is uniform. Moreover, for each $z\in S$,
+%\be
+% \sum_n|f_n(z)|\leq\sum_n c_n<\infty,
+%\ee
+%so the convergence is absolute at every point of $S$.
+%\end{proof}
 
-\begin{proof}
-For $m>k$,
-\be
- \left\|\sum_{n=k+1}^{m}f_n\right\|_S
- \leq \sum_{n=k+1}^{m}\|f_n\|_S
- \leq \sum_{n=k+1}^{m}c_n.
-\ee
-Since $\sum c_n$ converges, its tails tend to $0$. Thus the partial sums of
-$\sum f_n$ are uniformly Cauchy. At each $z\in S$ they therefore converge to
-some value $f(z)$, and the same tail estimate shows that the convergence to
-$f$ is uniform. Moreover, for each $z\in S$,
-\be
- \sum_n|f_n(z)|\leq\sum_n c_n<\infty,
-\ee
-so the convergence is absolute at every point of $S$.
-\end{proof}
+Indeed, the application we have in mind is the following:
 
 \begin{corollary}[Application]
 \label{cor:closed-disc}
@@ -324,9 +326,9 @@ $\displaystyle\limsup_n t_n=\lim_{n\to\infty}t_n$.
 
 \begin{theorem}[Hadamard]
 \label{thm:hadamard}
-Let $r$ be the radius of convergence of $\sum a_nz^n$. Then
+Let $r_0$ be the radius of convergence of $\sum a_nz^n$. Then
 \be
- \frac1r=\limsup_{n}|a_n|^{1/n}.
+ \frac{1}{r_0}=\limsup_{n}|a_n|^{1/n}.
 \ee
 Here we use the conventions $1/0=\infty$ and $1/\infty=0$.
 \end{theorem}
@@ -335,7 +337,7 @@ Here we use the conventions $1/0=\infty$ and $1/\infty=0$.
 Let $t=\limsup_{n\to\infty}|a_n|^{1/n}$ and assume $0<t<\infty$ (the extreme
 cases are treated in the remark below). We must show that $\sum a_nz^n$
 converges for $|z|<1/t$ and diverges for $|z|>1/t$; this identifies the
-radius of convergence as $r=1/t$.
+radius of convergence as $r_0=1/t$.
 
 % Handwritten page 6.
 \textbf{Convergence.} By characterisation (A) above, for any $\epsilon>0$
