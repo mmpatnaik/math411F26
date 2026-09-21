@@ -276,19 +276,19 @@ coefficients, but it is phrased using $\limsup$. So: what does $\limsup$
 mean?
 
 \begin{definition}[Accumulation point]
-Let $\{t_n\}$ be a sequence of nonnegative real numbers. An \emph{accumulation
-point} of $\{t_n\}$ is a point $t\in\R$ such that every interval around $t$
-contains $t_n$ for infinitely many indices $n$.
+Let $(t_n)_{n\geq0}$ be an infinite sequence of nonnegative real numbers. An
+\emph{accumulation point} of $(t_n)_{n\geq0}$ is a point $t\in\R$ such that
+every interval around $t$ contains $t_n$ for infinitely many indices $n$.
 \end{definition}
 
 \begin{fact}
-Every bounded sequence in $\R$ has a convergent subsequence and hence an
-accumulation point.
+Every bounded infinite sequence in $\R$ has a convergent subsequence and hence
+an accumulation point.
 \end{fact}
 
 \begin{definition}[$\limsup$]
-Suppose $\{t_n\}$ is bounded, and let $S$ be the set of all its accumulation
-points. Then
+Suppose the infinite sequence $(t_n)_{n\geq0}$ is bounded, and let $S$ be the
+set of all its accumulation points. Then
 \be
  \limsup_{n} t_n=\text{l.u.b.}(S).
 \ee
@@ -305,12 +305,13 @@ $t_n\ge\lambda-\epsilon$.
 
 % Handwritten page 5.
 \begin{definition}[Convention]
-If $\{t_n\}$ is unbounded, we set $\limsup_n t_n=\infty$.
+If the infinite sequence $(t_n)_{n\geq0}$ is unbounded, we set
+$\limsup_n t_n=\infty$.
 \end{definition}
 
 \begin{exercise}
-Let $\{t_n\},\{s_n\}$ be bounded sequences of nonnegative real numbers and set
-$t=\limsup_n t_n$, $s=\limsup_n s_n$. Verify:
+Let $(t_n)_{n\geq0}$ and $(s_n)_{n\geq0}$ be bounded infinite sequences of
+nonnegative real numbers and set $t=\limsup_n t_n$, $s=\limsup_n s_n$. Verify:
 \begin{itemize}
 \item $\displaystyle\limsup_n(t_n+s_n)\le t+s$;
 \item $\displaystyle\limsup_n(t_ns_n)\le t\cdot s$;
