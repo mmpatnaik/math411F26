@@ -23,6 +23,8 @@
 \definecolor{examplebg}{HTML}{F4FAFE}
 \definecolor{exampleframe}{HTML}{85C1E9}
 \definecolor{darkgray}{HTML}{333333}
+\definecolor{lightorange}{HTML}{FDEBD8}
+\definecolor{orangeframe}{HTML}{E08A3C}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.65em}
@@ -46,6 +48,7 @@
 
 \tcolorboxenvironment{definition}{
   enhanced,
+  unbreakable,
   colback=lightgreen,
   colframe=ForestGreen,
   boxrule=0.7pt,
@@ -143,6 +146,7 @@ Hadamard's criterion computes it from the coefficients:
 \ee
 
 \begin{example}
+\label{ex:nfactorial}
 Consider $\sum n!\,z^n$. By Stirling, $n!=n^ne^{-n}u_n$ with
 $\lim_{n\to\infty}u_n^{1/n}=1$, so
 \be
@@ -152,8 +156,35 @@ Hence the radius of convergence is $\dfrac1\infty=0$: the series converges
 only at $z=0$.
 \end{example}
 
+\begin{tcolorbox}[
+  enhanced,
+  colback=lightorange,
+  colframe=orangeframe,
+  coltitle=white,
+  fonttitle=\bfseries,
+  title={Stirling's formula},
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+]
+A useful estimate to keep in mind is the following:
+\be 
+ n!\sim\sqrt{2\pi n}\,\left(\frac ne\right)^{n}
+ \qquad\text{as }n\to\infty,
+\ee
+where $a_n\sim b_n$ means $a_n/b_n\to1$ as $n \rightarrow \infty$. So $n!$ grows like $n^n$, damped by
+$e^{-n}$ and corrected by the comparatively tiny factor $\sqrt{2\pi n}$. In
+Example~\ref{ex:nfactorial} that factor (times something tending to $1$) is $u_n$. 
+
+%For radius-of-convergence purposes the crude bound $n!\geq(n/e)^n$ is already
+%enough. It follows from $e^n=\sum_k n^k/k!\geq n^n/n!$.
+\end{tcolorbox}
+
 \section{The formal derivative has the same radius of convergence}
-Suppose $f(T)=\sum a_nT^n$ has radius of convergence $r$. Its
+Suppose $f(T)=\sum_{n=0}^{\infty} a_nT^n$ has radius of convergence $r$. Its
 \emph{formal derivative} is
 \be
  f'(T)=\sum_{n\geq1}n\,a_nT^{n-1}.
@@ -168,15 +199,11 @@ $r$ as well.
 
 \begin{proof}
 First consider the formal series $T f'(T)=\sum_{n\geq1}n\,a_nT^n$. Since
-$n^{1/n}\to1$, Hadamard's criterion gives
+$n^{1/n}=e^{\frac1n\log n}\longrightarrow e^0=1$ as $ n \rightarrow \infty$, Hadamard's criterion gives
 \be
  \limsup_{n\to\infty}n^{1/n}|a_n|^{1/n}
  =\limsup_{n\to\infty}|a_n|^{1/n}
- =\frac1r,
-\ee
-where
-\be
- n^{1/n}=e^{\frac1n\log n}\longrightarrow e^0=1.
+ =\frac1r.
 \ee
 Thus $T f'(T)$ has radius $r$. Removing the initial zero coefficient and
 shifting the powers down by one does not change a power series's radius of
@@ -215,111 +242,158 @@ nowhere-differentiable one --- is a uniform limit of polynomials.)
 \begin{theorem}
 \label{thm:ps-diff}
 The function $f(z)=\sum a_nz^n$ is $\C$-differentiable on its region of
-convergence $D(0,r)$.
+convergence $D(0,r)$, and in fact it has derivative given by
+\be
+ f'(z)=\sum_{n\geq1}n\,a_nz^{n-1}\qquad\text{for all }z\in D(0,r).
+\ee
+In other words, a power series may be differentiated term by term inside its disc
+of convergence.
 \end{theorem}
 
 % Handwritten page 3.
 \begin{proof}
-Fix $z\in D(0,r)$ and choose $\rho$ with $|z|<\rho<r$. For
-$0<|h|<\rho-|z|$, the binomial theorem gives
-\be
- (z+h)^n-z^n-nz^{n-1}h=h^2P_n(z,h),
- \qquad
- P_n(z,h):=\sum_{k=2}^{n}\binom nk z^{n-k}h^{k-2}.
-\ee
-For $2\leq k\leq n$, we have
-$\binom nk\leq\binom n2\binom{n-2}{k-2}$. Hence
-\begin{align*}
- |P_n(z,h)|
- &\leq \binom n2
-   \sum_{k=2}^{n}\binom{n-2}{k-2}|z|^{n-k}|h|^{k-2}\\
- &=\binom n2(|z|+|h|)^{n-2}
- \leq\binom n2\rho^{n-2}.
-\end{align*}
-The last inequality is where the choice of $\rho$ enters: for the admissible
-increments $h$, the points $z+h$ fill the disc $D(z,\rho-|z|)$, and every such
-$h$ satisfies $|z|+|h|<\rho<r$.
+Remember that $f$ is $\C$-differentiable at a point $z\in\C$ if there exist
+a function $\varphi(h)$, defined for $h$ near $0$, and a complex number
+$\alpha$ such that
 
-\begin{center}
-\begin{tikzpicture}[scale=1.25]
-  % axes
-  \draw[->,gray!60] (-3.4,0) -- (3.6,0);
-  \draw[->,gray!60] (0,-3.3) -- (0,3.3);
-  % region of convergence and the intermediate disc
-  \draw[gray!55,dashed] (0,0) circle (3);
-  \fill[lightblue,opacity=0.85] (0,0) circle (2.2);
-  \draw[courseblue,thick] (0,0) circle (2.2);
-  % admissible points z+h
-  \coordinate (z) at (45:1.25);
-  \fill[lightyellow] (z) circle (0.95);
-  \draw[warningyellow,thick] (z) circle (0.95);
-  % points
-  \fill (0,0) circle (1.4pt) node[below left]{$0$};
-  \draw[gray!70] (0,0) -- (z);
-  \fill (z) circle (1.4pt) node[right]{$z$};
-  \path (z) ++(160:0.62) coordinate (zh);
-  \draw[->,thick] (z) -- (zh) node[midway,below,font=\small]{$h$};
-  \fill (zh) circle (1.4pt) node[left]{$z+h$};
-  % radii
-  \draw[gray!70,->] (0,0) -- (225:3) node[pos=0.8,above left]{$r$};
-  \draw[courseblue,->] (0,0) -- (135:2.2) node[pos=0.6,above right]{$\rho$};
-  \draw[warningyellow!70!black,->] (z) -- ++(45:0.95);
-  \node[warningyellow!70!black,font=\small] at (58:2.75) {$\rho-|z|$};
-  % labels
-  \node[gray] at (-40:3.45) {$D(0,r)$};
-  \node[courseblue] at (-55:1.6) {$D(0,\rho)$};
-  \node[warningyellow!70!black,font=\small] at (0.95,0.32) {$D(z,\rho-|z|)$};
+\noindent
+\begin{minipage}[c]{0.58\textwidth}
+\setlength{\parskip}{0.65em}
+\begin{itemize}
+  \item $f(z+h)-f(z)-\alpha h=\varphi(h)\cdot h$, and
+  \item $\lim_{h\to0}\varphi(h)=0$.
+\end{itemize}
+In that case $f'(z)=\alpha$.
+
+Given $z\in D(0,r)$, choose $\delta>0$ with $|z|+\delta<r$, so that
+$D(z,\delta)\subset D(0,r)$.
+\end{minipage}\hfill
+\begin{minipage}[c]{0.4\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.66]
+  \draw[gray!55,dashed] (0,0) circle (2.4);
+  \fill[gray!70] (0,0) circle (1.2pt) node[below left]{$0$};
+  \draw[gray!70,->] (0,0) -- (-40:2.4) node[pos=0.55,above right]{$r$};
+  \coordinate (z) at (135:1.3);
+  \fill[lightpink,opacity=0.9] (z) circle (0.8);
+  \draw[red!75!black,thick] (z) circle (0.8);
+  \fill (z) circle (1.4pt) node[below right]{$z$};
+  \draw[red!75!black,->] (z) -- ++(60:0.8) node[pos=0.55,left,font=\small]{$\delta$};
+  \node[gray,anchor=west] at (2.45,-0.9) {$D(0,r)$};
+  \node[red!75!black,anchor=south east] at (-1.45,1.6) {$D(z,\delta)$};
 \end{tikzpicture}
-\end{center}
+\end{minipage}
+
+For $|h|<\delta$ the point $z+h$ lies in $D(z,\delta)\subset D(0,r)$, and by
+the binomial theorem
+\begin{align*}
+ f(z+h)&=\sum_n a_n(z+h)^n
+ =\sum_n a_n\Bigl(z^n+\binom n1z^{n-1}h+\cdots+h^n\Bigr)\\
+ &=\sum_n a_n\bigl(z^n+n\,z^{n-1}h+h^2P_n(z,h)\bigr),
+\end{align*}
+where
+\be
+ P_n(z,h):=\sum_{k=2}^{n}\binom nk z^{n-k}h^{k-2}
+ \qquad(\text{and }P_0=P_1=0).
+\ee
+Why does $\sum a_nP_n(z,h)$ converge? By the definition of $P_n$, each
+term satisfies
+\be
+ h^2a_nP_n(z,h)=a_n(z+h)^n-a_nz^n-n\,a_nz^{n-1}h.
+\ee
+The three series on the right converge: $\sum a_n(z+h)^n$ and $\sum a_nz^n$
+because $z$, $z+h\in D(0,r)$, and $\sum n\,a_nz^{n-1}$ by
+Proposition~\ref{prop:roc-derivative}. A term-by-term combination of
+convergent series converges, so $\sum h^2a_nP_n(z,h)$ converges. For
+$h\neq0$ we may divide by $h^2$, and so $\sum a_nP_n(z,h)$ converges.%
+\footnote{When $h=0$ we cannot divide by $h^2$, but then
+$P_n(z,0)=\binom n2z^{n-2}$. So $\sum a_nP_n(z,0)=\sum\binom n2a_nz^{n-2}$
+is half the second formal derivative of $f$ evaluated at $z$. It converges
+by Proposition~\ref{prop:roc-derivative} applied twice. (The value at
+$h=0$ plays no role in the limit below, since $\varphi(0)=0$ in any case.)}
+Hence
+\be
+ f(z+h)-f(z)=h\sum_n n\,a_nz^{n-1}+h^2\sum_n a_nP_n(z,h).
+\ee
+So we set
+\be
+ \alpha:=\sum_n n\,a_nz^{n-1},
+ \qquad
+ \varphi(h):=h\sum_n a_nP_n(z,h),
+\ee
+which exist for $h\in D(0,\delta)$. By construction,
+$f(z+h)-f(z)-\alpha h=\varphi(h)\cdot h$.
 
 % Handwritten page 4.
-By Proposition~\ref{prop:roc-derivative}, applied twice, the series
+\emph{Check that $\lim_{h\to0}\varphi(h)=0$.} First,
 \be
- M_\rho:=\sum_{n=2}^{\infty}\binom n2|a_n|\rho^{n-2}
+ |\varphi(h)|\leq|h|\sum_n|a_n|\,|P_n(z,h)|.
 \ee
-converges. Also, the series
+Since $|h|<\delta$ we then have
 \be
- \alpha:=\sum_{n=1}^{\infty}n\,a_nz^{n-1}
+ |P_n(z,h)|\leq\sum_{k=2}^{n}\binom nk|z|^{n-k}|h|^{k-2}
+ \leq\sum_{k=2}^{n}\binom nk|z|^{n-k}\delta^{k-2}=P_n(|z|,\delta).
 \ee
-converges. Therefore
-\begin{align*}
- \left|\frac{f(z+h)-f(z)}{h}-\alpha\right|
- &\leq |h|\sum_{n=2}^{\infty}|a_n|\,|P_n(z,h)|\\
- &\leq |h|M_\rho\longrightarrow0
- \qquad\text{as }h\to0.
-\end{align*}
-Thus $f$ is $\C$-differentiable at $z$, with $f'(z)=\alpha$.
+Therefore
+\be
+ |\varphi(h)|\leq|h|\,\sum_n|a_n|\,P_n(|z|,\delta).
+ \label{eq:phi-bound}
+\ee
+The sum on the right is a \emph{fixed} number that does not depend on $h$.
+It is finite because the binomial expansion gives
+$\delta^2P_n(|z|,\delta)=(|z|+\delta)^n-|z|^n-n|z|^{n-1}\delta$. So (since $\delta  >0$)
+\be
+ \sum_n|a_n|P_n(|z|,\delta)
+ =\frac1{\delta^2}\Bigl(\sum_n|a_n|(|z|+\delta)^n-\sum_n|a_n||z|^n
+ -\delta\sum_n n|a_n||z|^{n-1}\Bigr),
+\ee
+and all three series on the right converge because $|z|$ and $|z|+\delta$
+are less than $r$ (again using Proposition~\ref{prop:roc-derivative} for
+the last one). Letting $h\to0$ in \eqref{eq:phi-bound} gives
+$\varphi(h)\to0$. Thus $f$ is $\C$-differentiable at $z$, with
+\be
+ f'(z)=\alpha=\sum_{n\geq1}n\,a_nz^{n-1}.
+\ee
+Since $z\in D(0,r)$ was arbitrary, $f$ is $\C$-differentiable on all of
+$D(0,r)$ and its derivative is obtained by differentiating term by term.
 \end{proof}
 
-\begin{remark}
-So $f(z)=\sum a_nz^n$ is $\C$-differentiable on $D(0,r)$ and
-\be
- f'(z)=\alpha=\sum_{n=1}^{\infty}n\,a_nz^{n-1},
-\ee
-i.e.\ a power series may be differentiated term by term inside its disc of
-convergence.
-\end{remark}
-
 % Handwritten page 5.
-In fact the same analysis applies to
-$f'(z)=\sum_{n=1}^{\infty}n\,a_nz^{n-1}$ to show that it too is
-differentiable, with derivative
+\begin{corollary}
+\label{cor:ps-smooth}
+The function $f(z)=\sum a_nz^n$ is infinitely $\C$-differentiable on
+$D(0,r)$. For instance,
 \be
- \sum_{n=2}^{\infty}n(n-1)a_nz^{n-2},
+ f''(z)=\sum_{n\geq2}n(n-1)a_nz^{n-2},
 \ee
-and so on: $f$ is infinitely $\C$-differentiable on $D(0,r)$.
+and in general, for every $k\geq0$,
+\be
+ f^{(k)}(z)=\sum_{n\geq k}n(n-1)\cdots(n-k+1)\,a_nz^{n-k}
+ \qquad\text{for all }z\in D(0,r).
+\ee
+\end{corollary}
+
+\begin{proof}
+By Proposition~\ref{prop:roc-derivative}, the series
+$f'(z)=\sum_{n\geq1}n\,a_nz^{n-1}$ again has radius of convergence $r$. So
+the same analysis, i.e.\ Theorem~\ref{thm:ps-diff} applied to $f'$, shows
+that $f'$ is $\C$-differentiable on $D(0,r)$ with derivative
+$\sum_{n\geq2}n(n-1)a_nz^{n-2}$. Repeating this argument (induction on $k$)
+gives the formula for $f^{(k)}$.
+\end{proof}
 
 \section{Analytic functions}
 
 \begin{definition}[Analytic]
+\label{def:analytic}
 Let $U\subseteq\C$ be an open set. A function $f\colon U\to\C$ is said to be
 \emph{analytic at $z_0\in U$} if there exist $\rho>0$ and a power series
 $\sum a_nT^n$, with radius of convergence at least $\rho$, such that
 $D(z_0,\rho)\subseteq U$ and
 \be
- f(z)=\sum a_n(z-z_0)^n\qquad\text{for all }|z-z_0|<\rho,
+ f(z)=\sum a_n(z-z_0)^n\qquad\text{for all }|z-z_0|<\rho, \qquad \text{i.e.,  for all }  z\in D(z_0,\rho).
 \ee
-i.e.\ for all $z\in D(z_0,\rho)$. If $f$ is analytic at each point $z_0\in U$,
+ If $f$ is analytic at each point $z_0\in U$,
 we say $f$ is \emph{analytic on $U$}.
 \end{definition}
 
@@ -361,14 +435,58 @@ The resulting double series is absolutely convergent because
  &\sum_{n=0}^{\infty}\sum_{k=0}^{n}
  |a_n|\binom nk|z_0|^{n-k}|z-z_0|^k\\
  &\hspace{4em}=
- \sum_{n=0}^{\infty}|a_n|\bigl(|z_0|+|z-z_0|\bigr)^n<\infty.
+ \sum_{n=0}^{\infty}|a_n|\bigl(|z_0|+|z-z_0|\bigr)^n<\infty,
 \end{align*}
-We may therefore rearrange the terms and obtain
+where the last series converges since $|z_0|+|z-z_0|<|z_0|+s<r$.
+
+To rearrange the double series we use the following standard fact.
+
+\begin{tcolorbox}[
+  enhanced,
+  colback=lightorange,
+  colframe=orangeframe,
+  coltitle=white,
+  fonttitle=\bfseries,
+  title={Rearranging absolutely convergent double series},
+  unbreakable,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+]
+Let $c_{n,k}\in\C$ for $0\leq k\leq n$, and suppose
+$\sum_{n=0}^{\infty}\sum_{k=0}^{n}|c_{n,k}|<\infty$. Then for each $k$ the
+series $\sum_{n\geq k}c_{n,k}$ converges absolutely, and
+\be
+ \sum_{n=0}^{\infty}\sum_{k=0}^{n}c_{n,k}
+ =\sum_{k=0}^{\infty}\sum_{n=k}^{\infty}c_{n,k}.
+\ee
+Indeed, write $S$ for the (finite) sum of all $|c_{n,k}|$. Given
+$\varepsilon>0$, choose $N$ so large that the terms with $n>N$ contribute
+less than $\varepsilon$ to $S$. Both iterated sums differ from the finite
+sum $\sum_{0\leq k\leq n\leq N}c_{n,k}$ by at most the sum of
+$|c_{n,k}|$ over the pairs with $n>N$, hence by less than $\varepsilon$.
+So the two iterated sums agree. In short, an absolutely convergent series
+can be summed in any order.
+\end{tcolorbox}
+
+We apply this with $c_{n,k}=a_n\binom nk z_0^{\,n-k}(z-z_0)^k$. Summing
+first over $n$ for fixed $k$ gives $b_k(z-z_0)^k$, so we obtain
 \be
  f(z)=\sum_{k=0}^{\infty}b_k(z-z_0)^k,
+ \label{eq:bk-expansion}
 \ee
-and $\sum b_kT^k$ converges absolutely for every $|T|<s$. It therefore has
-radius of convergence at least $s>0$, proving that $f$ is analytic at $z_0$.
+valid for every $z\in D(z_0,s)$.
+
+Since \eqref{eq:bk-expansion} holds for every $z\in D(z_0,s)$, the series
+$\sum b_kT^k$ converges at every $T$ with $|T|<s$ (take $T=z-z_0$). Hence
+its radius of convergence is at least $s$: if it were some $R<s$, the series
+would diverge at any $T$ with $R<|T|<s$. Together with
+$f(z)=\sum b_k(z-z_0)^k$ on $D(z_0,s)\subseteq D(0,r)$, this shows that $f$
+is analytic at $z_0$ (take $\rho=s$ in Definition~\ref{def:analytic}). Since $z_0\in D(0,r)$
+was arbitrary, $f$ is analytic on $D(0,r)$.
 \end{proof}
 
 % Handwritten page 7.
