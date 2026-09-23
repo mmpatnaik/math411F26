@@ -184,12 +184,8 @@ convergence, so $f'(T)$ also has radius $r$.
 \end{proof}
 
 \section{A convergent power series is \texorpdfstring{$\C$}{C}-differentiable}
-Let $f(z)=\sum a_nz^n$ on $D(0,r)$.
-
-\begin{center}
-\emph{Question.} What is the relation between $f'(z)$ --- the derivative we
-discussed earlier --- and $\sum_{n\geq1}n\,a_nz^{n-1}$?
-\end{center}
+Let $f(z)=\sum a_nz^n$ be a power series with radius of convergence $r$ and regard it as a function on $D(0,r)$. \emph{Question.} What is the relation between $f'(z)$ --- the derivative we
+discussed earlier --- and \be \sum_{n\geq1}n\,a_nz^{n-1} ? \ee
 
 To address this, we must first ask what kind of function $f(z)$ is. On every
 closed disc $\overline{D(0,s)}$ with $s<r$, it is a uniform limit of
@@ -200,9 +196,20 @@ $\C$-differentiable functions, namely the partial sums
 
 \begin{warning}
 A uniform limit of differentiable functions need not be differentiable in
-the real-variable setting --- think of uniform limits of polynomials
-approximating $|x|$. Uniform convergence alone is therefore insufficient;
-the proof below uses the power series structure.
+the real-variable setting. For example, the functions
+\be
+ f_n(x)=\sqrt{x^2+\tfrac1n}\qquad(x\in\R)
+\ee
+are differentiable (indeed smooth) on $\R$, and they converge uniformly to
+$|x|$, since
+\be
+ 0\leq\sqrt{x^2+\tfrac1n}-|x|
+ =\frac{1/n}{\sqrt{x^2+\frac1n}+|x|}
+ \leq\frac1{\sqrt n}.
+\ee
+Yet the limit $|x|$ is not differentiable at $x=0$. (If you have seen it before, then the 
+Weierstrass approximation theorem states that every continuous function on $[a,b]$ --- even a
+nowhere-differentiable one --- is a uniform limit of polynomials.)
 \end{warning}
 
 \begin{theorem}
@@ -229,6 +236,41 @@ $\binom nk\leq\binom n2\binom{n-2}{k-2}$. Hence
  &=\binom n2(|z|+|h|)^{n-2}
  \leq\binom n2\rho^{n-2}.
 \end{align*}
+The last inequality is where the choice of $\rho$ enters: for the admissible
+increments $h$, the points $z+h$ fill the disc $D(z,\rho-|z|)$, and every such
+$h$ satisfies $|z|+|h|<\rho<r$.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.25]
+  % axes
+  \draw[->,gray!60] (-3.4,0) -- (3.6,0);
+  \draw[->,gray!60] (0,-3.3) -- (0,3.3);
+  % region of convergence and the intermediate disc
+  \draw[gray!55,dashed] (0,0) circle (3);
+  \fill[lightblue,opacity=0.85] (0,0) circle (2.2);
+  \draw[courseblue,thick] (0,0) circle (2.2);
+  % admissible points z+h
+  \coordinate (z) at (45:1.25);
+  \fill[lightyellow] (z) circle (0.95);
+  \draw[warningyellow,thick] (z) circle (0.95);
+  % points
+  \fill (0,0) circle (1.4pt) node[below left]{$0$};
+  \draw[gray!70] (0,0) -- (z);
+  \fill (z) circle (1.4pt) node[right]{$z$};
+  \path (z) ++(160:0.62) coordinate (zh);
+  \draw[->,thick] (z) -- (zh) node[midway,below,font=\small]{$h$};
+  \fill (zh) circle (1.4pt) node[left]{$z+h$};
+  % radii
+  \draw[gray!70,->] (0,0) -- (225:3) node[pos=0.8,above left]{$r$};
+  \draw[courseblue,->] (0,0) -- (135:2.2) node[pos=0.6,above right]{$\rho$};
+  \draw[warningyellow!70!black,->] (z) -- ++(45:0.95);
+  \node[warningyellow!70!black,font=\small] at (58:2.75) {$\rho-|z|$};
+  % labels
+  \node[gray] at (-40:3.45) {$D(0,r)$};
+  \node[courseblue] at (-55:1.6) {$D(0,\rho)$};
+  \node[warningyellow!70!black,font=\small] at (0.95,0.32) {$D(z,\rho-|z|)$};
+\end{tikzpicture}
+\end{center}
 
 % Handwritten page 4.
 By Proposition~\ref{prop:roc-derivative}, applied twice, the series
@@ -352,8 +394,10 @@ and this expansion has radius of convergence $3$, again the distance from
 the centre $1$ to the pole at $-2$.
 \end{example}
 
-\begin{center}
-\begin{tikzpicture}[scale=0.95]
+\noindent
+\begin{minipage}[c]{0.42\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.55,every node/.style={font=\small}]
   \draw[gray!55,dashed] (0,0) circle (2);
   \draw[gray!55,dashed] (1,0) circle (3);
   \draw[->,gray!70] (-3.6,0) -- (4.4,0);
@@ -366,13 +410,14 @@ the centre $1$ to the pole at $-2$.
   \draw[courseblue,thick,->] (0,0) -- (1.41,1.41) node[midway,above left]{$2$};
   \draw[courseblue,thick,->] (1,0) -- (3.12,2.12) node[midway,below right]{$3$};
 \end{tikzpicture}
-\end{center}
-
+\end{minipage}\hfill
+\begin{minipage}[c]{0.55\textwidth}
 \begin{remark}
 In both cases the radius of convergence is exactly the distance from the
 centre of expansion to the nearest point where $f$ fails to be defined. This
 is not an accident, and we will return to it.
 \end{remark}
+\end{minipage}
 
 \begin{exercise}
 Expand $f(z)=\dfrac{z^2}{z+2}$ around $z_0=-1$ and check that the radius of
