@@ -1,0 +1,271 @@
+\documentclass[12pt, reqno]{amsart}
+\usepackage{latexsym, amssymb, amscd, xypic, amsthm, setspace}
+\input xy
+\xyoption{all}
+
+%%: Font = times
+\usepackage{mathptmx} % rm & math
+\usepackage[scaled=0.90]{helvet} % ss
+\usepackage{courier} % tt
+\normalfont
+\usepackage[T1]{fontenc}
+\pagestyle{plain}
+
+
+\newtheorem{theorem}{Theorem}[subsection]
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+
+\theoremstyle{definition}
+\newtheorem{de}[theorem]{Definition}
+\newtheorem{notation}{Notation}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{examples}{Examples}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{remarks}{Remarks}
+\newtheorem{question}{Question}
+
+
+\newtheorem*{nthm}{Theorem}
+\newtheorem*{nlem}{Lemma}
+\newtheorem*{nprop}{Proposition}
+\newtheorem*{ncor}{Corollary}
+\newtheorem*{nclaim}{Claim}
+\newtheorem*{nde}{Definition}
+\newtheorem*{nex}{Example}
+
+\newtheoremstyle{test}{3pt}{3pt}{\itshape}{\parindent}{\bfseries}{---}{  }{\thmnote{#3}} \theoremstyle{test}
+\newtheorem*{mythm}{}
+
+
+%: paragraphs
+
+\newcommand{\point}{\vspace{3mm}\par \noindent (\refstepcounter{subsection}{\bf \thesubsection) } }
+
+\newcommand{\tpoint}[1]{\vspace{3mm}\par \noindent \refstepcounter{subsubsection}{\bf \thesubsubsection.}
+  {\em #1. ---} }
+\newcommand{\epoint}[1]{\vspace{3mm}\par \noindent \refstepcounter{subsection}{\bf \thesubsection.}
+  {\em #1.} }
+\newcommand{\spoint}{\vspace{3mm}\par \noindent \refstepcounter{subsection}{\bf \thesubsection.} }
+
+\newcommand{\bpoint}[1]{\vspace{3mm}\par \noindent \refstepcounter{subsection}{\bf \thesubsection.}
+  {\bf #1.} }
+
+
+
+%: numbering and margins
+
+\numberwithin{equation}{subsection}
+
+\setlength{\oddsidemargin}{0cm} \setlength{\evensidemargin}{0cm}
+\setlength{\marginparwidth}{0in}
+\setlength{\marginparsep}{0in}
+\setlength{\marginparpush}{0in}
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\footskip}{.3in}
+\setlength{\textheight}{9.2in}
+\setlength{\textwidth}{6.5in}
+\setlength{\parskip}{0.25pt}
+\setlength{\parindent}{0.25in}
+
+%: math shortcuts
+
+
+\DeclareMathOperator{\inv}{inv}
+\DeclareMathOperator{\out}{Out}
+\DeclareMathOperator{\gal}{Gal}
+\renewcommand{\mod}{\mathrm{\, mod \, }}
+\renewcommand{\d}[1]{{}^{#1}}
+\renewcommand{\b}[1]{\mathbf{{#1}}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\be}[1]{\begin{eqnarray} \label{#1}}
+\newcommand{\ee}{\end{eqnarray}}
+\newcommand{\re}{\mathsf{Re}}
+\newcommand{\im}{\mathsf{Im}}
+\newcommand{\rr}{\rightarrow}
+
+\newcommand{\n}{\mathbb{N}}
+\newcommand{\zee}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\pr}{\mathbb{P}}
+\renewcommand{\gcd}[2]{\mathsf{gcd}(#1, #2)}
+\newcommand{\ov}[1]{\overline{#1}}
+\renewcommand{\Re}{\mathrm{Re}}
+\renewcommand{\Im}{\mathrm{Im}}
+
+
+
+\usepackage{enumitem}
+
+\title{Midterm 1 Review Sheet \\ MATH 411: Honors Complex Variables, Fall 2026}
+\date{last compiled: \today}
+
+\begin{document}
+\maketitle
+
+\begin{center}\fbox{\begin{minipage}{0.95\textwidth}\vspace{4pt}\centering
+\begin{tabular}{rl}
+\textbf{Date:} & Friday, October 9, 2026, in class (CAB 369, 3:00--3:50 PM)\\[2pt]
+\textbf{Length:} & 50 minutes\\[2pt]
+\textbf{Format:} & Closed book. No notes, no textbook, no calculators or devices.\\[2pt]
+\textbf{Coverage:} & Lectures 1--12; Lang \S\S1.1--1.7, 2.1--2.5, 3.2--3.3 (through Goursat)
+\end{tabular}\vspace{4pt}\end{minipage}}\end{center}
+
+\noindent Since the exam is closed book, you should be able to \emph{state} the main
+definitions and theorems below precisely, not just recognize them. When you use
+a result from class in a solution, state clearly which result you are using and
+check that its hypotheses hold.
+
+\noindent Lecture 13 (local primitives, Cauchy's theorem on a disc) and Lecture 14 (computing real
+integrals) will \emph{not} be tested on this midterm.
+
+\section*{Topics}
+
+\subsection*{1. Basic complex numbers \normalfont (Lectures 1--3; Lang \S\S1.1--1.4)}
+\begin{itemize}[leftmargin=*]
+\item Arithmetic in $\C$: real and imaginary parts, the conjugate $\ov z$, the modulus $|z|=\sqrt{z\ov z}$,
+      and the identities $|zw|=|z||w|$, $\ov{zw}=\ov z\,\ov w$, $z^{-1}=\ov z/|z|^2$.
+\item The triangle inequality $|z+w|\le|z|+|w|$ and its reverse form $\bigl||z|-|w|\bigr|\le|z-w|$.
+\item Polar form $z=re^{i\theta}$; multiplication multiplies moduli and adds arguments.
+      The definition $e^{a+ib}=e^a(\cos b+i\sin b)$.
+\item Solving $z^n=w$: the $n$ distinct $n$-th roots of a nonzero $w$, and roots of unity.
+\item Stereographic projection and the extended plane $\widehat\C=\C\cup\{\infty\}$.
+\item Topology of $\C$: open and closed discs, open and closed sets, interior, boundary and adherent points;
+      limits and continuity of functions $f:S\to\C$ in $\varepsilon$--$\delta$ form.
+\end{itemize}
+
+\subsection*{2. $\C$-differentiability \normalfont (Lectures 3--5; Lang \S\S1.5--1.7)}
+\begin{itemize}[leftmargin=*]
+\item Definition of $f'(z_0)$ as a limit over $h\in\C$, and of \emph{holomorphic} on an open set.
+      The equivalent ``linear approximation'' form $f(z_0+h)-f(z_0)=f'(z_0)h+h\,\sigma(h)$ with $\sigma(h)\to0$.
+\item Differentiable implies continuous; sum, product, quotient and chain rules.
+      Polynomials are entire; rational functions are holomorphic away from the zeros of the denominator.
+\item Total (real) differentiability of $F=(u,v):U\subseteq\R^2\to\R^2$; the Jacobian;
+      continuous partials $\Rightarrow$ totally differentiable.
+\item \textbf{Cauchy--Riemann criterion:} $f=u+iv$ is $\C$-differentiable at $z=x+iy$ if and only if
+      $F=(u,v)$ is totally differentiable at $(x,y)$ and $u_x=v_y$, $u_y=-v_x$ there.
+      In that case $f'=u_x+iv_x$. Know the proof, not just the statement.
+\item Using CR to show a function is (or is not) holomorphic; e.g.\ $e^z$ is entire, $\ov z$ and $|z|^2$ are not holomorphic.
+\item On a connected open set, $f'\equiv0$ implies $f$ is constant (via ``locally constant'').
+      Typical consequences: if $f$ is holomorphic on a disc and $\Re f$, $\Im f$ or $|f|$ is constant, then $f$ is constant.
+\item Conformality: if $f'(z_0)\ne0$, then $f$ preserves oriented angles between curves at $z_0$.
+\item Green's theorem and the resulting first version of Cauchy's theorem
+      (assuming $f$ has continuous partials).
+\end{itemize}
+
+\subsection*{3. Power series \normalfont (Lectures 6--9; Lang \S\S2.1--2.2)}
+\begin{itemize}[leftmargin=*]
+\item Formal power series $\C[[T]]$: addition, multiplication (Cauchy product),
+      inversion ($f$ is invertible iff $a_0\ne0$), composition $f\circ g$ when $g$ has no constant term.
+      Be able to compute the first few coefficients of $1/f$, $f\cdot g$, $f\circ g$.
+\item Convergence of sequences and series in $\C$; Cauchy sequences; absolute convergence; the comparison test.
+\item Sequences and series of functions: pointwise vs.\ uniform convergence, the sup norm $\|\cdot\|_S$,
+      uniformly Cauchy sequences. A uniform limit of continuous functions is continuous.
+      The comparison test for series of functions (Weierstrass $M$-test).
+\item \textbf{Radius of convergence:} every $\sum a_nz^n$ has $0\le r\le\infty$ such that it converges absolutely
+      on $D(0,r)$, uniformly on each closed disc $\ov D(0,s)$ with $s<r$, and diverges for $|z|>r$.
+\item $\limsup$ and \textbf{Hadamard's formula} $1/r=\limsup_n|a_n|^{1/n}$. Be able to compute radii of convergence
+      (including series with gaps, such as $\sum a_nz^{n^2}$), and know the proof.
+\item Behaviour on the boundary circle can vary: compare $\sum nz^n$, $\sum z^n/n$, $\sum z^n/n^2$.
+\item The formal derivative $\sum na_nz^{n-1}$ has the same radius of convergence, and a power series can be
+      differentiated term by term inside its disc of convergence; hence it is infinitely $\C$-differentiable there.
+\end{itemize}
+
+\subsection*{4. Analytic functions \normalfont (Lectures 9--11; Lang \S\S2.3--2.5)}
+\begin{itemize}[leftmargin=*]
+\item Definition: $f$ is \emph{analytic} on $U$ if near each $z_0\in U$ it is given by a convergent power series in $z-z_0$.
+\item A power series with radius $r$ is analytic on all of $D(0,r)$ (re-centring a power series).
+\item Analytic $\Rightarrow$ holomorphic, in fact infinitely $\C$-differentiable; the Taylor coefficients are
+      $a_k=f^{(k)}(z_0)/k!$. Sums and products of analytic functions are analytic.
+\item Uniqueness of power series expansions; \textbf{isolated zeros}; the \textbf{identity principle}
+      (two convergent power series that agree at a sequence of nonzero points tending to $0$ are the same power series).
+\item Analytic extensions of real functions, and uniqueness of such extensions; the complex exponential, $\sin$, $\cos$.
+\end{itemize}
+
+\subsection*{5. Path integrals and the Cauchy--Goursat theorem \normalfont (Lectures 11--12; Lang \S\S3.2--3.3)}
+\begin{itemize}[leftmargin=*]
+\item Integrals of complex-valued functions of a real variable, and $\bigl|\int_a^bF\bigr|\le\int_a^b|F|$.
+\item Piecewise $C^1$ paths and the path integral $\int_\gamma f\,dz=\int_a^b f(\gamma(t))\gamma'(t)\,dt$.
+      Be able to compute integrals over line segments, circles and rectangles
+      (e.g.\ $\int_{|z|=1}z^n\,dz$ for all $n\in\zee$).
+\item Independence of parametrization; reversing orientation changes the sign.
+\item \textbf{The ML-estimate:} $\bigl|\int_\gamma f\bigr|\le\bigl(\sup_{\gamma}|f|\bigr)\cdot L(\gamma)$.
+\item For a polynomial $Q$ and a closed path $\gamma$, $\int_\gamma Q=0$.
+\item \textbf{Cauchy--Goursat:} if $f$ is holomorphic on an open set $U$ and $R\subseteq U$ is a closed rectangle, then
+      $\int_{\partial R}f=0$. Know the structure of the proof: subdivide into four rectangles,
+      pick the worst one, get nested rectangles shrinking to a point $z_0$, use the linear approximation of $f$ at $z_0$
+      together with the lemma on polynomials, and finish with the ML-estimate.
+      Note that no continuity of $f'$ is assumed (compare with the Green's theorem version).
+\end{itemize}
+
+\section*{How to prepare}
+\begin{itemize}[leftmargin=*]
+\item Work through Problem Sets 1 and 2.
+\item Try the 2021 and 2022 Midterm 1 papers (posted with solutions on the course site) under exam conditions: 50 minutes,
+      nothing on your desk. Note that the 2022 exam allowed a page of notes; this one does not.
+\item Practise writing out the key statements from memory: the definition of $\C$-differentiability,
+      the Cauchy--Riemann criterion, Hadamard's formula, the definition of analytic, the identity principle, the ML-estimate,
+      and Cauchy--Goursat.
+\end{itemize}
+
+\section*{Practice problems}
+\noindent These are for practice only; solutions will not be collected.
+
+\begin{enumerate}[leftmargin=*]
+
+\item Find all solutions of $z^4=-16$ and plot them. Then describe geometrically the set
+      $\{z\in\C:\ |z-1|=|z+i|\}$.
+
+\item Show that if $|w|<1$ and $|z|<1$, then $\left|\dfrac{z-w}{1-\ov wz}\right|<1$.
+      \emph{(Hint: compare $|1-\ov wz|^2-|z-w|^2$.)}
+
+\item Using the Cauchy--Riemann criterion, determine the set of points at which each function is $\C$-differentiable:
+\begin{enumerate}
+\item $f(z)=|z|^2$;
+\item $f(x+iy)=x^2+iy^2$;
+\item $f(z)=z\,\ov z^{\,2}$.
+\end{enumerate}
+
+\item Let $f$ be holomorphic on the unit disc and suppose that $|f|$ is constant. Prove that $f$ is constant.
+
+\item Find the radius of convergence of
+\begin{enumerate}
+\item $\displaystyle\sum_{n\ge0}\frac{n^3}{3^n}\,z^n$;
+\item $\displaystyle\sum_{n\ge0}2^n z^{2n}$;
+\item $\displaystyle\sum_{n\ge1}n!\,z^{n^2}$.
+\end{enumerate}
+
+\item Find the terms of order $\le3$ in the power series of $\dfrac{e^z}{1-z}$ at $z=0$, and of
+      $\dfrac{1}{\cos z}$ at $z=0$. What is the radius of convergence of the first?
+
+\item Show directly from the definition that $f(z)=1/z$ is analytic on $\C\setminus\{0\}$:
+      expand it as a power series around an arbitrary $z_0\ne0$ and find the radius of convergence.
+
+\item Let $f$ be analytic on the unit disc $D(0,1)$.
+\begin{enumerate}
+\item If $f(1/n)=1/n^2$ for all $n\ge2$, determine $f$.
+\item Is there such an $f$ with $f(1/n)=(-1)^n/n$ for all $n\ge2$? Justify your answer.
+\end{enumerate}
+
+\item Suppose $f(z)=\sum a_nz^n$ has radius of convergence $r>0$ and $f(z)=f(-z)$ for all $|z|<r$. Show that $a_n=0$ for all odd $n$.
+
+\item Compute $\displaystyle\int_\gamma \ov z\,dz$ where $\gamma$ is the unit circle traversed once counterclockwise, and also
+      where $\gamma$ is the boundary of the square with vertices $0,1,1+i,i$. Why does this not contradict the Cauchy--Goursat theorem?
+
+\item Let $C_R$ denote the circle $|z|=R$ traversed once counterclockwise, with $R>1$. Use the ML-estimate to show
+\[
+\left|\int_{C_R}\frac{dz}{z^2+1}\right|\le\frac{2\pi R}{R^2-1},
+\]
+and conclude that the integral tends to $0$ as $R\to\infty$.
+
+\item State the Cauchy--Goursat theorem carefully. In its proof, explain (i) why the nested rectangles shrink to a single point
+      $z_0\in R$, (ii) exactly where the hypothesis that $f$ is $\C$-differentiable at $z_0$ is used, and (iii) how the
+      estimate $\bigl|\int_{\partial R}f\bigr|\le 4^n\bigl|\int_{\partial R_n}f\bigr|$ combines with the ML-estimate to finish the argument.
+
+\end{enumerate}
+
+\end{document}
