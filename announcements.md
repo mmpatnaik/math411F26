@@ -11,6 +11,9 @@
 # The site sorts by date and shows the newest first, so old announcements
 # stay on the page as a running log.
 
+## 2026-09-28
+[Homework 2 solutions](hw/hw-02-solutions.pdf) are posted. Review materials for Midterm 1 (Friday, October 9) are posted under [Midterm 1](#midterm1), including a [coverage sheet](exams/midterm-1-coverage.pdf) and past exams with solutions.
+
 ## 2026-09-20
 [Homework 2](hw/hw-02.pdf) is posted. It covers Lectures 6-8; the suggested completion date is September 28.
 
