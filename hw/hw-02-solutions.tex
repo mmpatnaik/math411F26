@@ -35,7 +35,13 @@
 \newtheorem*{nclaim}{Claim}
 \newtheorem*{nde}{Definition}
 \newtheorem*{nex}{Example}
-\newenvironment{solution}{\par\smallskip\noindent\textbf{Solution.}}{\hfill$\square$\par\medskip}
+\usepackage[most]{tcolorbox}
+\definecolor{solblue}{RGB}{232,243,252}
+\definecolor{solframe}{RGB}{120,170,215}
+\newenvironment{solution}
+  {\par\smallskip\begin{tcolorbox}[breakable, enhanced, colback=solblue, colframe=solframe,
+     boxrule=0.5pt, arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt]\noindent\textbf{Solution.}}
+  {\hfill$\square$\end{tcolorbox}\par\medskip}
 
 \newtheoremstyle{test}{3pt}{3pt}{\itshape}{\parindent}{\bfseries}{---}{  }{\thmnote{#3}} \theoremstyle{test}
 \newtheorem*{mythm}{}
@@ -122,8 +128,10 @@
 \begin{solution}
 Recall
 \[
-\sin T=T-\frac{T^3}{6}+\frac{T^5}{120}-\cdots,\quad
-\cos T=1-\frac{T^2}{2}+\frac{T^4}{24}-\cdots,\quad
+\sin T=T-\frac{T^3}{6}+\frac{T^5}{120}-\cdots,\qquad
+\cos T=1-\frac{T^2}{2}+\frac{T^4}{24}-\cdots,
+\]
+\[
 e^T=1+T+\frac{T^2}{2}+\frac{T^3}{6}+\frac{T^4}{24}+\cdots.
 \]
 Throughout, $O(T^k)$ denotes a power series all of whose terms have degree $\geq k$.
@@ -135,11 +143,11 @@ $v=\frac{T^2}{2}-\frac{T^4}{24}+\cdots$. Since $v$ has no constant term,
 \frac{1}{\cos T}=1+v+v^2+\cdots=1+\frac{T^2}{2}+O(T^4),
 \]
 because $v^2=O(T^4)$. Therefore
-\[
-\frac{\sin T}{\cos T}=\Bigl(T-\frac{T^3}{6}+O(T^5)\Bigr)\Bigl(1+\frac{T^2}{2}+O(T^4)\Bigr)
-=T+\Bigl(\frac12-\frac16\Bigr)T^3+O(T^5)
+\begin{align*}
+\frac{\sin T}{\cos T}&=\Bigl(T-\frac{T^3}{6}+O(T^5)\Bigr)\Bigl(1+\frac{T^2}{2}+O(T^4)\Bigr)\\
+&=T+\Bigl(\frac12-\frac16\Bigr)T^3+O(T^5)
 =\boxed{T+\frac{T^3}{3}}+O(T^5).
-\]
+\end{align*}
 (There is no $T^0$ or $T^2$ term, as expected since $\tan$ is odd.)
 
 \medskip
@@ -150,11 +158,11 @@ lives in the Laurent series $\C((T))$. As in lecture, factor
 \]
 where $u$ has constant term $1$ and is therefore invertible. Writing $u=1-w$ with
 $w=\frac{T^2}{6}-\frac{T^4}{120}+\cdots$, we get
-\[
-\frac{1}{u}=1+w+w^2+O(T^6)
-=1+\frac{T^2}{6}+\Bigl(\frac{1}{36}-\frac{1}{120}\Bigr)T^4+O(T^6)
-=1+\frac{T^2}{6}+\frac{7}{360}T^4+O(T^6).
-\]
+\begin{align*}
+\frac{1}{u}&=1+w+w^2+O(T^6)
+=1+\frac{T^2}{6}+\Bigl(\frac{1}{36}-\frac{1}{120}\Bigr)T^4+O(T^6)\\
+&=1+\frac{T^2}{6}+\frac{7}{360}T^4+O(T^6).
+\end{align*}
 Since we will divide by $T$, to get all terms of order $\leq3$ we need $e^T/u$ up to order $4$:
 \begin{align*}
 \frac{e^T}{u}&=\Bigl(1+T+\frac{T^2}{2}+\frac{T^3}{6}+\frac{T^4}{24}\Bigr)\Bigl(1+\frac{T^2}{6}+\frac{7}{360}T^4\Bigr)+O(T^5)\\
