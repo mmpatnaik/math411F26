@@ -241,6 +241,8 @@
   .exam-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 1.5rem 2rem; margin-top: 1.75rem; }
   .exam-meta dt { font-family: "IBM Plex Mono", monospace; font-size: 0.7rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-faint); margin: 0 0 0.35rem; }
   .exam-meta dd { margin: 0; font-size: 1.02rem; }
+  .exam-meta .review-materials { grid-column: 1 / -1; }
+  .exam-meta .review-materials dd { display: grid; gap: 0.4rem; }
 
   .announce-list { display: flex; flex-direction: column; gap: 1rem; max-width: 46rem; }
   .announce {
@@ -509,8 +511,11 @@
       <dl class="exam-meta">
         <div><dt>Date &amp; time</dt><dd>Friday, October 9, 2026 &#183; In class</dd></div>
         <div><dt>Format</dt><dd>In class, closed book</dd></div>
-        <div><dt>Coverage</dt><dd>Lectures 1&#8211;14</dd></div>
-        <div><dt>Review materials</dt><dd><span class="tba">Posted closer to the exam</span></dd></div>
+        <div><dt>Coverage</dt><dd data-coverage="1"><span class="tba">Coverage PDF coming soon</span></dd></div>
+        <div class="review-materials"><dt>Review materials</dt><dd>
+          <div>2021: <a href="exams/midterm-1-2021.pdf">Exam PDF</a> &#183; <a href="exams/midterm-1-2021-solutions.pdf">Solutions PDF</a></div>
+          <div>2022: <a href="exams/midterm-1-2022.pdf">Exam PDF</a> &#183; <a href="exams/midterm-1-2022-solutions.pdf">Solutions PDF</a></div>
+        </dd></div>
       </dl>
     </div>
   </section>
