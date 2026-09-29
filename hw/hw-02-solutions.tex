@@ -126,53 +126,61 @@
 \end{enumerate}
 
 \begin{solution}
-Recall
-\[
-\sin T=T-\frac{T^3}{6}+\frac{T^5}{120}-\cdots,\qquad
-\cos T=1-\frac{T^2}{2}+\frac{T^4}{24}-\cdots,
-\]
-\[
-e^T=1+T+\frac{T^2}{2}+\frac{T^3}{6}+\frac{T^4}{24}+\cdots.
-\]
-Throughout, $O(T^k)$ denotes a power series all of whose terms have degree $\geq k$.
+In class we defined
+\begin{align*}
+\cos T&=1-\frac{T^2}{2!}+\frac{T^4}{4!}-\cdots=\sum_{n=0}^{\infty}(-1)^n\frac{T^{2n}}{(2n)!},\\
+\sin T&=T-\frac{T^3}{3!}+\frac{T^5}{5!}-\cdots=\sum_{n=0}^{\infty}(-1)^n\frac{T^{2n+1}}{(2n+1)!},\\
+e^T&=1+T+\frac{T^2}{2!}+\frac{T^3}{3!}+\cdots=\sum_{n=0}^{\infty}\frac{T^n}{n!}.
+\end{align*}
 
 \medskip
-\noindent (a) Since $\cos T$ has constant term $1\neq 0$, it is invertible in $\C[[T]]$. Write $\cos T=1-v$ with
-$v=\frac{T^2}{2}-\frac{T^4}{24}+\cdots$. Since $v$ has no constant term,
+\noindent (a) Write
 \[
-\frac{1}{\cos T}=1+v+v^2+\cdots=1+\frac{T^2}{2}+O(T^4),
+\frac{1}{\cos T}=b_0+b_1T+b_2T^2+\cdots,
 \]
-because $v^2=O(T^4)$. Therefore
+so that
+\[
+\bigl(b_0+b_1T+b_2T^2+\cdots\bigr)\Bigl(1-\frac{T^2}{2!}+\frac{T^4}{4!}-\cdots\Bigr)=1 .
+\]
+Comparing coefficients:
 \begin{align*}
-\frac{\sin T}{\cos T}&=\Bigl(T-\frac{T^3}{6}+O(T^5)\Bigr)\Bigl(1+\frac{T^2}{2}+O(T^4)\Bigr)\\
-&=T+\Bigl(\frac12-\frac16\Bigr)T^3+O(T^5)
-=\boxed{T+\frac{T^3}{3}}+O(T^5).
+b_0&=1 &&\text{(coefficient of $T^0$)},\\
+b_1&=0 &&\text{(coefficient of $T$)},\\
+b_2-\frac{b_0}{2}&=0,\ \text{so } b_2=\tfrac12 &&\text{(coefficient of $T^2$)}.
 \end{align*}
-(There is no $T^0$ or $T^2$ term, as expected since $\tan$ is odd.)
+Hence
+\[
+\frac{1}{\cos T}=1+\frac12T^2+\cdots
+\]
+and
+\begin{align*}
+\frac{\sin T}{\cos T}&=\Bigl(1+\frac12T^2+\cdots\Bigr)\Bigl(T-\frac{T^3}{3!}+\frac{T^5}{5!}-\cdots\Bigr)\\
+&=T+\Bigl(\frac12-\frac16\Bigr)T^3+\cdots=\boxed{T+\frac{T^3}{3}}+\cdots .
+\end{align*}
 
 \medskip
-\noindent (b) Now $\sin T$ has zero constant term, so it is \emph{not} invertible in $\C[[T]]$; the quotient
-lives in the Laurent series $\C((T))$. As in lecture, factor
+\noindent (b) Write
 \[
-\sin T=T\,u(T),\qquad u(T)=1-\frac{T^2}{6}+\frac{T^4}{120}-\cdots,
+\sin T=T\Bigl(1-\frac{T^2}{3!}+\frac{T^4}{5!}-\cdots\Bigr)=T\bigl(1-h(T)\bigr),
 \]
-where $u$ has constant term $1$ and is therefore invertible. Writing $u=1-w$ with
-$w=\frac{T^2}{6}-\frac{T^4}{120}+\cdots$, we get
-\begin{align*}
-\frac{1}{u}&=1+w+w^2+O(T^6)
-=1+\frac{T^2}{6}+\Bigl(\frac{1}{36}-\frac{1}{120}\Bigr)T^4+O(T^6)\\
-&=1+\frac{T^2}{6}+\frac{7}{360}T^4+O(T^6).
-\end{align*}
-Since we will divide by $T$, to get all terms of order $\leq3$ we need $e^T/u$ up to order $4$:
-\begin{align*}
-\frac{e^T}{u}&=\Bigl(1+T+\frac{T^2}{2}+\frac{T^3}{6}+\frac{T^4}{24}\Bigr)\Bigl(1+\frac{T^2}{6}+\frac{7}{360}T^4\Bigr)+O(T^5)\\
-&=1+T+\Bigl(\frac12+\frac16\Bigr)T^2+\Bigl(\frac16+\frac16\Bigr)T^3+\Bigl(\frac1{24}+\frac1{12}+\frac{7}{360}\Bigr)T^4+O(T^5)\\
-&=1+T+\frac23T^2+\frac13T^3+\frac{13}{90}T^4+O(T^5).
-\end{align*}
-Dividing by $T$,
+where
 \[
-\frac{e^T}{\sin T}=\boxed{\frac1T+1+\frac23T+\frac13T^2+\frac{13}{90}T^3}+O(T^4).
+h(T)=\frac{T^2}{3!}-\frac{T^4}{5!}+\cdots .
 \]
+Since $h$ has no constant term,
+\begin{align*}
+\frac{1}{\sin T}&=\frac1T\bigl(1+h(T)+h(T)^2+\cdots\bigr)
+=\frac1T\Bigl(1+\frac{T^2}{3!}+\Bigl(\frac1{36}-\frac1{120}\Bigr)T^4+\cdots\Bigr)\\
+&=\frac1T\Bigl(1+\frac{T^2}{3!}+\frac{7T^4}{360}+\cdots\Bigr).
+\end{align*}
+So
+\begin{align*}
+\frac{e^T}{\sin T}&=\frac1T\Bigl(1+T+\frac{T^2}{2!}+\frac{T^3}{3!}+\frac{T^4}{4!}+\cdots\Bigr)\\
+&\qquad\cdot\Bigl(1+\frac{T^2}{3!}+\frac{7T^4}{360}+\cdots\Bigr)\\
+&=\frac1T\Bigl(1+T+\frac23T^2+\frac13T^3+\frac{13}{90}T^4+\cdots\Bigr)\\
+&=\boxed{\frac1T+1+\frac{2T}{3}+\frac{T^2}{3}+\frac{13T^3}{90}}+\cdots .
+\end{align*}
+(For the $T^4$ coefficient inside the parentheses: $\frac1{24}+\frac1{12}+\frac7{360}=\frac{52}{360}=\frac{13}{90}$.)
 \end{solution}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -195,57 +203,60 @@ F(T)=\sum_{n=0}^{\infty}a_nT^n.
 Show that it represents a rational function $f(T)/g(T)$, where $f(T)$ and $g(T)$ are polynomials with $g(T)\neq 0$. Give the partial fraction decomposition of this rational function.
 
 \begin{solution}
-Expanding $(T-\alpha)(T-\alpha')$ and comparing coefficients,
-\begin{equation}\label{eq:u}
-u_1=\alpha+\alpha',\qquad u_2=-\alpha\alpha'.
+If $T^2-u_1T-u_2=(T-\alpha)(T-\alpha')$, then we first note that
+\begin{equation}\label{u:alpha}
+u_1=\alpha+\alpha'\quad\text{and}\quad u_2=-\alpha\alpha' .
 \end{equation}
-In particular $\alpha^2=u_1\alpha+u_2$ and $(\alpha')^2=u_1\alpha'+u_2$, since $\alpha,\alpha'$ are roots of $T^2-u_1T-u_2$.
-
-\medskip
-\noindent\emph{Finding $A$ and $B$.} If the formula is to hold for $n=0,1$ we need
-\[
-A+B=a_0,\qquad A\alpha+B\alpha'=a_1 .
-\]
-Since $\alpha\neq\alpha'$, this linear system has the unique solution
-\begin{equation}\label{eq:AB}
-A=\frac{a_1-a_0\alpha'}{\alpha-\alpha'},\qquad B=\frac{a_0\alpha-a_1}{\alpha-\alpha'}.
+Now, if $a_n=A\alpha^n+B(\alpha')^n$, we must have in particular that
+\begin{equation}\label{a12}
+a_1=A\alpha+B\alpha'\quad\text{and}\quad a_0=A+B.
 \end{equation}
-
-\noindent\emph{The formula holds for all $n$.} Define $A,B$ by \eqref{eq:AB}. We show $a_n=A\alpha^n+B(\alpha')^n$ by
-strong induction on $n$. The cases $n=0,1$ hold by construction. Suppose $m\geq1$ and the formula holds for all $n\leq m$. Then
+These can be solved for $A,B$ to yield
+\begin{equation}\label{A:B}
+A=\frac{a_1-a_0\alpha'}{\alpha-\alpha'}\quad\text{and}\quad B=a_0-A=\frac{a_0\alpha-a_1}{\alpha-\alpha'} .
+\end{equation}
+Note that the ratio involved in the definition of $A$ is well-defined as we assumed $\alpha\neq\alpha'$. So let us now
+\emph{define} $A$ and $B$ as in \eqref{A:B} and verify that with these definitions we must have
+\begin{equation}\label{an}
+a_n=A\alpha^n+B(\alpha')^n\quad\text{for any } n\geq0.
+\end{equation}
+Indeed, for $n=0,1$ this follows immediately from the way we have defined $A$ and $B$, so let us assume the formula
+\eqref{an} holds for $a_n$ when $n=0,\dots,m$ with $m\geq1$. We argue that it must also hold for $m+1$, i.e.\
+$a_{m+1}=A\alpha^{m+1}+B(\alpha')^{m+1}$. Indeed, by hypothesis, we have
 \begin{align*}
-a_{m+1}&=u_1a_m+u_2a_{m-1}
-=u_1\bigl(A\alpha^m+B(\alpha')^m\bigr)+u_2\bigl(A\alpha^{m-1}+B(\alpha')^{m-1}\bigr)\\
-&=A\alpha^{m-1}(u_1\alpha+u_2)+B(\alpha')^{m-1}(u_1\alpha'+u_2)
-=A\alpha^{m+1}+B(\alpha')^{m+1},
+a_{m+1}&=u_1a_m+u_2a_{m-1}=u_1\bigl(A\alpha^m+B(\alpha')^m\bigr)+u_2\bigl(A\alpha^{m-1}+B(\alpha')^{m-1}\bigr)\\
+&=A\alpha^{m-1}(u_1\alpha+u_2)+B(\alpha')^{m-1}(u_1\alpha'+u_2).
 \end{align*}
-which completes the induction.
+Using \eqref{u:alpha} (equivalently, since $\alpha,\alpha'$ are roots of $T^2-u_1T-u_2$), we have $u_1\alpha+u_2=\alpha^2$
+and $u_1\alpha'+u_2=(\alpha')^2$, so the induction is proven.
 
 \medskip
-\noindent\emph{$F$ is rational.} In $\C[[T]]$, the series $1-cT$ is invertible for any $c\in\C$, with inverse
-$\sum_{n\geq0}c^nT^n$. Hence the closed form for $a_n$ gives
+Defining $F(T)$ as in the problem, we find
+\begin{align*}
+u_1TF(T)&=\sum_{n\geq1}u_1a_{n-1}T^n=u_1a_0T+u_1a_1T^2+\cdots,\\
+u_2T^2F(T)&=\sum_{n\geq2}u_2a_{n-2}T^n=u_2a_0T^2+u_2a_1T^3+\cdots,
+\end{align*}
+and therefore, using the recursion for the coefficients of $T^n$ with $n\geq2$, we have (formally)
 \[
-F(T)=\sum_{n\ge0}\bigl(A\alpha^n+B(\alpha')^n\bigr)T^n
-=\boxed{\frac{A}{1-\alpha T}+\frac{B}{1-\alpha' T}},
+F(T)-a_0-a_1T=u_1TF(T)-u_1a_0T+u_2T^2F(T).
 \]
-with $A,B$ as in \eqref{eq:AB}. This is the partial fraction decomposition. Putting it over a common denominator and using
-\eqref{eq:u},
+Solving for $F(T)$ we find
+\begin{equation}\label{sol:F}
+F(T)=\frac{a_0+a_1T-u_1a_0T}{1-u_1T-u_2T^2},
+\end{equation}
+so $F=f/g$ with $f(T)=a_0+(a_1-u_1a_0)T$ and $g(T)=1-u_1T-u_2T^2$; note $g\neq0$ since its constant term is $1$.
+From \eqref{u:alpha} we find that
 \[
 (1-\alpha T)(1-\alpha'T)=1-(\alpha+\alpha')T+\alpha\alpha'T^2=1-u_1T-u_2T^2,
 \]
-and
+so that
 \[
-A(1-\alpha'T)+B(1-\alpha T)=(A+B)-(A\alpha'+B\alpha)T=a_0+(a_1-u_1a_0)T,
+F(T)=\frac{a_0+a_1T-u_1a_0T}{(1-\alpha T)(1-\alpha'T)}=\boxed{\frac{A}{1-\alpha T}+\frac{B}{1-\alpha'T}},
 \]
-where we used $A\alpha'+B\alpha=(A+B)(\alpha+\alpha')-(A\alpha+B\alpha')=u_1a_0-a_1$. So
-\[
-F(T)=\frac{f(T)}{g(T)},\qquad f(T)=a_0+(a_1-u_1a_0)T,\qquad g(T)=1-u_1T-u_2T^2,
-\]
-and $g\neq0$ since its constant term is $1$.
-
-\medskip
-\noindent\emph{Remark.} One can also see $F=f/g$ directly, without the closed form. For $n\geq2$, the coefficient of $T^n$ in
-$(1-u_1T-u_2T^2)F(T)$ is $a_n-u_1a_{n-1}-u_2a_{n-2}=0$. The coefficients of $T^0$ and $T^1$ are $a_0$ and $a_1-u_1a_0$.
+with $A,B$ as in \eqref{A:B}. This last equality follows immediately from clearing denominators and using \eqref{u:alpha}
+and \eqref{a12}: indeed $A(1-\alpha'T)+B(1-\alpha T)=(A+B)-(A\alpha'+B\alpha)T$, and
+$A\alpha'+B\alpha=(A+B)(\alpha+\alpha')-(A\alpha+B\alpha')=u_1a_0-a_1$.
+(Alternatively, expand each term as a geometric series, $\frac{A}{1-\alpha T}=\sum A\alpha^nT^n$, and compare with \eqref{an}.)
 \end{solution}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -257,36 +268,36 @@ $(1-u_1T-u_2T^2)F(T)$ is $a_n-u_1a_{n-1}-u_2a_{n-2}=0$. The coefficients of $T^0
 \end{enumerate}
 
 \begin{solution}
-We use Hadamard's formula $1/r=\limsup_n|a_n|^{1/n}$ throughout, together with the fact that
-\begin{equation}\label{eq:n1n}
-\lim_{n\to\infty}n^{1/n}=1,
-\end{equation}
-which holds because $n^{1/n}=e^{(\log n)/n}$ and $(\log n)/n\to0$. It follows that $n^{c/n}=(n^{1/n})^c\to1$ for any fixed real $c$.
+\noindent (a) It is $\boxed{1}$. We use Hadamard's criterion and compute
+\[
+\limsup_{n\to\infty}|n^2|^{1/n}=\limsup_{n\to\infty}n^{2/n}=\limsup_{n\to\infty}e^{\frac{2\log n}{n}}=1,
+\]
+since $\lim_{n\to\infty}\frac{2\log n}{n}=0$.
 
 \medskip
-\noindent (a) By \eqref{eq:n1n}, $(n^2)^{1/n}=(n^{1/n})^2\to1$. So $\limsup_n|n^2|^{1/n}=1$ and the radius of convergence is $\boxed{1}$.
+\noindent (b) First note that
+\[
+\lim_{n\to\infty}(1/n)^{1/n}=1 .
+\]
+Also, as we observed in class, we have the Stirling estimate $n!=n^ne^{-n}u_n$ where $\lim u_n^{1/n}=1$. Thus
+$(n!)^{1/n}=n\,e^{-1}u_n^{1/n}$, and
+\[
+\limsup\,(n!)^{1/n}(1/n)^{1/n}=\limsup\,n\,e^{-1}u_n^{1/n}(1/n)^{1/n}=\infty,
+\]
+so the radius of convergence is $\boxed{0}$.
 
 \medskip
-\noindent (b) Here $a_n=n!/n=(n-1)!$. At least half of the factors $1,2,\dots,n$ are $\geq n/2$, so $n!\geq(n/2)^{n/2}$ and
+\noindent (c) Again, we use Hadamard's criterion to compute $\limsup_{n\to\infty}|n^da_n|^{1/n}$. First,
 \[
-(n!)^{1/n}\geq\sqrt{n/2}\longrightarrow\infty .
+\lim_{n\to\infty}n^{d/n}=\lim_{n\to\infty}e^{\frac{d\log n}{n}}=1 .
 \]
-Since $(1/n)^{1/n}\to1$ by \eqref{eq:n1n}, we have\\ $|a_n|^{1/n}=(n!)^{1/n}(1/n)^{1/n}\to\infty$. Hence
-$\limsup_n|a_n|^{1/n}=\infty$ and the radius of convergence is $\boxed{0}$, i.e.\ the series converges only at $z=0$.
-
-\medskip
-\noindent (c) Set $L=\limsup_n|a_n|^{1/n}=1/r\in[0,\infty)$ and $b_n=n^{d/n}$, so that
+Since $|n^da_n|^{1/n}=n^{d/n}|a_n|^{1/n}$, and $n^{d/n}$ is a sequence of positive numbers with limit $1$, the remarks
+before Theorem 2.6 in Lang (p.~55) (if $\lim t_n=t$ exists and $t\neq0,\infty$, then $\limsup t_ns_n=t\limsup s_n$)
+give
 \[
-|n^da_n|^{1/n}=b_n\,|a_n|^{1/n},\qquad b_n\to1\ \text{by \eqref{eq:n1n}}.
+\limsup_{n\to\infty}|n^da_n|^{1/n}=\limsup_{n\to\infty}|a_n|^{1/n}=1/r .
 \]
-Let $0<\varepsilon<1$. For all sufficiently large $n$ we have $1-\varepsilon\leq b_n\leq1+\varepsilon$, and therefore
-\[
-(1-\varepsilon)|a_n|^{1/n}\leq|n^da_n|^{1/n}\leq(1+\varepsilon)|a_n|^{1/n}.
-\]
-Changing finitely many terms of a sequence does not change its $\limsup$, so
-$(1-\varepsilon)L\leq\limsup_n|n^da_n|^{1/n}\leq(1+\varepsilon)L$. Since $\varepsilon$ was arbitrary,
-$\limsup_n|n^da_n|^{1/n}=L$, and $\sum n^da_nz^n$ has radius of convergence $1/L=r$. (The same argument, with the
-convention $1/0=\infty$, also covers $r=\infty$.)
+Hence $\sum n^da_nz^n$ also has radius of convergence $r$.
 \end{solution}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -298,38 +309,41 @@ convention $1/0=\infty$, also covers $r=\infty$.)
 \end{enumerate}
 
 \begin{solution}
-By \eqref{eq:n1n}, $n^{1/n}\to1$, $(1/n^2)^{1/n}\to1$ and $(1/n)^{1/n}\to1$. So by Hadamard's formula all three series
-have radius of convergence $1$. It remains to study $|z|=1$. Recall that if $\sum c_n$ converges, then $c_n\to0$.
+\noindent (a) Since $\limsup n^{1/n}=1$, the assertion about the radius of convergence being equal to $1$ follows from
+Hadamard's theorem. On the other hand, if $|z|=1$, then the terms $nz^n$ of the series have norm $n$, which approaches
+infinity, so the series clearly cannot converge for any such $z$.
 
 \medskip
-\noindent (a) If $|z|=1$, then $|nz^n|=n\not\to0$, so $\sum nz^n$ diverges.
-
-\medskip
-\noindent (b) If $|z|=1$, then $|z^n/n^2|=1/n^2$, and $\sum1/n^2$ converges. (For instance,
-$\frac1{n^2}\leq\frac1{n(n-1)}=\frac1{n-1}-\frac1n$ for $n\geq2$, and the latter series telescopes.) By the comparison test,
-$\sum z^n/n^2$ converges, indeed absolutely.
-
-\medskip
-\noindent (c) At $z=1$ we get the harmonic series $\sum1/n$, which diverges. Now fix $z$ with $|z|=1$ and $z\neq1$, and set
+\noindent (b) Since $\limsup\frac{1}{n^{2/n}}=1$, the radius of convergence is $1$. If $|z|=1$, then
 \[
-S_0=0,\qquad S_n=\sum_{k=1}^nz^k=\frac{z(1-z^n)}{1-z}\quad(n\geq1).
+\sum\Bigl|\frac{z^n}{n^2}\Bigr|=\sum\frac1{n^2},
 \]
-The key point is that these partial sums are \emph{bounded}:
+and the latter converges by comparison with (a Riemann sum for) the convergent integral $\int_1^\infty\frac{1}{x^2}\,dx$, for
+example. So the series converges absolutely at every point of the unit circle.
+
+\medskip
+\noindent (c) Again, from Hadamard we see the radius of convergence is $1$. For $z=1$, this is the harmonic series, whose
+divergence is well known. So let us assume that $z\neq1$ but $z$ lies on the unit circle.
+
+We use \emph{summation by parts}: if $\{a_n\}_{n=1}^N$ and $\{b_n\}_{n=1}^N$ are finite sequences of complex numbers and
+$B_k=\sum_{n=1}^kb_n$, then
+\begin{equation}\label{sbp}
+\sum_{n=1}^Na_nb_n=a_NB_N-\sum_{n=1}^{N-1}(a_{n+1}-a_n)B_n .
+\end{equation}
+(Proof by induction on $N$: for $N=1$ both sides are $a_1b_1$. If $L_N$, $R_N$ denote the left and right hand sides, then
+$L_{N+1}-L_N=a_{N+1}b_{N+1}$, while
+$R_{N+1}-R_N=a_{N+1}B_{N+1}-a_NB_N-(a_{N+1}-a_N)B_N=a_{N+1}(B_{N+1}-B_N)=a_{N+1}b_{N+1}$.)
+
+Apply \eqref{sbp} to $\sum_{n=1}^N\frac1n z^n$ with $a_n=1/n$ and $b_n=z^n$. As $z\neq1$ we may write
+$B_n=\frac{z-z^{n+1}}{1-z}$, and since $a_{n+1}-a_n=-\frac{1}{n(n+1)}$, we obtain
 \[
-|S_n|\leq\frac{|z|\,(1+|z|^n)}{|1-z|}=\frac{2}{|1-z|}=:M\qquad\text{for all }n.
+\sum_{n=1}^N\frac1n z^n=\frac{1}{1-z}\cdot\frac{z-z^{N+1}}{N}+\frac{1}{1-z}\sum_{n=1}^{N-1}\frac{z-z^{n+1}}{n(n+1)} .
 \]
-Now use \emph{summation by parts}. Since $z^n=S_n-S_{n-1}$,
-\begin{align*}
-\sum_{n=1}^N\frac{z^n}{n}
-&=\sum_{n=1}^N\frac{S_n-S_{n-1}}{n}
-=\sum_{n=1}^N\frac{S_n}{n}-\sum_{n=0}^{N-1}\frac{S_n}{n+1}\\
-&=\frac{S_N}{N}+\sum_{n=1}^{N-1}S_n\Bigl(\frac1n-\frac1{n+1}\Bigr)
-=\frac{S_N}{N}+\sum_{n=1}^{N-1}\frac{S_n}{n(n+1)} .
-\end{align*}
-As $N\to\infty$, the first term satisfies $|S_N/N|\leq M/N\to0$. For the second term,
-$\bigl|S_n/(n(n+1))\bigr|\leq M/n^2$, and $\sum M/n^2$ converges. So by the comparison test,
-$\sum_{n\geq1}S_n/(n(n+1))$ converges. Hence the partial sums $\sum_{n=1}^Nz^n/n$ converge as $N\to\infty$; that is,
-$\sum z^n/n$ converges at every $z\neq1$ on the unit circle.
+Now if $z$ is on the unit circle we have $|z-z^k|\leq2$ for any integer $k$. Hence the first term is bounded in norm by
+$\frac{2}{|1-z|N}$, which tends to $0$ as $N\to\infty$. In the second term, the $n$-th summand of the sum is bounded in norm by
+$\frac{2}{n(n+1)}$, and $\sum\frac{2}{n(n+1)}$ converges (it telescopes: $\frac1{n(n+1)}=\frac1n-\frac1{n+1}$). So the series
+$\sum_{n\geq1}\frac{z-z^{n+1}}{n(n+1)}$ converges absolutely. Letting $N\to\infty$, the partial sums
+$\sum_{n=1}^N\frac{z^n}{n}$ converge, i.e.\ $\sum\frac{z^n}{n}$ converges at every $z\neq1$ with $|z|=1$.
 \end{solution}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -340,31 +354,28 @@ f(z)=\frac{z-2}{(z+3)(z+2)}
 at $z=1$.
 
 \begin{solution}
-First decompose into partial fractions. Writing $\frac{z-2}{(z+3)(z+2)}=\frac{P}{z+3}+\frac{Q}{z+2}$ and evaluating
-$z-2=P(z+2)+Q(z+3)$ at $z=-3$ and $z=-2$ gives $P=5$ and $Q=-4$:
+We begin by noting that if $|z/a|<1$ we have
 \[
-f(z)=\frac{5}{z+3}-\frac{4}{z+2}.
+\frac{1}{a+z}=\frac1a\sum_{n=0}^{\infty}(-1)^n\Bigl(\frac za\Bigr)^n .
 \]
-Put $w=z-1$, so that $z+3=4+w$ and $z+2=3+w$. For $a\neq0$ and $|w|<|a|$, the geometric series gives
+Note that
 \[
-\frac{1}{a+w}=\frac1a\cdot\frac{1}{1+w/a}=\sum_{n\geq0}\frac{(-1)^n}{a^{n+1}}\,w^n .
+z-2=-1+(z-1),\qquad z+3=4+(z-1),\qquad z+2=3+(z-1).
 \]
-Applying this with $a=4$ and $a=3$, for $|z-1|<3$ we get
-\[
-f(z)=\sum_{n\geq0}c_n(z-1)^n,\qquad c_n=(-1)^n\Bigl(\frac{5}{4^{n+1}}-\frac{4}{3^{n+1}}\Bigr).
-\]
-Evaluating the first four coefficients:
-\begin{align*}
-c_0&=\tfrac54-\tfrac43=-\tfrac1{12}, &
-c_1&=-\bigl(\tfrac5{16}-\tfrac49\bigr)=\tfrac{19}{144},\\
-c_2&=\tfrac5{64}-\tfrac4{27}=-\tfrac{121}{1728}, &
-c_3&=-\bigl(\tfrac5{256}-\tfrac4{81}\bigr)=\tfrac{619}{20736}.
-\end{align*}
 Hence
-\[
-f(z)=\boxed{-\frac1{12}+\frac{19}{144}(z-1)-\frac{121}{1728}(z-1)^2+\frac{619}{20736}(z-1)^3}+\cdots
-\]
-for $|z-1|<3$. The radius of convergence is exactly $3$, the distance from $1$ to the nearest pole $z=-2$.
+\begin{align*}
+\frac{1}{z+3}&=\frac{1}{4+(z-1)}=\frac14\sum_{n=0}^{\infty}(-1)^n\Bigl(\frac{z-1}{4}\Bigr)^n,\\
+\frac{1}{z+2}&=\frac{1}{3+(z-1)}=\frac13\sum_{n=0}^{\infty}(-1)^n\Bigl(\frac{z-1}{3}\Bigr)^n,
+\end{align*}
+and so, for $|z-1|<3$,
+\begin{align*}
+\frac{z-2}{(z+3)(z+2)}&=\frac1{12}\bigl(-1+(z-1)\bigr)\sum_{n=0}^{\infty}(-1)^n\Bigl(\frac{z-1}{4}\Bigr)^n\sum_{n=0}^{\infty}(-1)^n\Bigl(\frac{z-1}{3}\Bigr)^n\\
+&=\frac1{12}\bigl(-1+(z-1)\bigr)\\
+&\qquad\cdot\Bigl(1-\frac{7}{12}(z-1)+\frac{37}{144}(z-1)^2-\frac{175}{1728}(z-1)^3+\cdots\Bigr)\\
+&=\boxed{-\frac1{12}+\frac{19}{144}(z-1)-\frac{121}{1728}(z-1)^2+\frac{619}{20736}(z-1)^3}+\cdots
+\end{align*}
+in a neighbourhood of $z=1$. (Here the coefficient of $(z-1)^n$ in the product of the two geometric series is
+$(-1)^n\sum_{k=0}^n4^{-k}3^{-(n-k)}$; e.g.\ for $n=2$ it is $\frac1{16}+\frac1{12}+\frac19=\frac{37}{144}$.)
 \end{solution}
 
 \end{enumerate}
