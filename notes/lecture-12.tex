@@ -131,6 +131,57 @@
 \tableofcontents
 \vspace{0.45em}
 
+\section{Review of path integrals and estimates}
+Recall the following definitions and estimates from Lecture~11. Let
+$U\subseteq\C$ be open.
+
+\begin{definition}[Piecewise continuously differentiable path]
+A curve $\gamma\colon[a,b]\to U$ is \emph{piecewise continuously differentiable}
+if it is continuous on $[a,b]$ and there is a finite partition
+$a=t_0<t_1<\cdots<t_m=b$ such that $\gamma$ is continuously differentiable
+on each $[t_{j-1},t_j]$, with one-sided derivatives at the endpoints.
+Unless said otherwise, a \emph{path} means such a curve. Its derivative
+need not exist at the joining points $t_1,\ldots,t_{m-1}$.
+\end{definition}
+
+\begin{definition}[Path integral]
+\label{def:path-int}
+For $f$ continuous on $U$ and $\gamma\colon[a,b]\to U$ a path, write
+$\gamma(t)=u(t)+iv(t)$, so $\gamma'(t)=u'(t)+iv'(t)$ on each $C^1$ piece. Then
+\be
+ \int_\gamma f=\int_\gamma f\,dz:=\int_a^bf\bigl(\gamma(t)\bigr)\,\gamma'(t)\,dt.
+\ee
+\end{definition}
+
+\begin{proposition}[Triangle inequality]
+\label{prop:basic-est}
+For continuous $F\colon[a,b]\to\C$,
+\be
+ \left|\int_a^bF(t)\,dt\right|\leq\int_a^b|F(t)|\,dt.
+\ee
+\end{proposition}
+
+\begin{proposition}[ML estimate]
+\label{prop:ML}
+For a path $\gamma\colon[a,b]\to\C$, let
+\be
+ L(\gamma)=\text{arclength of }\gamma=\int_a^b|\gamma'(t)|\,dt.
+\ee
+Then
+\be
+ \left|\int_\gamma f\right|\leq\Bigl(\sup_{z\in\gamma([a,b])}|f(z)|\Bigr)\cdot L(\gamma).
+\ee
+\end{proposition}
+
+\begin{proof}
+Why? Since $\int_\gamma f=\int_a^bf\bigl(\gamma(t)\bigr)\,\gamma'(t)\,dt$, the
+basic estimate above gives
+\be
+ \left|\int_\gamma f\right|\leq\int_a^b\bigl|f\bigl(\gamma(t)\bigr)\bigr|\,|\gamma'(t)|\,dt
+ \leq\sup_{z\in\gamma([a,b])}|f(z)|\int_a^b|\gamma'(t)|\,dt.
+\ee
+\end{proof}
+
 \section{The Cauchy--Goursat theorem}
 Let $U\subseteq\C$ be open and $f$ holomorphic on $U$. Let $R$ be any
 (closed) rectangle in $U$ with sides parallel to the axes, and write
@@ -320,5 +371,43 @@ $\frac1{2^n}$ from the diameter and the perimeter in Step~3. The theorem
 really uses only that $f$ is $\C$-differentiable at each point; we did not
 assume $f'$ is continuous.
 \end{remark}
+
+\section{Primitives}
+\begin{definition}[Primitive]
+Let $f$ be a continuous function on an open set $U\subseteq\C$. A
+\emph{primitive} for $f$ (or \emph{holomorphic primitive}) is a function
+$g\colon U\to\C$ such that $g$ is holomorphic and
+\be
+ g'=f\qquad\text{on }U.
+\ee
+\end{definition}
+
+\begin{example}[Analytic functions have local primitives]
+\label{ex:local-prim}
+Recall: if $f$ is analytic on $U$, so
+\be
+ f(z)=\sum a_n(z-z_0)^n\qquad\text{for $z$ near $z_0$},
+\ee
+then $f'(z)$ exists and is computed term by term. But we can also
+``integrate term by term'' to get the series
+\be
+ g(z)=\sum_n\frac{a_n}{n+1}(z-z_0)^{n+1}.
+\ee
+What do we know about this series? Its coefficient of $(z-z_0)^{n+1}$ is
+$\frac{a_n}{n+1}$, and
+\be
+ \limsup_n\left|\frac{a_n}{n+1}\right|^{1/n}
+ =\limsup_n\frac{|a_n|^{1/n}}{(n+1)^{1/n}}
+ =\limsup_n|a_n|^{1/n},
+\ee
+since $(n+1)^{1/n}\to1$. (Shifting the index by one does not change the
+radius of convergence.) Therefore $g(z)$ is also convergent for $z$ near
+$z_0$, so
+\be
+ g(z)\ \text{analytic}\ \Longrightarrow\ \text{holomorphic, and}\ g'=f
+\ee
+by term-by-term differentiation. So $g$ is a primitive for $f$ on a disc
+around $z_0$.
+\end{example}
 
 \end{document}
