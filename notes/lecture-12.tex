@@ -303,15 +303,12 @@ $z_0\in\bigcap_{n}R^{(n)}$.
 holomorphic. We pick $z_0$ to be the point $\bigcap_{n=1}^{\infty}R^{(n)}$.
 Then $f$ being holomorphic at $z_0\in U$ means: there is a function
 $\varphi(z)$ defined on a neighbourhood $V\ni z_0$, with
-$\lim_{z\to z_0}\varphi(z)=0$, such that
+$\lim_{z\to z_0}\varphi(z)=0$, $\varphi(z_0)=0$, and such that
 \begin{tcolorbox}[enhanced,colback=lightgreen,colframe=ForestGreen,boxrule=0.7pt,arc=2pt]
-\be
- f(z)=f(z_0)+f'(z_0)(z-z_0)+\varphi(z)(z-z_0)\qquad(z\in V).
-\ee
+\[ f(z)=f(z_0)+f'(z_0)(z-z_0)+\varphi(z)(z-z_0)\qquad(z\in V). \]
 \end{tcolorbox}
-Setting $\varphi(z_0)=0$, the function $\varphi$ is continuous on $V$
-(for $z\neq z_0$ it equals $\frac{f(z)-f(z_0)}{z-z_0}-f'(z_0)$, and $f$ is
-continuous).
+Note that the function $\varphi$ is continuous on $V$: this is certainly true at $z=z_0$, and for $z\neq z_0$ it equals $\frac{f(z)-f(z_0)}{z-z_0}-f'(z_0).$ But $f$ is
+continuous, being $\C$-differentiable.
 
 % Handwritten page 7.
 \noindent
@@ -372,42 +369,47 @@ really uses only that $f$ is $\C$-differentiable at each point; we did not
 assume $f'$ is continuous.
 \end{remark}
 
-\section{Primitives}
-\begin{definition}[Primitive]
-Let $f$ be a continuous function on an open set $U\subseteq\C$. A
-\emph{primitive} for $f$ (or \emph{holomorphic primitive}) is a function
-$g\colon U\to\C$ such that $g$ is holomorphic and
-\be
- g'=f\qquad\text{on }U.
-\ee
-\end{definition}
-
-\begin{example}[Analytic functions have local primitives]
-\label{ex:local-prim}
-Recall: if $f$ is analytic on $U$, so
-\be
- f(z)=\sum a_n(z-z_0)^n\qquad\text{for $z$ near $z_0$},
-\ee
-then $f'(z)$ exists and is computed term by term. But we can also
-``integrate term by term'' to get the series
-\be
- g(z)=\sum_n\frac{a_n}{n+1}(z-z_0)^{n+1}.
-\ee
-What do we know about this series? Its coefficient of $(z-z_0)^{n+1}$ is
-$\frac{a_n}{n+1}$, and
-\be
- \limsup_n\left|\frac{a_n}{n+1}\right|^{1/n}
- =\limsup_n\frac{|a_n|^{1/n}}{(n+1)^{1/n}}
- =\limsup_n|a_n|^{1/n},
-\ee
-since $(n+1)^{1/n}\to1$. (Shifting the index by one does not change the
-radius of convergence.) Therefore $g(z)$ is also convergent for $z$ near
-$z_0$, so
-\be
- g(z)\ \text{analytic}\ \Longrightarrow\ \text{holomorphic, and}\ g'=f
-\ee
-by term-by-term differentiation. So $g$ is a primitive for $f$ on a disc
-around $z_0$.
-\end{example}
+\begin{exercise}
+	
+	
+\end{exercise}
+%
+%\section{Primitives}
+%\begin{definition}[Primitive]
+%Let $f$ be a continuous function on an open set $U\subseteq\C$. A
+%\emph{primitive} for $f$ (or \emph{holomorphic primitive}) is a function
+%$g\colon U\to\C$ such that $g$ is holomorphic and
+%\be
+% g'=f\qquad\text{on }U.
+%\ee
+%\end{definition}
+%
+%\begin{example}[Analytic functions have local primitives]
+%\label{ex:local-prim}
+%Recall: if $f$ is analytic on $U$, so
+%\be
+% f(z)=\sum a_n(z-z_0)^n\qquad\text{for $z$ near $z_0$},
+%\ee
+%then $f'(z)$ exists and is computed term by term. But we can also
+%``integrate term by term'' to get the series
+%\be
+% g(z)=\sum_n\frac{a_n}{n+1}(z-z_0)^{n+1}.
+%\ee
+%What do we know about this series? Its coefficient of $(z-z_0)^{n+1}$ is
+%$\frac{a_n}{n+1}$, and
+%\be
+% \limsup_n\left|\frac{a_n}{n+1}\right|^{1/n}
+% =\limsup_n\frac{|a_n|^{1/n}}{(n+1)^{1/n}}
+% =\limsup_n|a_n|^{1/n},
+%\ee
+%since $(n+1)^{1/n}\to1$. (Shifting the index by one does not change the
+%radius of convergence.) Therefore $g(z)$ is also convergent for $z$ near
+%$z_0$, so
+%\be
+% g(z)\ \text{analytic}\ \Longrightarrow\ \text{holomorphic, and}\ g'=f
+%\ee
+%by term-by-term differentiation. So $g$ is a primitive for $f$ on a disc
+%around $z_0$.
+%\end{example}
 
 \end{document}
