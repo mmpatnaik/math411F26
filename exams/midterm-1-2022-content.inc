@@ -1,9 +1,9 @@
 \begin{enumerate}
 \item \begin{enumerate}
 \item \textbf{(3 points)} Find every solution of $z^3=-8i$. You may leave your answers in polar form $re^{i\theta}$.
-\worked{Since $-8i=8e^{-\pi i/2}$, its cube roots are
+\worked{Write $z=re^{i\theta}$. Since $-8i=8e^{3\pi i/2}$, we have $r^3=8$ and $3\theta=3\pi/2+2\pi k$. Thus $r=2$ and the three distinct roots are
 \[
-  z_k=2\exp\!\left(i\left(-\frac{\pi}{6}+\frac{2\pi k}{3}\right)\right),
+  z_k=2\exp\!\left(i\left(\frac{\pi}{2}+\frac{2\pi k}{3}\right)\right),
   \qquad k=0,1,2.
 \]}
 \item \textbf{(4 points)} Let $r>0$ be real and $w\in\C$. Show that
@@ -11,12 +11,16 @@
   \left|\frac{w-r}{1-r\overline w}\right|\le1
   \quad\text{when }r<1\text{ and }|w|<1.
 \]
-\worked{The denominator is nonzero because $|r\overline w|<1$. Direct expansion yields
+\worked{The denominator is nonzero because $|r\overline w|<1$. Compare the squares of the two moduli:
+\begin{align*}
+  |w-r|^2&=|w|^2-r(w+\overline w)+r^2,\\
+  |1-r\overline w|^2&=1-r(w+\overline w)+r^2|w|^2.
+\end{align*}
+Thus $|w-r|^2\leq|1-r\overline w|^2$ is equivalent to
 \[
-  |1-r\overline w|^2-|w-r|^2
-  =(1-r^2)(1-|w|^2)>0.
+  (1-r^2)(1-|w|^2)\geq0.
 \]
-Thus the desired quotient actually has modulus strictly less than $1$.}
+Both factors are positive under the stated hypotheses. In fact the inequality is strict, so the quotient has modulus less than $1$.}
 \end{enumerate}
 
 \item \textbf{(9 points)} Let $D=\{z\in\C:|z|<1\}$ and let $f=u+iv$ be holomorphic on $D$. Suppose $|f|^2=u^2+v^2=c$ throughout $D$, where $c>0$. Prove that $f$ is constant.\par
