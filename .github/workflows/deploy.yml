@@ -25,7 +25,7 @@ jobs:
 
       - name: Compile LaTeX sources
         run: |
-          docker run --rm -v "$PWD":/w -w /w texlive/texlive:latest bash -c '
+          docker run --rm -v "$PWD":/w -w /w registry.gitlab.com/islandoftex/images/texlive:latest bash -c '
             shopt -s nullglob
             for f in notes/*.tex hw/*.tex; do
               echo "--- compiling $f"
