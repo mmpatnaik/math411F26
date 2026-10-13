@@ -131,8 +131,8 @@
 \tableofcontents
 \vspace{0.45em}
 
-% Sources: handwritten Lecture 14 (all six pages) and Lecture 15 (pages 1--4).
-% Stop before "Contour integrals of holomorphic functions on continuous curves".
+% Source: handwritten Lecture 14, pages 1--5 (Gaussian integral).
+% The indented semicircular contour is continued in Lecture 15.
 \section{Review of Lecture 13: primitives and Cauchy's theorem}
 Throughout this lecture, a \emph{path} means a continuous, piecewise
 continuously differentiable curve.
@@ -174,8 +174,8 @@ The domain matters: $1/z$ is holomorphic on $\C\setminus\{0\}$, but
 its integral around the counterclockwise unit circle is $2\pi i$.
 Local primitives need not give a primitive on the whole domain.
 
-Today we combine Cauchy's theorem with the ML estimate to compute real
-integrals by choosing suitable closed contours.
+Today we combine Cauchy's theorem with the ML estimate to compute the
+Fourier transform of the Gaussian by shifting a rectangular contour.
 
 \newpage
 \section{The Gaussian integral and its Fourier transform}
@@ -313,150 +313,6 @@ The height $\xi$ was fixed while $R\to\infty$. Thus the lengths of the
 vertical sides stayed fixed, and the factor $e^{-\pi R^2}$ forced their
 integrals to vanish. The factor on the top side is $e^{+\pi\xi^2}$;
 solving for $F(\xi)$ produces $e^{-\pi\xi^2}$.
-\end{remark}
-
-\section{An indented semicircular contour}
-% Handwritten Lecture 14, pages 5--6; Lecture 15, pages 1--4.
-Our second example is
-\begin{equation}\label{eq:cosine-goal}
- \boxed{\displaystyle\int_0^\infty\frac{1-\cos x}{x^2}\,dx=\frac\pi2.}
-\end{equation}
-The integral converges: near $0$, $(1-\cos x)/x^2\to1/2$, and for
-$x\geq1$ its absolute value is at most $2/x^2$.
-
-To introduce complex analysis, set
-\[
- f(z)=\frac{1-e^{iz}}{z^2}\qquad(z\neq0).
-\]
-This is holomorphic away from $0$, and on the real axis
-\[
- f(x)=\frac{1-\cos x}{x^2}-i\frac{\sin x}{x^2}.
-\]
-We will integrate around a large upper semicircle, making a small
-semicircular indentation to avoid the origin.
-
-
-\subsection{The contour and the vanishing integral}
-Fix $0<\varepsilon<R$. The contour $\Gamma$ consists, in order, of
-\begin{itemize}
- \item $I_-=[-R,-\varepsilon]$, traversed from left to right;
- \item $\gamma_\varepsilon$, the upper semicircle from $-\varepsilon$ to
- $\varepsilon$, traversed clockwise;
- \item $I_+=[\varepsilon,R]$, traversed from left to right;
- \item $\gamma_R(\theta)=Re^{i\theta}$, $0\leq\theta\leq\pi$,
- traversed counterclockwise.
-\end{itemize}
-\begin{center}
-\begin{tikzpicture}[scale=0.9,
- decoration={markings,mark=at position 0.52 with {\arrow{>}}}]
- \fill[lightpink] (-3,0) arc[start angle=180,end angle=0,radius=3]
- --(0.65,0) arc[start angle=0,end angle=180,radius=0.65]--cycle;
- \draw[gray!65,->] (-3.6,0)--(3.7,0) node[right]{$\Real z$};
- \draw[very thick,courseblue,postaction={decorate}] (-3,0)--(-0.65,0);
- \draw[very thick,ForestGreen,postaction={decorate}] (-0.65,0)
- arc[start angle=180,end angle=0,radius=0.65];
- \draw[very thick,courseblue,postaction={decorate}] (0.65,0)--(3,0);
- \draw[very thick,courseblue,postaction={decorate}] (3,0)
- arc[start angle=0,end angle=180,radius=3];
- \node[below] at (-3,0){$-R$};\node[below] at (3,0){$R$};
- \node[below] at (-0.65,0){$-\varepsilon$};
- \node[below] at (0.65,0){$\varepsilon$};
- \fill (0,0) circle(1.5pt) node[below]{$0$};
- \node[above] at (0,3){$\gamma_R$};
- \node[above] at (0,0.7){$\gamma_\varepsilon$};
- \node[below] at (-1.8,0){$I_-$};\node[below] at (1.8,0){$I_+$};
-\end{tikzpicture}
-\end{center}
-For this contour we have
-\begin{equation}\label{eq:indented}
- \int_{I_-}f+\int_{\gamma_\varepsilon}f+
- \int_{I_+}f+\int_{\gamma_R}f=0.
-\end{equation}
-Here is a direct justification using facts already proved, without
-assuming a general version of Cauchy's theorem for arbitrary regions.
-The exponential series gives
-\begin{equation}\label{eq:split}
- f(z)=-\frac{i}{z}+E(z),\qquad
- E(z)=-\sum_{n=2}^{\infty}\frac{i^n z^{n-2}}{n!}
- =\frac12+\frac{iz}{6}-\frac{z^2}{24}+\cdots.
-\end{equation}
-The series for $E$ converges everywhere, so $E$ is entire and
-$\int_\Gamma E=0$. Also,
-\[
- \int_{I_-}\frac{dz}{z}+\int_{I_+}\frac{dz}{z}
- =\log\frac{\varepsilon}{R}+\log\frac{R}{\varepsilon}=0,
-\]
-while the two semicircles contribute
-\[
- \int_{\gamma_\varepsilon}\frac{dz}{z}=\int_\pi^0 i\,d\theta=-i\pi,
- \qquad
- \int_{\gamma_R}\frac{dz}{z}=\int_0^\pi i\,d\theta=i\pi.
-\]
-Thus $\int_\Gamma dz/z=0$, and \eqref{eq:split} proves
-\eqref{eq:indented}.
-
-
-\subsection{Estimating the arcs and taking limits}
-\textbf{The large semicircle.} In the upper half-plane,
-$|e^{iz}|=e^{-\Imag z}\leq1$, so $|1-e^{iz}|\leq2$.
-On $\gamma_R$, therefore, $|f(z)|\leq2/R^2$. The ML estimate gives
-\begin{equation}\label{eq:large-arc}
- \left|\int_{\gamma_R}f\right|
- \leq\frac{2}{R^2}\,\pi R=\frac{2\pi}{R}\longrightarrow0
- \qquad(R\to\infty).
-\end{equation}
-
-\textbf{The small semicircle.} Use \eqref{eq:split}. Since
-$\gamma_\varepsilon$ goes clockwise, its angle decreases from $\pi$ to $0$:
-\begin{align*}
- \int_{\gamma_\varepsilon}f(z)\,dz
- &=\int_\pi^0\frac{-i}{\varepsilon e^{i\theta}}
-       i\varepsilon e^{i\theta}\,d\theta
-       +\int_{\gamma_\varepsilon}E(z)\,dz\\
- &=-\pi+\int_{\gamma_\varepsilon}E(z)\,dz.
-\end{align*}
-As $E$ is continuous near $0$, there is a constant $M$ such that
-$|E(z)|\leq M$ for $|z|\leq1$. For $0<\varepsilon\leq1$,
-\[
- \left|\int_{\gamma_\varepsilon}E(z)\,dz\right|
- \leq M\pi\varepsilon\longrightarrow0.
-\]
-Consequently,
-\begin{equation}\label{eq:small-arc}
- \lim_{\varepsilon\to0^+}\int_{\gamma_\varepsilon}f=-\pi.
-\end{equation}
-
-\textbf{The real intervals.} Their sum is
-\begin{align*}
- \int_{I_-}f+\int_{I_+}f
- &=\int_{-R}^{-\varepsilon}\frac{1-e^{ix}}{x^2}\,dx
-   +\int_\varepsilon^R\frac{1-e^{ix}}{x^2}\,dx\\
- &=2\int_\varepsilon^R\frac{1-\cos x}{x^2}\,dx.
-\end{align*}
-The imaginary parts cancel because $\sin x/x^2$ is odd. Substitution
-into \eqref{eq:indented} yields
-\[
- 2\int_\varepsilon^R\frac{1-\cos x}{x^2}\,dx
- =-\int_{\gamma_\varepsilon}f-\int_{\gamma_R}f.
-\]
-First let $R\to\infty$ using \eqref{eq:large-arc}, and then let
-$\varepsilon\to0^+$ using \eqref{eq:small-arc}. We obtain
-\[
- 2\int_0^\infty\frac{1-\cos x}{x^2}\,dx=\pi,
-\]
-which proves \eqref{eq:cosine-goal}.
-
-\begin{remark}[The complex integral at the origin]
-The symmetric limit
-\[
- \lim_{\varepsilon\to0^+}\left(
- \int_{-\infty}^{-\varepsilon}\frac{1-e^{ix}}{x^2}\,dx+
- \int_\varepsilon^\infty\frac{1-e^{ix}}{x^2}\,dx\right)=\pi
-\]
-is a \emph{Cauchy principal value}. The separate one-sided complex
-integrals do not converge at $0$, because $f(x)=-i/x+O(1)$.
-The real part, however, has an ordinary convergent improper integral,
-with value $\pi$ on $\R$ and $\pi/2$ on $(0,\infty)$.
 \end{remark}
 
 \end{document}

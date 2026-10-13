@@ -1,0 +1,441 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{decorations.markings}
+\usepackage{enumitem}
+\usepackage{tocloft}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{courseblue}{HTML}{1F4E79}
+\definecolor{lightblue}{HTML}{EAF2F8}
+\definecolor{lightgreen}{HTML}{EAF7EA}
+\definecolor{lightpink}{HTML}{FCE8EF}
+\definecolor{lightyellow}{HTML}{FFF8D6}
+\definecolor{warningyellow}{HTML}{D6A000}
+\definecolor{exercisebg}{HTML}{D6E6F5}
+\definecolor{exerciseframe}{HTML}{1F4E79}
+\definecolor{examplebg}{HTML}{F4FAFE}
+\definecolor{exampleframe}{HTML}{85C1E9}
+\definecolor{darkgray}{HTML}{333333}
+\definecolor{lightorange}{HTML}{FDEBD8}
+\definecolor{orangeframe}{HTML}{E08A3C}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\setlist[itemize]{topsep=0.25em,itemsep=0.15em}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{fact}{Fact}
+\newtheorem*{warning}{Warning}
+
+\tcolorboxenvironment{definition}{
+  enhanced,
+  unbreakable,
+  colback=lightgreen,
+  colframe=ForestGreen,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{warning}{
+  enhanced,
+  colback=lightyellow,
+  colframe=warningyellow,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{exercise}{
+  enhanced,
+  colback=exercisebg,
+  colframe=exerciseframe,
+  boxrule=1pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{example}{
+  enhanced,
+  colback=examplebg,
+  colframe=exampleframe,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\numberwithin{equation}{section}
+
+\newcommand{\be}{\begin{eqnarray}}
+\newcommand{\ee}{\end{eqnarray}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+
+\DeclareMathOperator{\Hol}{\mathcal{H}\mathrm{ol}}
+\DeclareMathOperator{\Real}{Re}
+\DeclareMathOperator{\Imag}{Im}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\CT}{\C[[T]]}
+\newcommand{\CLT}{\C((T))}
+\tcbset{breakable}
+\begin{document}
+
+\begin{center}
+  \colorbox{lightblue}{%
+    \begin{minipage}{0.94\textwidth}
+      \vspace{0.55em}
+      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr}
+        {\color{courseblue}\bfseries\LARGE Lecture 15} &
+        {\color{courseblue}\bfseries\LARGE MATH 411}\\[0.35em]
+        \textbf{Fall 2026} & \textbf{Date: Oct 14, 2026}\\
+        & \textbf{Instructor: Manish Patnaik}
+      \end{tabular*}
+      \vspace{0.45em}
+    \end{minipage}}
+\end{center}
+
+\setcounter{tocdepth}{1}
+\tableofcontents
+\vspace{0.45em}
+
+% Sources: handwritten Lecture 14, pages 5--6; Lecture 15, all seven pages;
+% Lecture 16, pages 1--3 (integration along continuous curves).
+We continue Lecture~14's applications of Cauchy's theorem with an indented
+contour. We then define integrals of holomorphic functions along continuous
+curves using local primitives.
+
+\section{An indented semicircular contour}
+% Handwritten Lecture 14, pages 5--6; Lecture 15, pages 1--4.
+Continuing the real-integral examples from Lecture~14, we compute
+\begin{equation}\label{eq:cosine-goal}
+ \boxed{\displaystyle\int_0^\infty\frac{1-\cos x}{x^2}\,dx=\frac\pi2.}
+\end{equation}
+The integral converges: near $0$, $(1-\cos x)/x^2\to1/2$, and for
+$x\geq1$ its absolute value is at most $2/x^2$.
+
+To introduce complex analysis, set
+\[
+ f(z)=\frac{1-e^{iz}}{z^2}\qquad(z\neq0).
+\]
+This is holomorphic away from $0$, and on the real axis
+\[
+ f(x)=\frac{1-\cos x}{x^2}-i\frac{\sin x}{x^2}.
+\]
+We will integrate around a large upper semicircle, making a small
+semicircular indentation to avoid the origin.
+
+
+\newpage
+\subsection{The contour and the vanishing integral}
+Fix $0<\varepsilon<R$. The contour $\Gamma$ consists, in order, of
+\begin{itemize}
+ \item $I_-=[-R,-\varepsilon]$, traversed from left to right;
+ \item $\gamma_\varepsilon$, the upper semicircle from $-\varepsilon$ to
+ $\varepsilon$, traversed clockwise;
+ \item $I_+=[\varepsilon,R]$, traversed from left to right;
+ \item $\gamma_R(\theta)=Re^{i\theta}$, $0\leq\theta\leq\pi$,
+ traversed counterclockwise.
+\end{itemize}
+\begin{center}
+\begin{tikzpicture}[scale=0.9,
+ decoration={markings,mark=at position 0.52 with {\arrow{>}}}]
+ \fill[lightpink] (-3,0) arc[start angle=180,end angle=0,radius=3]
+ --(0.65,0) arc[start angle=0,end angle=180,radius=0.65]--cycle;
+ \draw[gray!65,->] (-3.6,0)--(3.7,0) node[right]{$\Real z$};
+ \draw[very thick,courseblue,postaction={decorate}] (-3,0)--(-0.65,0);
+ \draw[very thick,ForestGreen,postaction={decorate}] (-0.65,0)
+ arc[start angle=180,end angle=0,radius=0.65];
+ \draw[very thick,courseblue,postaction={decorate}] (0.65,0)--(3,0);
+ \draw[very thick,courseblue,postaction={decorate}] (3,0)
+ arc[start angle=0,end angle=180,radius=3];
+ \node[below] at (-3,0){$-R$};\node[below] at (3,0){$R$};
+ \node[below] at (-0.65,0){$-\varepsilon$};
+ \node[below] at (0.65,0){$\varepsilon$};
+ \fill (0,0) circle(1.5pt) node[below]{$0$};
+ \node[above] at (0,3){$\gamma_R$};
+ \node[above] at (0,0.7){$\gamma_\varepsilon$};
+ \node[below] at (-1.8,0){$I_-$};\node[below] at (1.8,0){$I_+$};
+\end{tikzpicture}
+\end{center}
+For this contour we have
+\begin{equation}\label{eq:indented}
+ \int_{I_-}f+\int_{\gamma_\varepsilon}f+
+ \int_{I_+}f+\int_{\gamma_R}f=0.
+\end{equation}
+Here is a direct justification using facts already proved, without
+assuming a general version of Cauchy's theorem for arbitrary regions.
+The exponential series gives
+\begin{equation}\label{eq:split}
+ f(z)=-\frac{i}{z}+E(z),\qquad
+ E(z)=-\sum_{n=2}^{\infty}\frac{i^n z^{n-2}}{n!}
+ =\frac12+\frac{iz}{6}-\frac{z^2}{24}+\cdots.
+\end{equation}
+The series for $E$ converges everywhere, so $E$ is entire and
+$\int_\Gamma E=0$. Also,
+\[
+ \int_{I_-}\frac{dz}{z}+\int_{I_+}\frac{dz}{z}
+ =\log\frac{\varepsilon}{R}+\log\frac{R}{\varepsilon}=0,
+\]
+while the two semicircles contribute
+\[
+ \int_{\gamma_\varepsilon}\frac{dz}{z}=\int_\pi^0 i\,d\theta=-i\pi,
+ \qquad
+ \int_{\gamma_R}\frac{dz}{z}=\int_0^\pi i\,d\theta=i\pi.
+\]
+Thus $\int_\Gamma dz/z=0$, and \eqref{eq:split} proves
+\eqref{eq:indented}.
+
+
+\subsection{Estimating the arcs and taking limits}
+\textbf{The large semicircle.} In the upper half-plane,
+$|e^{iz}|=e^{-\Imag z}\leq1$, so $|1-e^{iz}|\leq2$.
+On $\gamma_R$, therefore, $|f(z)|\leq2/R^2$. The ML estimate gives
+\begin{equation}\label{eq:large-arc}
+ \left|\int_{\gamma_R}f\right|
+ \leq\frac{2}{R^2}\,\pi R=\frac{2\pi}{R}\longrightarrow0
+ \qquad(R\to\infty).
+\end{equation}
+
+\textbf{The small semicircle.} Use \eqref{eq:split}. Since
+$\gamma_\varepsilon$ goes clockwise, its angle decreases from $\pi$ to $0$:
+\begin{align*}
+ \int_{\gamma_\varepsilon}f(z)\,dz
+ &=\int_\pi^0\frac{-i}{\varepsilon e^{i\theta}}
+       i\varepsilon e^{i\theta}\,d\theta
+       +\int_{\gamma_\varepsilon}E(z)\,dz\\
+ &=-\pi+\int_{\gamma_\varepsilon}E(z)\,dz.
+\end{align*}
+As $E$ is continuous near $0$, there is a constant $M$ such that
+$|E(z)|\leq M$ for $|z|\leq1$. For $0<\varepsilon\leq1$,
+\[
+ \left|\int_{\gamma_\varepsilon}E(z)\,dz\right|
+ \leq M\pi\varepsilon\longrightarrow0.
+\]
+Consequently,
+\begin{equation}\label{eq:small-arc}
+ \lim_{\varepsilon\to0^+}\int_{\gamma_\varepsilon}f=-\pi.
+\end{equation}
+
+\textbf{The real intervals.} Their sum is
+\begin{align*}
+ \int_{I_-}f+\int_{I_+}f
+ &=\int_{-R}^{-\varepsilon}\frac{1-e^{ix}}{x^2}\,dx
+   +\int_\varepsilon^R\frac{1-e^{ix}}{x^2}\,dx\\
+ &=2\int_\varepsilon^R\frac{1-\cos x}{x^2}\,dx.
+\end{align*}
+The imaginary parts cancel because $\sin x/x^2$ is odd. Substitution
+into \eqref{eq:indented} yields
+\[
+ 2\int_\varepsilon^R\frac{1-\cos x}{x^2}\,dx
+ =-\int_{\gamma_\varepsilon}f-\int_{\gamma_R}f.
+\]
+First let $R\to\infty$ using \eqref{eq:large-arc}, and then let
+$\varepsilon\to0^+$ using \eqref{eq:small-arc}. We obtain
+\[
+ 2\int_0^\infty\frac{1-\cos x}{x^2}\,dx=\pi,
+\]
+which proves \eqref{eq:cosine-goal}.
+
+\begin{remark}[The complex integral at the origin]
+The symmetric limit
+\[
+ \lim_{\varepsilon\to0^+}\left(
+ \int_{-\infty}^{-\varepsilon}\frac{1-e^{ix}}{x^2}\,dx+
+ \int_\varepsilon^\infty\frac{1-e^{ix}}{x^2}\,dx\right)=\pi
+\]
+is a \emph{Cauchy principal value}. The separate one-sided complex
+integrals do not converge at $0$, because $f(x)=-i/x+O(1)$.
+The real part, however, has an ordinary convergent improper integral,
+with value $\pi$ on $\R$ and $\pi/2$ on $(0,\infty)$.
+\end{remark}
+
+\newpage
+\section{Integrating holomorphic functions along continuous curves}
+% Handwritten Lecture 15, pages 5--7; Lecture 16, pages 1--3.
+So far, we have defined contour integrals for piecewise continuously
+ differentiable paths. We now extend the definition to an arbitrary
+\emph{continuous} curve $\gamma\colon[a,b]\to U$, provided that the
+integrand $f$ is holomorphic on the open set $U$.
+
+The idea is to use local primitives. If $f$ has a primitive $g$ on all
+of $U$, endpoint evaluation suggests the definition
+\[
+ \int_\gamma f(z)\,dz=g\bigl(\gamma(b)\bigr)-g\bigl(\gamma(a)\bigr).
+\]
+In general, a global primitive need not exist. We instead divide the
+curve into finitely many pieces, each lying in a disc on which $f$ has
+ a primitive, and add the corresponding endpoint differences.
+
+\subsection{A uniform neighbourhood of a compact set}
+\begin{lemma}\label{lem:compact-neighbourhood}
+Let $U\subseteq\C$ be open and $K\subseteq U$ compact. There is an $r>0$
+such that $D(z,r)\subseteq U$ for every $z\in K$, where
+$D(z,r)=\{w\in\C:|w-z|<r\}$.
+\end{lemma}
+\begin{proof}
+The assertion is immediate if $K$ is empty. Otherwise, suppose no such
+$r$ exists. For every $n\geq1$, choose $z_n\in K$ with
+$D(z_n,1/n)\not\subseteq U$. Compactness gives a subsequence
+$z_{n_k}\to z\in K$. Since $U$ is open, choose $d>0$ with
+$D(z,d)\subseteq U$, and then choose $\varepsilon>0$ with
+$2\varepsilon<d$.
+
+For sufficiently large $k$, both $|z_{n_k}-z|<\varepsilon$ and
+$1/n_k<\varepsilon$. The triangle inequality gives
+\[
+ D(z_{n_k},1/n_k)\subseteq D(z_{n_k},\varepsilon)
+ \subseteq D(z,2\varepsilon)\subseteq D(z,d)\subseteq U,
+\]
+a contradiction.
+\end{proof}
+Informally, a compact subset of an open set stays a uniform positive
+ distance away from the complement of the open set.
+
+\begin{lemma}[A chain of discs along a curve]\label{lem:disc-chain}
+Let $\gamma\colon[a,b]\to U$ be continuous, with $U$ open and $a<b$.
+There are a partition
+\[
+ a=a_0<a_1<\cdots<a_n=b
+\]
+and open discs $D_0,\ldots,D_{n-1}\subseteq U$ such that
+$\gamma([a_j,a_{j+1}])\subseteq D_j$ for every $j$.
+\end{lemma}
+\begin{proof}
+The image $K=\gamma([a,b])$ is compact. By
+Lemma~\ref{lem:compact-neighbourhood}, choose $r>0$ such that
+$D(z,r)\subseteq U$ for every $z\in K$.
+Also, $\gamma$ is uniformly continuous on $[a,b]$. Thus there is
+$\delta>0$ such that
+\[
+ |s-t|<\delta\quad\Longrightarrow\quad
+ |\gamma(s)-\gamma(t)|<r/2.
+\]
+Choose a partition with $a_{j+1}-a_j<\delta$, and set
+$D_j=D(\gamma(a_j),r)$. For $t\in[a_j,a_{j+1}]$,
+$|\gamma(t)-\gamma(a_j)|<r/2$, so the whole subcurve lies in $D_j$.
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+ \draw[thick,courseblue] (-0.9,-1.2) .. controls (-2.1,0.1) and (-1.5,2.3)
+ .. (0.7,2.5) .. controls (2.5,2.9) and (4,1.4) .. (3.8,-0.6)
+ .. controls (3.4,-1.7) and (0.5,-1.9) .. cycle;
+ \node[courseblue] at (3.5,1.8){$U$};
+ \foreach \x/\y in {-0.65/-0.2,0/0.3,0.65/0.45,1.3/0.35,1.95/0.65,2.4/1.15}
+ {\draw[ForestGreen,thick] (\x,\y) circle (0.65);}
+ \draw[very thick,darkgray] (-0.65,-0.2) .. controls (-0.25,0.5) and (0.75,0.5)
+ .. (1.3,0.35) .. controls (1.75,0.3) and (2.3,0.8) .. (2.4,1.15);
+ \fill (-0.65,-0.2) circle (1.8pt) node[below left]{$\gamma(a)$};
+ \fill (2.4,1.15) circle (1.8pt) node[above right]{$\gamma(b)$};
+ \node at (1,-1.2){$\gamma([a_j,a_{j+1}])\subseteq D_j\subseteq U$};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Definition by local primitives}
+\begin{definition}\label{def:continuous-integral}
+Let $f$ be holomorphic on an open set $U$, and let
+$\gamma\colon[a,b]\to U$ be continuous. Choose a partition and discs
+as in Lemma~\ref{lem:disc-chain}. On each $D_j$, choose a primitive
+$g_j$ of $f$, which exists by Cauchy's theorem on a disc. Define
+\begin{equation}\label{eq:continuous-integral}
+ \boxed{\displaystyle
+ \int_\gamma f(z)\,dz
+ =\sum_{j=0}^{n-1}\left[
+ g_j\bigl(\gamma(a_{j+1})\bigr)-g_j\bigl(\gamma(a_j)\bigr)
+ \right].}
+\end{equation}
+For a curve whose parameter interval is a single point, the integral is zero.
+\end{definition}
+This definition uses the continuity of the curve and the holomorphicity
+of $f$. No derivative of $\gamma$ is needed.
+
+\begin{proposition}\label{prop:well-defined}
+The value in \eqref{eq:continuous-integral} is independent of the
+partition, the discs, and the chosen local primitives. For a piecewise
+continuously differentiable path, it agrees with the usual contour integral.
+\end{proposition}
+\begin{proof}
+\textbf{Choice of primitive.} If $g$ and $h$ are primitives of $f$ on
+one disc, then $(g-h)'=0$. Since the disc is connected, $g-h$ is constant.
+Consequently,
+\[
+ g(w_1)-g(w_0)=h(w_1)-h(w_0).
+\]
+
+\textbf{Refinement of the partition.} Inserting a point $c$ between
+$a_j$ and $a_{j+1}$ leaves the sum unchanged, since
+\begin{align*}
+ g_j(\gamma(a_{j+1}))-g_j(\gamma(a_j))
+ &=\bigl[g_j(\gamma(a_{j+1}))-g_j(\gamma(c))\bigr]\\
+ &\quad+\bigl[g_j(\gamma(c))-g_j(\gamma(a_j))\bigr].
+\end{align*}
+
+\textbf{Choice of discs and partition.} Given two choices, take the
+common refinement of their partitions. Each resulting subcurve lies
+in both an original disc $D$ and a disc $\widetilde D$ from the second
+choice. Their intersection is nonempty, open, and convex, hence connected.
+On this intersection, the corresponding primitives differ by a constant,
+so they give the same endpoint difference. Summing over the common
+refinement proves independence of all choices.
+
+\textbf{Agreement with the usual integral.} For a piecewise continuously
+ differentiable path, refine further at its differentiability breakpoints.
+On each piece, the fundamental theorem for a primitive gives
+\[
+ \int_{\gamma|_{[a_j,a_{j+1}]}}f(z)\,dz
+ =g_j(\gamma(a_{j+1}))-g_j(\gamma(a_j)).
+\]
+Additivity of the usual contour integral gives
+\eqref{eq:continuous-integral}.
+\end{proof}
+
+\begin{corollary}[Endpoint evaluation]
+If $f$ has a primitive $g$ on $U$, then for every continuous curve
+$\gamma\colon[a,b]\to U$,
+\[
+ \int_\gamma f(z)\,dz=g(\gamma(b))-g(\gamma(a)).
+\]
+In particular, the integral is zero on every closed continuous curve in
+$U$. Thus Cauchy's theorem on a disc also holds for continuous curves.
+\end{corollary}
+\begin{proof}
+Use the restrictions of $g$ as the local primitives. The sum telescopes.
+\end{proof}
+The integral is linear in $f$, additive when curves are concatenated,
+and changes sign when the orientation is reversed. Each property follows
+ directly from the endpoint differences in \eqref{eq:continuous-integral}.
+
+\end{document}

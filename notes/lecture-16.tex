@@ -1,0 +1,304 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{decorations.markings}
+\usepackage{enumitem}
+\usepackage{tocloft}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{courseblue}{HTML}{1F4E79}
+\definecolor{lightblue}{HTML}{EAF2F8}
+\definecolor{lightgreen}{HTML}{EAF7EA}
+\definecolor{lightpink}{HTML}{FCE8EF}
+\definecolor{lightyellow}{HTML}{FFF8D6}
+\definecolor{warningyellow}{HTML}{D6A000}
+\definecolor{exercisebg}{HTML}{D6E6F5}
+\definecolor{exerciseframe}{HTML}{1F4E79}
+\definecolor{examplebg}{HTML}{F4FAFE}
+\definecolor{exampleframe}{HTML}{85C1E9}
+\definecolor{darkgray}{HTML}{333333}
+\definecolor{lightorange}{HTML}{FDEBD8}
+\definecolor{orangeframe}{HTML}{E08A3C}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\setlist[itemize]{topsep=0.25em,itemsep=0.15em}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{fact}{Fact}
+\newtheorem*{warning}{Warning}
+
+\tcolorboxenvironment{definition}{
+  enhanced,
+  unbreakable,
+  colback=lightgreen,
+  colframe=ForestGreen,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{warning}{
+  enhanced,
+  colback=lightyellow,
+  colframe=warningyellow,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{exercise}{
+  enhanced,
+  colback=exercisebg,
+  colframe=exerciseframe,
+  boxrule=1pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{example}{
+  enhanced,
+  colback=examplebg,
+  colframe=exampleframe,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\numberwithin{equation}{section}
+
+\newcommand{\be}{\begin{eqnarray}}
+\newcommand{\ee}{\end{eqnarray}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+
+\DeclareMathOperator{\Hol}{\mathcal{H}\mathrm{ol}}
+\DeclareMathOperator{\Real}{Re}
+\DeclareMathOperator{\Imag}{Im}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\CT}{\C[[T]]}
+\newcommand{\CLT}{\C((T))}
+\tcbset{breakable}
+\begin{document}
+
+\begin{center}
+  \colorbox{lightblue}{%
+    \begin{minipage}{0.94\textwidth}
+      \vspace{0.55em}
+      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr}
+        {\color{courseblue}\bfseries\LARGE Lecture 16} &
+        {\color{courseblue}\bfseries\LARGE MATH 411}\\[0.35em]
+        \textbf{Fall 2026} & \textbf{Date: Oct 16, 2026}\\
+        & \textbf{Instructor: Manish Patnaik}
+      \end{tabular*}
+      \vspace{0.45em}
+    \end{minipage}}
+\end{center}
+
+\setcounter{tocdepth}{1}
+\tableofcontents
+\vspace{0.45em}
+
+% Source: handwritten Lecture 16, pages 3--7.
+% Moved from Sections 3 and 4 of the current Lecture 15.
+In Lecture~15 we defined integrals of holomorphic functions along continuous
+curves using local primitives. We now preview the local Cauchy integral
+formula and introduce homotopy of curves.
+
+\section{The local Cauchy integral formula: a preview}
+% Handwritten Lecture 16, pages 3--5.
+Why do we need integration over continuous curves? One reason is that
+we want to deform contours continuously. Here is an important application;
+the contour-deformation step will be justified by the homotopy theorem
+in the next lecture.
+
+\begin{theorem}[Local Cauchy integral formula]\label{thm:cauchy-formula}
+Let $D=D(c,R)$ be an open disc, let $U$ be an open set containing
+$\overline D$, and let $f$ be holomorphic on $U$.
+If $z_0\in D$ and $\gamma$ is the counterclockwise boundary circle
+of $D$, then
+\begin{equation}\label{eq:cauchy-formula}
+ \boxed{\displaystyle
+ f(z_0)=\frac{1}{2\pi i}\int_\gamma\frac{f(z)}{z-z_0}\,dz.}
+\end{equation}
+\end{theorem}
+
+\begin{proof}[Proof sketch, assuming contour deformation]
+For $z\neq z_0$, set
+\[
+ q(z)=\frac{f(z)-f(z_0)}{z-z_0}.
+\]
+This is holomorphic on $U\setminus\{z_0\}$. The existence of $f'(z_0)$
+gives
+\[
+ \lim_{z\to z_0}q(z)=f'(z_0),
+\]
+so $q$ is bounded near $z_0$. We only need this bound; we do not yet
+need to prove that the extension of $q$ at $z_0$ is holomorphic.
+
+Choose $0<r<R-|z_0-c|$, and let
+$C_r(\theta)=z_0+re^{i\theta}$, $0\leq\theta\leq2\pi$, oriented
+counterclockwise. The boundary circle $\gamma$ can be continuously
+ deformed to $C_r$ inside $U\setminus\{z_0\}$. The contour-deformation
+ theorem, to be proved later, gives
+\begin{equation}\label{eq:deformation-preview}
+ \int_\gamma q(z)\,dz=\int_{C_r}q(z)\,dz.
+\end{equation}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85,
+ decoration={markings,mark=at position 0.16 with {\arrow{>}}}]
+ \draw[thick,gray!65] (0,0) circle (2.8);
+ \node at (2.55,2.25){$U$};
+ \draw[very thick,courseblue,postaction={decorate}] (2.1,0)
+ arc[start angle=0,end angle=360,radius=2.1];
+ \fill (-0.4,0) circle (1.5pt) node[below]{$z_0$};
+ \draw[very thick,orangeframe,postaction={decorate}] (0.15,0)
+ arc[start angle=0,end angle=360,radius=0.55];
+ \draw[ForestGreen,dashed] (-0.25,0) circle (1.05);
+ \draw[ForestGreen,dashed] (-0.12,0) circle (1.55);
+ \node[courseblue] at (1.8,1.65){$\gamma=\partial D$};
+ \node[orangeframe] at (-0.4,0.85){$C_r$};
+\end{tikzpicture}
+\end{center}
+
+Take $M$ such that $|q(z)|\leq M$ near $z_0$. For sufficiently small
+$r$, the ML estimate gives
+\[
+ \left|\int_{C_r}q(z)\,dz\right|\leq2\pi rM\longrightarrow0.
+\]
+The left side of \eqref{eq:deformation-preview} is independent of $r$,
+so $\int_\gamma q=0$. Therefore
+\[
+ \int_\gamma\frac{f(z)}{z-z_0}\,dz
+ =f(z_0)\int_\gamma\frac{dz}{z-z_0}.
+\]
+Apply the same contour deformation to $1/(z-z_0)$ and parametrize $C_r$:
+\[
+ \int_\gamma\frac{dz}{z-z_0}
+ =\int_{C_r}\frac{dz}{z-z_0}
+ =\int_0^{2\pi}\frac{ire^{i\theta}}{re^{i\theta}}\,d\theta
+ =2\pi i.
+\]
+This gives \eqref{eq:cauchy-formula}.
+\end{proof}
+
+\begin{remark}
+The deformation above is a deformation through \emph{closed curves}:
+their common start and end point is allowed to move. Below we first
+ define homotopy with fixed endpoints; the closed-curve version and
+invariance of integrals will be treated in the next lecture.
+\end{remark}
+
+\section{Homotopy of curves}
+% Handwritten Lecture 16, pages 5--7.
+\subsection{Continuous deformation with fixed endpoints}
+\begin{definition}\label{def:homotopy}
+Let $\gamma,\eta\colon[a,b]\to U$ be continuous curves with the same
+endpoints:
+\[
+ \gamma(a)=\eta(a),\qquad \gamma(b)=\eta(b).
+\]
+A \emph{homotopy with fixed endpoints} from $\gamma$ to $\eta$ in $U$
+is a continuous map
+\[
+ H\colon[a,b]\times[0,1]\longrightarrow U
+\]
+satisfying
+\begin{align*}
+ H(t,0)&=\gamma(t),& H(t,1)&=\eta(t)&& (a\leq t\leq b),\\
+ H(a,s)&=\gamma(a)=\eta(a),&
+ H(b,s)&=\gamma(b)=\eta(b)&& (0\leq s\leq1).
+\end{align*}
+When such an $H$ exists, the curves are \emph{homotopic with fixed
+endpoints in $U$}.
+\end{definition}
+For each fixed $s$, the map $t\mapsto H(t,s)$ is a continuous curve
+with the same endpoints. As $s$ runs from $0$ to $1$, these curves
+ deform $\gamma$ into $\eta$, staying inside $U$ throughout.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95,
+ decoration={markings,mark=at position 0.55 with {\arrow{>}}}]
+ \draw[very thick,courseblue,postaction={decorate}] (0,0)
+ .. controls (0.6,1.7) and (2.6,1.8) .. (3.5,0.8);
+ \draw[very thick,orangeframe,postaction={decorate}] (0,0)
+ .. controls (0.8,-1.3) and (2.8,-0.8) .. (3.5,0.8);
+ \draw[ForestGreen,thick] (0,0) .. controls (0.7,1) and (2.7,1) .. (3.5,0.8);
+ \draw[ForestGreen,thick] (0,0) .. controls (0.7,0.3) and (2.7,0.3) .. (3.5,0.8);
+ \draw[ForestGreen,thick] (0,0) .. controls (0.8,-0.5) and (2.8,-0.3) .. (3.5,0.8);
+ \fill (0,0) circle (1.8pt) node[below left]{$\gamma(a)=\eta(a)$};
+ \fill (3.5,0.8) circle (1.8pt) node[right]{$\gamma(b)=\eta(b)$};
+ \node[courseblue] at (1.7,1.65){$\gamma$};
+ \node[orangeframe] at (1.8,-1.05){$\eta$};
+ \node[ForestGreen] at (1.7,0.5){$H(\cdot,s)$};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Example: curves in a convex set}
+\begin{definition}
+A set $S\subseteq\C$ is \emph{convex} if, for every $z,w\in S$,
+the line segment
+\[
+ [z,w]=\{(1-s)z+sw:0\leq s\leq1\}
+\]
+lies in $S$.
+\end{definition}
+Discs, half-planes, and filled triangles are convex. A region with an
+inward notch need not be convex: a segment joining two of its points
+ can pass outside the region.
+
+\begin{example}[Straight-line homotopy]
+Let $S$ be convex, and let $\gamma,\eta\colon[a,b]\to S$ be continuous
+curves with the same endpoints. Define
+\begin{equation}\label{eq:straight-homotopy}
+ H(t,s)=(1-s)\gamma(t)+s\eta(t).
+\end{equation}
+This map is continuous, and convexity ensures that $H(t,s)\in S$.
+Moreover,
+\[
+ H(t,0)=\gamma(t),\qquad H(t,1)=\eta(t),
+\]
+and the endpoints stay fixed because the endpoints of $\gamma$ and
+$\eta$ agree. Thus any two such curves in a convex set are homotopic
+with fixed endpoints.
+\end{example}
+In particular, every curve in a convex set can be deformed, keeping its
+endpoints fixed, to the straight segment joining those endpoints.
+The next step is to prove that integrating a holomorphic function is
+invariant under homotopy, and then to justify the contour deformation
+used in the Cauchy integral formula.
+
+\end{document}
