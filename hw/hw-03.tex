@@ -1,0 +1,162 @@
+\documentclass[12pt,reqno]{amsart}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathptmx}
+\usepackage[scaled=0.90]{helvet}
+\usepackage{courier}
+\usepackage[T1]{fontenc}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\pagestyle{plain}
+
+\setlength{\oddsidemargin}{0cm}
+\setlength{\evensidemargin}{0cm}
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\footskip}{.3in}
+\setlength{\textheight}{9.2in}
+\setlength{\textwidth}{6.5in}
+\setlength{\parindent}{0pt}
+\setlist[enumerate,1]{leftmargin=*,itemsep=1.1em}
+\setlist[enumerate,2]{label=(\alph*),leftmargin=1.7em,itemsep=.45em,topsep=.4em}
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+
+\title{Problem Set 3 \\ MATH 411: Honors Complex Variables, Fall 2026}
+\date{last compiled: \today}
+
+% Coverage: material excluded from Midterm 1 through Monday, Oct. 26,
+% 2026 (Lectures 13--20), according to the current course schedule.
+% Suggested completion date: Monday, October 26, 2026.
+% Sources (paths relative to the course workspace):
+% 1: Old Homework/Homework/Fall2021-MATH411-Homework4.tex, 1(a)--(b).
+% 2: same source, 2; adapted to the fixed-endpoint definition in Lecture 17.
+% 3: same source, 3; f is required to be nonconstant to avoid a trivial
+%    counterexample whose image is not open.
+% 4: same source, 4--5; argument intervals replace ambiguous branch names.
+% 5: same source, 6; sharpened to specified domains and a global obstruction.
+% 6: Old Homework/Homework/Homework5_Fall2021.tex, 1.
+% 7: Old Homework/Homework/Homework5_Fall2021.tex, 3--4.
+% Residue and winding-number questions from later old sets are omitted.
+
+\begin{document}
+\maketitle
+
+\begin{center}
+Suggested completion date: Monday, October 26, 2026.
+\end{center}
+
+These are practice problems and are not to be turned in. Justify your
+answers and all limiting arguments. Throughout, homotopies of paths
+\emph{fix their endpoints}, and a simply connected open set is required
+to be nonempty and connected.
+
+\begin{enumerate}
+
+\item \textbf{Real integrals by contour integration.}
+Use Cauchy's theorem to evaluate the following improper integrals.
+\begin{enumerate}
+\item
+\[
+ \int_0^\infty \cos(t^2)\,dt.
+\]
+\emph{Hint:} Integrate $e^{-z^2}$ around the boundary of the sector
+$0\leq\arg z\leq\pi/4$, $|z|\leq R$.
+You may use
+\[
+ \int_{-\infty}^{\infty}e^{-x^2}\,dx=\sqrt{\pi},\qquad
+ \sin u\geq\frac{2u}{\pi}\quad(0\leq u\leq\pi/2).
+\]
+Show that the integral over the circular arc tends to zero; a bound
+using only the maximum of the integrand on the arc will not suffice.
+\item For $a,b>0$, evaluate
+\[
+ \int_0^\infty e^{-ax}\cos(bx)\,dx.
+\]
+\emph{Hint:} Put $A=\sqrt{a^2+b^2}$ and choose
+$0<\theta<\pi/2$ with $\cos\theta=a/A$ and $\sin\theta=b/A$.
+Integrate $e^{-Az}$ around the sector of radius $R$ and angle $\theta$.
+\end{enumerate}
+
+\item \textbf{Star-shaped open sets.}
+A nonempty open set $U\subseteq\C$ is \emph{star-shaped with respect
+to $a\in U$} if the segment $[a,z]$ lies in $U$ for every $z\in U$.
+\begin{enumerate}
+\item Prove that $U$ is path connected.
+\item For a closed continuous curve $\gamma:[0,1]\to U$ based at $a$,
+construct a homotopy with fixed endpoints from $\gamma$ to the constant
+curve at $a$. Deduce that $U$ is simply connected.
+\end{enumerate}
+For the last deduction, you may use the elementary fact that in a path
+connected set it suffices to contract loops at one fixed base point.
+A connecting path and its reverse transfer the contraction to any
+other base point.
+
+\item \textbf{Images of simply connected sets.}
+Let $U$ be a simply connected open set and let $f$ be a nonconstant
+holomorphic function on $U$. Must $f(U)$ be simply connected?
+Investigate this using
+\[
+ H=\{z\in\C:\operatorname{Im}z>0\},\qquad f(z)=e^{2\pi i z}.
+\]
+Determine $f(H)$ exactly and justify your conclusion about its simple
+connectivity, for example by integrating $1/z$ around a suitable circle.
+
+\item \textbf{Two branches of the logarithm.}
+Let $L_+$ be the logarithm on $\C\setminus[0,\infty)$ with argument
+in $(0,2\pi)$, and let $L_-$ be the logarithm on
+$\C\setminus(-\infty,0]$ with argument in $(-\pi,\pi)$.
+For \emph{each} branch $L$, compute
+\[
+ L(-1+i),\qquad \exp\bigl(iL(-i)\bigr),\qquad L(-1-i).
+\]
+Here $(-i)^i$ is defined relative to the chosen branch as
+$\exp(iL(-i))$. Explain how $L_+$ and $L_-$ differ on the upper and
+lower half-planes.
+
+\item \textbf{Holomorphic roots and the choice of domain.}
+Fix an integer $n\geq2$.
+\begin{enumerate}
+\item Let $U\subseteq\C\setminus\{0\}$ be a simply connected open
+set. Use a holomorphic logarithm on $U$ to construct a holomorphic
+function $g$ satisfying $g(z)^n=z$ on $U$.
+\item For $\theta\in\R$, give such a branch on the slit plane
+\[
+ U_\theta=\C\setminus\{re^{i\theta}:r\geq0\},
+\]
+specifying the interval used for the argument.
+\item Show that there is no continuous function $g$ on
+$\C\setminus\{0\}$ satisfying $g(z)^n=z$ everywhere.
+\emph{Hint:} On the unit circle, consider
+$g(e^{it})e^{-it/n}$ for $0\leq t\leq2\pi$.
+\end{enumerate}
+
+\item \textbf{Polynomial growth and Cauchy estimates.}
+Let $f$ be entire and put
+\[
+ M_f(R)=\max_{|z|=R}|f(z)|.
+\]
+Suppose there are a constant $C>0$, an integer $k\geq0$, and radii
+$R_j\to\infty$ such that $M_f(R_j)\leq C R_j^k$ for every $j$.
+Use Cauchy's estimates for the Taylor coefficients at $0$ to prove
+that $f$ is a polynomial of degree at most $k$ (including the zero
+polynomial). What does the case $k=0$ say?
+
+\item \textbf{Laurent expansions.}
+\begin{enumerate}
+\item Find a series in integer powers of $z$ representing
+\[
+ f(z)=\frac{1}{(z-1)(z-2)}
+\]
+in each of the regions $|z|<1$, $1<|z|<2$, and $|z|>2$.
+Justify convergence in each region.
+\item Find the first four nonzero terms of the Laurent expansion of
+\[
+ \frac{e^z}{z(1+z^2)}
+\]
+valid for $0<|z|<1$.
+\end{enumerate}
+
+\end{enumerate}
+\end{document}
