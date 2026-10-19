@@ -135,8 +135,8 @@
 % Sources: Lecture 16 (current course), Section 3; handwritten Lecture 16,
 % pages 5--7, and handwritten Lecture 17, pages 1--7.
 % The overlap-constant argument expands the telescoping step on handwritten
-% Lecture 17, pages 4--5. The closed-curve proof and explicit circle homotopy
-% supply the contour-deformation justification promised in current Lecture 16.
+% Lecture 17, pages 4--5. The connecting-path argument and explicit circle
+% comparison supply the contour-deformation justification promised in Lecture 16.
 % Main exposition and redrawn figures follow handwritten Lecture 17 in order:
 % definitions (pp. 1--2), theorem and puncture (pp. 2--3), close curves
 % (pp. 3--5), homotopy grid (pp. 5--6), horizontal slices (p. 7).
@@ -161,6 +161,8 @@ such that
  H(a,s)&=\gamma(a)=\eta(a),&H(b,s)&=\gamma(b)=\eta(b)&& (0\leq s\leq1).
 \end{align*}
 We write $\gamma\sim\eta$ in $U$ when such a homotopy exists.
+Throughout this lecture, \emph{homotopic} always means homotopic with
+fixed endpoints.
 \end{definition}
 For fixed $s$, write $H_s(t)=H(t,s)$. Thus $H_0=\gamma$,
 $H_1=\eta$, and every intermediate curve has the same endpoints.
@@ -196,30 +198,24 @@ convexity keeps its values in $U$, and the boundary conditions hold.
 \end{example}
 
 \subsection{Closed curves and simple connectivity}
-\begin{definition}\label{def:closed-homotopy}
-Two closed continuous curves $\gamma,\eta\colon[a,b]\to U$ are
-\emph{homotopic through closed curves in $U$} if there is a continuous
-map $H\colon[a,b]\times[0,1]\to U$ such that
-\[
- H(t,0)=\gamma(t),\qquad H(t,1)=\eta(t),\qquad
- H(a,s)=H(b,s).
-\]
-These identities hold for all $t\in[a,b]$ and $s\in[0,1]$.
-The common start and end point may move as $s$ varies.
-\end{definition}
-This differs from homotopy with fixed endpoints: the last condition
-requires each intermediate curve to be closed, but does not fix its base point.
-
 \begin{definition}
-A closed curve $\gamma$ in $U$ is \emph{null-homotopic in $U$} if it
-is homotopic through closed curves to a constant curve $c_p(t)=p$,
-for some $p\in U$.
-A nonempty open connected set $U$ is \emph{simply connected} if every closed
-continuous curve in $U$ is null-homotopic in $U$.
+A closed continuous curve $\gamma\colon[a,b]\to U$, with
+$p=\gamma(a)=\gamma(b)$, is \emph{null-homotopic in $U$} if it
+is homotopic with fixed endpoints to the constant curve $c_p(t)=p$.
+Such a homotopy $H$ (a \emph{contraction}) satisfies
+\[
+ H(t,0)=\gamma(t),\qquad H(t,1)=p,\qquad H(a,s)=H(b,s)=p.
+\]
+A nonempty open set $U\subseteq\C$ is \emph{simply connected} if
+it is \textbf{connected} and every closed continuous curve in $U$
+is null-homotopic in $U$.
 \end{definition}
-For a nonempty convex open set, the homotopy
-$H(t,s)=(1-s)\gamma(t)+sp$ contracts any closed curve to a point
-$p\in U$. Thus every such set is simply connected.
+For a nonempty convex open set, put $p=\gamma(a)=\gamma(b)$. The homotopy
+$H(t,s)=(1-s)\gamma(t)+sp$ contracts $\gamma$ to $c_p$ while
+keeping its endpoints fixed at $p$. A convex set is connected, so every
+nonempty convex open set is simply connected.
+Connectedness is a separate requirement: the union of two disjoint open
+discs has every closed curve null-homotopic, but is not simply connected.
 The ambient set matters: a deformation must stay in $U$ at every stage.
 
 % Redrawn from handwritten Lecture 17, page 2.
@@ -227,25 +223,28 @@ The ambient set matters: a deformation must stay in $U$ at every stage.
 \begin{tikzpicture}[scale=0.85]
  \draw[thick] plot[smooth cycle,tension=0.8] coordinates
  {(-2,-0.7) (-1.7,0.9) (-0.5,1.25) (1.7,0.7) (1.9,-0.5) (0.4,-1.15)};
- \draw[ForestGreen,very thick] plot[smooth cycle,tension=0.8] coordinates
- {(-1.35,0.15) (-0.8,0.65) (-0.1,0.35) (0.8,0.55) (1.05,-0.2) (0.15,-0.6) (-0.4,-0.15)};
- \draw[ForestGreen,dashed] (0,-0.05) ellipse (0.48 and 0.3);
- \fill[ForestGreen] (0,-0.05) circle (2pt) node[below]{$p$};
+ \draw[ForestGreen,very thick] (0,-0.6)
+  .. controls (-1.7,-0.05) and (-1,1.1) .. (0,0.45)
+  .. controls (1.1,1.1) and (1.6,-0.35) .. (0,-0.6);
+ \draw[ForestGreen,dashed] (0,-0.6)
+  .. controls (-0.8,-0.35) and (-0.45,0.2) .. (0,-0.1)
+  .. controls (0.5,0.2) and (0.7,-0.45) .. (0,-0.6);
+ \fill[ForestGreen] (0,-0.6) circle (2pt) node[below]{$p$};
  \node at (-1.65,1.35){$U$};
- \node[below,font=\small,align=center] at (0,-1.45){A loop can contract\\inside $U$.};
+ \node[below,font=\small,align=center] at (0,-1.45){A loop contracts inside $U$,\\keeping its base point $p$ fixed.};
  \begin{scope}[xshift=5.1cm]
   \draw[thick] (0,0) circle (1.3);
   \fill[white] (0,0) circle (0.28);
   \draw[thick] (0,0) circle (0.28);
   \draw[exerciseframe,very thick] plot[smooth cycle,tension=0.8] coordinates
   {(0.8,0) (0.45,0.85) (-0.4,0.65) (-0.8,-0.15) (-0.2,-0.8) (0.65,-0.55)};
-  \node at (-1.15,1.2){$V$};
   \node[below,font=\small,align=center] at (0,-1.45){A hole may obstruct\\contraction.};
  \end{scope}
 \end{tikzpicture}
 \end{center}
-The right-hand picture suggests an obstruction; the example below will
-prove it for a punctured disc by integrating $1/z$.
+The right-hand picture shows a disc with a hole and suggests an
+obstruction; the example below proves this for the punctured disc, where
+the hole is a single point, by integrating $1/z$.
 
 
 \newpage
@@ -257,8 +256,6 @@ If $\gamma$ and $\eta$ are homotopic with fixed endpoints in $U$, then
 \begin{equation}\label{eq:homotopy-invariance}
  \boxed{\displaystyle\int_\gamma f(z)\,dz=\int_\eta f(z)\,dz.}
 \end{equation}
-The same conclusion holds if $\gamma$ and $\eta$ are closed and
-homotopic through closed curves in $U$.
 \end{theorem}
 
 \begin{example}[A puncture prevents contraction]
@@ -271,14 +268,13 @@ $C_r(t)=re^{it}$, $0\leq t\leq2\pi$,
 Since $1/z$ is holomorphic on $U$, Theorem~\ref{thm:homotopy} shows that
 $C_r$ is not null-homotopic in $U$. Indeed, a contraction would force this integral to equal the integral
 over a constant curve, which is zero. Thus $U$ is not simply connected.
-For any $0<\rho<1$, the circles $C_r,C_\rho$ are homotopic through
-closed curves in $U$ via
-\[
- H(t,s)=\bigl((1-s)r+s\rho\bigr)e^{it},
-\]
-and their integrals agree. A homotopy to a constant curve guarantees
-vanishing; it is not necessary for a particular integrand. For example,
-$\int_{C_r}1\,dz=0$, although $C_r$ is not null-homotopic in $U$.
+For any $0<\rho<1$, the same calculation gives
+$\int_{C_\rho} dz/z=2\pi i$. The circles have different base points
+when $r\ne\rho$, so they cannot be compared directly by a
+fixed-endpoint homotopy. Section~\ref{sec:circle-comparison} explains how
+to compare their integrals by adding a connecting path.
+Null-homotopy is sufficient for the integral to vanish, but not
+necessary: for example, $\int_{C_r}1\,dz=0$, although $C_r$ is not null-homotopic in $U$.
 
 % Redrawn from handwritten Lecture 17, page 3.
 \begin{center}
@@ -291,12 +287,13 @@ $\int_{C_r}1\,dz=0$, although $C_r$ is not null-homotopic in $U$.
  arc[start angle=0,end angle=360,radius=1.15];
  \draw[fill=white,thick] (0,0) circle (2pt);
  \node[below] at (0,-0.06){$0$};
- \node[exerciseframe] at (0.8,-0.65){$C_r$};
- \node[ForestGreen] at (1.2,0.95){$C_\rho$};
+ \node[exerciseframe] at (0.36,-0.3){$C_r$};
+ \draw[ForestGreen,thin] (0.81,-0.81)--(1.45,-1.45)
+  node[below right,inner sep=1pt]{$C_\rho$};
  \node at (-1.65,1.2){$U$};
  \node[right,align=left] at (2,0)
  {$\displaystyle\int_{C_r}\frac{dz}{z}=\int_{C_\rho}\frac{dz}{z}=2\pi i$\\[0.6em]
-  The circles deform into each other,\\but cannot contract in $U$.};
+  Both circles have the same integral,\\but cannot contract in $U$.};
 \end{tikzpicture}
 \end{center}
 
@@ -336,7 +333,7 @@ and open discs $D_0,\ldots,D_{n-1}\subseteq U$ such that, for every $j$,
 \[
  \alpha([t_j,t_{j+1}])\cup\beta([t_j,t_{j+1}])\subseteq D_j.
 \]
-Thus the same subdivision and the same discs form a partition of both curves.
+Thus one subdivision and one chain of discs serve for both curves.
 \end{definition}
 
 \begin{center}
@@ -409,11 +406,12 @@ connected. Since
 we have $g_{j-1}-g_j=C_j$ on this intersection. Consequently,
 \begin{align*}
  A_{j-1}(t_j)
+ &=g_{j-1}(\alpha(t_j))-g_{j-1}(\beta(t_j))\\
  &=\bigl[g_j(\alpha(t_j))+C_j\bigr]
    -\bigl[g_j(\beta(t_j))+C_j\bigr]\\
  &=A_j(t_j).
 \end{align*}
-Thus \eqref{eq:close-difference} becomes
+Thus the right-hand side of \eqref{eq:close-difference} equals
 \[
  A_{n-1}(b)-A_0(a)
  +\sum_{j=1}^{n-1}\underbrace{\bigl[A_{j-1}(t_j)-A_j(t_j)\bigr]}_{0}.
@@ -448,15 +446,16 @@ The picture suggests subdividing the parameter rectangle in both directions.
  \fill (0,0) circle (2pt); \fill (3.8,0.6) circle (2pt);
  \node[above] at (1.9,1.15){$\eta$};
  \node[below] at (1.9,-1.05){$\gamma$};
- \node[exerciseframe] at (1.7,-0.7){$D_{j,k}$};
+ \draw[exerciseframe,thin] (2.15,0.55)--(2.75,1.45)
+  node[above right,inner sep=1pt]{$D_{j,k}$};
  \draw[->,thick] (5,0.3)--(4.1,0.3) node[midway,above]{$H$};
  \begin{scope}[xshift=5.5cm,yshift=-0.9cm]
   \fill[pattern=north east lines,pattern color=exerciseframe!60]
    (0.8,0.8) rectangle (1.6,1.6);
   \draw[step=0.8,ForestGreen] (0,0) grid (2.4,2.4);
   \draw[thick] (0,0) rectangle (2.4,2.4);
-  \node[below] at (0,0){$a$}; \node[below] at (2.4,0){$b$};
-  \node[right] at (2.4,0){$0$}; \node[right] at (2.4,2.4){$1$};
+  \node[below=2pt] at (0,0){$a$}; \node[below=2pt] at (2.4,0){$b$};
+  \node[right=2pt] at (2.4,0){$s=0$}; \node[right=2pt] at (2.4,2.4){$s=1$};
   \node[above] at (1.2,2.5){$[a,b]\times[0,1]$};
  \end{scope}
 \end{tikzpicture}
@@ -512,11 +511,11 @@ so one finite grid suffices.
  \draw[thick] (0,0) rectangle (3.6,2.4);
  \draw[very thick,courseblue,->] (0,0.8)--(3.6,0.8);
  \draw[very thick,orangeframe,->] (0,1.6)--(3.6,1.6);
- \node[left] at (0,0){$0$}; \node[left] at (0,2.4){$1$};
- \node[left,courseblue] at (0,0.8){$s_k$};
- \node[left,orangeframe] at (0,1.6){$s_{k+1}$};
- \node[below] at (0,0){$a$}; \node[below] at (3.6,0){$b$};
- \node[below] at (1.2,0){$t_j$}; \node[below] at (2.4,0){$t_{j+1}$};
+ \node[left=3pt] at (0,0){$0$}; \node[left=3pt] at (0,2.4){$1$};
+ \node[left=3pt,courseblue] at (0,0.8){$s_k$};
+ \node[left=3pt,orangeframe] at (0,1.6){$s_{k+1}$};
+ \node[below=3pt] at (0,0){$a$}; \node[below=3pt] at (3.6,0){$b$};
+ \node[below=3pt] at (1.2,0){$t_j$}; \node[below=3pt] at (2.4,0){$t_{j+1}$};
  \node at (1.8,1.2){$R_{j,k}$};
  \draw[thick,->] (4,1.2)--(5,1.2) node[midway,above]{$H$};
  \fill[lightgreen] (6.5,1.2) circle (1.2);
@@ -532,7 +531,7 @@ The image of a small rectangle need not itself be a rectangle, or even
 have a simple shape. What matters is that it lies in one disc. In
 particular, the two horizontal edges map to curves in the same disc.
 
-\begin{proof}[Proof of Theorem~\ref{thm:homotopy} for fixed endpoints]
+\begin{proof}[Proof of Theorem~\ref{thm:homotopy}]
 Let $H$ be the given homotopy and choose the grid from
 Lemma~\ref{lem:grid}. For $0\leq k\leq m$, define
 \[
@@ -556,9 +555,9 @@ Thus consecutive curves $\gamma_k$ and $\gamma_{k+1}$ are close.
   \draw[courseblue,thick,->] (0,\y)--(3.2,\y);
   \node[right,courseblue] at (3.35,\y){$\gamma_{\lab}=H(\cdot,s_{\lab})$};
  }
- \node[left] at (0,0){$s_0=0$};
- \node[left] at (0,2.4){$s_4=1$};
- \node[below] at (0,0){$a$}; \node[below] at (3.2,0){$b$};
+ \node[left=3pt] at (0,0){$s_0=0$};
+ \node[left=3pt] at (0,2.4){$s_4=1$};
+ \node[below=3pt] at (0,0){$a$}; \node[below=3pt] at (3.2,0){$b$};
  \node[align=left,right] at (7,1.2)
  {Shown with $m=4$.\\Each consecutive pair\\is close.};
 \end{tikzpicture}
@@ -574,40 +573,7 @@ Lemma~\ref{lem:close} gives
 which is the desired equality.
 \end{proof}
 
-\section{Closed-curve version and consequences}
-\subsection{Allowing the base point to move}
-We now prove the second assertion of the theorem. The moving base point
-means we cannot directly use the fixed-endpoint hypothesis of
-Lemma~\ref{lem:close}. Instead, we keep track of the two side curves.
-
-\begin{proof}[Proof of Theorem~\ref{thm:homotopy} for closed curves]
-Choose a grid for the given closed-curve homotopy as in
-Lemma~\ref{lem:grid}, and put $\gamma_k(t)=H(t,s_k)$.
-Traverse the boundary of each small rectangle counterclockwise in the
-parameter plane. Composing this traversal with $H$ gives a closed
-continuous curve in $D_{j,k}$. Since $f$ has a primitive there, its integral
-is zero.
-
-Fix a horizontal strip $[a,b]\times[s_k,s_{k+1}]$ and add these zero
-integrals over its $n$ rectangles. Every interior vertical edge is
-traversed twice in opposite directions, so these contributions cancel.
-Write
-\[
- L_k(s)=H(a,s),\qquad R_k(s)=H(b,s),\qquad s_k\leq s\leq s_{k+1},
-\]
-with both side curves parametrized by increasing $s$. The bottom and
-right edges are traversed in the positive parameter directions, while
-the top and left edges are traversed in reverse. Thus
-\[
- 0=\int_{\gamma_k}f(z)\,dz+\int_{R_k}f(z)\,dz
-   -\int_{\gamma_{k+1}}f(z)\,dz-\int_{L_k}f(z)\,dz.
-\]
-For a homotopy through closed curves, $H(a,s)=H(b,s)$; hence
-$L_k=R_k$ as parametrized curves, and their integrals cancel too.
-Therefore $\int_{\gamma_k}f=\int_{\gamma_{k+1}}f$ for every $k$.
-Chaining the equalities proves $\int_\gamma f=\int_\eta f$.
-\end{proof}
-
+\section{Consequences and comparison of circles}
 \subsection{Null-homotopic curves}
 \begin{corollary}[Cauchy's theorem for a null-homotopic curve]
 If $f$ is holomorphic on $U$ and $\gamma$ is a closed continuous curve
@@ -620,30 +586,86 @@ holomorphic function on $U$ around every closed continuous curve in $U$
 is zero.
 \end{corollary}
 \begin{proof}
-Deform $\gamma$ through closed curves to a constant curve. The theorem
-preserves the integral, and the integral over a constant curve is zero.
+Put $p=\gamma(a)=\gamma(b)$. By definition, $\gamma$ is homotopic
+with fixed endpoints to $c_p$. By Theorem~\ref{thm:homotopy},
+$\int_\gamma f(z)\,dz=\int_{c_p}f(z)\,dz=0$.
 \end{proof}
 
-
-
-\newpage
-\subsection{Justifying the deformation in Lecture 16}
+\subsection{Comparing circles with different base points}\label{sec:circle-comparison}
 Let $D=D(c,R)$, let $U$ contain $\overline D$, let $f$ be holomorphic
 on $U$, and take $z_0\in D$.
-In Lecture~16 we deformed the outer circle $\gamma(t)=c+Re^{it}$ to
-$C_r(t)=z_0+re^{it}$, where $0<r<R-|z_0-c|$. An explicit homotopy is
+In Lecture~16 we compared the outer circle $\gamma(t)=c+Re^{it}$ with
+$C_r(t)=z_0+re^{it}$, where $0<r<R-|z_0-c|$.
+Their base points $p=c+R$ and $q=z_0+r$ differ, so we must add a
+connecting path before applying the fixed-endpoint homotopy theorem.
+
+Consider the continuous map
 \[
- H(t,s)=(1-s)c+sz_0+\bigl((1-s)R+sr\bigr)e^{it},
+ F(t,s)=(1-s)c+sz_0+\bigl((1-s)R+sr\bigr)e^{it},
  \qquad 0\leq t\leq2\pi,\quad 0\leq s\leq1.
 \]
 Put $d=|z_0-c|<R$. The estimates
 \begin{align*}
- |H(t,s)-c|&\leq sd+(1-s)R+sr\leq R,\\
- |H(t,s)-z_0|&\geq(1-s)(R-d)+sr>0
+ |F(t,s)-c|&\leq sd+(1-s)R+sr\leq R,\\
+ |F(t,s)-z_0|&\geq(1-s)(R-d)+sr>0
 \end{align*}
-show that the deformation stays in $\overline D\setminus\{z_0\}$,
-hence in $U\setminus\{z_0\}$. Also $H(0,s)=H(2\pi,s)$.
-The closed-curve form of Theorem~\ref{thm:homotopy} therefore gives
+show that $F$ takes values in $\overline D\setminus\{z_0\}$,
+hence in $U\setminus\{z_0\}$. Its bottom and top edges give
+$\gamma$ and $C_r$. Both vertical edges give the same connecting path
+\[
+ \alpha(s)=F(0,s)=F(2\pi,s)=(1-s)p+sq,\qquad 0\leq s\leq1.
+\]
+Write $\sigma*\tau$ for the curve that traverses $\sigma$ first and
+$\tau$ second, with each curve assigned half the parameter interval.
+Then $\gamma*\alpha$ and $\alpha*C_r$ both run from $p$ to $q$.
+
+\textbf{A fixed-endpoint homotopy.}
+In the parameter rectangle $Q=[0,2\pi]\times[0,1]$, let
+$\lambda,\mu\colon[0,1]\to Q$ be the two boundary paths shown below,
+with each edge traversed linearly in half the parameter interval.
+The path $\lambda$ follows the bottom edge and then the right edge;
+$\mu$ follows the left edge and then the top edge. The edge labels in
+the picture denote their images under $F$.
+
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=1cm,>=stealth]
+ \draw[courseblue,very thick,->] (0,0)--(4,0)
+  node[midway,below]{$\gamma$};
+ \draw[courseblue,very thick,->] (4,0)--(4,2)
+  node[midway,right]{$\alpha$};
+ \draw[orangeframe,very thick,->] (0,0)--(0,2)
+  node[midway,left]{$\alpha$};
+ \draw[orangeframe,very thick,->] (0,2)--(4,2)
+  node[midway,above]{$C_r$};
+ \fill (0,0) circle (2pt);
+ \fill (4,2) circle (2pt);
+ \node[below left,font=\small] at (0,0){$(0,0)$};
+ \node[above right,font=\small] at (4,2){$(2\pi,1)$};
+ \node at (2,1){$Q$};
+ \node[right,align=left] at (5,1)
+  {{\color{courseblue}$\lambda$: bottom, then right}\\[0.4em]
+   {\color{orangeframe}$\mu$: left, then top}};
+\end{tikzpicture}
+\end{center}
+
+Both paths start at $(0,0)$ and end at $(2\pi,1)$.
+Since $Q$ is convex, straight-line interpolation between $\lambda$
+and $\mu$ stays in $Q$ and fixes these endpoints. Composing with $F$
+gives the homotopy
+\[
+ H(u,v)=F\bigl((1-v)\lambda(u)+v\mu(u)\bigr),
+ \qquad 0\leq u,v\leq1.
+\]
+It deforms $F\circ\lambda=\gamma*\alpha$ into
+$F\circ\mu=\alpha*C_r$, with
+$H(0,v)=p$ and $H(1,v)=q$ for every $v$.
+Thus Theorem~\ref{thm:homotopy} and additivity of integrals give
+\[
+ \int_\gamma h(z)\,dz+\int_\alpha h(z)\,dz
+ =\int_\alpha h(z)\,dz+\int_{C_r}h(z)\,dz
+ \qquad\bigl(h\in\Hol(U\setminus\{z_0\})\bigr).
+\]
+Cancelling the connecting-path integrals yields
 \[
  \int_\gamma h(z)\,dz=\int_{C_r}h(z)\,dz
  \qquad\text{for every }h\in\Hol(U\setminus\{z_0\}).
@@ -652,6 +674,12 @@ Apply this to $h(z)=(f(z)-f(z_0))/(z-z_0)$ and to $h(z)=1/(z-z_0)$.
 These are exactly the two contour-deformation steps used in Lecture~16;
 the boundedness estimate and the circle computation there now complete
 the proof of the local Cauchy integral formula.
+
+The same argument compares the concentric circles in the punctured-disc
+example: use $F(t,s)=((1-s)r+s\rho)e^{it}$ and the connecting segment
+$\alpha(s)=(1-s)r+s\rho$. It gives
+$C_r*\alpha\sim\alpha*C_\rho$ with fixed endpoints, and hence
+equal integrals for every function holomorphic on the punctured disc.
 
 \begin{exercise}
 Let $U$ be convex and open, and let $f$ be holomorphic on $U$.
