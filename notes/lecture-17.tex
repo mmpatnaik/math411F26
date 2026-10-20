@@ -135,8 +135,8 @@
 % Sources: Lecture 16 (current course), Section 3; handwritten Lecture 16,
 % pages 5--7, and handwritten Lecture 17, pages 1--7.
 % The overlap-constant argument expands the telescoping step on handwritten
-% Lecture 17, pages 4--5. The connecting-path argument and explicit circle
-% comparison supply the contour-deformation justification promised in Lecture 16.
+% Lecture 17, pages 4--5. The connecting-path argument comparing circles
+% is continued in Lecture 18, completing the justification promised in Lecture 16.
 % Main exposition and redrawn figures follow handwritten Lecture 17 in order:
 % definitions (pp. 1--2), theorem and puncture (pp. 2--3), close curves
 % (pp. 3--5), homotopy grid (pp. 5--6), horizontal slices (p. 7).
@@ -271,8 +271,8 @@ over a constant curve, which is zero. Thus $U$ is not simply connected.
 For any $0<\rho<1$, the same calculation gives
 $\int_{C_\rho} dz/z=2\pi i$. The circles have different base points
 when $r\ne\rho$, so they cannot be compared directly by a
-fixed-endpoint homotopy. Section~\ref{sec:circle-comparison} explains how
-to compare their integrals by adding a connecting path.
+fixed-endpoint homotopy. In Lecture~18 we will compare their integrals by adding a connecting
+path before applying the fixed-endpoint homotopy theorem.
 Null-homotopy is sufficient for the integral to vanish, but not
 necessary: for example, $\int_{C_r}1\,dz=0$, although $C_r$ is not null-homotopic in $U$.
 
@@ -573,7 +573,7 @@ Lemma~\ref{lem:close} gives
 which is the desired equality.
 \end{proof}
 
-\section{Consequences and comparison of circles}
+\section{Consequences}
 \subsection{Null-homotopic curves}
 \begin{corollary}[Cauchy's theorem for a null-homotopic curve]
 If $f$ is holomorphic on $U$ and $\gamma$ is a closed continuous curve
@@ -590,96 +590,6 @@ Put $p=\gamma(a)=\gamma(b)$. By definition, $\gamma$ is homotopic
 with fixed endpoints to $c_p$. By Theorem~\ref{thm:homotopy},
 $\int_\gamma f(z)\,dz=\int_{c_p}f(z)\,dz=0$.
 \end{proof}
-
-\subsection{Comparing circles with different base points}\label{sec:circle-comparison}
-Let $D=D(c,R)$, let $U$ contain $\overline D$, let $f$ be holomorphic
-on $U$, and take $z_0\in D$.
-In Lecture~16 we compared the outer circle $\gamma(t)=c+Re^{it}$ with
-$C_r(t)=z_0+re^{it}$, where $0<r<R-|z_0-c|$.
-Their base points $p=c+R$ and $q=z_0+r$ differ, so we must add a
-connecting path before applying the fixed-endpoint homotopy theorem.
-
-Consider the continuous map
-\[
- F(t,s)=(1-s)c+sz_0+\bigl((1-s)R+sr\bigr)e^{it},
- \qquad 0\leq t\leq2\pi,\quad 0\leq s\leq1.
-\]
-Put $d=|z_0-c|<R$. The estimates
-\begin{align*}
- |F(t,s)-c|&\leq sd+(1-s)R+sr\leq R,\\
- |F(t,s)-z_0|&\geq(1-s)(R-d)+sr>0
-\end{align*}
-show that $F$ takes values in $\overline D\setminus\{z_0\}$,
-hence in $U\setminus\{z_0\}$. Its bottom and top edges give
-$\gamma$ and $C_r$. Both vertical edges give the same connecting path
-\[
- \alpha(s)=F(0,s)=F(2\pi,s)=(1-s)p+sq,\qquad 0\leq s\leq1.
-\]
-Write $\sigma*\tau$ for the curve that traverses $\sigma$ first and
-$\tau$ second, with each curve assigned half the parameter interval.
-Then $\gamma*\alpha$ and $\alpha*C_r$ both run from $p$ to $q$.
-
-\textbf{A fixed-endpoint homotopy.}
-In the parameter rectangle $Q=[0,2\pi]\times[0,1]$, let
-$\lambda,\mu\colon[0,1]\to Q$ be the two boundary paths shown below,
-with each edge traversed linearly in half the parameter interval.
-The path $\lambda$ follows the bottom edge and then the right edge;
-$\mu$ follows the left edge and then the top edge. The edge labels in
-the picture denote their images under $F$.
-
-\begin{center}
-\begin{tikzpicture}[x=1cm,y=1cm,>=stealth]
- \draw[courseblue,very thick,->] (0,0)--(4,0)
-  node[midway,below]{$\gamma$};
- \draw[courseblue,very thick,->] (4,0)--(4,2)
-  node[midway,right]{$\alpha$};
- \draw[orangeframe,very thick,->] (0,0)--(0,2)
-  node[midway,left]{$\alpha$};
- \draw[orangeframe,very thick,->] (0,2)--(4,2)
-  node[midway,above]{$C_r$};
- \fill (0,0) circle (2pt);
- \fill (4,2) circle (2pt);
- \node[below left,font=\small] at (0,0){$(0,0)$};
- \node[above right,font=\small] at (4,2){$(2\pi,1)$};
- \node at (2,1){$Q$};
- \node[right,align=left] at (5,1)
-  {{\color{courseblue}$\lambda$: bottom, then right}\\[0.4em]
-   {\color{orangeframe}$\mu$: left, then top}};
-\end{tikzpicture}
-\end{center}
-
-Both paths start at $(0,0)$ and end at $(2\pi,1)$.
-Since $Q$ is convex, straight-line interpolation between $\lambda$
-and $\mu$ stays in $Q$ and fixes these endpoints. Composing with $F$
-gives the homotopy
-\[
- H(u,v)=F\bigl((1-v)\lambda(u)+v\mu(u)\bigr),
- \qquad 0\leq u,v\leq1.
-\]
-It deforms $F\circ\lambda=\gamma*\alpha$ into
-$F\circ\mu=\alpha*C_r$, with
-$H(0,v)=p$ and $H(1,v)=q$ for every $v$.
-Thus Theorem~\ref{thm:homotopy} and additivity of integrals give
-\[
- \int_\gamma h(z)\,dz+\int_\alpha h(z)\,dz
- =\int_\alpha h(z)\,dz+\int_{C_r}h(z)\,dz
- \qquad\bigl(h\in\Hol(U\setminus\{z_0\})\bigr).
-\]
-Cancelling the connecting-path integrals yields
-\[
- \int_\gamma h(z)\,dz=\int_{C_r}h(z)\,dz
- \qquad\text{for every }h\in\Hol(U\setminus\{z_0\}).
-\]
-Apply this to $h(z)=(f(z)-f(z_0))/(z-z_0)$ and to $h(z)=1/(z-z_0)$.
-These are exactly the two contour-deformation steps used in Lecture~16;
-the boundedness estimate and the circle computation there now complete
-the proof of the local Cauchy integral formula.
-
-The same argument compares the concentric circles in the punctured-disc
-example: use $F(t,s)=((1-s)r+s\rho)e^{it}$ and the connecting segment
-$\alpha(s)=(1-s)r+s\rho$. It gives
-$C_r*\alpha\sim\alpha*C_\rho$ with fixed endpoints, and hence
-equal integrals for every function holomorphic on the punctured disc.
 
 \begin{exercise}
 Let $U$ be convex and open, and let $f$ be holomorphic on $U$.
