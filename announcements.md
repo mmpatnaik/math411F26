@@ -11,6 +11,11 @@
 # The site sorts by date and shows the newest first, so old announcements
 # stay on the page as a running log.
 
+## 2026-10-21
+Office hours this Friday, October 23, will be from **2:00–3:00 PM**.
+
+Updated [Lecture 18 notes](notes/lecture-18.pdf) are posted. A new remark explains that the proof of Theorem 3.1 only needs **path connectedness**; polygonal connectedness is not necessary. The standard proof for connected open sets actually gives the stronger conclusion of polygonal connectedness.
+
 ## 2026-09-28
 [Homework 2 solutions](hw/hw-02-solutions.pdf) are posted. Review materials for Midterm 1 (Friday, October 9) are posted under [Midterm 1](#midterm1), including a [coverage sheet](exams/midterm-1-coverage.pdf) and past exams with solutions.
 
