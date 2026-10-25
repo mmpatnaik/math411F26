@@ -1,0 +1,167 @@
+\documentclass[12pt,reqno]{amsart}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathptmx}
+\usepackage[scaled=0.90]{helvet}
+\usepackage{courier}
+\usepackage[T1]{fontenc}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\pagestyle{plain}
+
+\setlength{\oddsidemargin}{0cm}
+\setlength{\evensidemargin}{0cm}
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\footskip}{.3in}
+\setlength{\textheight}{9.2in}
+\setlength{\textwidth}{6.5in}
+\setlength{\parindent}{0pt}
+\setlist[enumerate,1]{leftmargin=*,itemsep=1.1em}
+\setlist[enumerate,2]{label=(\alph*),leftmargin=1.7em,itemsep=.45em,topsep=.4em}
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+
+\title{Problem Set 4 \\ MATH 411: Honors Complex Variables, Fall 2026}
+\date{last compiled: \today}
+
+% Coverage: Laurent series, isolated singularities, residues, and the
+% residue theorem (Lectures 21--24), ahead of Midterm 2 on Fri, Nov. 6.
+% Suggested completion date: Wednesday, November 4, 2026.
+% Sources (paths relative to the course workspace):
+% 1: moved from Problem Set 3, problem 7
+%    (originally Old Homework/Homework/Homework5_Fall2021.tex, 3--4).
+% 2--9: Old Homework/Homework/Homework5_Fall2021.tex, 2 and 5--12
+%    (old 9 and 10 are combined as 6(a)--(b)).
+% Homework5_Fall2021 problem 1 is omitted: it is already Problem Set 3,
+% problem 6.
+% Corrections to the 2021 version:
+% - 3, last part: the 2021 statement printed a polynomial (residue 0); the
+%   intended function, matching the 2021 answer 9/16, is
+%   (z^3-1)(z+2)/(z^4-1)^2.
+% - 4(b): the commented 2021 solution claimed the answer is 0. In fact
+%   1 - sin z has double zeros at pi/2 + 2k pi, each with residue 2 for
+%   the integrand; three lie inside |z| = 8, so the integral is 12 pi i.
+
+\begin{document}
+\maketitle
+
+\begin{center}
+Suggested completion date: Wednesday, November 4, 2026.
+\end{center}
+
+These are practice problems and are not to be turned in. Justify your
+answers and all limiting arguments. Unless stated otherwise, closed
+curves are oriented counterclockwise.
+
+\begin{enumerate}
+
+\item \textbf{Laurent expansions.}
+\begin{enumerate}
+\item Find a series in integer powers of $z$ representing
+\[
+ f(z)=\frac{1}{(z-1)(z-2)}
+\]
+in each of the regions $|z|<1$, $1<|z|<2$, and $|z|>2$.
+Justify convergence in each region.
+\item Find the first four nonzero terms of the Laurent expansion of
+\[
+ \frac{e^z}{z(1+z^2)}
+\]
+valid for $0<|z|<1$.
+\end{enumerate}
+
+\item \textbf{Logarithmic derivatives.}
+\begin{enumerate}
+\item Show that the association $f\mapsto f'/f$ (for $f$ holomorphic
+and nonvanishing) sends products to sums.
+\item If $P(z)=(z-a_1)\cdots(z-a_n)$, where $a_1,\dots,a_n\in\C$ are
+the roots of $P$ (listed with multiplicity), compute $P'/P$.
+\item Let $\gamma$ be a closed path on which $P$ has no roots. Show
+that
+\[
+ \frac{1}{2\pi i}\int_\gamma\frac{P'(z)}{P(z)}\,dz
+ = W(\gamma,a_1)+\cdots+W(\gamma,a_n).
+\]
+\end{enumerate}
+
+\item \textbf{Residues at the origin.}
+Find the residue at $0$ of each of the following.
+\begin{enumerate}
+\item $\dfrac{2z+1}{z(z^3-5)}$
+\item $\dfrac{e^z}{z^4}$
+\item $\dfrac{e^z}{\sin z}$
+\end{enumerate}
+Also find the residue at $z=1$ of
+\[
+ \frac{(z^3-1)(z+2)}{(z^4-1)^2}.
+\]
+
+\item \textbf{Contour integrals by residues.}
+\begin{enumerate}
+\item Evaluate
+\[
+ \int_C\frac{dz}{z^2-3z+5},
+\]
+where $C$ is the boundary of the rectangle with vertices
+$0,\ 10,\ 10+4i,\ 4i$, oriented \emph{clockwise}.
+\item Evaluate
+\[
+ \int_C\frac{1+z}{1-\sin z}\,dz,
+\]
+where $C$ is the circle $|z|=8$. \emph{Hint:} First find all complex
+solutions of $\sin z=1$ and determine the order of each zero of
+$1-\sin z$.
+\end{enumerate}
+
+\item \textbf{A trigonometric integral.}
+Show that
+\[
+ \int_0^{2\pi}\frac{dt}{(5-3\sin t)^2}=\frac{5\pi}{32}.
+\]
+
+\item \textbf{Rational integrals over the real line.}
+\begin{enumerate}
+\item Show that
+\[
+ \int_0^\infty\frac{x^2}{x^6+1}\,dx=\frac{\pi}{6}.
+\]
+\item For $a,b>0$, show that
+\[
+ \int_0^\infty\frac{dx}{(x^2+a^2)(x^2+b^2)}=\frac{\pi}{2ab(a+b)}.
+\]
+\end{enumerate}
+
+\item \textbf{A Fourier-type integral.}
+For $a,b>0$ with $a\neq b$, show that
+\[
+ \int_{-\infty}^{\infty}\frac{\cos x}{(x^2+a^2)(x^2+b^2)}\,dx
+ =\frac{\pi}{a^2-b^2}\left(\frac{e^{-b}}{b}-\frac{e^{-a}}{a}\right).
+\]
+
+\item \textbf{An integral with a logarithm.}
+Show that
+\[
+ \int_0^\infty\frac{(\log x)^2}{1+x^2}\,dx=\frac{\pi^3}{8}.
+\]
+\emph{Hint:} Use a branch of $\log z$ on $\C$ minus the negative
+imaginary axis, and integrate $(\log z)^2/(1+z^2)$ around the boundary
+of the region $\{\delta\leq|z|\leq R,\ \operatorname{Im}z\geq0\}$
+(Lang, \S VI.2, Exercise 14(a)). You may use
+$\int_0^\infty dx/(1+x^2)=\pi/2$.
+
+\item \textbf{The Gaussian integral via residues.}
+Prove that
+\[
+ \int_{-\infty}^{\infty}e^{-x^2}\,dx=\sqrt{\pi}
+\]
+by integrating
+\[
+ f(z)=\frac{e^{-z^2}}{1+e^{-2az}},\qquad a=e^{\pi i/4}\sqrt{\pi},
+\]
+around the parallelogram with vertices $-R,\ R,\ R+a,\ -R+a$ and then
+letting $R\to\infty$. \emph{Hint:} Check that $f(z)-f(z+a)=e^{-z^2}$.
+
+\end{enumerate}
+\end{document}
