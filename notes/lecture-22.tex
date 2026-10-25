@@ -1,0 +1,603 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{mathrsfs}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{decorations.markings,patterns}
+\usepackage{enumitem}
+\usepackage{tocloft}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{courseblue}{HTML}{1F4E79}
+\definecolor{lightblue}{HTML}{EAF2F8}
+\definecolor{lightgreen}{HTML}{EAF7EA}
+\definecolor{lightpink}{HTML}{FCE8EF}
+\definecolor{lightyellow}{HTML}{FFF8D6}
+\definecolor{warningyellow}{HTML}{D6A000}
+\definecolor{exercisebg}{HTML}{FDEAEA}
+\definecolor{exerciseframe}{HTML}{B54040}
+\definecolor{examplebg}{HTML}{F4FAFE}
+\definecolor{exampleframe}{HTML}{85C1E9}
+\definecolor{darkgray}{HTML}{333333}
+\definecolor{lightorange}{HTML}{FDEBD8}
+\definecolor{orangeframe}{HTML}{E08A3C}
+\definecolor{remarkbg}{HTML}{F3EEFB}
+\definecolor{remarkframe}{HTML}{9B7FC9}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlist[itemize]{topsep=0.25em,itemsep=0.15em}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{fact}{Fact}
+\newtheorem*{warning}{Warning}
+
+\tcolorboxenvironment{definition}{
+  enhanced,
+  unbreakable,
+  colback=lightgreen,
+  colframe=ForestGreen,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{remark}{
+  enhanced,
+  colback=remarkbg,
+  colframe=remarkframe,
+  before upper={\setlength{\parskip}{0.5em}},
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{warning}{
+  enhanced,
+  colback=lightyellow,
+  colframe=warningyellow,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{exercise}{
+  enhanced,
+  colback=exercisebg,
+  colframe=exerciseframe,
+  boxrule=1pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{example}{
+  enhanced,
+  colback=examplebg,
+  colframe=exampleframe,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\numberwithin{equation}{section}
+
+\newcommand{\be}{\begin{eqnarray}}
+\newcommand{\ee}{\end{eqnarray}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\DeclareMathOperator{\Hol}{\mathcal{H}\mathrm{ol}}
+\DeclareMathOperator{\Real}{Re}
+\DeclareMathOperator{\Imag}{Im}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\CT}{\C[[T]]}
+\newcommand{\CLT}{\C((T))}
+\tcbset{breakable}
+% Compact spacing around diagrams; keep the main text at 11pt.
+\newenvironment{lecturefigure}
+ {\par\addvspace{0.25em}\begingroup\setlength{\parskip}{0pt}\centering}
+ {\par\endgroup\addvspace{0.25em}}
+\begin{document}
+
+\begin{center}
+  \colorbox{lightblue}{%
+    \begin{minipage}{0.94\textwidth}
+      \vspace{0.55em}
+      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr}
+        {\color{courseblue}\bfseries\LARGE Lecture 22} &
+        {\color{courseblue}\bfseries\LARGE MATH 411}\\[0.35em]
+        \textbf{Fall 2026} & \textbf{Date: Oct 30, 2026}\\
+        & \textbf{Instructor: Manish Patnaik}
+      \end{tabular*}
+      \vspace{0.45em}
+    \end{minipage}}
+\end{center}
+
+\setcounter{tocdepth}{1}
+\tableofcontents
+\vspace{0.45em}
+
+% Sources: handwritten Lecture 21, Oct. 31, pages 1--4. Order follows the
+% handwritten notes: annuli and Laurent series, the expansion lemma and its
+% proof via Cauchy's formula on an annulus, examples, Laurent series about
+% z_0, isolated singularities. The handwritten proof quotes the homology
+% form of Cauchy's theorem; here the annulus case is derived from the
+% homotopy form (Lecture 18), and the homology form is only remarked on.
+In Lecture~21 we introduced Laurent series $\sum_{n\in\Z}a_nz^n$ and
+stated that a function holomorphic on a closed annulus has a Laurent
+expansion (Theorem~3.2 of Lecture~21). Today we prove this, compute some
+expansions, and use Laurent series to sort isolated singularities into
+three types.
+
+\section{Annuli and Laurent series}
+% Handwritten Lecture 21, page 1.
+For $0\leq r<R\leq\infty$ we write
+\[
+ A(r,R)=\{z\in\C:\ r<|z|<R\}
+\]
+for the \emph{open} annulus. We allow $r=0$ (a punctured disc, or
+$\C\setminus\{0\}$ if also $R=\infty$) and $R=\infty$ (the exterior of a
+disc). For $\rho>0$, let $C_\rho(t)=\rho e^{it}$, $0\leq t\leq2\pi$, be the
+positively oriented circle of radius $\rho$ centred at $0$.
+
+\begin{lecturefigure}
+\begin{tikzpicture}[scale=0.8,>=stealth]
+ \fill[lightpink] (0,0) circle(2);
+ \fill[white] (0,0) circle(0.6);
+ \draw[gray,dashed] (0,0) circle(2);
+ \draw[gray,dashed] (0,0) circle(0.6);
+ \draw[courseblue,thick,postaction={decorate},decoration={markings,
+  mark=at position 0.3 with {\arrow{>}}}] (1.7,0) arc(0:360:1.7);
+ \draw[ForestGreen,thick,postaction={decorate},decoration={markings,
+  mark=at position 0.3 with {\arrow{>}}}] (0.95,0) arc(0:360:0.95);
+ \fill (0,0) circle(1.5pt);
+ \node[courseblue] at (1.55,1.3) {$C_R$};
+ \node[ForestGreen] at (0.35,1.15) {$C_r$};
+ \fill (-0.9,-0.95) circle(2pt) node[below left]{$z_0$};
+ \node[right,align=left] at (2.4,0.2)
+ {$f$ holomorphic on the shaded region;\\
+  $z_0$ lies between the two circles.};
+\end{tikzpicture}
+\end{lecturefigure}
+
+Recall the splitting of a Laurent series into its two halves:
+\[
+ f(z)=\sum_{n=-\infty}^{\infty}a_nz^n
+ =\underbrace{\sum_{n\geq0}a_nz^n}_{f_+}
+ +\underbrace{\sum_{n<0}a_nz^n}_{f_-}.
+\]
+Here $f_+$ is a power series in $z$ and $f_-$ is a power series in $1/z$
+without constant term. On a closed disc strictly inside its disc of
+convergence a power series converges uniformly, so a Laurent series that
+converges on $A(r,R)$ converges uniformly on every closed annulus
+$\{s\leq|z|\leq S\}$ with $r<s<S<R$.
+
+\section{The Laurent expansion}
+% Handwritten Lecture 21, page 1.
+We restate the theorem from Lecture~21. As there, ``$f$ is holomorphic on
+$\{r\leq|z|\leq R\}$'' means holomorphic on an open set containing it.
+
+\begin{theorem}[Laurent expansion]\label{thm:laurent}
+Let $0<r<R$ and let $f$ be holomorphic on $\{r\leq|z|\leq R\}$. Set
+\[
+ a_n=\frac{1}{2\pi i}\int_{C_R}\frac{f(\zeta)}{\zeta^{n+1}}\,d\zeta
+ \quad(n\geq0),\qquad
+ a_n=\frac{1}{2\pi i}\int_{C_r}\frac{f(\zeta)}{\zeta^{n+1}}\,d\zeta
+ \quad(n<0).
+\]
+Then $f(z)=\sum_{n=-\infty}^{\infty}a_nz^n$ for $r<|z|<R$, with uniform
+convergence on every closed annulus $s\leq|z|\leq S$, $r<s<S<R$.
+\end{theorem}
+
+\begin{remark}[The case of a disc]
+% Handwritten Lecture 21, top of page 2.
+If $f$ is holomorphic on the whole closed disc $|z|\leq R$ (no hole),
+then for $n<0$ the function $\zeta^{-n-1}f(\zeta)$ is holomorphic on that
+disc, so $a_n=0$ by Cauchy's theorem. Then $f=f_+$, and we are back to the
+usual statement of Lecture~20:
+\[
+ f(z)=\sum_{n\geq0}a_nz^n,\qquad
+ a_n=\frac{1}{2\pi i}\int_{C_R}\frac{f(\zeta)}{\zeta^{n+1}}\,d\zeta .
+\]
+\end{remark}
+
+\subsection{Cauchy's formula on an annulus}
+% Handwritten Lecture 21, page 2.
+The key input is a version of Cauchy's formula in which the contour is the
+boundary of the annulus: the outer circle counterclockwise and the inner
+circle clockwise. We first compare concentric circles.
+
+\begin{lemma}[Concentric circles]\label{lem:concentric}
+Let $0<\rho_1<\rho_2$ and let $h$ be holomorphic on an open set containing
+$\{\rho_1\leq|z|\leq\rho_2\}$. Then
+\[
+ \int_{C_{\rho_1}}h(\zeta)\,d\zeta=\int_{C_{\rho_2}}h(\zeta)\,d\zeta.
+\]
+\end{lemma}
+\begin{proof}
+This is the argument of Lecture~18 (the circle comparison in the proof of
+the local Cauchy formula), with
+\[
+ F(t,s)=\bigl((1-s)\rho_2+s\rho_1\bigr)e^{it},\qquad
+ \alpha(s)=(1-s)\rho_2+s\rho_1\qquad(0\leq t\leq2\pi,\ 0\leq s\leq1).
+\]
+The map $F$ takes values in the closed annulus, and the connecting segment
+$\alpha$ runs from $\rho_2$ to $\rho_1$. As in Lecture~18, $F$ yields a
+homotopy with fixed endpoints between $C_{\rho_2}*\alpha$ and
+$\alpha*C_{\rho_1}$. The homotopy form of Cauchy's theorem gives
+\[
+ \int_{C_{\rho_2}}h+\int_\alpha h=\int_\alpha h+\int_{C_{\rho_1}}h,
+\]
+and the connecting-path integrals cancel.
+\end{proof}
+
+\begin{proposition}[Cauchy's formula on an annulus]\label{prop:annulus-cauchy}
+Let $f$ be holomorphic on $\{r\leq|z|\leq R\}$, where $0<r<R$. Then for
+every $z_0$ with $r<|z_0|<R$,
+\[
+ \boxed{\displaystyle
+ f(z_0)=\frac{1}{2\pi i}\int_{C_R}\frac{f(\zeta)}{\zeta-z_0}\,d\zeta
+ -\frac{1}{2\pi i}\int_{C_r}\frac{f(\zeta)}{\zeta-z_0}\,d\zeta.}
+\]
+\end{proposition}
+\begin{proof}
+Define
+\[
+ g(\zeta)=\frac{f(\zeta)-f(z_0)}{\zeta-z_0}\quad(\zeta\ne z_0),
+ \qquad g(z_0)=f'(z_0).
+\]
+Away from $z_0$, $g$ is clearly holomorphic. Near $z_0$, $f$ is given by a
+power series $f(\zeta)=\sum_{k\geq0}b_k(\zeta-z_0)^k$ (Lecture~20), so
+$g(\zeta)=\sum_{k\geq1}b_k(\zeta-z_0)^{k-1}$ is also a convergent power
+series there. Thus $g$ is holomorphic on a neighbourhood of the closed
+annulus, and Lemma~\ref{lem:concentric} gives
+$\int_{C_R}g=\int_{C_r}g$, that is,
+\[
+ \int_{C_R}\frac{f(\zeta)}{\zeta-z_0}\,d\zeta
+ -f(z_0)\int_{C_R}\frac{d\zeta}{\zeta-z_0}
+ =\int_{C_r}\frac{f(\zeta)}{\zeta-z_0}\,d\zeta
+ -f(z_0)\int_{C_r}\frac{d\zeta}{\zeta-z_0}.
+\]
+Since $|z_0|<R$, the local Cauchy formula (Lecture~18) applied to the
+constant function $1$ gives $\int_{C_R}d\zeta/(\zeta-z_0)=2\pi i$. Since
+$|z_0|>r$, the function $1/(\zeta-z_0)$ is holomorphic on the disc
+$|\zeta|<|z_0|$, which contains $C_r$, so $\int_{C_r}d\zeta/(\zeta-z_0)=0$
+by Cauchy's theorem on a disc. Rearranging gives the formula.
+\end{proof}
+
+\begin{remark}[The homology form of Cauchy's theorem]
+The handwritten notes quote a more general fact: if $\gamma$ is a
+(formal sum of) closed curves in $U$ that does not wind around any point
+outside $U$, then
+\[
+ \frac{1}{2\pi i}\int_\gamma\frac{f(\zeta)}{\zeta-z_0}\,d\zeta
+ =n(\gamma,z_0)\,f(z_0),\qquad
+ n(\gamma,z_0)=\frac{1}{2\pi i}\int_\gamma\frac{d\zeta}{\zeta-z_0},
+\]
+where $n(\gamma,z_0)$ is the \emph{winding number} of $\gamma$ around $z_0$.
+For $\gamma=C_R-C_r$ and $z_0$ in the annulus, $n(\gamma,z_0)=1-0=1$, which
+is Proposition~\ref{prop:annulus-cauchy}. We will not need the general
+statement.
+\end{remark}
+
+\begin{lecturefigure}
+\begin{tikzpicture}[scale=0.75,>=stealth]
+ \begin{scope}
+  \draw[courseblue,thick,postaction={decorate},decoration={markings,
+   mark=at position 0.3 with {\arrow{>}}}] (1.5,0) arc(0:360:1.5);
+  \node[courseblue] at (1.45,1.25){$C_R$};
+  \fill (0,0) circle(1.5pt);
+ \end{scope}
+ \node at (2.3,0) {\Large$-$};
+ \begin{scope}[xshift=3.5cm]
+  \draw[ForestGreen,thick,postaction={decorate},decoration={markings,
+   mark=at position 0.3 with {\arrow{>}}}] (0.6,0) arc(0:360:0.6);
+  \node[ForestGreen] at (0.75,0.65){$C_r$};
+  \fill (0,0) circle(1.5pt);
+ \end{scope}
+ \node at (4.7,0) {\Large$=$};
+ \begin{scope}[xshift=6.8cm]
+  \fill[lightpink] (0,0) circle(1.5);
+  \fill[white] (0,0) circle(0.6);
+  \draw[courseblue,thick,postaction={decorate},decoration={markings,
+   mark=at position 0.3 with {\arrow{>}}}] (1.5,0) arc(0:360:1.5);
+  \draw[ForestGreen,thick,postaction={decorate},decoration={markings,
+   mark=at position 0.3 with {\arrow{<}}}] (0.6,0) arc(0:360:0.6);
+  \fill (0,0) circle(1.5pt);
+  \fill (-0.75,-0.65) circle(2pt) node[below left]{$z_0$};
+ \end{scope}
+ \node[right,align=left] at (8.8,0)
+ {boundary of the annulus;\\ winds once around $z_0$.};
+\end{tikzpicture}
+\end{lecturefigure}
+
+\subsection{Proof of the Laurent expansion}
+% Handwritten Lecture 21, pages 2--3.
+\begin{proof}[Proof of Theorem~\ref{thm:laurent}]
+Fix $r<s<S<R$ and let $s\leq|z|\leq S$. By
+Proposition~\ref{prop:annulus-cauchy},
+\[
+ f(z)=\underbrace{\frac{1}{2\pi i}\int_{C_R}\frac{f(\zeta)}{\zeta-z}\,d\zeta}_{(\mathrm{I})}
+ \;\underbrace{-\;\frac{1}{2\pi i}\int_{C_r}\frac{f(\zeta)}{\zeta-z}\,d\zeta}_{(\mathrm{II})}.
+\]
+We expand the kernel $1/(\zeta-z)$ by a geometric series on each circle,
+in two different ways. Let $M$ be the maximum of $|f|$ on $C_R\cup C_r$.
+
+\textbf{The outer circle.} For $\zeta\in C_R$ we have
+$|z/\zeta|\leq S/R<1$, so
+\[
+ \frac{1}{\zeta-z}=\frac{1}{\zeta}\,\frac{1}{1-z/\zeta}
+ =\frac1\zeta\left(1+\frac z\zeta+\frac{z^2}{\zeta^2}+\cdots\right)
+ =\sum_{n\geq0}\frac{z^n}{\zeta^{n+1}}.
+\]
+The $n$th term of $f(\zeta)z^n/\zeta^{n+1}$ is bounded by
+$M R^{-1}(S/R)^n$, uniformly in $\zeta\in C_R$ and $s\leq|z|\leq S$.
+Exactly as in Lecture~20 (Corollary~2.2 there), we may integrate term by
+term:
+\[
+ (\mathrm{I})=\sum_{n\geq0}\left(\frac{1}{2\pi i}\int_{C_R}
+ \frac{f(\zeta)}{\zeta^{n+1}}\,d\zeta\right)z^n=\sum_{n\geq0}a_nz^n,
+\]
+and the remainder after $N$ terms is at most $M(S/R)^{N+1}/(1-S/R)$.
+
+\textbf{The inner circle.} For $\zeta\in C_r$ we instead have
+$|\zeta/z|\leq r/s<1$, so
+\[
+ \frac{1}{\zeta-z}=-\frac1z\,\frac{1}{1-\zeta/z}
+ =-\frac1z\left(1+\frac\zeta z+\frac{\zeta^2}{z^2}+\cdots\right)
+ =-\sum_{m\geq0}\frac{\zeta^m}{z^{m+1}}.
+\]
+Now the $m$th term of $f(\zeta)\zeta^m/z^{m+1}$ is bounded by
+$M s^{-1}(r/s)^m$. Integrating term by term,
+\[
+ (\mathrm{II})=\sum_{m\geq0}\left(\frac{1}{2\pi i}\int_{C_r}
+ f(\zeta)\zeta^{m}\,d\zeta\right)z^{-(m+1)}
+ =\sum_{n\leq-1}a_nz^n,
+\]
+where we substituted $n=-(m+1)$, so that $\zeta^m=\zeta^{-n-1}$. The
+remainder after $N$ terms is at most $M(r/s)^{N+1}/(1-r/s)$.
+
+Both remainders tend to $0$ uniformly for $s\leq|z|\leq S$, so
+$f=\sum_{n\in\Z}a_nz^n$ uniformly there. Every point of $A(r,R)$ lies in
+such a closed annulus.
+\end{proof}
+
+\begin{lecturefigure}
+\begin{tikzpicture}[scale=0.8]
+ \fill[lightpink] (0,0) circle(1.6);
+ \fill[white] (0,0) circle(0.9);
+ \draw[courseblue,thick] (0,0) circle(2.1);
+ \draw[ForestGreen,thick] (0,0) circle(0.5);
+ \draw[exerciseframe] (0,0) circle(1.6);
+ \draw[exerciseframe] (0,0) circle(0.9);
+ \fill (0,0) circle(1.5pt);
+ \fill (1.15,0.6) circle(2pt) node[above]{$z$};
+ \fill[courseblue] (-1.485,1.485) circle(2pt) node[above left]{$\zeta$};
+ \fill[ForestGreen] (0.35,-0.354) circle(2pt) node[below]{$\zeta$};
+ \node[right,align=left] at (2.6,0.6)
+ {outer circle: $|z/\zeta|\leq S/R<1$};
+ \node[right,align=left] at (2.6,-0.4)
+ {inner circle: $|\zeta/z|\leq r/s<1$};
+\end{tikzpicture}
+\end{lecturefigure}
+
+\subsection{Open annuli and uniqueness}
+Combining Theorem~\ref{thm:laurent} with Lemma~\ref{lem:concentric} gives
+the version for open annuli, which is the one used in practice.
+
+\begin{corollary}\label{cor:open-annulus}
+Let $0\leq r<R\leq\infty$ and let $f$ be holomorphic on $A(r,R)$. For
+$n\in\Z$ and $r<\rho<R$, the number
+\[
+ a_n=\frac{1}{2\pi i}\int_{C_\rho}\frac{f(\zeta)}{\zeta^{n+1}}\,d\zeta
+\]
+does not depend on $\rho$, and $f(z)=\sum_{n\in\Z}a_nz^n$ for all
+$z\in A(r,R)$.
+\end{corollary}
+\begin{proof}
+Independence of $\rho$ is Lemma~\ref{lem:concentric} applied to
+$h(\zeta)=f(\zeta)\zeta^{-n-1}$. Given $z\in A(r,R)$, choose
+$r<\rho_1<|z|<\rho_2<R$ and apply Theorem~\ref{thm:laurent} on the closed
+annulus $\rho_1\leq|z|\leq\rho_2$; its coefficients are the $a_n$ above.
+\end{proof}
+
+\begin{proposition}[Uniqueness]\label{prop:unique}
+If $f(z)=\sum_{n\in\Z}c_nz^n$ on $A(r,R)$, then $c_n=a_n$ for all $n$.
+\end{proposition}
+\begin{proof}
+Fix $k\in\Z$ and $r<\rho<R$. The series converges uniformly on $C_\rho$,
+so we may multiply by $z^{-k-1}$ and integrate term by term over $C_\rho$.
+Since $\int_{C_\rho}z^{m}\,dz=2\pi i$ for $m=-1$ and $0$ otherwise, only
+the term $n=k$ survives:
+\[
+ a_k=\frac{1}{2\pi i}\int_{C_\rho}\frac{f(z)}{z^{k+1}}\,dz
+ =\sum_{n\in\Z}c_n\,\frac{1}{2\pi i}\int_{C_\rho}z^{n-k-1}\,dz=c_k.\qedhere
+\]
+\end{proof}
+In particular, \emph{any} method of producing a Laurent series for $f$
+on an annulus (for example, geometric series) gives the Laurent expansion.
+
+\section{Computing Laurent expansions}
+% Handwritten Lecture 21, pages 3--4.
+In practice we rarely use the coefficient integrals. Instead we use
+partial fractions and geometric series, and appeal to
+Proposition~\ref{prop:unique}.
+
+\begin{example}\label{ex:zz1-at-0}
+Let $f(z)=\dfrac{1}{z(z-1)}$, holomorphic on $\C\setminus\{0,1\}$. By
+partial fractions,
+\[
+ \frac{1}{z(z-1)}=\frac{1}{z-1}-\frac1z.
+\]
+\begin{itemize}
+ \item On $A(0,1)=\{0<|z|<1\}$: here $-1/z$ is already a Laurent series
+ (valid for $|z|>0$), and $\frac{1}{z-1}=-(1+z+z^2+\cdots)$ for $|z|<1$. So
+ \[
+  f(z)=-\frac1z-1-z-z^2-\cdots\qquad(0<|z|<1).
+ \]
+ \item On $A(1,\infty)=\{|z|>1\}$: now
+ $\frac{1}{z-1}=\frac1z+\frac1{z^2}+\frac1{z^3}+\cdots$ (Lecture~21), so
+ \[
+  f(z)=\frac1{z^2}+\frac1{z^3}+\cdots\qquad(|z|>1).
+ \]
+\end{itemize}
+\begin{lecturefigure}
+\begin{tikzpicture}[scale=0.8]
+ \fill[lightpink] (0,0) circle(1.2);
+ \draw[thick] (0,0) circle(1.2);
+ \draw[gray,->] (-2,0)--(2.2,0);
+ \draw[gray,->] (0,-1.6)--(0,1.6);
+ \draw[thick] (0,0) node{$\times$};
+ \draw[thick] (1.2,0) node{$\times$};
+ \node[below left] at (0,0){$0$};
+ \node[below right] at (1.2,0){$1$};
+ \node[right,align=left] at (2.5,0.3)
+ {shaded: $0<|z|<1$ (first expansion)\\
+  outside the circle: $|z|>1$ (second)};
+\end{tikzpicture}
+\end{lecturefigure}
+\end{example}
+
+\subsection{Laurent series about other points}
+We do not need to centre Laurent series at $0$. Applying
+Corollary~\ref{cor:open-annulus} to $w\mapsto f(z_0+w)$: if $f$ is
+holomorphic on $\{r<|z-z_0|<R\}$, then
+\[
+ f(z)=\sum_{n=-\infty}^{\infty}a_n(z-z_0)^n,\qquad
+ a_n=\frac{1}{2\pi i}\int_{|\zeta-z_0|=\rho}
+ \frac{f(\zeta)}{(\zeta-z_0)^{n+1}}\,d\zeta\quad(r<\rho<R).
+\]
+
+\begin{example}[Expansion about $z=1$]
+% Handwritten page 4 writes +(1+(1-z)+(1-z)^2+...); the sign is corrected.
+Take $f(z)=\dfrac{1}{z(z-1)}=\dfrac{1}{z-1}-\dfrac1z$ again, now on
+$0<|z-1|<1$. The first term is already a power of $z-1$. For the second,
+\[
+ \frac1z=\frac{1}{1+(z-1)}=1-(z-1)+(z-1)^2-\cdots
+ =\sum_{n\geq0}(1-z)^n\qquad(|z-1|<1).
+\]
+Therefore the Laurent expansion about $z=1$ is
+\[
+ f(z)=\frac{1}{z-1}-1+(z-1)-(z-1)^2+\cdots\qquad(0<|z-1|<1).
+\]
+\end{example}
+
+\begin{exercise}
+Find the Laurent expansion of $\dfrac{1}{z(z-1)}$ about $z=1$ on the
+region $|z-1|>1$.
+\end{exercise}
+
+\section{Isolated singularities}
+% Handwritten Lecture 21, page 4. The function-side characterizations in
+% the table are stated here; their proofs come in the next lecture.
+\begin{definition}
+Let $U$ be open and $z_0\in U$. A function $f$ holomorphic on
+$U\setminus\{z_0\}$ is said to have an \emph{isolated singularity} at $z_0$.
+\end{definition}
+We are interested in functions $f$ on an open set that are holomorphic
+except for, at worst, isolated singularities. If $f$ has an isolated
+singularity at $z_0$, choose $\rho>0$ with $D(z_0,\rho)\subseteq U$. Then $f$
+is holomorphic on the punctured disc $\{0<|z-z_0|<\rho\}$, an annulus with
+inner radius $0$, so Corollary~\ref{cor:open-annulus} gives a Laurent
+expansion
+\[
+ f(z)=\sum_{n=-\infty}^{\infty}a_n(z-z_0)^n\qquad(0<|z-z_0|<\rho).
+\]
+By Proposition~\ref{prop:unique}, the coefficients depend only on $f$ near
+$z_0$, not on $\rho$.
+
+\begin{definition}
+In this situation the singularity at $z_0$ is
+\begin{enumerate}
+ \item \emph{removable} if $a_n=0$ for all $n<0$;
+ \item a \emph{pole} if $a_n\ne0$ for some, but only finitely many, $n<0$.
+ If $a_{-m}\ne0$ and $a_n=0$ for $n<-m$, the pole has \emph{order} $m$;
+ \item an \emph{essential singularity} if $a_n\ne0$ for infinitely many
+ $n<0$.
+\end{enumerate}
+\end{definition}
+
+The three types are also visible from the behaviour of $f$ near $z_0$:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|p{5.2cm}|p{5.4cm}|}
+ \hline
+ \textbf{Type} & \textbf{Behaviour of $f$ near $z_0$} &
+ \textbf{Laurent expansion at $z_0$}\\
+ \hline
+ Removable & $f$ is bounded near $z_0$ &
+ no negative terms:\newline $f=\sum_{n\geq0}a_n(z-z_0)^n$\\
+ \hline
+ Pole & $|f(z)|\to\infty$ as $z\to z_0$ &
+ finitely many negative terms:\newline $f=\sum_{n\geq-m}a_n(z-z_0)^n$\\
+ \hline
+ Essential & the values of $f$ near $z_0$ are dense in $\C$ &
+ infinitely many negative terms\\
+ \hline
+\end{tabular}
+\end{center}
+That the two columns match is a theorem, proved next lecture (it includes
+Riemann's removable singularity theorem and the Casorati--Weierstrass
+theorem).
+
+\begin{example}
+Some examples of each type:
+\begin{itemize}
+ \item $\dfrac{\sin z}{z}=1-\dfrac{z^2}{3!}+\dfrac{z^4}{5!}-\cdots$ has a
+ removable singularity at $0$; setting its value at $0$ to be $1$ gives an
+ entire function.
+ \item $\dfrac{1}{z(z-1)}$ has poles of order $1$ at $0$ and at $1$, by
+ the expansions computed above.
+ \item $\dfrac{1}{z^2}$ has a pole of order $2$ at $0$.
+ \item $e^{1/z}=\displaystyle\sum_{n\geq0}\frac{1}{n!}z^{-n}$ has an
+ essential singularity at $0$.
+\end{itemize}
+\end{example}
+
+\begin{exercise}
+Prove the easy half of the table for the first two rows. (a) If the
+Laurent expansion at $z_0$ has no negative terms, show that $f$ is bounded
+near $z_0$ and extends holomorphically to $z_0$. (b) If $f$ has a pole of
+order $m$ at $z_0$, write $f(z)=(z-z_0)^{-m}g(z)$ with $g$ holomorphic near
+$z_0$ and $g(z_0)\ne0$, and deduce that $|f(z)|\to\infty$ as $z\to z_0$.
+\end{exercise}
+
+\end{document}

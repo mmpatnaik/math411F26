@@ -29,7 +29,7 @@
 \definecolor{orangeframe}{HTML}{E08A3C}
 
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.65em}
+\setlength{\parskip}{0.45em}
 \setlist[itemize]{topsep=0.25em,itemsep=0.15em}
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
 \renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
@@ -115,6 +115,10 @@
 \newcommand{\CT}{\C[[T]]}
 \newcommand{\CLT}{\C((T))}
 \tcbset{breakable}
+% Compact spacing around diagrams; keep the main text at 11pt.
+\newenvironment{lecturefigure}
+ {\par\addvspace{0.25em}\begingroup\setlength{\parskip}{0pt}\centering}
+ {\par\endgroup\addvspace{0.25em}}
 \begin{document}
 
 \begin{center}
@@ -136,26 +140,176 @@
 \vspace{0.45em}
 
 
-% Sources: Section 6 of the former Lecture 18 (handwritten Lecture 18,
-% Oct. 24, pages 7--10), followed by handwritten Lecture 19, Oct. 26,
-% pages 1--6. Preserve the handwritten order: logarithm laws, local
-% logarithm series, analyticity theorem, Liouville, then the theorem's proof.
-% Correct the sign in the logarithm series and supply uniform convergence
-% and the closed-disc hypothesis needed for the contour integrals.
-We continue Lecture~18 with logarithms of nonvanishing functions.
-We then compare logarithms with their local power series and prove that
-\emph{every holomorphic function is analytic}. The same integral formula
-for the coefficients gives Cauchy's estimates and Liouville's theorem.
+% Sources: handwritten Lecture 18, Oct. 24, pages 3--10,
+% followed by handwritten Lecture 19, Oct. 26,
+% pages 1--3. Preserve the handwritten order: logarithm laws, then
+% local logarithm series. The general analyticity theorem and its proof
+% are omitted from this lecture.
+We use the primitive theorem from Lecture~18 to construct complex
+logarithms, beginning with branches of the logarithm of $z$ and then
+passing to nonvanishing analytic functions.
+We then discuss logarithm identities and compare logarithms with their
+local power series.
+
+\section{Complex logarithms}
+% Handwritten Lecture 18, pages 3--6.
+Recall that
+\[
+ e^w=\sum_{n=0}^\infty\frac{w^n}{n!},\qquad
+ e^{x+iy}=e^x(\cos y+i\sin y).
+\]
+The exponential is never zero and has period $2\pi i$. We would like to
+invert it. If $z=re^{i\theta}\ne0$, then all solutions of $e^w=z$ are
+\[
+ w=\ln r+i(\theta+2\pi k),\qquad k\in\Z.
+\]
+Here $\ln$ denotes the ordinary real logarithm. The difficulty is to
+choose the argument continuously as $z$ varies.
+
+\subsection{Why a branch is needed}
+If we always choose $\theta\in[0,2\pi)$, the function
+$\ln|z|+i\theta$ jumps across the positive real axis. At a positive
+real number $r$, the limits from above and below are respectively
+$\ln r$ and $\ln r+2\pi i$.
+
+\begin{lecturefigure}
+\begin{tikzpicture}[scale=0.85,x=1cm,y=1cm,>=stealth,transform shape]
+ \draw[gray,->] (-1,0)--(4,0);
+ \draw[gray,->] (0,-1)--(0,1);
+ \draw[exerciseframe,dashed,thick] (0,0)--(3.8,0);
+ \draw[fill=white] (0,0) circle (2pt) node[below left]{$0$};
+ \fill (2.4,0.35) circle (2pt);
+ \fill (2.4,-0.35) circle (2pt);
+ \draw[courseblue,->] (2.4,0.9)--(2.4,0.45);
+ \draw[orangeframe,->] (2.4,-0.9)--(2.4,-0.45);
+ \node[right,courseblue] at (2.6,0.6){$\theta\to0$};
+ \node[right,orangeframe] at (2.6,-0.6){$\theta\to2\pi$};
+ \fill (2.4,0) circle (1.4pt);
+ \node[left,font=\small] at (2.35,-0.2){$r$};
+\end{tikzpicture}
+\end{lecturefigure}
+
+In fact, no continuous function $L$ on $\C\setminus\{0\}$ satisfies
+$e^{L(z)}=z$ for all $z\ne0$. If such an $L$ existed, then
+\[
+ L(e^{it})-it\in2\pi i\Z\qquad(0\leq t\leq2\pi).
+\]
+This continuous function of $t$ takes values in a discrete set, so it
+is constant. But its values at $0$ and $2\pi$ differ by $-2\pi i$,
+since $e^0=e^{2\pi i}=1$. This is a contradiction.
+
+\begin{definition}
+A \emph{holomorphic branch of the logarithm} on an open set
+$U\subseteq\C\setminus\{0\}$ is a holomorphic function $L\colon U\to\C$
+satisfying $e^{L(z)}=z$ for every $z\in U$.
+\end{definition}
+Differentiating this identity gives $e^{L(z)}L'(z)=1$, hence
+$L'(z)=1/z$. This suggests constructing a logarithm by integrating $1/z$.
+
+\subsection{Constructing a logarithm on a simply connected domain}
+\begin{theorem}\label{thm:log-z}
+Let $U\subseteq\C\setminus\{0\}$ be simply connected. Choose $z_0\in U$
+and $w_0\in\C$ with $e^{w_0}=z_0$. Then
+\[
+ \boxed{\displaystyle L(z)=w_0+\int_{z_0}^z\frac{d\zeta}{\zeta}}
+\]
+defines a holomorphic branch of the logarithm on $U$, with
+$L(z_0)=w_0$ and $L'(z)=1/z$.
+\end{theorem}
+\begin{proof}
+The function $1/z$ is holomorphic on $U$, so the primitive theorem from Lecture~18
+shows that the integral is path independent and $L'=1/z$.
+To verify the exponential identity, differentiate:
+\[
+ \frac{d}{dz}\bigl(ze^{-L(z)}\bigr)
+ =e^{-L(z)}-ze^{-L(z)}L'(z)=0.
+\]
+Since $U$ is connected, $ze^{-L(z)}$ is constant. At $z_0$, its value
+is $z_0e^{-w_0}=1$, so $e^{L(z)}=z$ on $U$.
+\end{proof}
+
+\begin{lecturefigure}
+\begin{tikzpicture}[scale=0.722,transform shape]
+ \draw[thick] plot[smooth cycle,tension=0.6] coordinates
+ {(-1.7,1.2) (0,1.6) (2.3,1.3) (2.6,0) (1.6,-1.4)
+  (-1.7,-1.2) (-1.6,-0.65) (0.3,-0.55) (0.65,0) (0.1,0.6) (-1.5,0.7)};
+ \draw[fill=white] (0,0) circle (2pt) node[left]{$0$};
+ \draw[exerciseframe,very thick,->] (-0.8,-0.95)
+ .. controls (0,-0.7) and (0.6,-1.3) .. (1.2,-0.6)
+ .. controls (1.7,0) and (1.8,0.5) .. (1.9,0.9);
+ \fill (-0.8,-0.95) circle (2pt) node[below]{$z_0$};
+ \fill (1.9,0.9) circle (2pt) node[right]{$z$};
+ \node at (2.5,1.55){$U$};
+ \node[right,align=left] at (3.5,0)
+ {$0\notin U$; all paths stay in $U$.\\The choice $L(z_0)=w_0$ fixes the branch.};
+\end{tikzpicture}
+\end{lecturefigure}
+
+\subsection{The principal branch}\label{sec:principal-log}
+Take the slit plane
+\[
+ U_0=\C\setminus(-\infty,0],\qquad z_0=1,\qquad w_0=0.
+\]
+The entire nonpositive real axis, including $0$, is removed. On this
+domain choose the unique argument $\Arg z\in(-\pi,\pi)$, which varies
+continuously. The coordinates $z\mapsto(\ln|z|,\Arg z)$ identify $U_0$
+with the convex strip $\R\times(-\pi,\pi)$; the continuous inverse is
+$(x,\theta)\mapsto e^x e^{i\theta}$. Straight-line contractions in the
+strip, transported back to $U_0$, contract any loop while fixing its
+base point. Thus $U_0$ is simply connected.
+
+By Theorem~\ref{thm:log-z}, the \emph{principal logarithm} is
+\[
+ \Log z=\int_1^z\frac{d\zeta}{\zeta},\qquad z\in U_0.
+\]
+Write $z=re^{i\theta}$ with $r>0$ and $-\pi<\theta<\pi$.
+Use a path consisting of the positive real segment from $1$ to $r$,
+followed by the circular arc from $r$ to $z$.
+
+\begin{lecturefigure}
+\begin{tikzpicture}[scale=0.807,>=stealth,transform shape]
+ \draw[gray,->] (-1.7,0)--(3.2,0);
+ \draw[gray,->] (0,-0.35)--(0,2.5);
+ \draw[exerciseframe,very thick] (-1.7,0)--(-0.06,0);
+ \draw[fill=white,exerciseframe] (0,0) circle (2pt) node[below]{$0$};
+ \draw[ForestGreen,very thick,->] (0.8,0)--(2.6,0);
+ \draw[courseblue,very thick,->] (2.6,0) arc[start angle=0,end angle=60,radius=2.6];
+ \draw[gray,dashed] (0,0)--(1.3,2.252);
+ \draw[orangeframe,->] (0.5,0) arc[start angle=0,end angle=60,radius=0.5];
+ \node[orangeframe] at (0.65,0.45){$\theta$};
+ \fill (0.8,0) circle (2pt) node[below]{$1$};
+ \fill (2.6,0) circle (2pt) node[below]{$r$};
+ \fill (1.3,2.252) circle (2pt) node[above]{$z=re^{i\theta}$};
+ \node[courseblue] at (2.6,1.6){$\eta$};
+\end{tikzpicture}
+\end{lecturefigure}
+On the real segment, the integral is $\int_1^r dx/x=\ln r$;
+this also holds when $0<r<1$, with the segment traversed towards $r$.
+Parametrize the arc by $\eta(u)=re^{iu\theta}$, $0\leq u\leq1$.
+This parametrization works for either sign of $\theta$, and
+\[
+ \int_\eta\frac{d\zeta}{\zeta}
+ =\int_0^1\frac{i\theta re^{iu\theta}}{re^{iu\theta}}\,du=i\theta.
+\]
+Therefore
+\[
+ \boxed{\Log z=\ln|z|+i\Arg z,\qquad -\pi<\Arg z<\pi.}
+\]
+The integral construction proves that this branch is holomorphic;
+the polar formula evaluates it explicitly.
+
+\begin{warning}
+The identity $\Log(zw)=\Log z+\Log w$ need not hold even when
+$z,w,zw\in U_0$. For example, $z=w=e^{3\pi i/4}$ and $zw=-i$ all lie in $U_0$,
+but
+\[
+ \Log(zw)=-\frac{\pi i}{2},\qquad \Log z+\Log w=\frac{3\pi i}{2}.
+\]
+The two sides differ by $2\pi i$.
+\end{warning}
 
 \section{Logarithms of nonvanishing analytic functions}
-% Handwritten Lecture 18, pages 7--10. Retain the handwritten correction
-% from "holomorphic" to "analytic" so f'/f is known to be holomorphic
-% before the later theorem that all holomorphic functions are analytic.
-The same construction works for a nonvanishing function $f$, replacing
-$1/z$ by its \emph{logarithmic derivative} $f'/f$.
-As in the handwritten notes, we assume here that $f$ is \emph{analytic}.
-Then $f'$ is analytic, so $f'/f$ is holomorphic when $f$ has no zeros.
-This uses only facts about power series already established in the course.
+Suppose now $f$ is \emph{analytic} on a domain $U$. Then $f'$ is analytic, so $f'/f$ is holomorphic when $f$ has no zeros.
 
 \begin{theorem}\label{thm:log-f}
 Let $U\subseteq\C$ be simply connected, and let $f$ be analytic on $U$
@@ -184,8 +338,8 @@ $z_0$ gives $e^{-w_0}f(z_0)=1$. Hence $e^{L_f(z)}=f(z)$.
 \end{proof}
 
 
-\begin{center}
-\begin{tikzpicture}[scale=0.85]
+\begin{lecturefigure}
+\begin{tikzpicture}[scale=0.722,transform shape]
  \draw[thick] plot[smooth cycle,tension=0.75] coordinates
  {(-2.6,-0.6) (-2.5,1) (-1.1,1.35) (0.3,1.6) (2.3,0.8)
   (2.4,-0.7) (1,-1.3) (-0.7,-0.8)};
@@ -198,7 +352,7 @@ $z_0$ gives $e^{-w_0}f(z_0)=1$. Hence $e^{L_f(z)}=f(z)$.
 \end{tikzpicture}
 
 {\small Integrate $f'/f$ along any path in the simply connected domain $U$.}
-\end{center}
+\end{lecturefigure}
 
 \subsection{Dependence on the choices}
 \begin{proposition}[Uniqueness up to $2\pi i\Z$]\label{prop:log-unique}
@@ -265,19 +419,19 @@ $w_{12}-w_1-w_2$ may instead be a nonzero multiple of $2\pi i$.
 
 \begin{example}[The normalized logarithm on the slit plane]
 On $U_0=\C\setminus(-\infty,0]$, the choices $f(z)=z$, $z_0=1$,
-and $w_0=0$ give the principal logarithm $\Log z$ of Lecture~18.
+and $w_0=0$ give the principal logarithm $\Log z$ from Section~\ref{sec:principal-log}.
 Its normalization is $\Log 1=0$.
-\begin{center}
-\begin{tikzpicture}[scale=0.8]
+\begin{lecturefigure}
+\begin{tikzpicture}[scale=0.68,transform shape]
  \draw[very thick] (-3,0)--(-0.08,0);
  \draw[fill=white,thick] (0,0) circle(0.07);
  \node[below] at (0,-0.08) {$0$};
  \fill[exerciseframe] (1.5,0) circle(2.5pt) node[above] {$z_0=1$};
  \node[below] at (-1.6,0) {removed ray};
 \end{tikzpicture}
-\end{center}
+\end{lecturefigure}
 Prescribing principal values separately does not guarantee the product
-rule: recall the example $z=w=e^{3\pi i/4}$ from Lecture~18.
+rule: recall the example $z=w=e^{3\pi i/4}$ in Section~\ref{sec:principal-log}.
 \end{example}
 
 \section{The logarithm as a local power series}
@@ -320,8 +474,8 @@ In particular, every holomorphic branch of the logarithm is analytic.
 This conclusion uses the explicit power series, before the general
 holomorphic-implies-analytic theorem has been proved.
 
-\begin{center}
-\begin{tikzpicture}[scale=0.8]
+\begin{lecturefigure}
+\begin{tikzpicture}[scale=0.68,transform shape]
  \draw[thick] plot[smooth cycle,tension=0.7] coordinates
  {(-2.8,-0.5) (-2.6,1.5) (-0.8,1.7) (1,1.65) (2.6,1)
   (2.3,-1.25) (0.3,-1.6) (-1.5,-1)};
@@ -331,17 +485,17 @@ holomorphic-implies-analytic theorem has been proved.
  \draw[exerciseframe] (-0.2,0.1)--(0.58,0.55) node[midway,above] {$r$};
  \node[align=center] at (4,0) {$F=L$\\on $D(z_0,r)$};
 \end{tikzpicture}
-\end{center}
+\end{lecturefigure}
 
 \subsection{The picture of overlapping discs}
-The handwritten sketch shows local logarithms on overlapping discs
+Consider the following picture that shows local logarithms on overlapping discs
 along a circle around $0$. On each new disc we can adjust the initial
 value by a multiple of $2\pi i$ so that the local logarithms agree on
 the overlap. Their derivatives are all $1/z$, so matching at one point
 makes them agree on the connected overlap.
 
-\begin{center}
-\begin{tikzpicture}[scale=1.1]
+\begin{lecturefigure}
+\begin{tikzpicture}[scale=0.935,transform shape]
  \draw[->,gray] (-2.3,0)--(2.5,0);
  \draw[->,gray] (0,-2.2)--(0,2.2);
  \foreach \a in {30,60,...,330} {
@@ -359,163 +513,119 @@ makes them agree on the connected overlap.
 \end{tikzpicture}
 
 {\small Local branches can be matched along a path around the origin.}
-\end{center}
-After one counterclockwise turn, the continued value has increased by
+\end{lecturefigure}
+Why does continuing the series once around $0$ change its value?
+Parametrize the circle by $z(t)=e^{it}$, $0\leq t\leq2\pi$, and choose
 \[
- \int_{|z|=1}\frac{dz}{z}=2\pi i.
+ 0=t_0<t_1<\cdots<t_N=2\pi
 \]
-Thus local agreement along the path does not give a single-valued
-logarithm on all of $\C\setminus\{0\}$. This is the obstruction that
-simple connectedness removes in the integral construction.
-
-\section{Holomorphic functions are analytic}
-% Handwritten Lecture 19, page 4. State the theorem, give Liouville's
-% theorem as in pages 4--5, and then return to the proof on pages 5--6.
-The logarithm illustrates a general phenomenon. Cauchy's integral
-formula produces a convergent power series for any holomorphic function.
-
-\begin{theorem}[Power series expansion and Cauchy estimates]\label{thm:analytic}
-Let $U\subseteq\C$ be open and $f$ holomorphic on $U$. Suppose
-$\overline{D(z_0,R)}\subseteq U$, where $R>0$, and let
-$\gamma_R(t)=z_0+Re^{it}$, $0\leq t\leq2\pi$, be the positively
-oriented boundary circle. Set
+so that each arc lies in one disc. Let $L_j$ be the local logarithm
+series used on the $j$-th arc. Differentiating each series gives
+$L_j'(z)=1/z$, so the chain rule gives
 \[
- a_n:=\frac{1}{2\pi i}\int_{\gamma_R}
-       \frac{f(\zeta)}{(\zeta-z_0)^{n+1}}\,d\zeta
- \quad(n\geq0),\qquad
- M_R:=\max_{\zeta\in\gamma_R}|f(\zeta)|.
+ \frac{d}{dt}L_j(e^{it})=\frac{1}{e^{it}}\,ie^{it}=i.
 \]
-Then
-\begin{enumerate}
- \item $\displaystyle |a_n|\leq\frac{M_R}{R^n}$ for all $n\geq0$
-       \quad\emph{(Cauchy estimates)};
- \item $\displaystyle f(z)=\sum_{n=0}^{\infty}a_n(z-z_0)^n$
-       for $|z-z_0|<R$.
-\end{enumerate}
-The series converges uniformly on each closed disc
-$\overline{D(z_0,s)}$ with $0<s<R$. Consequently, $f$ is analytic on $U$.
-\end{theorem}
-
-\begin{center}
-\begin{tikzpicture}[scale=0.8]
- \draw[thick] plot[smooth cycle,tension=0.8] coordinates
- {(-3,-0.6) (-2.6,1.6) (-0.8,2) (1.1,1.9) (2.7,1)
-  (2.7,-1) (0.7,-1.8) (-1.8,-1.4)};
- \node at (2.8,1.7) {$U$};
- \draw[thick,postaction={decorate},decoration={markings,
- mark=at position 0.25 with {\arrow{>}}}] (1.35,0) arc(0:360:1.35);
- \fill (0,0) circle(2pt) node[below] {$z_0$};
- \draw[exerciseframe,thick] (0,0)--(-0.95,0.95) node[midway,left] {$R$};
- \node at (1.7,0.85) {$\gamma_R$};
-\end{tikzpicture}
-\end{center}
-The closed-disc condition ensures that $f$ is holomorphic on a
-neighborhood of the contour and its interior. For $n=0$, the coefficient
-formula is simply Cauchy's formula at the center: $a_0=f(z_0)$.
-
-\subsection{An immediate consequence: Liouville's theorem}
-\begin{corollary}[Liouville's theorem]
-Every bounded entire function is constant.
-\end{corollary}
-\begin{proof}[Proof using Theorem~\ref{thm:analytic}]
-Suppose $f$ is holomorphic on $\C$ and $|f(z)|\leq M$ for all $z$.
-Expand at $z_0=0$. For every $R>0$, the theorem gives
+Thus $L_j(e^{it})-it$ has derivative zero and is constant for
+$t_{j-1}\leq t\leq t_j$. Evaluating this constant at the two endpoints
+gives
 \[
- f(z)=\sum_{n=0}^{\infty}a_n z^n\quad(|z|<R),\qquad
- |a_n|\leq\frac{M}{R^n}.
+ L_j(e^{it_j})-it_j
+ =L_j(e^{it_{j-1}})-it_{j-1}.
 \]
-The coefficients are independent of $R$: power series representing the
-same function near $0$ have unique coefficients (equivalently,
-$a_n=f^{(n)}(0)/n!$). For each fixed $n\geq1$, let $R\to\infty$.
-Then $a_n=0$. Since $R$ can be arbitrarily large, $f(z)=a_0$ on all of $\C$.
-\end{proof}
-We now prove the expansion theorem used above.
-
-\section{Proof of the power series expansion}
-% Handwritten Lecture 19, pages 5--6, with the interchange of sum and
-% integral and the final remainder estimate written out.
-\begin{proof}[Proof of Theorem~\ref{thm:analytic}]
-\textbf{Step 1: estimate the coefficients.}
-On $\gamma_R$, we have $|\zeta-z_0|=R$, and the contour has length
-$2\pi R$. The estimation lemma gives
+Rearranging, the change along that arc is
 \[
- |a_n|\leq\frac{1}{2\pi}\,(2\pi R)\,
-              \frac{M_R}{R^{n+1}}=\frac{M_R}{R^n}.
+ L_j(e^{it_j})-L_j(e^{it_{j-1}})=i(t_j-t_{j-1}).
 \]
+This calculation uses the same branch $L_j$ throughout the arc.
+Matching different branches enters only when we pass to the next arc.
 
-\textbf{Step 2: expand the Cauchy kernel.}
-Fix $0<s<R$. For $|z-z_0|\leq s$ and $\zeta\in\gamma_R$,
-\[
- \left|\frac{z-z_0}{\zeta-z_0}\right|\leq\frac{s}{R}<1.
-\]
-Consequently,
-\begin{align*}
- \frac{1}{\zeta-z}
- &=\frac{1}{\zeta-z_0}\,
-   \frac{1}{1-\dfrac{z-z_0}{\zeta-z_0}}\\
- &=\frac{1}{\zeta-z_0}
-    \sum_{n=0}^{\infty}\left(\frac{z-z_0}{\zeta-z_0}\right)^n
- =\sum_{n=0}^{\infty}\frac{(z-z_0)^n}{(\zeta-z_0)^{n+1}}.
-\end{align*}
-The absolute value of the $n$th term is at most
-$R^{-1}(s/R)^n$. Since these bounds form a convergent geometric series,
-the kernel series converges uniformly for all such $z$ and $\zeta$.
+At each transition we choose the next branch to agree with the previous
+one on their overlap; in particular,
+$L_{j+1}(e^{it_j})=L_j(e^{it_j})$.
 
-\begin{center}
-\begin{tikzpicture}[scale=0.9]
- \draw[thick] plot[smooth cycle,tension=0.75] coordinates
- {(-2.8,-1) (-2.8,1.4) (-1,2.05) (1.3,1.8) (2.8,0.6)
-  (2.7,-1) (0.6,-1.95) (-1.5,-1.7)};
- \node at (2.7,1.6) {$U$};
- \draw[thick,postaction={decorate},decoration={markings,
- mark=at position 0.2 with {\arrow{>}}}] (1.5,0) arc(0:360:1.5);
- \draw[courseblue,thick,fill=lightblue] (0,0) circle(0.9);
- \fill (0,0) circle(2pt) node[below left] {$z_0$};
- \draw[exerciseframe,thick] (0,0)--(-0.75,1.3)
- node[pos=0.8,left] {$R$};
- \draw[courseblue,thick] (0,0)--(0.78,0.45) node[midway,above] {$s$};
- \fill (0.45,-0.3) circle(2pt) node[right] {$z$};
- \fill (1.3,-0.75) circle(2pt) node[right] {$\zeta$};
- \node at (1.75,0.65) {$\gamma_R$};
+\begin{lecturefigure}
+\begin{tikzpicture}[scale=1.05,>=stealth]
+ \fill[lightblue] (1.8,0.2) circle(1.35);
+ \fill[lightgreen,fill opacity=0.6] (0,0.2) circle(1.35);
+ \draw[courseblue,thick] (1.8,0.2) circle(1.35);
+ \draw[ForestGreen,thick] (0,0.2) circle(1.35);
+ \draw[gray,dashed] ({0.9+3*cos(40)},{-2.35+3*sin(40)})
+  arc[start angle=40,end angle=140,radius=3];
+ \draw[courseblue,very thick,postaction={decorate},
+  decoration={markings,mark=at position 0.5 with {\arrow{>}}}]
+  (2.4,0.248076) arc[start angle=60,end angle=90,radius=3];
+ \draw[ForestGreen,very thick,postaction={decorate},
+  decoration={markings,mark=at position 0.5 with {\arrow{>}}}]
+  (0.9,0.65) arc[start angle=90,end angle=120,radius=3];
+ \fill (0.9,0.65) circle(2pt);
+ \node at (0.9,1.9) {$e^{it_j}$};
+ \draw[gray] (0.9,1.65)--(0.9,0.75);
+ \fill (-0.6,0.248076) circle(2pt);
+ \node at (-1.7,0.8) {$e^{it_{j+1}}$};
+ \draw[gray] (-1.35,0.65)--(-0.7,0.3);
+ \node[courseblue,align=center] at (2,-0.4)
+  {$D_j$\\$L_j$};
+ \node[ForestGreen,align=center] at (-0.2,-0.4)
+  {$D_{j+1}$\\$L_{j+1}$};
+ \node[align=center] at (0.9,-1.65)
+  {Match at $e^{it_j}\in D_j\cap D_{j+1}$:\\[2pt]
+   $L_j(e^{it_j})=L_{j+1}(e^{it_j})$.};
 \end{tikzpicture}
 
-{\small The smaller disc gives a uniform ratio $s/R<1$ on the contour.}
-\end{center}
+{\small Follow $z(t)=e^{it}$ counterclockwise, then use $L_{j+1}$
+to reach $e^{it_{j+1}}$.}
+\end{lecturefigure}
 
-\textbf{Step 3: integrate term by term.}
-Cauchy's integral formula, recalled in Lecture~18, says
-\[
- f(z)=\frac{1}{2\pi i}\int_{\gamma_R}\frac{f(\zeta)}{\zeta-z}\,d\zeta
- \qquad (|z-z_0|<R).
-\]
-The function $f$ is bounded on $\gamma_R$. Multiplying the uniformly
-convergent kernel series by $f(\zeta)$ therefore preserves uniform
-convergence, allowing termwise integration:
+To see the cancellation explicitly, put $z_j=e^{it_j}$, so that
+$z_0=z_N=1$. Adding the changes along the individual arcs gives
 \begin{align*}
- f(z)
- &=\frac{1}{2\pi i}\int_{\gamma_R}
-   \sum_{n=0}^{\infty}\frac{f(\zeta)(z-z_0)^n}{(\zeta-z_0)^{n+1}}\,d\zeta\\
- &=\sum_{n=0}^{\infty}\left(\frac{1}{2\pi i}\int_{\gamma_R}
-   \frac{f(\zeta)}{(\zeta-z_0)^{n+1}}\,d\zeta\right)(z-z_0)^n\\
- &=\sum_{n=0}^{\infty}a_n(z-z_0)^n.
+ \sum_{j=1}^N\bigl(L_j(z_j)-L_j(z_{j-1})\bigr)
+ &=\bigl[L_1(z_1)-L_1(z_0)\bigr]
+   +\bigl[L_2(z_2)-L_2(z_1)\bigr]\\
+ &\quad+\cdots+\bigl[L_N(z_N)-L_N(z_{N-1})\bigr].
 \end{align*}
-More explicitly, the integrated geometric-series remainder satisfies
+The term $+L_1(z_1)$ from the first arc cancels with $-L_2(z_1)$
+from the second arc because the branches were matched at $z_1$:
+$L_1(z_1)=L_2(z_1)$. Similarly, at every intermediate point $z_j$,
 \[
- \sup_{|z-z_0|\leq s}
- \left|f(z)-\sum_{n=0}^{N}a_n(z-z_0)^n\right|
- \leq M_R\,\frac{(s/R)^{N+1}}{1-s/R}\longrightarrow0.
+ +L_j(z_j)-L_{j+1}(z_j)=0,\qquad 1\leq j\leq N-1.
 \]
-This also proves uniform convergence on the smaller closed disc.
-Every point of $D(z_0,R)$ lies in such a disc, so the expansion holds
-throughout $D(z_0,R)$. Finally, every $z_0\in U$ admits some $R>0$
-with $\overline{D(z_0,R)}\subseteq U$. Thus $f$ is analytic on $U$.
-\end{proof}
+More explicitly, regrouping the sum gives
+\begin{align*}
+ \sum_{j=1}^N\bigl(L_j(z_j)-L_j(z_{j-1})\bigr)
+ &=L_N(z_N)-L_1(z_0)
+   +\sum_{j=1}^{N-1}\underbrace{\bigl(L_j(z_j)-L_{j+1}(z_j)\bigr)}_{=\,0}\\
+ &=L_N(1)-L_1(1).
+\end{align*}
+Only the final value and the initial value remain. Although both are
+evaluated at the point $1$, they belong to different branches, $L_N$
+and $L_1$; we have not imposed a matching condition between these two.
+Since the change along the $j$-th arc is $i(t_j-t_{j-1})$, we obtain
+\[
+ \boxed{L_N(1)-L_1(1)
+ =\sum_{j=1}^N i(t_j-t_{j-1})=2\pi i.}
+\]
+Thus a starting value $L_1(1)=0$ becomes $L_N(1)=2\pi i$ after one
+counterclockwise turn. Equivalently, the change on each arc is
+$\int_{\text{arc}}dz/z$, so the total change is
+$\int_{|z|=1}dz/z=2\pi i$. The integral records the accumulated changes
+of the matched local series.
 
-\begin{remark}
-We already knew that analytic functions are holomorphic by termwise
-differentiation of power series. The theorem proves the converse.
-In particular, all derivatives of a holomorphic function are themselves
-holomorphic. We may now replace ``analytic'' by ``holomorphic'' in the
-logarithm theorem at the beginning of this lecture.
-\end{remark}
+\newpage
+\textbf{Why do the last and first branches not agree on their overlap?}
+Overlapping discs do not automatically have agreeing logarithms: on a
+connected overlap, two logarithms differ by a constant $2\pi i k$,
+$k\in\Z$. Matching each new branch with the preceding one fixes its
+constant. By the time we return to the first disc, the final branch is
+already fixed, and the calculation above shows that it differs from
+the initial branch by $2\pi i$ on the overlap near the return point.
+Subtracting $2\pi i$ from the final branch would make it agree with the
+first branch, but would break its agreement with the preceding branch.
+We can match successive branches along the path, but cannot make all
+the matches close consistently around the loop.
+
+This is why local logarithm series do not give a single-valued logarithm
+on all of $\C\setminus\{0\}$. It is the obstruction that simple
+connectedness removes in the integral construction.
+
 \end{document}

@@ -1,0 +1,397 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{mathrsfs}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{decorations.markings,patterns}
+\usepackage{enumitem}
+\usepackage{tocloft}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{courseblue}{HTML}{1F4E79}
+\definecolor{lightblue}{HTML}{EAF2F8}
+\definecolor{lightgreen}{HTML}{EAF7EA}
+\definecolor{lightpink}{HTML}{FCE8EF}
+\definecolor{lightyellow}{HTML}{FFF8D6}
+\definecolor{warningyellow}{HTML}{D6A000}
+\definecolor{exercisebg}{HTML}{FDEAEA}
+\definecolor{exerciseframe}{HTML}{B54040}
+\definecolor{examplebg}{HTML}{F4FAFE}
+\definecolor{exampleframe}{HTML}{85C1E9}
+\definecolor{darkgray}{HTML}{333333}
+\definecolor{lightorange}{HTML}{FDEBD8}
+\definecolor{orangeframe}{HTML}{E08A3C}
+\definecolor{remarkbg}{HTML}{F3EEFB}
+\definecolor{remarkframe}{HTML}{9B7FC9}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlist[itemize]{topsep=0.25em,itemsep=0.15em}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{fact}{Fact}
+\newtheorem*{warning}{Warning}
+
+\tcolorboxenvironment{definition}{
+  enhanced,
+  unbreakable,
+  colback=lightgreen,
+  colframe=ForestGreen,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{remark}{
+  enhanced,
+  colback=remarkbg,
+  colframe=remarkframe,
+  before upper={\setlength{\parskip}{0.5em}},
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{warning}{
+  enhanced,
+  colback=lightyellow,
+  colframe=warningyellow,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{exercise}{
+  enhanced,
+  colback=exercisebg,
+  colframe=exerciseframe,
+  boxrule=1pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{example}{
+  enhanced,
+  colback=examplebg,
+  colframe=exampleframe,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\numberwithin{equation}{section}
+
+\newcommand{\be}{\begin{eqnarray}}
+\newcommand{\ee}{\end{eqnarray}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\DeclareMathOperator{\Hol}{\mathcal{H}\mathrm{ol}}
+\DeclareMathOperator{\Real}{Re}
+\DeclareMathOperator{\Imag}{Im}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\CT}{\C[[T]]}
+\newcommand{\CLT}{\C((T))}
+\tcbset{breakable}
+% Compact spacing around diagrams; keep the main text at 11pt.
+\newenvironment{lecturefigure}
+ {\par\addvspace{0.25em}\begingroup\setlength{\parskip}{0pt}\centering}
+ {\par\endgroup\addvspace{0.25em}}
+\begin{document}
+
+\begin{center}
+  \colorbox{lightblue}{%
+    \begin{minipage}{0.94\textwidth}
+      \vspace{0.55em}
+      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr}
+        {\color{courseblue}\bfseries\LARGE Lecture 21} &
+        {\color{courseblue}\bfseries\LARGE MATH 411}\\[0.35em]
+        \textbf{Fall 2026} & \textbf{Date: Oct 28, 2026}\\
+        & \textbf{Instructor: Manish Patnaik}
+      \end{tabular*}
+      \vspace{0.45em}
+    \end{minipage}}
+\end{center}
+
+\setcounter{tocdepth}{1}
+\tableofcontents
+\vspace{0.45em}
+
+% Sources: handwritten Lecture 20, Oct. 28, pages 5--9 (moved here from
+% Lecture 20). Order follows the handwritten notes: the fundamental theorem
+% of algebra, Morera's theorem, then Laurent series.
+In Lecture~20 we proved that every holomorphic function is analytic,
+with the Cauchy estimates
+\[
+ |a_n|\leq\frac{\|f\|_{\gamma_R}}{R^n},\qquad
+ a_n=\frac{f^{(n)}(z_0)}{n!}=\frac{1}{2\pi i}\int_{\gamma_R}
+ \frac{f(\zeta)}{(\zeta-z_0)^{n+1}}\,d\zeta,
+\]
+whenever $\overline{D(z_0,R)}\subseteq U$, and we deduced Liouville's
+theorem: \emph{every bounded entire function is constant}. Today we give two
+more applications, the fundamental theorem of algebra and Morera's
+theorem, and then introduce Laurent series, which play the role of power
+series on annuli.
+
+\section{The fundamental theorem of algebra}
+% Handwritten Lecture 20, page 5.
+\begin{theorem}[Fundamental theorem of algebra]\label{thm:fta}
+Let $P(z)=a_nz^n+a_{n-1}z^{n-1}+\cdots+a_0$ be a polynomial with complex
+coefficients, $n\geq1$ and $a_n\ne0$. Then $P$ has a root $\alpha\in\C$.
+\end{theorem}
+\begin{proof}
+Suppose $P$ has no root. Then $1/P$ is entire. We show that $1/P$ is
+also bounded. Factor out the leading term:
+\[
+ P(z)=a_nz^n\left(1+\frac{b_1}{z}+\frac{b_2}{z^2}+\cdots+\frac{b_n}{z^n}\right),
+ \qquad b_k=\frac{a_{n-k}}{a_n}.
+\]
+Put $B=|b_1|+\cdots+|b_n|$ and $\rho_0=\max(1,2B)$. For $|z|\geq\rho_0$,
+\[
+ \left|\frac{b_1}{z}+\cdots+\frac{b_n}{z^n}\right|
+ \leq\frac{|b_1|+\cdots+|b_n|}{|z|}\leq\frac12,
+ \qquad\text{so}\qquad
+ |P(z)|\geq\frac{|a_n|}{2}|z|^n\geq\frac{|a_n|}{2}.
+\]
+Thus $|P(z)|\to\infty$ as $|z|\to\infty$, and $|1/P(z)|\leq2/|a_n|$ for
+$|z|\geq\rho_0$. On the compact disc $|z|\leq\rho_0$, the continuous
+function $1/P$ is bounded. Hence $1/P$ is a bounded entire function, so it
+is constant by Liouville's theorem. Then $P$ is constant, contradicting
+$n\geq1$ and $a_n\ne0$.
+\end{proof}
+
+\begin{exercise}
+Use Theorem~\ref{thm:fta} and induction on the degree to show that every
+polynomial of degree $n\geq1$ factors as
+$P(z)=a_n(z-\alpha_1)\cdots(z-\alpha_n)$ with $\alpha_1,\dots,\alpha_n\in\C$.
+\end{exercise}
+
+\section{Morera's theorem}
+% Handwritten Lecture 20, page 6.
+Morera's theorem is a converse to the Cauchy--Goursat theorem.
+
+\begin{theorem}[Morera's theorem]\label{thm:morera}
+Let $U\subseteq\C$ be open and $f$ continuous on $U$. Suppose
+\[
+ \int_{\partial Q}f=0
+\]
+for every closed rectangle $Q\subseteq U$ with sides parallel to the
+axes. Then $f$ is holomorphic on $U$.
+\end{theorem}
+
+\begin{lecturefigure}
+\begin{tikzpicture}[scale=0.8,>=stealth]
+ \draw[thick] plot[smooth cycle,tension=0.8] coordinates
+ {(-2.7,-0.8) (-2.5,1.3) (-0.5,1.8) (1.8,1.5) (2.8,0.2)
+  (1.8,-1.4) (-0.6,-1.6)};
+ \node at (2.7,1.3) {$U$};
+ \draw[ForestGreen,thick,dashed] (-0.2,0) circle(1.45);
+ \draw[courseblue,very thick,->] (-0.2,0)--(0.7,0);
+ \draw[courseblue,very thick,->] (0.7,0)--(0.7,0.85);
+ \fill (-0.2,0) circle(2pt) node[below left] {$c$};
+ \fill (0.7,0.85) circle(2pt) node[above right] {$z$};
+ \node[ForestGreen] at (-1.55,1.15) {$D$};
+ \node[right,align=left] at (3.1,0)
+ {$g(z)=\displaystyle\int_c^z f$ along a\\horizontal then vertical path.};
+\end{tikzpicture}
+\end{lecturefigure}
+
+\begin{proof}
+Holomorphy is a local property, so it suffices to work on a disc
+$D\subseteq U$ with centre $c$. For $z\in D$ define
+\[
+ g(z)=\int_c^z f,
+\]
+integrating along the rectangular path that goes horizontally and then
+vertically from $c$ to $z$; this path stays in $D$. This is exactly the
+construction of a primitive on a disc that we used with the
+Cauchy--Goursat theorem: there, the only input was that integrals of $f$
+over boundaries of rectangles in $D$ vanish, which is now our hypothesis.
+The same argument shows that $g$ is holomorphic on $D$ with $g'=f$.
+
+By Theorem~1.1 of Lecture~20, $g$ is analytic on $D$, so its derivative
+$g'=f$ is again holomorphic (Corollary~3.1 of Lecture~20). Thus $f$
+is holomorphic on $D$, and hence on $U$.
+\end{proof}
+
+\begin{exercise}
+Let $f_n$ be holomorphic on an open set $U$ and suppose $f_n\to f$
+uniformly on every closed disc contained in $U$. Use
+Lemma~2.1 of Lecture~20, the Cauchy--Goursat theorem, and
+Morera's theorem to show that $f$ is holomorphic on $U$.
+\end{exercise}
+
+\section{Laurent series}
+% Handwritten Lecture 20, pages 7--9. The proof of the expansion
+% theorem is given in Lecture 22.
+Power series model holomorphic functions on discs. To model functions on
+annuli, such as $1/z$ or $e^{1/z}$ near $0$, we allow negative powers.
+In Lecture~6 we met the formal Laurent series $\CLT$, which have only
+finitely many negative powers. We now allow infinitely many terms in both
+directions.
+
+\begin{definition}
+A \emph{Laurent series} (centred at $0$) is an expression
+\[
+ f(z)=\sum_{n=-\infty}^{\infty}a_nz^n .
+\]
+We split it into
+\[
+ f_+(z)=\sum_{n\geq0}a_nz^n,\qquad f_-(z)=\sum_{n<0}a_nz^n
+ =\sum_{m\geq1}a_{-m}\Bigl(\frac1z\Bigr)^m,
+\]
+and say that the Laurent series \emph{converges} at $z$ if both $f_+(z)$
+and $f_-(z)$ converge.
+\end{definition}
+
+To understand $f_-$, consider the ordinary power series in a new
+variable $T$:
+\[
+ a_{-1}T+a_{-2}T^2+a_{-3}T^3+\cdots .
+\]
+Suppose it has radius of convergence $\rho_->0$, so it converges for
+$|T|<\rho_-$. Substituting $T=1/z$, the series $f_-(z)$ converges for
+\[
+ \frac{1}{|z|}<\rho_-,\qquad\text{i.e.}\qquad |z|>r:=\frac{1}{\rho_-}.
+\]
+If $f_+$ has radius of convergence $R$, then $f_+$ converges for
+$|z|<R$, and $f_-$ converges for $|z|>r$. When $r<R$, both converge on
+the open annulus $r<|z|<R$.
+
+\begin{lecturefigure}
+\begin{tikzpicture}[scale=0.85]
+ \begin{scope}
+  \fill[lightpink] (0,0) circle(1.5);
+  \draw[thick] (0,0) circle(1.5);
+  \fill (0,0) circle(1.5pt);
+  \draw[exerciseframe] (0,0)--(1.06,1.06) node[pos=0.6,above left]{$R$};
+  \node[below] at (0,-1.6) {$f_+$: $|z|<R$};
+ \end{scope}
+ \begin{scope}[xshift=4.2cm]
+  \fill[lightpink] (-1.8,-1.8) rectangle (1.8,1.8);
+  \fill[white] (0,0) circle(0.6);
+  \draw[thick] (0,0) circle(0.6);
+  \fill (0,0) circle(1.5pt);
+  \draw[exerciseframe] (0,0)--(0.6,0) node[pos=0.6,below]{$r$};
+  \node[below] at (0,-1.85) {$f_-$: $|z|>r$};
+ \end{scope}
+ \begin{scope}[xshift=8.4cm]
+  \fill[lightpink] (0,0) circle(1.5);
+  \fill[white] (0,0) circle(0.6);
+  \draw[thick] (0,0) circle(1.5);
+  \draw[thick] (0,0) circle(0.6);
+  \fill (0,0) circle(1.5pt);
+  \node[below] at (0,-1.6) {both: $r<|z|<R$};
+ \end{scope}
+\end{tikzpicture}
+\end{lecturefigure}
+
+For $0\leq r<R$ write
+\[
+ A_{r,R}=\{z\in\C:\ r\leq|z|\leq R\}
+\]
+for the closed annulus. Just as power series model holomorphic functions
+on discs, Laurent series model holomorphic functions on annuli.
+
+\begin{theorem}[Laurent expansion]\label{thm:laurent}
+Let $0<r<R$ and let $f$ be holomorphic on $A_{r,R}$ (that is, on an open
+set containing $A_{r,R}$). Let $C_R$ and $C_r$ be the positively oriented
+circles $|\zeta|=R$ and $|\zeta|=r$, and set
+\[
+ a_n=\frac{1}{2\pi i}\int_{C_R}\frac{f(\zeta)}{\zeta^{n+1}}\,d\zeta
+ \quad(n\geq0),\qquad
+ a_n=\frac{1}{2\pi i}\int_{C_r}\frac{f(\zeta)}{\zeta^{n+1}}\,d\zeta
+ \quad(n<0).
+\]
+Then for $r<|z|<R$,
+\[
+ f(z)=\underbrace{\sum_{n\geq0}a_nz^n}_{f_+(z)}
+ +\underbrace{\sum_{n<0}a_n\Bigl(\frac1z\Bigr)^{-n}}_{f_-(z)},
+\]
+and the convergence is uniform on every smaller closed annulus
+$s\leq|z|\leq S$ with $r<s<S<R$.
+\end{theorem}
+% Handwritten page 9 writes f(\zeta)/\zeta^n for n<0 and omits 1/(2\pi i);
+% corrected so that both coefficient formulas have the same form.
+
+\begin{lecturefigure}
+\begin{tikzpicture}[scale=0.85]
+ \fill[lightpink] (0,0) circle(1.65);
+ \fill[white] (0,0) circle(0.85);
+ \draw[thick] (0,0) circle(1.95);
+ \draw[thick] (0,0) circle(0.55);
+ \draw[exerciseframe,thick] (0,0) circle(1.65);
+ \draw[exerciseframe,thick] (0,0) circle(0.85);
+ \fill (0,0) circle(1.5pt);
+ \draw (0,0)--(0,1.95) node[pos=0.88,right]{$R$};
+ \draw (0,0)--(0,-0.55) node[pos=0.6,right]{$r$};
+ \draw[exerciseframe] (0,0)--(-0.85,0) node[pos=0.75,above]{$s$};
+ \draw[exerciseframe] (0,0)--(1.65,0) node[pos=0.8,above]{$S$};
+ \node[right,align=left] at (2.3,0)
+ {Black: $C_R$ and $C_r$.\\
+  Shaded: $s\leq|z|\leq S$, where\\
+  the convergence is uniform.};
+\end{tikzpicture}
+\end{lecturefigure}
+
+The proof, which again starts from Cauchy's formula and two geometric
+series, will be given in Lecture~22.
+
+\begin{example}[The annulus matters]
+The function $f(z)=1/(z-1)$ is holomorphic on $\C\setminus\{1\}$.
+On the disc $|z|<1$,
+\[
+ \frac{1}{z-1}=-\frac{1}{1-z}=-\sum_{n\geq0}z^n,
+\]
+so $f=f_+$ and $f_-=0$. On the region $|z|>1$, instead,
+\[
+ \frac{1}{z-1}=\frac1z\,\frac{1}{1-1/z}=\sum_{m\geq1}\Bigl(\frac1z\Bigr)^m,
+\]
+so $f=f_-$ and $f_+=0$. The same function has different Laurent
+expansions on different annuli.
+\end{example}
+
+\begin{exercise}
+Find the Laurent expansion of $e^{1/z}$ on $0<|z|<\infty$. Which
+coefficients $a_n$ are nonzero? Compare with the coefficient formula of
+Theorem~\ref{thm:laurent} for $n=-1$.
+\end{exercise}
+
+\end{document}
