@@ -26,14 +26,18 @@
 \title{Problem Set 4 \\ MATH 411: Honors Complex Variables, Fall 2026}
 \date{last compiled: \today}
 
-% Coverage: Laurent series, isolated singularities, residues, and the
-% residue theorem (Lectures 21--24), ahead of Midterm 2 on Fri, Nov. 6.
+% Coverage: Laurent series, isolated singularities, residues, the
+% residue theorem, the argument principle, Rouche's theorem, and the open
+% mapping theorem (Lectures 21--24), ahead of Midterm 2 on Fri, Nov. 6.
 % Suggested completion date: Wednesday, November 4, 2026.
 % Sources (paths relative to the course workspace):
 % 1: moved from Problem Set 3, problem 7
 %    (originally Old Homework/Homework/Homework5_Fall2021.tex, 3--4).
 % 2--9: Old Homework/Homework/Homework5_Fall2021.tex, 2 and 5--12
 %    (old 9 and 10 are combined as 6(a)--(b)).
+% 10--13: Old Homework/Homework/Homework6_Fall2021.tex, 1--4 (hints
+%    added). Its Lang exercises (Ch. XII--XIII) are omitted as they go
+%    beyond Lecture 24.
 % Homework5_Fall2021 problem 1 is omitted: it is already Problem Set 3,
 % problem 6.
 % Corrections to the 2021 version:
@@ -162,6 +166,41 @@ by integrating
 \]
 around the parallelogram with vertices $-R,\ R,\ R+a,\ -R+a$ and then
 letting $R\to\infty$. \emph{Hint:} Check that $f(z)-f(z+a)=e^{-z^2}$.
+
+\item \textbf{Roots of a trinomial.}
+Let $a\in\C$ and let $n\geq2$ be an integer. Prove that the equation
+\[
+ 1+z+az^n=0
+\]
+has at least one root in the closed disc $|z|\leq2$.
+\emph{Hint:} For $a\neq0$, the reciprocals $w_j=1/z_j$ of the roots are
+the roots of $w^n+w^{n-1}+a$. Compute the power sums
+$\sum_j w_j^{k}$ for $1\leq k\leq n-1$.
+
+\item \textbf{Counting zeros with Rouch\'e's theorem.}
+How many zeros, counted with multiplicity, does
+\[
+ f(z)=z^5+5z^3+z^2+z+1
+\]
+have in the closed annulus $1\leq|z|\leq2$?
+
+\item \textbf{Images of the unit disc.}
+Let $f$ be nonconstant and holomorphic on an open set containing the
+closed unit disc $\overline{D}=\{|z|\leq1\}$, and let $D=\{|z|<1\}$.
+\begin{enumerate}
+\item Suppose $|f(z)|=1$ whenever $|z|=1$. Show that $f(D)$ contains
+the open unit disc.
+\item Suppose instead that $|f(z)|\geq1$ whenever $|z|=1$, and that
+$|f(z_0)|<1$ for some $z_0\in D$. Show that $f(D)$ contains the open
+unit disc.
+\end{enumerate}
+\emph{Hint:} For $|w|<1$, compare the number of zeros of $f$ and of
+$f-w$ in $D$.
+
+\item \textbf{No holomorphic extension of $1/z$.}
+Show that there is no function $f$ that is holomorphic on the open unit
+disc, extends continuously to the closed unit disc, and satisfies
+$f(z)=1/z$ for $|z|=1$.
 
 \end{enumerate}
 \end{document}
