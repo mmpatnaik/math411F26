@@ -29,7 +29,14 @@
 \definecolor{orangeframe}{HTML}{E08A3C}
 
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.45em}
+\setlength{\parskip}{0.3em}
+% Keep the 11pt text and 1in margins; use compact display spacing.
+\AtBeginDocument{%
+ \setlength{\abovedisplayskip}{9pt plus 2pt minus 2pt}%
+ \setlength{\belowdisplayskip}{9pt plus 2pt minus 2pt}%
+ \setlength{\abovedisplayshortskip}{3pt plus 2pt}%
+ \setlength{\belowdisplayshortskip}{6pt plus 2pt minus 2pt}%
+}
 \setlist[itemize]{topsep=0.25em,itemsep=0.15em}
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
 \renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
@@ -159,7 +166,7 @@ Recall that
  e^{x+iy}=e^x(\cos y+i\sin y).
 \]
 The exponential is never zero and has period $2\pi i$. We would like to
-invert it. If $z=re^{i\theta}\ne0$, then all solutions of $e^w=z$ are
+invert it. If $z=re^{i\theta}$ with $r>0$, then all solutions of $e^w=z$ are
 \[
  w=\ln r+i(\theta+2\pi k),\qquad k\in\Z.
 \]
@@ -169,7 +176,7 @@ choose the argument continuously as $z$ varies.
 \subsection{Why a branch is needed}
 If we always choose $\theta\in[0,2\pi)$, the function
 $\ln|z|+i\theta$ jumps across the positive real axis. At a positive
-real number $r$, the limits from above and below are respectively
+real number $r>0$, the limits from above and below are, respectively,
 $\ln r$ and $\ln r+2\pi i$.
 
 \begin{lecturefigure}
@@ -208,7 +215,7 @@ $L'(z)=1/z$. This suggests constructing a logarithm by integrating $1/z$.
 
 \subsection{Constructing a logarithm on a simply connected domain}
 \begin{theorem}\label{thm:log-z}
-Let $U\subseteq\C\setminus\{0\}$ be simply connected. Choose $z_0\in U$
+Let $U\subseteq\C\setminus\{0\}$ be a simply connected domain. Choose $z_0\in U$
 and $w_0\in\C$ with $e^{w_0}=z_0$. Then
 \[
  \boxed{\displaystyle L(z)=w_0+\int_{z_0}^z\frac{d\zeta}{\zeta}}
@@ -309,10 +316,11 @@ The two sides differ by $2\pi i$.
 \end{warning}
 
 \section{Logarithms of nonvanishing analytic functions}
-Suppose now $f$ is \emph{analytic} on a domain $U$. Then $f'$ is analytic, so $f'/f$ is holomorphic when $f$ has no zeros.
+Suppose now that $f$ is \emph{analytic} on a domain $U$. Then $f'$ is
+analytic, so $f'/f$ is holomorphic if $f$ has no zeros.
 
 \begin{theorem}\label{thm:log-f}
-Let $U\subseteq\C$ be simply connected, and let $f$ be analytic on $U$
+Let $U\subseteq\C$ be a simply connected domain, and let $f$ be analytic on $U$
 with $f(z)\ne0$ for all $z\in U$. Choose $z_0\in U$ and $w_0\in\C$
 satisfying $e^{w_0}=f(z_0)$. Then
 \[
@@ -378,9 +386,9 @@ Choosing another allowed initial value changes the entire logarithm by
 one constant multiple of $2\pi i$.
 
 \begin{example}[Different branches on the same slit plane]
-For $f(z)=z$ on $U_0=\C\setminus(-\infty,0]$, take $z_0=1$.
-The choice $w_0=0$ gives $\Log z=\ln r+i\theta$, with
-$-\pi<\theta<\pi$. The choice $w_0=2\pi i$ gives
+For $f(z)=z$ on $U_0=\C\setminus(-\infty,0]$, write $z=re^{i\theta}$
+with $r>0$ and $-\pi<\theta<\pi$, and take $z_0=1$. The choice $w_0=0$
+gives $\Log z=\ln r+i\theta$; the choice $w_0=2\pi i$ gives
 \[
  L(z)=\Log z+2\pi i=\ln r+i\theta+2\pi i.
 \]
@@ -471,8 +479,8 @@ connected disc $D(z_0,r)$ and vanishes at $z_0$. It follows that
  \quad (|z-z_0|<r).}
 \]
 In particular, every holomorphic branch of the logarithm is analytic.
-This conclusion uses the explicit power series, before the general
-holomorphic-implies-analytic theorem has been proved.
+This uses the explicit power series; the general theorem that
+holomorphic functions are analytic has yet to be proved.
 
 \begin{lecturefigure}
 \begin{tikzpicture}[scale=0.68,transform shape]
@@ -488,11 +496,11 @@ holomorphic-implies-analytic theorem has been proved.
 \end{lecturefigure}
 
 \subsection{The picture of overlapping discs}
-Consider the following picture that shows local logarithms on overlapping discs
-along a circle around $0$. On each new disc we can adjust the initial
-value by a multiple of $2\pi i$ so that the local logarithms agree on
-the overlap. Their derivatives are all $1/z$, so matching at one point
-makes them agree on the connected overlap.
+The picture shows local logarithm series on discs avoiding $0$ along a
+circle around $0$. On each new disc, adjust the initial value by a
+multiple of $2\pi i$ to match the preceding branch on the overlap.
+The overlap is convex, hence connected. Since both derivatives are $1/z$,
+matching at one point makes the branches agree throughout the overlap.
 
 \begin{lecturefigure}
 \begin{tikzpicture}[scale=0.935,transform shape]
@@ -519,8 +527,8 @@ Parametrize the circle by $z(t)=e^{it}$, $0\leq t\leq2\pi$, and choose
 \[
  0=t_0<t_1<\cdots<t_N=2\pi
 \]
-so that each arc lies in one disc. Let $L_j$ be the local logarithm
-series used on the $j$-th arc. Differentiating each series gives
+so that the $j$-th arc lies in a disc $D_j$ avoiding $0$. Let $L_j$ be
+the local logarithm series used on that arc. Differentiating each series gives
 $L_j'(z)=1/z$, so the chain rule gives
 \[
  \frac{d}{dt}L_j(e^{it})=\frac{1}{e^{it}}\,ie^{it}=i.
@@ -544,7 +552,7 @@ one on their overlap; in particular,
 $L_{j+1}(e^{it_j})=L_j(e^{it_j})$.
 
 \begin{lecturefigure}
-\begin{tikzpicture}[scale=1.05,>=stealth]
+\begin{tikzpicture}[scale=0.85,>=stealth]
  \fill[lightblue] (1.8,0.2) circle(1.35);
  \fill[lightgreen,fill opacity=0.6] (0,0.2) circle(1.35);
  \draw[courseblue,thick] (1.8,0.2) circle(1.35);
@@ -587,9 +595,7 @@ $z_0=z_N=1$. Adding the changes along the individual arcs gives
 The term $+L_1(z_1)$ from the first arc cancels with $-L_2(z_1)$
 from the second arc because the branches were matched at $z_1$:
 $L_1(z_1)=L_2(z_1)$. Similarly, at every intermediate point $z_j$,
-\[
- +L_j(z_j)-L_{j+1}(z_j)=0,\qquad 1\leq j\leq N-1.
-\]
+$L_j(z_j)-L_{j+1}(z_j)=0$ for $1\leq j\leq N-1$.
 More explicitly, regrouping the sum gives
 \begin{align*}
  \sum_{j=1}^N\bigl(L_j(z_j)-L_j(z_{j-1})\bigr)
@@ -611,21 +617,18 @@ $\int_{\text{arc}}dz/z$, so the total change is
 $\int_{|z|=1}dz/z=2\pi i$. The integral records the accumulated changes
 of the matched local series.
 
-\newpage
 \textbf{Why do the last and first branches not agree on their overlap?}
-Overlapping discs do not automatically have agreeing logarithms: on a
-connected overlap, two logarithms differ by a constant $2\pi i k$,
-$k\in\Z$. Matching each new branch with the preceding one fixes its
-constant. By the time we return to the first disc, the final branch is
-already fixed, and the calculation above shows that it differs from
-the initial branch by $2\pi i$ on the overlap near the return point.
-Subtracting $2\pi i$ from the final branch would make it agree with the
-first branch, but would break its agreement with the preceding branch.
-We can match successive branches along the path, but cannot make all
-the matches close consistently around the loop.
+Two local logarithm series need not agree on overlapping discs; their
+difference on the overlap is a constant $2\pi i k$, $k\in\Z$. Matching
+each new branch with the preceding one fixes this constant. By the time
+we return to the first disc, the final branch is fixed, and the calculation
+above shows that it differs from the initial branch by $2\pi i$ on their
+overlap. Subtracting $2\pi i$ from the final branch would make it agree
+with the first, but would break its agreement with the preceding branch.
 
-This is why local logarithm series do not give a single-valued logarithm
-on all of $\C\setminus\{0\}$. It is the obstruction that simple
-connectedness removes in the integral construction.
+We can match successive branches along the path, but cannot make all
+these matches consistent around the loop. Thus local logarithm series
+do not give a single-valued logarithm on all of $\C\setminus\{0\}$.
+Simple connectedness removes this obstruction in the integral construction.
 
 \end{document}

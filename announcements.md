@@ -11,6 +11,9 @@
 # The site sorts by date and shows the newest first, so old announcements
 # stay on the page as a running log.
 
+## 2026-10-26
+Updated [Lecture 19 notes](notes/lecture-19.pdf?v=2026-10-26) and [Lecture 20 notes](notes/lecture-20.pdf?v=2026-10-26) are posted. Lecture 20 now includes the fundamental theorem of algebra; Lecture 21 begins with Morera's theorem. The lecture schedule has been updated to match.
+
 ## 2026-10-21
 Office hours this Friday, October 23, will be from **2:00–3:00 PM**.
 

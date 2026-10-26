@@ -159,15 +159,15 @@
 % and handwritten Lecture 20, Oct. 28, pages 1--4 and the end of page 6.
 % Order follows the handwritten Lecture 20: theorem, proof (kernel
 % expansion, Cauchy formula, exchange of sum and integral, Cauchy
-% estimates), derivatives, Liouville. The fundamental theorem of algebra,
-% Morera's theorem, and Laurent series (handwritten pages 5--9) are in
-% Lecture 21.
+% estimates), derivatives, Liouville, and the fundamental theorem of
+% algebra (handwritten Lecture 20, page 5). Morera's theorem and Laurent
+% series (handwritten pages 6--9) are in Lecture 21.
 In Lecture~19 we saw that every holomorphic branch of the logarithm is
 given locally by a convergent power series. The logarithm illustrates a
 general phenomenon: Cauchy's integral formula produces a convergent power
 series for \emph{any} holomorphic function. We prove this, derive the
 Cauchy estimates and Cauchy's formula for derivatives, and deduce
-Liouville's theorem.
+Liouville's theorem and the fundamental theorem of algebra.
 
 \section{Holomorphic functions are analytic}
 % Handwritten Lecture 19, page 4, and Lecture 20, page 1.
@@ -223,7 +223,7 @@ $\overline{D(z_0,s)}$ with $0<s<R$. Consequently, $f$ is analytic on $U$.
 \section{Proof of the power series expansion}
 % Handwritten Lecture 19, pages 5--6, and Lecture 20, pages 1--4.
 \subsection{Step 1: expand the Cauchy kernel}
-For $\zeta\ne z$, write
+For $\zeta\ne z$ and $\zeta\ne z_0$, write
 \[
  \frac{1}{\zeta-z}
  =\frac{1}{(\zeta-z_0)-(z-z_0)}
@@ -268,8 +268,8 @@ $n$th term has absolute value at most $R^{-1}(s/R)^n$.
 \end{lecturefigure}
 
 \subsection{Step 2: apply Cauchy's integral formula}
-Cauchy's integral formula (Lecture~18), applied to $z\in D(z_0,s)$ and
-the circle $\gamma_R$, gives
+Cauchy's integral formula (Lecture~18), applied to $|z-z_0|\leq s<R$
+and the circle $\gamma_R$, gives
 \[
  f(z)=\frac{1}{2\pi i}\int_{\gamma_R}\frac{f(\zeta)}{\zeta-z}\,d\zeta.
 \]
@@ -289,20 +289,27 @@ which is the claimed expansion.
 \subsection{Step 3: justify the exchange}
 % Handwritten Lecture 20, page 3.
 Recall that for a piecewise $C^1$ curve $\gamma$ and $g$ continuous on
-$\gamma$, the estimation lemma gives
-$\bigl|\int_\gamma g\bigr|\leq\operatorname{Length}(\gamma)\,\|g\|_\gamma$.
+$\gamma$, the ML estimate gives
+\[
+ \left|\int_\gamma g\right|\leq\operatorname{Length}(\gamma)\,\|g\|_\gamma.
+\]
 
-\begin{lemma}\label{lem:uniform-integral}
-Let $\gamma$ be a piecewise $C^1$ curve, and let $\{g_n\}$ be a sequence of
-continuous functions on $\gamma$ converging uniformly on $\gamma$ to a
-function $g$. Then
+\begin{proposition}\label{prop:uniform-integral}
+Let $\gamma$ be a piecewise $C^1$ curve, and let $(g_n)$ be a sequence of
+continuous complex-valued functions on $\gamma$ converging uniformly on
+$\gamma$ to a function $g$. Then
 \[
  \lim_{n\to\infty}\int_\gamma g_n=\int_\gamma g.
 \]
-\end{lemma}
+In particular, if each $h_k$ is continuous on $\gamma$ and the series
+$\sum_{k=0}^{\infty}h_k$ converges uniformly on $\gamma$, then
+\[
+\int_\gamma\sum_{k=0}^{\infty}h_k=\sum_{k=0}^{\infty}\int_\gamma h_k.
+\]
+\end{proposition}
 \begin{proof}
 The limit $g$ is continuous, being a uniform limit of continuous
-functions (Lecture~7), so $\int_\gamma g$ makes sense. By the estimation lemma,
+functions (Lecture~7), so $\int_\gamma g$ is defined. By the ML estimate,
 \[
  \left|\int_\gamma g_n-\int_\gamma g\right|
  =\left|\int_\gamma (g_n-g)\right|
@@ -310,18 +317,9 @@ functions (Lecture~7), so $\int_\gamma g$ makes sense. By the estimation lemma,
  \longrightarrow0,
 \]
 since $\|g_n-g\|_\gamma\to0$ by uniform convergence.
-\end{proof}
 
-\begin{corollary}\label{cor:termwise}
-Suppose each $h_k$ is continuous on $\gamma$ and the series
-$\sum_{k=0}^{\infty}h_k$ converges uniformly on $\gamma$ to $h$. Then
-\[
- \int_\gamma\sum_{k=0}^{\infty}h_k=\sum_{k=0}^{\infty}\int_\gamma h_k.
-\]
-\end{corollary}
-\begin{proof}
-Apply Lemma~\ref{lem:uniform-integral} to the partial sums
-$g_n=h_0+h_1+\cdots+h_n$, and use $\int_\gamma g_n=\sum_{k=0}^n\int_\gamma h_k$.
+For the second statement, apply the first to the partial sums
+$g_n=h_0+h_1+\cdots+h_n$ and use linearity of the integral.
 \end{proof}
 
 Now fix $z$ with $|z-z_0|\leq s$ and put
@@ -335,25 +333,26 @@ the $N$th term is bounded, uniformly in $\zeta\in\gamma_R$, by
  \sum_{n=N+1}^{\infty}\frac{\|f\|_{\gamma_R}}{R}\Bigl(\frac sR\Bigr)^n
  =\frac{\|f\|_{\gamma_R}}{R}\,\frac{(s/R)^{N+1}}{1-s/R}\longrightarrow0.
 \]
-So $\sum h_n$ converges uniformly on $\gamma_R$, and
-Corollary~\ref{cor:termwise} justifies the exchange in Step~2. This
-proves $f(z)=\sum a_n(z-z_0)^n$ for $|z-z_0|\leq s$.
+Thus the partial sums of $\sum h_n$ are uniformly Cauchy on $\gamma_R$,
+so the series converges uniformly there (Lecture~7).
+Proposition~\ref{prop:uniform-integral} justifies the exchange in Step~2,
+giving $f(z)=\sum a_n(z-z_0)^n$ for $|z-z_0|\leq s$.
 
-Integrating the same tail bound over $\gamma_R$ (length $2\pi R$) gives
+The tail bound is also independent of $z$ for $|z-z_0|\leq s$.
+Integrating it over $\gamma_R$, whose length is $2\pi R$, gives
 \[
  \sup_{|z-z_0|\leq s}
  \left|f(z)-\sum_{n=0}^{N}a_n(z-z_0)^n\right|
- \leq\|f\|_{\gamma_R}\,\frac{(s/R)^{N+1}}{1-s/R}\longrightarrow0,
+ \leq\|f\|_{\gamma_R}\,\frac{(s/R)^{N+1}}{1-s/R}\longrightarrow 0.
 \]
-which is the uniform convergence on $\overline{D(z_0,s)}$. Every point of
-$D(z_0,R)$ lies in such a disc, so the expansion holds throughout
+Every point of $D(z_0,R)$ lies in such a disc, so the expansion holds throughout
 $D(z_0,R)$. Finally, every $z_0\in U$ admits some $R>0$ with
 $\overline{D(z_0,R)}\subseteq U$, so $f$ is analytic on $U$.
 
 \subsection{Step 4: the Cauchy estimates}
 % Handwritten Lecture 20, page 4.
 On $\gamma_R$ we have $|\zeta-z_0|=R$, and $\operatorname{Length}(\gamma_R)=2\pi R$.
-The estimation lemma gives
+The ML estimate gives
 \[
  |a_n|\leq\frac{1}{2\pi}\cdot\frac{\|f\|_{\gamma_R}}{R^{n+1}}
  \cdot2\pi R=\frac{\|f\|_{\gamma_R}}{R^n}.
@@ -363,7 +362,8 @@ This completes the proof of Theorem~\ref{thm:analytic}. \hfill$\square$
 \begin{remark}[Comparison with Hadamard's formula]
 The Cauchy estimates give
 $|a_n|^{1/n}\leq\|f\|_{\gamma_R}^{1/n}/R$, and
-$\|f\|_{\gamma_R}^{1/n}\to1$ when $\|f\|_{\gamma_R}>0$. By Hadamard's formula
+$\|f\|_{\gamma_R}^{1/n}\to1$ when $\|f\|_{\gamma_R}>0$
+(if $\|f\|_{\gamma_R}=0$, all coefficients vanish). By Hadamard's formula
 the radius of convergence $\rho$ of $\sum a_n(z-z_0)^n$ satisfies
 \[
  \frac1\rho=\limsup_{n\to\infty}|a_n|^{1/n}\leq\frac1R,
@@ -384,6 +384,7 @@ Theorem~\ref{thm:analytic}:
 \begin{corollary}[Cauchy's integral formula for derivatives]\label{cor:derivatives}
 If $f$ is holomorphic on $U$, then $f$ has derivatives of all orders on
 $U$, each of which is holomorphic. If $\overline{D(z_0,R)}\subseteq U$, then
+for every integer $n\geq0$,
 \[
  \boxed{\displaystyle f^{(n)}(z_0)=\frac{n!}{2\pi i}\int_{\gamma_R}
  \frac{f(\zeta)}{(\zeta-z_0)^{n+1}}\,d\zeta,\qquad
@@ -431,13 +432,43 @@ $a_n=0$. Hence $f(z)=a_0$ on $D(0,R)$ for every $R$, i.e.\ on all of $\C$.
 \end{lecturefigure}
 
 \begin{exercise}
-Let $f$ be entire and suppose there are constants $C$ and $k\geq0$ with
+Let $f$ be entire and suppose there are constants $C\geq0$ and $k\geq0$ with
 $|f(z)|\leq C|z|^k$ for all $|z|\geq1$. Use the Cauchy estimates on
 circles $|z|=R$ with $R\to\infty$ to show that $f$ is a polynomial of
 degree at most $k$.
 \end{exercise}
 
-Next time we apply these results to prove the fundamental theorem of
-algebra and Morera's theorem, and we introduce Laurent series.
+\subsection{The fundamental theorem of algebra}
+% Handwritten Lecture 20, page 5.
+\begin{theorem}[Fundamental theorem of algebra]\label{thm:fta}
+Let $P(z)=a_nz^n+a_{n-1}z^{n-1}+\cdots+a_0$ be a polynomial with complex
+coefficients, $n\geq1$ and $a_n\ne0$. Then $P$ has a root $\alpha\in\C$.
+\end{theorem}
+\begin{proof}
+Suppose $P$ has no root. Then $1/P$ is entire. For $z\ne0$, factor out
+the leading term:
+\begin{equation}\label{eq:fta-factorization}
+ P(z)=a_nz^n\left(1+\frac{b_1}{z}+\frac{b_2}{z^2}+\cdots+\frac{b_n}{z^n}\right),
+ \qquad b_k=\frac{a_{n-k}}{a_n}.
+\end{equation}
+Put $B=|b_1|+\cdots+|b_n|$ and $\rho_0=\max(1,2B)$. For $|z|\geq\rho_0$,
+\begin{equation}\label{eq:fta-tail-bound}
+ \left|\frac{b_1}{z}+\cdots+\frac{b_n}{z^n}\right|
+ \leq\frac{|b_1|+\cdots+|b_n|}{|z|}\leq\frac12.
+\end{equation}
+The first inequality uses the triangle inequality and $|z|\geq1$;
+the second uses $|z|\geq2B$. By \eqref{eq:fta-factorization},
+\eqref{eq:fta-tail-bound}, and the reverse triangle inequality,
+\begin{equation}\label{eq:fta-polynomial-bound}
+ |P(z)|\geq\frac{|a_n|}{2}|z|^n\geq\frac{|a_n|}{2},
+\end{equation}
+The first bound gives $|P(z)|\to\infty$ as $|z|\to\infty$; the second gives
+$|1/P(z)|\leq2/|a_n|$ for $|z|\geq\rho_0$. On the compact disc
+$|z|\leq\rho_0$, $1/P$ is continuous and hence bounded. Thus $1/P$ is
+bounded and entire, so it is constant by Liouville's theorem. Then $P$
+is constant, a contradiction.
+\end{proof}
+
+Next time we prove Morera's theorem and introduce Laurent series.
 
 \end{document}

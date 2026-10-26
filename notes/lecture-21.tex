@@ -154,9 +154,9 @@
 \tableofcontents
 \vspace{0.45em}
 
-% Sources: handwritten Lecture 20, Oct. 28, pages 5--9 (moved here from
-% Lecture 20). Order follows the handwritten notes: the fundamental theorem
-% of algebra, Morera's theorem, then Laurent series.
+% Sources: handwritten Lecture 20, Oct. 28, pages 6--9. Order follows
+% the handwritten notes: Morera's theorem, then Laurent series. The
+% fundamental theorem of algebra (page 5) is covered in Lecture 20.
 In Lecture~20 we proved that every holomorphic function is analytic,
 with the Cauchy estimates
 \[
@@ -165,43 +165,10 @@ with the Cauchy estimates
  \frac{f(\zeta)}{(\zeta-z_0)^{n+1}}\,d\zeta,
 \]
 whenever $\overline{D(z_0,R)}\subseteq U$, and we deduced Liouville's
-theorem: \emph{every bounded entire function is constant}. Today we give two
-more applications, the fundamental theorem of algebra and Morera's
-theorem, and then introduce Laurent series, which play the role of power
+theorem: \emph{every bounded entire function is constant}. We applied it
+to prove the fundamental theorem of algebra. Today we prove Morera's
+theorem and introduce Laurent series, which play the role of power
 series on annuli.
-
-\section{The fundamental theorem of algebra}
-% Handwritten Lecture 20, page 5.
-\begin{theorem}[Fundamental theorem of algebra]\label{thm:fta}
-Let $P(z)=a_nz^n+a_{n-1}z^{n-1}+\cdots+a_0$ be a polynomial with complex
-coefficients, $n\geq1$ and $a_n\ne0$. Then $P$ has a root $\alpha\in\C$.
-\end{theorem}
-\begin{proof}
-Suppose $P$ has no root. Then $1/P$ is entire. We show that $1/P$ is
-also bounded. Factor out the leading term:
-\[
- P(z)=a_nz^n\left(1+\frac{b_1}{z}+\frac{b_2}{z^2}+\cdots+\frac{b_n}{z^n}\right),
- \qquad b_k=\frac{a_{n-k}}{a_n}.
-\]
-Put $B=|b_1|+\cdots+|b_n|$ and $\rho_0=\max(1,2B)$. For $|z|\geq\rho_0$,
-\[
- \left|\frac{b_1}{z}+\cdots+\frac{b_n}{z^n}\right|
- \leq\frac{|b_1|+\cdots+|b_n|}{|z|}\leq\frac12,
- \qquad\text{so}\qquad
- |P(z)|\geq\frac{|a_n|}{2}|z|^n\geq\frac{|a_n|}{2}.
-\]
-Thus $|P(z)|\to\infty$ as $|z|\to\infty$, and $|1/P(z)|\leq2/|a_n|$ for
-$|z|\geq\rho_0$. On the compact disc $|z|\leq\rho_0$, the continuous
-function $1/P$ is bounded. Hence $1/P$ is a bounded entire function, so it
-is constant by Liouville's theorem. Then $P$ is constant, contradicting
-$n\geq1$ and $a_n\ne0$.
-\end{proof}
-
-\begin{exercise}
-Use Theorem~\ref{thm:fta} and induction on the degree to show that every
-polynomial of degree $n\geq1$ factors as
-$P(z)=a_n(z-\alpha_1)\cdots(z-\alpha_n)$ with $\alpha_1,\dots,\alpha_n\in\C$.
-\end{exercise}
 
 \section{Morera's theorem}
 % Handwritten Lecture 20, page 6.
@@ -254,7 +221,7 @@ is holomorphic on $D$, and hence on $U$.
 \begin{exercise}
 Let $f_n$ be holomorphic on an open set $U$ and suppose $f_n\to f$
 uniformly on every closed disc contained in $U$. Use
-Lemma~2.1 of Lecture~20, the Cauchy--Goursat theorem, and
+Proposition~2.1 of Lecture~20, the Cauchy--Goursat theorem, and
 Morera's theorem to show that $f$ is holomorphic on $U$.
 \end{exercise}
 
