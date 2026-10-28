@@ -306,14 +306,17 @@ For $0\leq r<R\leq\infty$ write
 \]
 for the \emph{open} annulus. We allow $r=0$ (a punctured disc, or
 $\C\setminus\{0\}$ if also $R=\infty$) and $R=\infty$ (the exterior of a
-disc).
+disc). The closure of $A(r,R)$ is the closed annulus
+\[
+\overline{A(r,R)}=\{z\in\C:\ r\leq|z|\leq R\}.
+\]
 
 % Handwritten Lecture 21, page 1.
-In the splitting above, $f_+$ is a power series in $z$ and $f_-$ is a power series in $1/z$
+\begin{remark} In the splitting above, $f_+$ is a power series in $z$ and $f_-$ is a power series in $1/z$
 without constant term. On a closed disc strictly inside its disc of
 convergence a power series converges uniformly, so a Laurent series that
 converges on $A(r,R)$ converges uniformly on every closed annulus
-$\{s\leq|z|\leq S\}$ with $r<s<S<R$.
+$\{s\leq|z|\leq S\}$ with $r<s<S<R$. \end{remark}
 
 For $\rho>0$, let $C_\rho(t)=\rho e^{it}$, $0\leq t\leq2\pi$, be the
 positively oriented circle of radius $\rho$ centred at $0$.
@@ -338,13 +341,7 @@ positively oriented circle of radius $\rho$ centred at $0$.
 \end{tikzpicture}
 \end{lecturefigure}
 
-For $0<r<R<\infty$, the closure of $A(r,R)$ is the closed annulus
-\[
- \overline{A(r,R)}=\{z\in\C:\ r\leq|z|\leq R\}.
-\]
-Lang, Chapter~V, \S2, Theorem~2.1, uses this closed annulus and assumes
-that $f$ is holomorphic on an open set containing it; we use the same
-hypothesis in the theorem below. Just as power series model holomorphic functions
+ Just as power series model holomorphic functions
 on discs, Laurent series model holomorphic functions on annuli.
 
 \begin{theorem}[Laurent expansion]\label{thm:laurent}
@@ -392,9 +389,6 @@ $s\leq|z|\leq S$ with $r<s<S<R$.
 The proof, which again starts from Cauchy's formula and two geometric
 series, is given in Lecture~22.
 
-Recall that ``$f$ is holomorphic on
-$\overline{A(r,R)}$'' means holomorphic on an open set containing the
-closed annulus, including both boundary circles.
 
 \begin{remark}[The case of a disc]
 	% Handwritten Lecture 21, top of page 2.
@@ -485,6 +479,35 @@ $\int_{C_R}g=\int_{C_r}g$, that is,
  =\int_{C_r}\frac{f(\zeta)}{\zeta-z_0}\,d\zeta
  -f(z_0)\int_{C_r}\frac{d\zeta}{\zeta-z_0}.
 \]
+
+\begin{lecturefigure}
+\begin{tikzpicture}[scale=0.85,>=stealth]
+ \fill[lightpink] (0,0) circle(1.65);
+ \fill[white] (0,0) circle(0.6);
+ \draw[courseblue,thick,postaction={decorate},decoration={markings,
+  mark=at position 0.38 with {\arrow{>}}}] (1.65,0) arc(0:360:1.65);
+ \draw[ForestGreen,thick,postaction={decorate},decoration={markings,
+  mark=at position 0.62 with {\arrow{>}}}] (0.6,0) arc(0:360:0.6);
+ \node[courseblue,above left] at (-1.05,1.27) {$C_R$};
+ \node[ForestGreen,left] at (-0.6,0) {$C_r$};
+ \fill (0,0) circle(1.5pt) node[below right] {$0$};
+ \fill[lightgreen] (0.92,0.5) circle(0.3);
+ \draw[orangeframe,dashed,thick] (0.92,0.5) circle(0.3);
+ \node[orangeframe,above] at (0.92,0.83) {$D(z_0,\delta)$};
+ \fill (0.92,0.5) circle(2pt) node[below right] {$z_0$};
+ \node[right,align=left] at (2.3,1.35)
+ {$g$ is holomorphic throughout the annulus,\\
+  including at $z_0$ inside the small disc.};
+ \node[right,courseblue] at (2.3,0.15)
+ {$\displaystyle\int_{C_R}\frac{d\zeta}{\zeta-z_0}=2\pi i$
+  \quad($z_0$ inside $C_R$)};
+ \node[right,ForestGreen] at (2.3,-1.05)
+ {$\displaystyle\int_{C_r}\frac{d\zeta}{\zeta-z_0}=0$
+  \quad($z_0$ outside $C_r$)};
+ \node[below] at (0,-1.75) {Both circles are counterclockwise.};
+\end{tikzpicture}
+\end{lecturefigure}
+
 Since $|z_0|<R$, the local Cauchy formula (Lecture~18) applied to the
 constant function $1$ gives $\int_{C_R}d\zeta/(\zeta-z_0)=2\pi i$. Since
 $|z_0|>r$, the function $1/(\zeta-z_0)$ is holomorphic on the disc
