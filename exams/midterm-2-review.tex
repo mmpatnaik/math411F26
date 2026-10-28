@@ -1,0 +1,216 @@
+\documentclass[12pt, reqno]{amsart}
+\usepackage{latexsym, amssymb, amscd, xypic, amsthm, setspace}
+\input xy
+\xyoption{all}
+
+%%: Font = times
+\usepackage{mathptmx} % rm & math
+\usepackage[scaled=0.90]{helvet} % ss
+\usepackage{courier} % tt
+\normalfont
+\usepackage[T1]{fontenc}
+\pagestyle{plain}
+
+
+\newtheorem{theorem}{Theorem}[subsection]
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+
+\theoremstyle{definition}
+\newtheorem{de}[theorem]{Definition}
+\newtheorem{notation}{Notation}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{examples}{Examples}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{remarks}{Remarks}
+\newtheorem{question}{Question}
+
+
+\newtheorem*{nthm}{Theorem}
+\newtheorem*{nlem}{Lemma}
+\newtheorem*{nprop}{Proposition}
+\newtheorem*{ncor}{Corollary}
+\newtheorem*{nclaim}{Claim}
+\newtheorem*{nde}{Definition}
+\newtheorem*{nex}{Example}
+
+\newtheoremstyle{test}{3pt}{3pt}{\itshape}{\parindent}{\bfseries}{---}{  }{\thmnote{#3}} \theoremstyle{test}
+\newtheorem*{mythm}{}
+
+
+%: paragraphs
+
+\newcommand{\point}{\vspace{3mm}\par \noindent (\refstepcounter{subsection}{\bf \thesubsection) } }
+
+\newcommand{\tpoint}[1]{\vspace{3mm}\par \noindent \refstepcounter{subsubsection}{\bf \thesubsubsection.}
+  {\em #1. ---} }
+\newcommand{\epoint}[1]{\vspace{3mm}\par \noindent \refstepcounter{subsection}{\bf \thesubsection.}
+  {\em #1.} }
+\newcommand{\spoint}{\vspace{3mm}\par \noindent \refstepcounter{subsection}{\bf \thesubsection.} }
+
+\newcommand{\bpoint}[1]{\vspace{3mm}\par \noindent \refstepcounter{subsection}{\bf \thesubsection.}
+  {\bf #1.} }
+
+
+
+%: numbering and margins
+
+\numberwithin{equation}{subsection}
+
+\setlength{\oddsidemargin}{0cm} \setlength{\evensidemargin}{0cm}
+\setlength{\marginparwidth}{0in}
+\setlength{\marginparsep}{0in}
+\setlength{\marginparpush}{0in}
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\footskip}{.3in}
+\setlength{\textheight}{9.2in}
+\setlength{\textwidth}{6.5in}
+\setlength{\parskip}{0.25pt}
+\setlength{\parindent}{0.25in}
+
+%: math shortcuts
+
+
+\DeclareMathOperator{\inv}{inv}
+\DeclareMathOperator{\out}{Out}
+\DeclareMathOperator{\gal}{Gal}
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+\DeclareMathOperator{\Res}{Res}
+\renewcommand{\mod}{\mathrm{\, mod \, }}
+\renewcommand{\d}[1]{{}^{#1}}
+\renewcommand{\b}[1]{\mathbf{{#1}}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\be}[1]{\begin{eqnarray} \label{#1}}
+\newcommand{\ee}{\end{eqnarray}}
+\newcommand{\re}{\mathsf{Re}}
+\newcommand{\im}{\mathsf{Im}}
+\newcommand{\rr}{\rightarrow}
+
+\newcommand{\n}{\mathbb{N}}
+\newcommand{\zee}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\pr}{\mathbb{P}}
+\renewcommand{\gcd}[2]{\mathsf{gcd}(#1, #2)}
+\newcommand{\ov}[1]{\overline{#1}}
+\renewcommand{\Re}{\mathrm{Re}}
+\renewcommand{\Im}{\mathrm{Im}}
+
+
+
+\usepackage{enumitem}
+
+\title{Midterm 2 Review Sheet \\ MATH 411: Honors Complex Variables, Fall 2026}
+\date{last compiled: \today}
+
+\begin{document}
+\maketitle
+
+\begin{center}\fbox{\begin{minipage}{0.95\textwidth}\vspace{4pt}\centering
+\begin{tabular}{rl}
+\textbf{Date:} & Friday, November 6, 2026, in class (CAB 369, 3:00--3:50 PM)\\[2pt]
+\textbf{Length:} & 50 minutes\\[2pt]
+\textbf{Format:} & Closed book. No notes, no textbook, no calculators or devices.\\[2pt]
+\textbf{Coverage:} & Lectures 13--23; Lang \S\S3.3--3.7, 4.1, 5.2--5.3, 6.1--6.2
+\end{tabular}\vspace{4pt}\end{minipage}}\end{center}
+
+\noindent Since the exam is closed book, you should be able to \emph{state} the main
+definitions and theorems below precisely, not just recognize them. When you use
+a result from class in a solution, state clearly which result you are using and
+check that its hypotheses hold.
+
+\noindent Lecture 24 (argument principle, Rouch\'e's theorem, open mapping
+theorem) will \emph{not} be tested.
+
+\section*{Topics}
+
+\subsection*{1. Primitives, Cauchy's theorem on a disc, and contour shifts \normalfont (Lectures 13--15; Lang \S3.3)}
+\begin{itemize}[leftmargin=*]
+\item A \emph{primitive} for continuous $f:U\to\C$ is a holomorphic $g'=f$ (analytic functions have local primitives
+      by termwise integration). Then $\int_\gamma f=g(\gamma(b))-g(\gamma(a))$; on connected $U$,
+      $\int_\gamma f=0$ for closed $\gamma$ iff $f$ has a primitive ($1/z$ on $\C\setminus\{0\}$ has none, as $\int_{|z|=1}dz/z=2\pi i$).
+\item \textbf{Primitives and Cauchy's theorem on a disc:} if $f$ is continuous on a disc $D$ about $z_0$ and $\int_{\partial R}f=0$
+      for rectangles $R\subseteq D$, then $g(z_1)=\int_{z_0}^{z_1}f$ along a horizontal-then-vertical path is a primitive for $f$
+      (know the proof via $\int_{\partial R}f=0$, $f(z)=f(z_1)+\psi(z)$, and the ML-estimate).
+      By Cauchy--Goursat, every holomorphic $f$ on a disc $D$ has a primitive, so $\int_\gamma f=0$ for closed $\gamma$ in $D$.
+\item Computing real integrals via Cauchy's theorem and the ML-estimate: shifting rectangular contours
+      (the Fourier transform $\int_{-\infty}^\infty e^{-\pi x^2}e^{-2\pi ix\xi}\,dx=e^{-\pi\xi^2}$), sector contours (e.g.\ $\int_0^\infty\cos(t^2)\,dt$),
+      and indented semicircles ($\int_0^\infty\frac{1-\cos x}{x^2}\,dx=\frac\pi2$ by splitting $\frac{1-e^{iz}}{z^2}=-\frac iz+E(z)$ with $E$ entire).
+\end{itemize}
+
+\subsection*{2. Continuous curves, homotopy, and Cauchy's formula \normalfont (Lectures 15--18; Lang \S\S3.4--3.7)}
+\begin{itemize}[leftmargin=*]
+\item Compactness in $\C$: finite subcover lemma (bisecting squares), uniform neighbourhood lemma ($D(z,r)\subseteq U$ for $z\in K$),
+      and the \textbf{chain-of-discs lemma}: any continuous $\gamma:[a,b]\to U$ admits a \emph{partition}
+      $(a=a_0<\cdots<a_n=b;\,D_0,\dots,D_{n-1})$ with $\gamma([a_j,a_{j+1}])\subseteq D_j\subseteq U$.
+\item For holomorphic $f$ and continuous $\gamma$, set $\int_\gamma f=\sum_{j=0}^{n-1}[g_j(\gamma(a_{j+1}))-g_j(\gamma(a_j))]$ with primitives $g_j$ on $D_j$.
+      Know why this is well-defined ($g_j-h_\ell$ is constant on overlaps
+      $D_j\cap\widetilde D_\ell$ of a common refinement) and agrees with the path integral for piecewise $C^1$ $\gamma$.
+\item \textbf{Homotopy with fixed endpoints} $H:[a,b]\times[0,1]\to U$; straight-line homotopy in convex sets;
+      \textbf{null-homotopic} closed curves and \textbf{simply connected} domains (nonempty, connected, every loop null-homotopic).
+      Convex and star-shaped open sets are simply connected; $\C\setminus\{0\}$ is not.
+\item \textbf{Homotopy form of Cauchy's theorem:} if $\gamma\sim\eta$ with fixed endpoints in $U$ and $f$ is holomorphic on $U$,
+      then $\int_\gamma f=\int_\eta f$. Know the proof: \emph{close} curves (sharing a partition) have equal integrals as $g_{j-1}-g_j=C_j$
+      on $D_{j-1}\cap D_j$ telescopes, and a fine grid on $[a,b]\times[0,1]$ makes consecutive slices $H(\cdot,s_k)$ close.
+      Hence $\int_\gamma f=0$ if $\gamma$ is null-homotopic, and on simply connected $U$ every $f$ has a
+      \textbf{global primitive} $g(z)=\int_{z_0}^z f(\zeta)\,d\zeta$.
+\item \textbf{Local Cauchy integral formula:} for $\ov{D(c,R)}\subseteq U$, $f$ holomorphic on $U$, $z_0\in D(c,R)$, and $\gamma=\partial D(c,R)$,
+      $f(z_0)=\frac{1}{2\pi i}\int_\gamma\frac{f(z)}{z-z_0}\,dz$
+      (know the proof comparing $\gamma$ and $C_r$ about $z_0$ via $\gamma*\alpha\sim\alpha*C_r$ in $U\setminus\{z_0\}$, applied to $\frac{f(z)-f(z_0)}{z-z_0}$ and $\frac{1}{z-z_0}$).
+\end{itemize}
+
+\subsection*{3. Complex logarithms and branches \normalfont (Lecture 19; Lang \S3.6)}
+\begin{itemize}[leftmargin=*]
+\item A \emph{branch of $\log z$} on $U\subseteq\C\setminus\{0\}$ is a holomorphic $L$ with $e^{L(z)}=z$ ($L'(z)=1/z$);
+      no continuous $\log z$ or $z^{1/n}$ ($n\ge2$) exists on $\C\setminus\{0\}$.
+      On simply connected $U\subseteq\C\setminus\{0\}$ ($e^{w_0}=z_0\in U$), $L(z)=w_0+\int_{z_0}^z d\zeta/\zeta$ is a branch of $\log z$.
+      \textbf{Principal branch} $\Log z=\ln|z|+i\Arg z$ ($-\pi<\Arg z<\pi$) on $\C\setminus(-\infty,0]$; branches on
+      $U_\theta=\C\setminus\{re^{i\theta}:r\ge0\}$ and of $z^\alpha=e^{\alpha L(z)}$, $z^{1/n}=e^{L(z)/n}$.
+\item \textbf{Logarithms of nonvanishing functions:} on simply connected $U$, if $f\ne0$ is holomorphic,
+      $L_f(z)=w_0+\int_{z_0}^z(f'/f)\,d\zeta$ ($e^{w_0}=f(z_0)$) gives $e^{L_f}=f$, unique up to $2\pi i\zee$.
+      Know when $L_{f_1f_2}=L_{f_1}+L_{f_2}$ ($\Log(zw)$ vs.\ $\Log z+\Log w$) and $L(z)=L(z_0)+\sum_{n\ge1}\frac{(-1)^{n-1}}{nz_0^n}(z-z_0)^n$ ($|z-z_0|<|z_0|$).
+\end{itemize}
+
+\subsection*{4. Cauchy estimates, Liouville's theorem, and Morera's theorem \normalfont (Lectures 20--21; Lang \S3.7)}
+\begin{itemize}[leftmargin=*]
+\item \textbf{Holomorphic $\Rightarrow$ analytic and Cauchy estimates:} if $f$ is holomorphic on $U$ and $\ov{D(z_0,R)}\subseteq U$, then
+      $f(z)=\sum_{n=0}^\infty a_n(z-z_0)^n$ on $D(z_0,R)$ (uniformly on $\ov{D(z_0,s)}$, $s<R$), with
+      $a_n=\frac{f^{(n)}(z_0)}{n!}=\frac{1}{2\pi i}\int_{\gamma_R}\frac{f(\zeta)}{(\zeta-z_0)^{n+1}}\,d\zeta$,
+      $|a_n|\le\|f\|_{\gamma_R}/R^n$, and $|f^{(n)}(z_0)|\le n!\,\|f\|_{\gamma_R}/R^n$.
+      Know the proof: expand $\frac{1}{\zeta-z}=\sum_{n=0}^\infty\frac{(z-z_0)^n}{(\zeta-z_0)^{n+1}}$ for $|\frac{z-z_0}{\zeta-z_0}|\le\frac sR<1$
+      and integrate termwise on $\gamma_R$.
+\item \textbf{Liouville's theorem and the fundamental theorem of algebra:} every bounded entire function is constant ($|a_n|\le M/R^n\to0$ for $n\ge1$);
+      an entire $f$ with $|f(z)|\le C|z|^k$ on circles $R_j\to\infty$ is a polynomial of degree $\le k$.
+      Every nonconstant polynomial $P(z)=a_nz^n+\cdots+a_0$ has a root in $\C$ (otherwise $1/P$ is entire and bounded since $|P(z)|\ge\frac{|a_n|}{2}|z|^n$ for large $|z|$).
+\item \textbf{Morera's theorem:} if $f$ is continuous on $U$ and $\int_{\partial Q}f=0$ for every closed rectangle $Q\subseteq U$,
+      then $f$ is holomorphic on $U$ (locally $f=g'$ for a holomorphic, hence analytic, primitive $g$).
+\end{itemize}
+
+\subsection*{5. Laurent series, singularities, and residues \normalfont (Lectures 21--23; Lang \S\S4.1, 5.2--5.3, 6.1--6.2)}
+\begin{itemize}[leftmargin=*]
+\item \textbf{Laurent expansion:} for $f$ holomorphic on $A(r,R)=\{r<|z-z_0|<R\}$, $f(z)=\sum_{n\in\zee}a_n(z-z_0)^n=f_++f_-$
+      (uniformly on $s\le|z-z_0|\le S$) with unique $a_n=\frac{1}{2\pi i}\int_{|\zeta-z_0|=\rho}\frac{f(\zeta)}{(\zeta-z_0)^{n+1}}\,d\zeta$.
+      Know the proof via Cauchy's formula on an annulus, $f(z_0)=\frac{1}{2\pi i}(\int_{C_R}-\int_{C_r})\frac{f(\zeta)}{\zeta-z_0}\,d\zeta$,
+      and geometric series on $C_R,C_r$; be able to compute Laurent series on annuli via partial fractions.
+\item \textbf{Isolated singularities} at $z_0$ via $f(z)=\sum_{n\in\zee}a_n(z-z_0)^n$ on $0<|z-z_0|<\rho$:
+      \emph{removable} ($a_n=0$ for $n<0$ $\Leftrightarrow$ $f$ bounded near $z_0$),
+      \emph{pole of order $m$} ($a_{-m}\ne0$, $a_n=0$ for $n<-m$ $\Leftrightarrow$ $|f(z)|\to\infty$),
+      \emph{essential} ($a_n\ne0$ for infinitely many $n<0$ $\Leftrightarrow$ dense image near $z_0$).
+\item \textbf{Winding number} $w(\gamma,\alpha)=\frac{1}{2\pi i}\int_\gamma\frac{dz}{z-\alpha}\in\zee$ (know the proof)
+      and \textbf{residue} $\Res_{z_0}(f)=a_{-1}=\frac{1}{2\pi i}\int_{|z-z_0|=r}f(z)\,dz$.
+      \textbf{Residue theorem:} for $f$ holomorphic on $U\setminus\{z_1,\dots,z_n\}$ and $\gamma$ closed and null-homotopic in $U$,
+      $\int_\gamma f=2\pi i\sum_{j=1}^n w(\gamma,z_j)\Res_{z_j}(f)$.
+      Know the proof ($g=f-\sum f_-^{(j)}$ extends holomorphically to $U$, and each $f_-^{(j)}$ is integrated termwise).
+\item \textbf{Computing residues and real integrals:}
+      at a simple pole, $\Res_{z_0}(fg)=g(z_0)\Res_{z_0}(f)$, and $\Res_{z_0}(g/f)=g(z_0)/f'(z_0)$ if $f(z_0)=0\ne f'(z_0)$;
+      for an order-$m$ pole, $(m-1)!\,\Res_{z_0}(f)=\lim_{z\to z_0}\bigl((z-z_0)^mf(z)\bigr)^{(m-1)}$.
+      Evaluate $\int_0^{2\pi}Q(\cos\theta,\sin\theta)\,d\theta$ via $z=e^{i\theta}$,
+      $\cos\theta=\frac{z+z^{-1}}{2}$, $\sin\theta=\frac{z-z^{-1}}{2i}$, $d\theta=\frac{dz}{iz}$, and
+      $\int_{-\infty}^\infty f(x)\,dx=2\pi i\sum_{\Im z_j>0}\Res_{z_j}(f)$ when $|f(z)|\le B/|z|^2$ in $\Im z\ge0$.
+\end{itemize}
+
+\end{document}

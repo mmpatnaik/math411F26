@@ -11,6 +11,9 @@
 # The site sorts by date and shows the newest first, so old announcements
 # stay on the page as a running log.
 
+## 2026-10-27
+The [coverage sheet](exams/midterm-2-coverage.pdf) for Midterm 2 (Friday, November 6) is posted under [Midterm 2](#midterm2).
+
 ## 2026-10-26
 Updated [Lecture 19 notes](notes/lecture-19.pdf?v=2026-10-26) and [Lecture 20 notes](notes/lecture-20.pdf?v=2026-10-26) are posted. Lecture 20 now includes the fundamental theorem of algebra; Lecture 21 begins with Morera's theorem. The lecture schedule has been updated to match.
 
