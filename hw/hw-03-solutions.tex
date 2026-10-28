@@ -1,0 +1,400 @@
+\documentclass[12pt,reqno]{amsart}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathptmx}
+\usepackage[scaled=0.90]{helvet}
+\usepackage{courier}
+\usepackage[T1]{fontenc}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\pagestyle{plain}
+
+\setlength{\oddsidemargin}{0cm}
+\setlength{\evensidemargin}{0cm}
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\footskip}{.3in}
+\setlength{\textheight}{9.2in}
+\setlength{\textwidth}{6.5in}
+\setlength{\parindent}{0pt}
+\setlist[enumerate,1]{leftmargin=*,itemsep=1.1em}
+\setlist[enumerate,2]{label=(\alph*),leftmargin=1.7em,itemsep=.45em,topsep=.4em}
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+
+\title{Problem Set 3: Solutions \\ MATH 411: Honors Complex Variables, Fall 2026}
+\date{last compiled: \today}
+
+% Coverage: material excluded from Midterm 1 through Monday, Oct. 26,
+% 2026 (Lectures 13--20), according to the current course schedule.
+% Suggested completion date: Monday, October 26, 2026.
+% Sources (paths relative to the course workspace):
+% 1: Old Homework/Homework/Fall2021-MATH411-Homework4.tex, 1(a)--(b).
+% 2: same source, 2; adapted to the fixed-endpoint definition in Lecture 17.
+% 3: same source, 3; f is required to be nonconstant to avoid a trivial
+%    counterexample whose image is not open.
+% 4: same source, 4--5; argument intervals replace ambiguous branch names.
+% 5: same source, 6; sharpened to specified domains and a global obstruction.
+% 6: Old Homework/Homework/Homework5_Fall2021.tex, 1.
+% Laurent expansions moved to Problem Set 4.
+% Residue and winding-number questions from later old sets are omitted.
+
+
+\usepackage[most]{tcolorbox}
+\definecolor{solblue}{RGB}{232,243,252}
+\definecolor{solframe}{RGB}{120,170,215}
+\newenvironment{solution}
+  {\par\smallskip\begin{tcolorbox}[breakable,enhanced,colback=solblue,colframe=solframe,
+   boxrule=0.5pt,arc=2pt,left=6pt,right=6pt,top=4pt,bottom=4pt]\noindent\textbf{Solution.}}
+  {\hfill$\square$\end{tcolorbox}\par\medskip}
+\usepackage{needspace}
+\widowpenalty=10000
+\clubpenalty=10000
+\raggedbottom
+% Solutions 2--5 follow Fall2021-MATH411-Homework4_solutions.tex (2--6).
+% Solution 6 follows Homework5_Fall2021solutions.pdf (1),
+% also present in hwk3.tex.
+% Solution 1 supplies the contour arguments requested in the old set,
+% which were not written out in the corresponding old solutions.
+
+\begin{document}
+\maketitle
+
+Throughout, homotopies of paths \emph{fix their endpoints}, and a simply connected open set is required to be nonempty and connected.
+
+\begin{enumerate}
+\item \textbf{Real integrals by contour integration.}
+Use Cauchy's theorem to evaluate the following improper integrals.
+\begin{enumerate}
+\item
+\[
+ \int_0^\infty \cos(t^2)\,dt.
+\]
+\emph{Hint:} Integrate $e^{-z^2}$ around the boundary of the sector
+$0\leq\arg z\leq\pi/4$, $|z|\leq R$.
+You may use
+\[
+ \int_{-\infty}^{\infty}e^{-x^2}\,dx=\sqrt{\pi},\qquad
+ \sin u\geq\frac{2u}{\pi}\quad(0\leq u\leq\pi/2).
+\]
+Show that the integral over the circular arc tends to zero; a bound
+using only the maximum of the integrand on the arc will not suffice.
+\item For $a,b>0$, evaluate
+\[
+ \int_0^\infty e^{-ax}\cos(bx)\,dx.
+\]
+\emph{Hint:} Put $A=\sqrt{a^2+b^2}$ and choose
+$0<\theta<\pi/2$ with $\cos\theta=a/A$ and $\sin\theta=b/A$.
+Integrate $e^{-Az}$ around the sector of radius $R$ and angle $\theta$.
+\end{enumerate}
+
+\begin{solution}
+\noindent (a) Let $C_R$ be the positively oriented boundary of the sector
+$0\leq\arg z\leq\pi/4$, $|z|\leq R$, and let $A_R$ be its circular
+arc, traversed from $R$ to $Re^{i\pi/4}$. Since $e^{-z^2}$ is entire,
+Cauchy's theorem gives
+\[
+0=\int_0^R e^{-x^2}\,dx+\int_{A_R}e^{-z^2}\,dz
+  -e^{i\pi/4}\int_0^R e^{-it^2}\,dt.
+\]
+We first show that the arc integral approaches zero. Parametrizing by
+$z=Re^{i\phi}$, $0\leq\phi\leq\pi/4$, we obtain
+\[
+\left|\int_{A_R}e^{-z^2}\,dz\right|
+ \leq R\int_0^{\pi/4}e^{-R^2\cos(2\phi)}\,d\phi.
+\]
+Put $u=\pi/4-\phi$. Then $\cos(2\phi)=\sin(2u)\geq4u/\pi$, by the
+inequality in the question. Hence
+\begin{align*}
+\left|\int_{A_R}e^{-z^2}\,dz\right|
+ &\leq R\int_0^{\pi/4}e^{-4R^2u/\pi}\,du\\
+ &=\frac{\pi}{4R}(1-e^{-R^2})\leq\frac{\pi}{4R}\longrightarrow0.
+\end{align*}
+Solving the contour identity for the integral on the sloping ray gives
+\[
+\int_0^R e^{-it^2}\,dt
+ =e^{-i\pi/4}\left(\int_0^R e^{-x^2}\,dx
+                  +\int_{A_R}e^{-z^2}\,dz\right).
+\]
+The right hand side has a limit as $R\to\infty$, so this also proves
+convergence of the improper integral on the left. Since
+$\int_0^\infty e^{-x^2}\,dx=\sqrt{\pi}/2$, taking real parts yields
+\[
+\boxed{\displaystyle\int_0^\infty\cos(t^2)\,dt
+ =\frac{\sqrt{\pi}}{2}\cos(\pi/4)
+ =\frac{\sqrt{\pi}}{2\sqrt2}=\sqrt{\frac{\pi}{8}}.}
+\]
+
+\medskip
+\noindent (b) Put $A=\sqrt{a^2+b^2}$ and choose $\theta$ as in the
+hint, so that $Ae^{i\theta}=a+ib$. Integrating $e^{-Az}$ around the
+positively oriented sector of radius $R$ and angle $\theta$ gives
+\[
+0=\int_0^R e^{-Ax}\,dx+\int_{B_R}e^{-Az}\,dz
+       -e^{i\theta}\int_0^R e^{-(a+ib)x}\,dx,
+\]
+where $B_R$ is the circular arc. On this arc, $z=Re^{i\phi}$ with
+$0\leq\phi\leq\theta$, so that
+\[
+|e^{-Az}|=e^{-AR\cos\phi}\leq e^{-AR\cos\theta}=e^{-aR}.
+\]
+Consequently
+\[
+\left|\int_{B_R}e^{-Az}\,dz\right|
+ \leq R\theta e^{-aR}\longrightarrow0.
+\]
+Also $|e^{-(a+ib)x}|=e^{-ax}$ is integrable on $[0,\infty)$, so
+all the ray integrals converge absolutely. Letting $R\to\infty$,
+we obtain
+\[
+\int_0^\infty e^{-(a+ib)x}\,dx
+ =\frac{e^{-i\theta}}{A}=\frac{a-ib}{a^2+b^2}.
+\]
+Taking real parts now gives
+\[
+\boxed{\displaystyle\int_0^\infty e^{-ax}\cos(bx)\,dx
+       =\frac{a}{a^2+b^2}.}
+\]
+\end{solution}
+
+\item \textbf{Star-shaped open sets.}
+A nonempty open set $U\subseteq\C$ is \emph{star-shaped with respect
+to $a\in U$} if the segment $[a,z]$ lies in $U$ for every $z\in U$.
+\begin{enumerate}
+\item Prove that $U$ is path connected.
+\item For a closed continuous curve $\gamma:[0,1]\to U$ based at $a$,
+construct a homotopy with fixed endpoints from $\gamma$ to the constant
+curve at $a$. Deduce that $U$ is simply connected.
+\end{enumerate}
+For the last deduction, you may use the elementary fact that in a path
+connected set it suffices to contract loops at one fixed base point.
+A connecting path and its reverse transfer the contraction to any
+other base point.
+
+\begin{solution}
+\noindent (a) For any $z,w\in U$, follow the segment from $z$ to $a$
+and then the segment from $a$ to $w$. Both segments lie in $U$ by the
+star-shaped hypothesis. More explicitly, the continuous path
+\[
+p(t)=\begin{cases}
+ (1-2t)z+2ta,&0\leq t\leq1/2,\\
+ (2-2t)a+(2t-1)w,&1/2\leq t\leq1
+\end{cases}
+\]
+joins $z$ to $w$ in $U$. Hence $U$ is path connected.
+
+\medskip
+\noindent (b) Let $\gamma:[0,1]\to U$ be a closed curve based at $a$.
+Define $F:[0,1]\times[0,1]\to U$ by
+\[
+F(t,u)=(1-u)\gamma(t)+ua.
+\]
+Clearly $F(t,u)\in U$ by the star-shaped hypothesis, and $F$ is
+continuous. Moreover,
+\[
+F(t,0)=\gamma(t),\qquad F(t,1)=a,
+\]
+and, since $\gamma(0)=\gamma(1)=a$,
+\[
+F(0,u)=F(1,u)=a\qquad(0\leq u\leq1).
+\]
+Hence $F$ is the required homotopy with fixed endpoints from $\gamma$
+to the constant curve at $a$. By (a) and the base-point fact stated in
+the question, $U$ is simply connected.
+\end{solution}
+
+\item \textbf{Images of simply connected sets.}
+Let $U$ be a simply connected open set and let $f$ be a nonconstant
+holomorphic function on $U$. Must $f(U)$ be simply connected?
+Investigate this using
+\[
+ H=\{z\in\C:\operatorname{Im}z>0\},\qquad f(z)=e^{2\pi i z}.
+\]
+Determine $f(H)$ exactly and justify your conclusion about its simple
+connectivity, for example by integrating $1/z$ around a suitable circle.
+
+\begin{solution}
+The answer is \emph{not necessarily}. The upper half-plane $H$ is
+convex, hence star-shaped and simply connected by Question~2.
+The function $f(z)=e^{2\pi iz}$ is nonconstant and holomorphic on $H$.
+
+If $z=x+iy$, then
+\[
+f(z)=e^{-2\pi y}e^{2\pi ix},
+\]
+the polar decomposition of $f(z)$. The radius of $f(z)$ is thus
+between $0$ and $1$ and the argument can be arbitrary. More precisely,
+if $w=re^{i\phi}$ with $0<r<1$, take
+\[
+x=\frac{\phi}{2\pi},\qquad y=-\frac{\log r}{2\pi}>0.
+\]
+Then $f(x+iy)=w$. Thus
+\[
+\boxed{f(H)=\{w\in\C:0<|w|<1\},}
+\]
+the open unit disc minus the origin.
+
+To see that this image is not simply connected, fix $0<r<1$ and
+let $\gamma(t)=re^{it}$ for $0\leq t\leq2\pi$. The function $1/z$
+is holomorphic on $f(H)$, but
+\[
+\int_\gamma\frac{dz}{z}
+ =\int_0^{2\pi}\frac{ire^{it}}{re^{it}}\,dt=2\pi i\neq0.
+\]
+If $f(H)$ were simply connected, Cauchy's theorem would force this
+integral to be zero, a contradiction.
+\end{solution}
+
+\newpage
+\item \textbf{Two branches of the logarithm.}
+Let $L_+$ be the logarithm on $\C\setminus[0,\infty)$ with argument
+in $(0,2\pi)$, and let $L_-$ be the logarithm on
+$\C\setminus(-\infty,0]$ with argument in $(-\pi,\pi)$.
+For \emph{each} branch $L$, compute
+\[
+ L(-1+i),\qquad \exp\bigl(iL(-i)\bigr),\qquad L(-1-i).
+\]
+Here $(-i)^i$ is defined relative to the chosen branch as
+$\exp(iL(-i))$. Explain how $L_+$ and $L_-$ differ on the upper and
+lower half-planes.
+
+\begin{solution}
+For either branch we use $L(z)=\log|z|+i\arg z$ with the specified
+interval for the argument.
+
+\medskip
+\noindent For $L_+$ the arguments of $-1+i$, $-i$, and $-1-i$ are,
+respectively, $3\pi/4$, $3\pi/2$, and $5\pi/4$. Thus
+\begin{align*}
+ L_+(-1+i)&=\tfrac12\log2+\tfrac{3\pi i}{4},\\
+ \exp(iL_+(-i))&=\exp\bigl(i\cdot\tfrac{3\pi i}{2}\bigr)
+                  =e^{-3\pi/2},\\
+ L_+(-1-i)&=\tfrac12\log2+\tfrac{5\pi i}{4}.
+\end{align*}
+
+\noindent For $L_-$ the corresponding arguments are $3\pi/4$,
+$-\pi/2$, and $-3\pi/4$. Hence
+\begin{align*}
+ L_-(-1+i)&=\tfrac12\log2+\tfrac{3\pi i}{4},\\
+ \exp(iL_-(-i))&=\exp\bigl(i\cdot(-\tfrac{\pi i}{2})\bigr)
+                  =e^{\pi/2},\\
+ L_-(-1-i)&=\tfrac12\log2-\tfrac{3\pi i}{4}.
+\end{align*}
+The branches have the same argument on the upper half-plane.
+On the lower half-plane the argument for $L_+$ is $2\pi$ greater
+than the one for $L_-$. Therefore
+\[
+L_+(z)-L_-(z)=
+\begin{cases}
+0,&\operatorname{Im}z>0,\\
+2\pi i,&\operatorname{Im}z<0.
+\end{cases}
+\]
+\end{solution}
+
+\item \textbf{Holomorphic roots and the choice of domain.}
+Fix an integer $n\geq2$.
+\begin{enumerate}
+\item Let $U\subseteq\C\setminus\{0\}$ be a simply connected open
+set. Use a holomorphic logarithm on $U$ to construct a holomorphic
+function $g$ satisfying $g(z)^n=z$ on $U$.
+\item For $\theta\in\R$, give such a branch on the slit plane
+\[
+ U_\theta=\C\setminus\{re^{i\theta}:r\geq0\},
+\]
+specifying the interval used for the argument.
+\item Show that there is no continuous function $g$ on
+$\C\setminus\{0\}$ satisfying $g(z)^n=z$ everywhere.
+\emph{Hint:} On the unit circle, consider
+$g(e^{it})e^{-it/n}$ for $0\leq t\leq2\pi$.
+\end{enumerate}
+
+\needspace{22\baselineskip}
+\begin{solution}
+\noindent (a) On any simply connected open set not containing the
+origin, a holomorphic logarithm $L$ is well-defined, with $e^{L(z)}=z$.
+Define
+\[
+\boxed{g(z)=\exp\left(\frac{L(z)}{n}\right).}
+\]
+This is holomorphic on $U$, and $g(z)^n=e^{L(z)}=z$.
+
+\medskip
+\noindent (b) On the slit plane $U_\theta$, choose the continuous
+argument $\arg_\theta z\in(\theta,\theta+2\pi)$. Then
+\[
+L_\theta(z)=\log|z|+i\arg_\theta z
+\]
+is a holomorphic logarithm, and a branch of the $n$th root is
+\[
+\boxed{g_\theta(z)=|z|^{1/n}
+                 \exp\left(\frac{i\arg_\theta z}{n}\right).}
+\]
+For example, deleting the negative real axis allows the argument
+interval $(-\pi,\pi)$ (take $\theta=-\pi$).
+
+\medskip
+\noindent (c) Suppose there were a continuous function $g$ on
+$\C\setminus\{0\}$ satisfying $g(z)^n=z$. On $[0,2\pi]$ put
+\[
+h(t)=g(e^{it})e^{-it/n}.
+\]
+Then $h$ is continuous and
+\[
+h(t)^n=g(e^{it})^n e^{-it}=1.
+\]
+Thus $h$ takes its values in the finite set of $n$th roots of unity.
+Since $[0,2\pi]$ is connected, $h$ must be constant, say $h(t)=c$
+with $c^n=1$. It follows that
+\[
+g(e^{it})=ce^{it/n}.
+\]
+Evaluating at $t=0$ and $t=2\pi$ gives
+\[
+g(1)=c\qquad\text{and}\qquad g(1)=ce^{2\pi i/n}.
+\]
+Since $c\neq0$ and $e^{2\pi i/n}\neq1$ for $n\geq2$, this is a
+contradiction. Hence no such continuous function exists on the entire
+punctured plane.
+\end{solution}
+
+\needspace{28\baselineskip}
+\item \textbf{Polynomial growth and Cauchy estimates.}
+Let $f$ be entire and put
+\[
+ M_f(R)=\max_{|z|=R}|f(z)|.
+\]
+Suppose there are a constant $C>0$, an integer $k\geq0$, and radii
+$R_j\to\infty$ such that $M_f(R_j)\leq C R_j^k$ for every $j$.
+Use Cauchy's estimates for the Taylor coefficients at $0$ to prove
+that $f$ is a polynomial of degree at most $k$ (including the zero
+polynomial). What does the case $k=0$ say?
+
+\begin{solution}
+Write the Taylor expansion of the entire function as
+\[
+f(z)=\sum_{m=0}^\infty a_mz^m.
+\]
+Let $N>k$. Then using the Cauchy estimates on the coefficients in
+this power series expansion, we find for each positive radius $R_j$
+\[
+|a_N|\leq\frac{M_f(R_j)}{R_j^N}
+       \leq C\frac{R_j^k}{R_j^N}=\frac{C}{R_j^{N-k}}.
+\]
+As $R_j\to\infty$ the right hand side tends to zero, so $a_N=0$.
+This holds for every $N>k$, i.e.\ in the power series expansion of
+$f$, only finitely many coefficients can be nonzero. Hence
+\[
+f(z)=a_0+a_1z+\cdots+a_kz^k,
+\]
+a polynomial of degree at most $k$, including the possibility that
+$f$ is the zero polynomial.
+
+For $k=0$ all coefficients except $a_0$ vanish, so $f$ is constant.
+This is the conclusion of Liouville's theorem, here obtained from a
+uniform bound on circles of arbitrarily large radius.
+\end{solution}
+
+\end{enumerate}
+\end{document}
