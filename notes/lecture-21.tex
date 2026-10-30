@@ -158,14 +158,12 @@
 \tableofcontents
 \vspace{0.45em}
 
-% Sources: handwritten Lecture 20, Oct. 28, pages 6--9. Order follows
-% the handwritten notes: Morera's theorem, then Laurent series. The
-% fundamental theorem of algebra (page 5) is covered in Lecture 20.
-% Additional sources: handwritten Lecture 21, Oct. 31, pages 1--4,
-% for annuli, Cauchy's formula, and examples. The Laurent expansion
-% proof, uniqueness, and further examples continue in Lecture 22.
-% The annulus case of Cauchy's formula is derived from the homotopy
-% form (Lecture 18); the homology form is only remarked on.
+% Sources: handwritten Lecture 20, Oct. 28, pages 5--9. Order follows
+% the handwritten notes: the fundamental theorem of algebra, Morera's
+% theorem, then Laurent series.
+% Additional sources: handwritten Lecture 21, Oct. 31, pages 1--2,
+% for annuli and examples. Cauchy's formula on an annulus, the Laurent
+% expansion proof, uniqueness, and further examples are in Lecture 22.
 In Lecture~20 we proved that every holomorphic function is analytic,
 with the Cauchy estimates
 \[
@@ -174,12 +172,43 @@ with the Cauchy estimates
  \frac{f(\zeta)}{(\zeta-z_0)^{n+1}}\,d\zeta,
 \]
 whenever $\overline{D(z_0,R)}\subseteq U$, and we deduced Liouville's
-theorem: \emph{every bounded entire function is constant}. We applied it
-to prove the fundamental theorem of algebra. Today we prove Morera's
-theorem and introduce Laurent series, which play the role of power
-series on annuli. We state the Laurent expansion theorem and derive
-Cauchy's formula on an annulus. The Laurent expansion proof, uniqueness,
-and further examples are taken up in Lecture~22.
+theorem: \emph{every bounded entire function is constant}. Today we apply
+it to prove the fundamental theorem of algebra, prove Morera's theorem,
+and introduce Laurent series, which play the role of power
+series on annuli. We state the Laurent expansion theorem. Cauchy's
+formula on an annulus, the Laurent expansion proof, uniqueness, and
+further examples are taken up in Lecture~22.
+
+\section{The fundamental theorem of algebra}
+% Handwritten Lecture 20, page 5.
+\begin{theorem}[Fundamental theorem of algebra]\label{thm:fta}
+Let $P(z)=a_nz^n+a_{n-1}z^{n-1}+\cdots+a_0$ be a polynomial with complex
+coefficients, $n\geq1$ and $a_n\ne0$. Then $P$ has a root $\alpha\in\C$.
+\end{theorem}
+\begin{proof}
+Suppose $P$ has no root. Then $1/P$ is entire. For $z\ne0$, factor out
+the leading term:
+\begin{equation}\label{eq:fta-factorization}
+ P(z)=a_nz^n\left(1+\frac{b_1}{z}+\frac{b_2}{z^2}+\cdots+\frac{b_n}{z^n}\right),
+ \qquad b_k=\frac{a_{n-k}}{a_n}.
+\end{equation}
+Put $B=|b_1|+\cdots+|b_n|$ and $\rho_0=\max(1,2B)$. For $|z|\geq\rho_0$,
+\begin{equation}\label{eq:fta-tail-bound}
+ \left|\frac{b_1}{z}+\cdots+\frac{b_n}{z^n}\right|
+ \leq\frac{|b_1|+\cdots+|b_n|}{|z|}\leq\frac12.
+\end{equation}
+The first inequality uses the triangle inequality and $|z|\geq1$;
+the second uses $|z|\geq2B$. By \eqref{eq:fta-factorization},
+\eqref{eq:fta-tail-bound}, and the reverse triangle inequality,
+\begin{equation}\label{eq:fta-polynomial-bound}
+ |P(z)|\geq\frac{|a_n|}{2}|z|^n\geq\frac{|a_n|}{2},
+\end{equation}
+The first bound gives $|P(z)|\to\infty$ as $|z|\to\infty$; the second gives
+$|1/P(z)|\leq2/|a_n|$ for $|z|\geq\rho_0$. On the compact disc
+$|z|\leq\rho_0$, $1/P$ is continuous and hence bounded. Thus $1/P$ is
+bounded and entire, so it is constant by Liouville's theorem. Then $P$
+is constant, a contradiction.
+\end{proof}
 
 \section{Morera's theorem}
 % Handwritten Lecture 20, page 6.
@@ -424,141 +453,5 @@ coefficients $a_n$ are nonzero? Compare with the coefficient formula of
 Theorem~\ref{thm:laurent} for $n=-1$.
 \end{exercise}
 
-
-\subsection{Cauchy's formula on an annulus}
-% Handwritten Lecture 21, page 2.
-The key input is a version of Cauchy's formula in which the contour is the
-boundary of the annulus: the outer circle counterclockwise and the inner
-circle clockwise. Recall from Lecture 18.
-
-\begin{lemma}[Concentric circles]\label{lem:concentric}
-Let $0<\rho_1<\rho_2$ and let $h$ be holomorphic on an open set containing
-$\{\rho_1\leq|z|\leq\rho_2\}$. Then
-\[
- \int_{C_{\rho_1}}h(\zeta)\,d\zeta=\int_{C_{\rho_2}}h(\zeta)\,d\zeta.
-\]
-\end{lemma}
-
-
-\begin{proposition}[Cauchy's formula on an annulus]\label{prop:annulus-cauchy}
-Let $f$ be holomorphic on $\overline{A(r,R)}$, where $0<r<R<\infty$. Then for
-every $z_0$ with $r<|z_0|<R$,
-\[
- \boxed{\displaystyle
- f(z_0)=\frac{1}{2\pi i}\int_{C_R}\frac{f(\zeta)}{\zeta-z_0}\,d\zeta
- -\frac{1}{2\pi i}\int_{C_r}\frac{f(\zeta)}{\zeta-z_0}\,d\zeta.}
-\]
-\end{proposition}
-\begin{proof}
-Define
-\[
- g(\zeta)=\frac{f(\zeta)-f(z_0)}{\zeta-z_0}\quad(\zeta\ne z_0),
- \qquad g(z_0)=f'(z_0).
-\]
-Away from $z_0$, $g$ is clearly holomorphic. Since $f$ is holomorphic near
-$z_0$, Lecture~20 gives a convergent power series
-\[
- f(\zeta)=\sum_{k\geq0}b_k(\zeta-z_0)^k
- \qquad(|\zeta-z_0|<\delta)
-\]
-for some $\delta>0$, with $b_0=f(z_0)$ and $b_1=f'(z_0)$. For
-$0<|\zeta-z_0|<\delta$, subtracting $b_0$ and dividing by $\zeta-z_0$ gives
-\[
- g(\zeta)=\frac{f(\zeta)-f(z_0)}{\zeta-z_0}
- =\sum_{k\geq1}b_k(\zeta-z_0)^{k-1}.
-\]
-The shifted power series converges throughout $|\zeta-z_0|<\delta$.
-At $\zeta=z_0$ its value is $b_1=f'(z_0)=g(z_0)$, so it represents $g$
-on the whole disc, including its centre. Hence $g$ is holomorphic at
-$z_0$. Thus $g$ is holomorphic on a neighbourhood of the closed
-annulus, and Lemma~\ref{lem:concentric} gives
-$\int_{C_R}g=\int_{C_r}g$, that is,
-\[
- \int_{C_R}\frac{f(\zeta)}{\zeta-z_0}\,d\zeta
- -f(z_0)\int_{C_R}\frac{d\zeta}{\zeta-z_0}
- =\int_{C_r}\frac{f(\zeta)}{\zeta-z_0}\,d\zeta
- -f(z_0)\int_{C_r}\frac{d\zeta}{\zeta-z_0}.
-\]
-
-\begin{lecturefigure}
-\begin{tikzpicture}[scale=0.85,>=stealth]
- \fill[lightpink] (0,0) circle(1.65);
- \fill[white] (0,0) circle(0.6);
- \draw[courseblue,thick,postaction={decorate},decoration={markings,
-  mark=at position 0.38 with {\arrow{>}}}] (1.65,0) arc(0:360:1.65);
- \draw[ForestGreen,thick,postaction={decorate},decoration={markings,
-  mark=at position 0.62 with {\arrow{>}}}] (0.6,0) arc(0:360:0.6);
- \node[courseblue,above left] at (-1.05,1.27) {$C_R$};
- \node[ForestGreen,left] at (-0.6,0) {$C_r$};
- \fill (0,0) circle(1.5pt) node[below right] {$0$};
- \fill[lightgreen] (0.92,0.5) circle(0.3);
- \draw[orangeframe,dashed,thick] (0.92,0.5) circle(0.3);
- \node[orangeframe,above] at (0.92,0.83) {$D(z_0,\delta)$};
- \fill (0.92,0.5) circle(2pt) node[below right] {$z_0$};
- \node[right,align=left] at (2.3,1.35)
- {$g$ is holomorphic throughout the annulus,\\
-  including at $z_0$ inside the small disc.};
- \node[right,courseblue] at (2.3,0.15)
- {$\displaystyle\int_{C_R}\frac{d\zeta}{\zeta-z_0}=2\pi i$
-  \quad($z_0$ inside $C_R$)};
- \node[right,ForestGreen] at (2.3,-1.05)
- {$\displaystyle\int_{C_r}\frac{d\zeta}{\zeta-z_0}=0$
-  \quad($z_0$ outside $C_r$)};
- \node[below] at (0,-1.75) {Both circles are counterclockwise.};
-\end{tikzpicture}
-\end{lecturefigure}
-
-Since $|z_0|<R$, the local Cauchy formula (Lecture~18) applied to the
-constant function $1$ gives $\int_{C_R}d\zeta/(\zeta-z_0)=2\pi i$. Since
-$|z_0|>r$, the function $1/(\zeta-z_0)$ is holomorphic on the disc
-$|\zeta|<|z_0|$, which contains $C_r$, so $\int_{C_r}d\zeta/(\zeta-z_0)=0$
-by Cauchy's theorem on a disc. Rearranging gives the formula.
-\end{proof}
-
-\begin{remark}[The homology form of Cauchy's theorem]
-Actually there is a more general fact: if $\gamma$ is a
-(formal sum of) closed curves in $U$ that does not wind around any point
-outside $U$, then
-\[
- \frac{1}{2\pi i}\int_\gamma\frac{f(\zeta)}{\zeta-z_0}\,d\zeta
- =n(\gamma,z_0)\,f(z_0),\qquad
- n(\gamma,z_0)=\frac{1}{2\pi i}\int_\gamma\frac{d\zeta}{\zeta-z_0},
-\]
-where $n(\gamma,z_0)$ is the \emph{winding number} of $\gamma$ around $z_0$.
-For $\gamma=C_R-C_r$ and $z_0$ in the annulus, $n(\gamma,z_0)=1-0=1$, which
-is Proposition~\ref{prop:annulus-cauchy}. We will not need the general
-statement.
-\end{remark}
-
-\begin{lecturefigure}
-\begin{tikzpicture}[scale=0.75,>=stealth]
- \begin{scope}
-  \draw[courseblue,thick,postaction={decorate},decoration={markings,
-   mark=at position 0.3 with {\arrow{>}}}] (1.5,0) arc(0:360:1.5);
-  \node[courseblue] at (1.45,1.25){$C_R$};
-  \fill (0,0) circle(1.5pt);
- \end{scope}
- \node at (2.3,0) {\Large$-$};
- \begin{scope}[xshift=3.5cm]
-  \draw[ForestGreen,thick,postaction={decorate},decoration={markings,
-   mark=at position 0.3 with {\arrow{>}}}] (0.6,0) arc(0:360:0.6);
-  \node[ForestGreen] at (0.75,0.65){$C_r$};
-  \fill (0,0) circle(1.5pt);
- \end{scope}
- \node at (4.7,0) {\Large$=$};
- \begin{scope}[xshift=6.8cm]
-  \fill[lightpink] (0,0) circle(1.5);
-  \fill[white] (0,0) circle(0.6);
-  \draw[courseblue,thick,postaction={decorate},decoration={markings,
-   mark=at position 0.3 with {\arrow{>}}}] (1.5,0) arc(0:360:1.5);
-  \draw[ForestGreen,thick,postaction={decorate},decoration={markings,
-   mark=at position 0.3 with {\arrow{<}}}] (0.6,0) arc(0:360:0.6);
-  \fill (0,0) circle(1.5pt);
-  \fill (-0.75,-0.65) circle(2pt) node[below left]{$z_0$};
- \end{scope}
- \node[right,align=left] at (8.8,0)
- {boundary of the annulus;\\ winds once around $z_0$.};
-\end{tikzpicture}
-\end{lecturefigure}
 
 \end{document}

@@ -159,15 +159,15 @@
 % and handwritten Lecture 20, Oct. 28, pages 1--4 and the end of page 6.
 % Order follows the handwritten Lecture 20: theorem, proof (kernel
 % expansion, Cauchy formula, exchange of sum and integral, Cauchy
-% estimates), derivatives, Liouville, and the fundamental theorem of
-% algebra (handwritten Lecture 20, page 5). Morera's theorem and Laurent
+% estimates), derivatives, and Liouville. The fundamental theorem of
+% algebra (handwritten Lecture 20, page 5), Morera's theorem, and Laurent
 % series (handwritten pages 6--9) are in Lecture 21.
 In Lecture~19 we saw that every holomorphic branch of the logarithm is
 given locally by a convergent power series. The logarithm illustrates a
 general phenomenon: Cauchy's integral formula produces a convergent power
 series for \emph{any} holomorphic function. We prove this, derive the
 Cauchy estimates and Cauchy's formula for derivatives, and deduce
-Liouville's theorem and the fundamental theorem of algebra.
+Liouville's theorem.
 
 \section{Holomorphic functions are analytic}
 % Handwritten Lecture 19, page 4, and Lecture 20, page 1.
@@ -438,37 +438,7 @@ circles $|z|=R$ with $R\to\infty$ to show that $f$ is a polynomial of
 degree at most $k$.
 \end{exercise}
 
-\subsection{The fundamental theorem of algebra}
-% Handwritten Lecture 20, page 5.
-\begin{theorem}[Fundamental theorem of algebra]\label{thm:fta}
-Let $P(z)=a_nz^n+a_{n-1}z^{n-1}+\cdots+a_0$ be a polynomial with complex
-coefficients, $n\geq1$ and $a_n\ne0$. Then $P$ has a root $\alpha\in\C$.
-\end{theorem}
-\begin{proof}
-Suppose $P$ has no root. Then $1/P$ is entire. For $z\ne0$, factor out
-the leading term:
-\begin{equation}\label{eq:fta-factorization}
- P(z)=a_nz^n\left(1+\frac{b_1}{z}+\frac{b_2}{z^2}+\cdots+\frac{b_n}{z^n}\right),
- \qquad b_k=\frac{a_{n-k}}{a_n}.
-\end{equation}
-Put $B=|b_1|+\cdots+|b_n|$ and $\rho_0=\max(1,2B)$. For $|z|\geq\rho_0$,
-\begin{equation}\label{eq:fta-tail-bound}
- \left|\frac{b_1}{z}+\cdots+\frac{b_n}{z^n}\right|
- \leq\frac{|b_1|+\cdots+|b_n|}{|z|}\leq\frac12.
-\end{equation}
-The first inequality uses the triangle inequality and $|z|\geq1$;
-the second uses $|z|\geq2B$. By \eqref{eq:fta-factorization},
-\eqref{eq:fta-tail-bound}, and the reverse triangle inequality,
-\begin{equation}\label{eq:fta-polynomial-bound}
- |P(z)|\geq\frac{|a_n|}{2}|z|^n\geq\frac{|a_n|}{2},
-\end{equation}
-The first bound gives $|P(z)|\to\infty$ as $|z|\to\infty$; the second gives
-$|1/P(z)|\leq2/|a_n|$ for $|z|\geq\rho_0$. On the compact disc
-$|z|\leq\rho_0$, $1/P$ is continuous and hence bounded. Thus $1/P$ is
-bounded and entire, so it is constant by Liouville's theorem. Then $P$
-is constant, a contradiction.
-\end{proof}
-
-Next time we prove Morera's theorem and introduce Laurent series.
+Next time we apply Liouville's theorem to prove the fundamental theorem
+of algebra, prove Morera's theorem, and introduce Laurent series.
 
 \end{document}

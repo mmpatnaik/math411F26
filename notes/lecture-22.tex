@@ -31,7 +31,7 @@
 \definecolor{remarkframe}{HTML}{9B7FC9}
 
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.45em}
+\setlength{\parskip}{0.35em}
 \setlist[itemize]{topsep=0.25em,itemsep=0.15em}
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
 \renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
@@ -139,6 +139,11 @@
  {\par\addvspace{0.25em}\begingroup\setlength{\parskip}{0pt}\centering}
  {\par\endgroup\addvspace{0.25em}}
 \begin{document}
+% Slightly tighter display spacing keeps this lecture within six pages.
+\setlength{\abovedisplayskip}{8pt plus 2pt minus 3pt}
+\setlength{\belowdisplayskip}{8pt plus 2pt minus 3pt}
+\setlength{\abovedisplayshortskip}{0pt plus 2pt}
+\setlength{\belowdisplayshortskip}{5pt plus 2pt minus 2pt}
 
 \begin{center}
   \colorbox{lightblue}{%
@@ -159,16 +164,161 @@
 \vspace{0.45em}
 
 % Sources: handwritten Lecture 21, Oct. 31, pages 2--4, for the
-% Laurent expansion proof, uniqueness, examples, and isolated singularities.
+% Cauchy formula on an annulus, Laurent expansion proof, uniqueness,
+% examples, and isolated singularities.
+% The annulus formula is derived from the homotopy form (Lecture 18);
+% the homology form is only remarked on.
 % The function-side characterizations of singularities are proved in
 % the next lecture.
-\section{The Laurent expansion}
-We begin by recalling Theorem~2.2 of Lecture~21. For
-$0\leq r<R\leq\infty$, write $A(r,R)=\{z\in\C:r<|z|<R\}$.
+In Lecture~21 we introduced Laurent series and stated the Laurent
+expansion theorem. We begin by deriving Cauchy's formula on an annulus,
+then use it to prove the Laurent expansion, establish uniqueness, and
+compute examples. Finally, we classify isolated singularities.
+
+For $0\leq r<R\leq\infty$, write $A(r,R)=\{z\in\C:r<|z|<R\}$.
 For $\rho>0$, let $C_\rho(t)=\rho e^{it}$, $0\leq t\leq2\pi$, be the
 positively oriented circle of radius $\rho$ centred at $0$. As before,
 holomorphy on $\overline{A(r,R)}$ means holomorphy on an open set
 containing the closed annulus, including both boundary circles.
+
+\section{Cauchy's formula on an annulus}
+% Handwritten Lecture 21, page 2.
+The key input is a version of Cauchy's formula in which the contour is the
+boundary of the annulus: the outer circle counterclockwise and the inner
+circle clockwise. Recall from Lecture 18.
+
+\begin{lemma}[Concentric circles]\label{lem:concentric}
+Let $0<\rho_1<\rho_2$ and let $h$ be holomorphic on an open set containing
+$\{\rho_1\leq|z|\leq\rho_2\}$. Then
+\[
+ \int_{C_{\rho_1}}h(\zeta)\,d\zeta=\int_{C_{\rho_2}}h(\zeta)\,d\zeta.
+\]
+\end{lemma}
+
+
+\begin{proposition}[Cauchy's formula on an annulus]\label{prop:annulus-cauchy}
+Let $f$ be holomorphic on $\overline{A(r,R)}$, where $0<r<R<\infty$. Then for
+every $z_0$ with $r<|z_0|<R$,
+\[
+ \boxed{\displaystyle
+ f(z_0)=\frac{1}{2\pi i}\int_{C_R}\frac{f(\zeta)}{\zeta-z_0}\,d\zeta
+ -\frac{1}{2\pi i}\int_{C_r}\frac{f(\zeta)}{\zeta-z_0}\,d\zeta.}
+\]
+\end{proposition}
+\begin{proof}
+Define
+\[
+ g(\zeta)=\frac{f(\zeta)-f(z_0)}{\zeta-z_0}\quad(\zeta\ne z_0),
+ \qquad g(z_0)=f'(z_0).
+\]
+Away from $z_0$, $g$ is clearly holomorphic. Since $f$ is holomorphic near
+$z_0$, Lecture~20 gives a convergent power series
+\[
+ f(\zeta)=\sum_{k\geq0}b_k(\zeta-z_0)^k
+ \qquad(|\zeta-z_0|<\delta)
+\]
+for some $\delta>0$, with $b_0=f(z_0)$ and $b_1=f'(z_0)$. For
+$0<|\zeta-z_0|<\delta$, subtracting $b_0$ and dividing by $\zeta-z_0$ gives
+\[
+ g(\zeta)=\frac{f(\zeta)-f(z_0)}{\zeta-z_0}
+ =\sum_{k\geq1}b_k(\zeta-z_0)^{k-1}.
+\]
+The shifted power series converges throughout $|\zeta-z_0|<\delta$.
+At $\zeta=z_0$ its value is $b_1=f'(z_0)=g(z_0)$, so it represents $g$
+on the whole disc, including its centre. Hence $g$ is holomorphic at
+$z_0$. Thus $g$ is holomorphic on a neighbourhood of the closed
+annulus, and Lemma~\ref{lem:concentric} gives
+$\int_{C_R}g=\int_{C_r}g$, that is,
+\[
+ \int_{C_R}\frac{f(\zeta)}{\zeta-z_0}\,d\zeta
+ -f(z_0)\int_{C_R}\frac{d\zeta}{\zeta-z_0}
+ =\int_{C_r}\frac{f(\zeta)}{\zeta-z_0}\,d\zeta
+ -f(z_0)\int_{C_r}\frac{d\zeta}{\zeta-z_0}.
+\]
+
+\begin{lecturefigure}
+\begin{tikzpicture}[scale=0.85,>=stealth]
+ \fill[lightpink] (0,0) circle(1.65);
+ \fill[white] (0,0) circle(0.6);
+ \draw[courseblue,thick,postaction={decorate},decoration={markings,
+  mark=at position 0.38 with {\arrow{>}}}] (1.65,0) arc(0:360:1.65);
+ \draw[ForestGreen,thick,postaction={decorate},decoration={markings,
+  mark=at position 0.62 with {\arrow{>}}}] (0.6,0) arc(0:360:0.6);
+ \node[courseblue,above left] at (-1.05,1.27) {$C_R$};
+ \node[ForestGreen,left] at (-0.6,0) {$C_r$};
+ \fill (0,0) circle(1.5pt) node[below right] {$0$};
+ \fill[lightgreen] (0.92,0.5) circle(0.3);
+ \draw[orangeframe,dashed,thick] (0.92,0.5) circle(0.3);
+ \node[orangeframe,above] at (0.92,0.83) {$D(z_0,\delta)$};
+ \fill (0.92,0.5) circle(2pt) node[below right] {$z_0$};
+ \node[right,align=left] at (2.3,1.35)
+ {$g$ is holomorphic throughout the annulus,\\
+  including at $z_0$ inside the small disc.};
+ \node[right,courseblue] at (2.3,0.15)
+ {$\displaystyle\int_{C_R}\frac{d\zeta}{\zeta-z_0}=2\pi i$
+  \quad($z_0$ inside $C_R$)};
+ \node[right,ForestGreen] at (2.3,-1.05)
+ {$\displaystyle\int_{C_r}\frac{d\zeta}{\zeta-z_0}=0$
+  \quad($z_0$ outside $C_r$)};
+ \node[below] at (0,-1.75) {Both circles are counterclockwise.};
+\end{tikzpicture}
+\end{lecturefigure}
+
+Since $|z_0|<R$, the local Cauchy formula (Lecture~18) applied to the
+constant function $1$ gives $\int_{C_R}d\zeta/(\zeta-z_0)=2\pi i$. Since
+$|z_0|>r$, the function $1/(\zeta-z_0)$ is holomorphic on the disc
+$|\zeta|<|z_0|$, which contains $C_r$, so $\int_{C_r}d\zeta/(\zeta-z_0)=0$
+by Cauchy's theorem on a disc. Rearranging gives the formula.
+\end{proof}
+
+\begin{remark}[The homology form of Cauchy's theorem]
+Actually there is a more general fact: if $\gamma$ is a
+(formal sum of) closed curves in $U$ that does not wind around any point
+outside $U$, then
+\[
+ \frac{1}{2\pi i}\int_\gamma\frac{f(\zeta)}{\zeta-z_0}\,d\zeta
+ =n(\gamma,z_0)\,f(z_0),\qquad
+ n(\gamma,z_0)=\frac{1}{2\pi i}\int_\gamma\frac{d\zeta}{\zeta-z_0},
+\]
+where $n(\gamma,z_0)$ is the \emph{winding number} of $\gamma$ around $z_0$.
+For $\gamma=C_R-C_r$ and $z_0$ in the annulus, $n(\gamma,z_0)=1-0=1$, which
+is Proposition~\ref{prop:annulus-cauchy}. We will not need the general
+statement.
+\end{remark}
+
+\begin{lecturefigure}
+\begin{tikzpicture}[scale=0.75,>=stealth]
+ \begin{scope}
+  \draw[courseblue,thick,postaction={decorate},decoration={markings,
+   mark=at position 0.3 with {\arrow{>}}}] (1.5,0) arc(0:360:1.5);
+  \node[courseblue] at (1.45,1.25){$C_R$};
+  \fill (0,0) circle(1.5pt);
+ \end{scope}
+ \node at (2.3,0) {\Large$-$};
+ \begin{scope}[xshift=3.5cm]
+  \draw[ForestGreen,thick,postaction={decorate},decoration={markings,
+   mark=at position 0.3 with {\arrow{>}}}] (0.6,0) arc(0:360:0.6);
+  \node[ForestGreen] at (0.75,0.65){$C_r$};
+  \fill (0,0) circle(1.5pt);
+ \end{scope}
+ \node at (4.7,0) {\Large$=$};
+ \begin{scope}[xshift=6.8cm]
+  \fill[lightpink] (0,0) circle(1.5);
+  \fill[white] (0,0) circle(0.6);
+  \draw[courseblue,thick,postaction={decorate},decoration={markings,
+   mark=at position 0.3 with {\arrow{>}}}] (1.5,0) arc(0:360:1.5);
+  \draw[ForestGreen,thick,postaction={decorate},decoration={markings,
+   mark=at position 0.3 with {\arrow{<}}}] (0.6,0) arc(0:360:0.6);
+  \fill (0,0) circle(1.5pt);
+  \fill (-0.75,-0.65) circle(2pt) node[below left]{$z_0$};
+ \end{scope}
+ \node[right,align=left] at (8.8,0)
+ {boundary of the annulus;\\ winds once around $z_0$.};
+\end{tikzpicture}
+\end{lecturefigure}
+
+\section{The Laurent expansion}
+We recall Theorem~3.2 of Lecture~21.
 
 \begin{theorem}[Laurent expansion, recalled]\label{thm:laurent}
 Let $0<r<R<\infty$ and let $f$ be holomorphic on $\overline{A(r,R)}$
@@ -190,8 +340,8 @@ and the convergence is uniform on every smaller closed annulus
 $s\leq|z|\leq S$ with $r<s<S<R$.
 \end{theorem}
 
-We now prove this theorem using Cauchy's formula on an annulus from
-Lecture~21, then establish uniqueness and compute expansions on different
+We now prove this theorem using Proposition~\ref{prop:annulus-cauchy},
+then establish uniqueness and compute expansions on different
 annuli and about different centres. Finally, we use Laurent series to
 classify isolated singularities.
 
@@ -199,7 +349,7 @@ classify isolated singularities.
 % Handwritten Lecture 21, pages 2--3.
 \begin{proof}[Proof of Theorem~\ref{thm:laurent}]
 Fix $r<s<S<R$ and let $s\leq|z|\leq S$. By
-Proposition~2.6 of Lecture~21,
+Proposition~\ref{prop:annulus-cauchy},
 \[
  f(z)=\underbrace{\frac{1}{2\pi i}\int_{C_R}\frac{f(\zeta)}{\zeta-z}\,d\zeta}_{(\mathrm{I})}
  \;\underbrace{-\;\frac{1}{2\pi i}\int_{C_r}\frac{f(\zeta)}{\zeta-z}\,d\zeta}_{(\mathrm{II})}.
@@ -266,7 +416,7 @@ such a closed annulus.
 \end{lecturefigure}
 
 \subsection{Open annuli and uniqueness}
-Combining Theorem~\ref{thm:laurent} with Lemma~2.5 of Lecture~21 gives
+Combining Theorem~\ref{thm:laurent} with Lemma~\ref{lem:concentric} gives
 the version for open annuli, which is the one used in practice.
 
 \begin{corollary}\label{cor:open-annulus}
@@ -279,7 +429,7 @@ does not depend on $\rho$, and $f(z)=\sum_{n\in\Z}a_nz^n$ for all
 $z\in A(r,R)$.
 \end{corollary}
 \begin{proof}
-Independence of $\rho$ is Lemma~2.5 of Lecture~21 applied to
+Independence of $\rho$ is Lemma~\ref{lem:concentric} applied to
 $h(\zeta)=f(\zeta)\zeta^{-n-1}$. Given $z\in A(r,R)$, choose
 $r<\rho_1<|z|<\rho_2<R$ and apply Theorem~\ref{thm:laurent} on the closed
 annulus $\rho_1\leq|z|\leq\rho_2$; its coefficients are the $a_n$ above.
@@ -321,7 +471,7 @@ partial fractions,
  \]
  \item On $A(1,\infty)=\{|z|>1\}$: now
  $\frac{1}{z-1}=\frac1z+\frac1{z^2}+\frac1{z^3}+\cdots$
- (Example~2.3 of Lecture~21), so
+ (Example~3.3 of Lecture~21), so
  \[
   f(z)=\frac1{z^2}+\frac1{z^3}+\cdots\qquad(|z|>1).
  \]
