@@ -165,15 +165,13 @@
 
 % Sources: handwritten Lecture 21, Oct. 31, pages 2--4, for the
 % Cauchy formula on an annulus, Laurent expansion proof, uniqueness,
-% examples, and isolated singularities.
+% and examples. (Isolated singularities moved to Lecture 23.)
 % The annulus formula is derived from the homotopy form (Lecture 18);
 % the homology form is only remarked on.
-% The function-side characterizations of singularities are proved in
-% the next lecture.
 In Lecture~21 we introduced Laurent series and stated the Laurent
 expansion theorem. We begin by deriving Cauchy's formula on an annulus,
 then use it to prove the Laurent expansion, establish uniqueness, and
-compute examples. Finally, we classify isolated singularities.
+compute examples.
 
 For $0\leq r<R\leq\infty$, write $A(r,R)=\{z\in\C:r<|z|<R\}$.
 For $\rho>0$, let $C_\rho(t)=\rho e^{it}$, $0\leq t\leq2\pi$, be the
@@ -342,8 +340,7 @@ $s\leq|z|\leq S$ with $r<s<S<R$.
 
 We now prove this theorem using Proposition~\ref{prop:annulus-cauchy},
 then establish uniqueness and compute expansions on different
-annuli and about different centres. Finally, we use Laurent series to
-classify isolated singularities.
+annuli and about different centres.
 
 \subsection{Proof of the Laurent expansion}\label{sec:laurent-proof}
 % Handwritten Lecture 21, pages 2--3.
@@ -520,82 +517,6 @@ Therefore the Laurent expansion about $z=1$ is
 \begin{exercise}
 Find the Laurent expansion of $\dfrac{1}{z(z-1)}$ about $z=1$ on the
 region $|z-1|>1$.
-\end{exercise}
-
-\section{Isolated singularities}
-% Handwritten Lecture 21, page 4. The function-side characterizations in
-% the table are stated here; their proofs come in the next lecture.
-\begin{definition}
-Let $U$ be open and $z_0\in U$. A function $f$ holomorphic on
-$U\setminus\{z_0\}$ is said to have an \emph{isolated singularity} at $z_0$.
-\end{definition}
-We are interested in functions $f$ on an open set that are holomorphic
-except for, at worst, isolated singularities. If $f$ has an isolated
-singularity at $z_0$, choose $\rho>0$ with $D(z_0,\rho)\subseteq U$. Then $f$
-is holomorphic on the punctured disc $\{0<|z-z_0|<\rho\}$, an annulus with
-inner radius $0$, so Corollary~\ref{cor:open-annulus} gives a Laurent
-expansion
-\[
- f(z)=\sum_{n=-\infty}^{\infty}a_n(z-z_0)^n\qquad(0<|z-z_0|<\rho).
-\]
-By Proposition~\ref{prop:unique}, the coefficients depend only on $f$ near
-$z_0$, not on $\rho$.
-
-\begin{definition}
-In this situation the singularity at $z_0$ is
-\begin{enumerate}
- \item \emph{removable} if $a_n=0$ for all $n<0$;
- \item a \emph{pole} if $a_n\ne0$ for some, but only finitely many, $n<0$.
- If $a_{-m}\ne0$ and $a_n=0$ for $n<-m$, the pole has \emph{order} $m$;
- \item an \emph{essential singularity} if $a_n\ne0$ for infinitely many
- $n<0$.
-\end{enumerate}
-\end{definition}
-
-The three types are also visible from the behaviour of $f$ near $z_0$:
-
-\begin{center}
-\renewcommand{\arraystretch}{1.5}
-\begin{tabular}{|l|p{5.2cm}|p{5.4cm}|}
- \hline
- \textbf{Type} & \textbf{Behaviour of $f$ near $z_0$} &
- \textbf{Laurent expansion at $z_0$}\\
- \hline
- Removable & $f$ is bounded near $z_0$ &
- no negative terms:\newline $f=\sum_{n\geq0}a_n(z-z_0)^n$\\
- \hline
- Pole & $|f(z)|\to\infty$ as $z\to z_0$ &
- finitely many negative terms:\newline $f=\sum_{n\geq-m}a_n(z-z_0)^n$\\
- \hline
- Essential & the values of $f$ near $z_0$ are dense in $\C$ &
- infinitely many negative terms\\
- \hline
-\end{tabular}
-\end{center}
-That the two columns match is a theorem, proved next lecture (it includes
-Riemann's removable singularity theorem and the Casorati--Weierstrass
-theorem).
-
-\begin{example}
-Some examples of each type:
-\begin{itemize}
- \item $\dfrac{\sin z}{z}=1-\dfrac{z^2}{3!}+\dfrac{z^4}{5!}-\cdots$ has a
- removable singularity at $0$; setting its value at $0$ to be $1$ gives an
- entire function.
- \item $\dfrac{1}{z(z-1)}$ has poles of order $1$ at $0$ and at $1$, by
- the expansions computed above.
- \item $\dfrac{1}{z^2}$ has a pole of order $2$ at $0$.
- \item $e^{1/z}=\displaystyle\sum_{n\geq0}\frac{1}{n!}z^{-n}$ has an
- essential singularity at $0$.
-\end{itemize}
-\end{example}
-
-\begin{exercise}
-Prove the easy half of the table for the first two rows. (a) If the
-Laurent expansion at $z_0$ has no negative terms, show that $f$ is bounded
-near $z_0$ and extends holomorphically to $z_0$. (b) If $f$ has a pole of
-order $m$ at $z_0$, write $f(z)=(z-z_0)^{-m}g(z)$ with $g$ holomorphic near
-$z_0$ and $g(z_0)\ne0$, and deduce that $|f(z)|\to\infty$ as $z\to z_0$.
 \end{exercise}
 
 \end{document}

@@ -115,12 +115,12 @@
 \textbf{Date:} & Friday, November 6, 2026, in class (CAB 369, 3:00--3:50 PM)\\[2pt]
 \textbf{Length:} & 50 minutes\\[2pt]
 \textbf{Format:} & Closed book. No notes, no textbook, no calculators or devices.\\[2pt]
-\textbf{Coverage:} & Lectures 13--23; Lang \S\S3.3--3.7, 4.1, 5.2--5.3, 6.1--6.2
+\textbf{Coverage:} & Lectures 13--23; Lang \S\S3.3--3.7, 4.1, 5.2--5.3, 6.1
 \end{tabular}\vspace{4pt}\end{minipage}}\end{center}
 
 
-\noindent \textit{Note: }material from Lecture 24 (argument principle, Rouch\'e's theorem, open mapping
-theorem) will \emph{not} be tested.
+\noindent \textit{Note: }material from Lecture 24 (computing residues; trigonometric and improper integrals)
+and Lecture 25 (argument principle, Rouch\'e's theorem, open mapping theorem) will \emph{not} be tested.
 
 \section*{Topics}
 
@@ -186,7 +186,7 @@ theorem) will \emph{not} be tested.
       then $f$ is holomorphic on $U$ (locally $f=g'$ for a holomorphic, hence analytic, primitive $g$).
 \end{itemize}
 
-\subsection*{5. Laurent series, singularities, and residues \normalfont (Lectures 21--23; Lang \S\S4.1, 5.2--5.3, 6.1--6.2)}
+\subsection*{5. Laurent series, singularities, and residues \normalfont (Lectures 21--23; Lang \S\S4.1, 5.2--5.3, 6.1)}
 \begin{itemize}[leftmargin=*]
 \item \textbf{Laurent expansion:} for $f$ holomorphic on $A(r,R)=\{r<|z-z_0|<R\}$, $f(z)=\sum_{n\in\zee}a_n(z-z_0)^n=f_++f_-$
       (uniformly on $s\le|z-z_0|\le S$) with unique $a_n=\frac{1}{2\pi i}\int_{|\zeta-z_0|=\rho}\frac{f(\zeta)}{(\zeta-z_0)^{n+1}}\,d\zeta$.
@@ -201,12 +201,12 @@ theorem) will \emph{not} be tested.
       \textbf{Residue theorem:} for $f$ holomorphic on $U\setminus\{z_1,\dots,z_n\}$ and $\gamma$ closed and null-homotopic in $U$,
       $\int_\gamma f=2\pi i\sum_{j=1}^n w(\gamma,z_j)\Res_{z_j}(f)$.
       Know the proof ($g=f-\sum f_-^{(j)}$ extends holomorphically to $U$, and each $f_-^{(j)}$ is integrated termwise).
-\item \textbf{Computing residues and real integrals:}
-      at a simple pole, $\Res_{z_0}(fg)=g(z_0)\Res_{z_0}(f)$, and $\Res_{z_0}(g/f)=g(z_0)/f'(z_0)$ if $f(z_0)=0\ne f'(z_0)$;
-      for an order-$m$ pole, $(m-1)!\,\Res_{z_0}(f)=\lim_{z\to z_0}\bigl((z-z_0)^mf(z)\bigr)^{(m-1)}$.
-      Evaluate $\int_0^{2\pi}Q(\cos\theta,\sin\theta)\,d\theta$ via $z=e^{i\theta}$,
-      $\cos\theta=\frac{z+z^{-1}}{2}$, $\sin\theta=\frac{z-z^{-1}}{2i}$, $d\theta=\frac{dz}{iz}$, and
-      $\int_{-\infty}^\infty f(x)\,dx=2\pi i\sum_{\Im z_j>0}\Res_{z_j}(f)$ when $|f(z)|\le B/|z|^2$ in $\Im z\ge0$.
+%\item \textbf{Computing residues and real integrals:}
+%      at a simple pole, $\Res_{z_0}(fg)=g(z_0)\Res_{z_0}(f)$, and $\Res_{z_0}(g/f)=g(z_0)/f'(z_0)$ if $f(z_0)=0\ne f'(z_0)$;
+%      for an order-$m$ pole, $(m-1)!\,\Res_{z_0}(f)=\lim_{z\to z_0}\bigl((z-z_0)^mf(z)\bigr)^{(m-1)}$.
+%      Evaluate $\int_0^{2\pi}Q(\cos\theta,\sin\theta)\,d\theta$ via $z=e^{i\theta}$,
+%      $\cos\theta=\frac{z+z^{-1}}{2}$, $\sin\theta=\frac{z-z^{-1}}{2i}$, $d\theta=\frac{dz}{iz}$, and
+%      $\int_{-\infty}^\infty f(x)\,dx=2\pi i\sum_{\Im z_j>0}\Res_{z_j}(f)$ when $|f(z)|\le B/|z|^2$ in $\Im z\ge0$.
 \end{itemize}
 
 \end{document}

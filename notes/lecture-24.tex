@@ -31,7 +31,7 @@
 \definecolor{remarkframe}{HTML}{9B7FC9}
 
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.45em}
+\setlength{\parskip}{0.35em}
 \setlist[itemize]{topsep=0.25em,itemsep=0.15em}
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
 \renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
@@ -45,8 +45,12 @@
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{example}[theorem]{Example}
 \newtheorem{exercise}[theorem]{Exercise}
-\theoremstyle{remark}
+\newtheoremstyle{boldremark}
+  {3pt}{3pt}{\normalfont}{}{\bfseries}{.}{.5em}
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}
+\theoremstyle{boldremark}
 \newtheorem*{remark}{Remark}
+\theoremstyle{remark}
 \newtheorem*{fact}{Fact}
 \newtheorem*{warning}{Warning}
 
@@ -154,321 +158,303 @@
 \tableofcontents
 \vspace{0.45em}
 
-% Sources: handwritten Lecture 24, Nov. 14, pages 1--6. Order follows the
-% handwritten notes: recall of the residue theorem, order of a zero or
-% pole via the logarithmic derivative, the argument principle, Rouche's
-% theorem with an application and proof, the open mapping theorem.
-% Added: a lemma on zeros of holomorphic functions (needed for finiteness
-% of zeros in Rouche's theorem and for the open mapping theorem), an
-% explicit continuity estimate in the proof of Rouche, and the
-% connectedness hypothesis in the open mapping theorem.
-Last time we proved the residue theorem and used it to compute integrals.
-Today we give \emph{theoretical} applications: counting zeros and poles
-with the argument principle, comparing zeros of two functions with
-Rouch\'e's theorem, and proving that nonconstant holomorphic functions are
-open maps.
+% Sources: handwritten Lecture 23, Nov. 4, pages 3--8 (moved here from the
+% typed Lecture 23): tricks for computing residues, a square-contour
+% example, trigonometric integrals, improper integrals. Added: the
+% completed computations of the two examples left open on pages 6 and 8.
+In Lecture~23 we proved the residue theorem. Today we develop practical
+tools for computing residues, and then apply the residue theorem to two
+classes of real integrals: trigonometric integrals over $[0,2\pi]$ and
+improper integrals over the real line.
 
-\section{Meromorphic functions and the order of a zero or pole}
-% Handwritten Lecture 24, pages 1--2.
-\subsection{Recall: the residue theorem}
-A function $f$ is \emph{meromorphic} on an open set $U$ if it is
-holomorphic on $U$ except for poles. In Lecture~23 we proved: if $f$ is
-holomorphic on $U$ except at $z_1,\dots,z_n$, and $\gamma$ is a closed
-curve in $U\setminus\{z_1,\dots,z_n\}$ that is null-homotopic in $U$, then
+\section{Recall: the residue theorem}
+\begin{theorem}[Residue theorem; Lecture~23, Theorem~4.1]\label{thm:residue}
+Let $U\subseteq\C$ be open, let $z_1,\dots,z_n\in U$ be distinct, and let
+$f$ be holomorphic on $U\setminus\{z_1,\dots,z_n\}$. Let $\gamma$ be a closed
+piecewise $C^1$ curve in $U\setminus\{z_1,\dots,z_n\}$ that is
+null-homotopic in $U$. Then
 \[
- \int_\gamma f=2\pi i\sum_{j=1}^{n}
- \underbrace{w(\gamma,z_j)}_{\text{winding number}}\,
- \underbrace{\operatorname{Res}_{z_j}(f)}_{\text{residue of $f$ at $z_j$}}.
-\]
-
-\subsection{Zeros of holomorphic functions}
-We need a fact about zeros which we have so far only proved for power
-series (Lecture~10).
-
-\begin{lemma}[Zeros are isolated]\label{lem:zeros}
-Let $D$ be a connected open set and $F$ holomorphic on $D$, not
-identically zero. Then:
-\begin{enumerate}
- \item at each zero $z_0$ of $F$ there are an integer $m\geq1$ and a
- function $g$ holomorphic near $z_0$ with $g(z_0)\ne0$ such that
- $F(z)=(z-z_0)^mg(z)$; in particular $z_0$ is an isolated zero;
- \item $F$ has only finitely many zeros in each compact subset of $D$.
-\end{enumerate}
-\end{lemma}
-\begin{proof}
-Let $S=\{z\in D:\ F^{(k)}(z)=0\text{ for all }k\geq0\}$. Each derivative
-is continuous, so $S$ is closed in $D$. If $z\in S$, the Taylor series of
-$F$ at $z$ is zero, and it represents $F$ on a disc around $z$
-(Lecture~20); so $F\equiv0$ on that disc, which therefore lies in $S$.
-Thus $S$ is also open. Since $D$ is connected and $S\ne D$, we get
-$S=\emptyset$.
-
-(1) At a zero $z_0$, let $m\geq1$ be the least $k$ with
-$F^{(k)}(z_0)\ne0$. The Taylor series at $z_0$ starts with
-$a_m(z-z_0)^m$, $a_m\ne0$, so $F=(z-z_0)^mg$ with
-$g(z)=a_m+a_{m+1}(z-z_0)+\cdots$. Since $g(z_0)\ne0$ and $g$ is
-continuous, $g$ and hence $F$ has no other zeros near $z_0$.
-
-(2) If $K\subseteq D$ is compact and contains infinitely many zeros, they
-accumulate at some $p\in K$. By continuity $F(p)=0$, and $p$ is not an
-isolated zero, contradicting (1).
-\end{proof}
-
-\subsection{Order and the logarithmic derivative}
-Let $f$ be meromorphic near $z_0$ and not identically zero near $z_0$. By
-Lemma~\ref{lem:zeros} if $f(z_0)=0$, and by the Laurent expansion
-(Lecture~22) if $z_0$ is a pole, we can write
-\[
- f(z)=(z-z_0)^m\,g(z),\qquad g\text{ holomorphic near }z_0,\quad g(z_0)\ne0,
-\]
-for a unique integer $m$. Equivalently, $f(z)=a_m(z-z_0)^m(1+h(z))$ with
-$a_m=g(z_0)\ne0$ and $h$ holomorphic, $h(z_0)=0$.
-
-\begin{definition}
-The integer $m=\operatorname{ord}_{z_0}(f)$ is the \emph{order} of $f$
-at $z_0$. If $m>0$, $f$ has a \emph{zero of order $m$}; if $m<0$, $f$ has a
-\emph{pole of order $-m$}. For example, $m=-1$ means
-$f=\frac{a_{-1}}{z-z_0}+\cdots$, a pole of order $1$.
-\end{definition}
-
-By the product rule $(fg)'=f'g+fg'$, so
-\[
- \frac{(fg)'}{fg}=\frac{f'}{f}+\frac{g'}{g}.
-\]
-The quotient $f'/f$ is called the \emph{logarithmic derivative} of $f$,
-written $d\log(f)$, since formally $(\log f)'=f'/f$. The identity says
-$d\log(fg)=d\log(f)+d\log(g)$. Applying it to $f=(z-z_0)^m\cdot g$,
-\[
- \frac{f'}{f}=\frac{m}{z-z_0}+\frac{g'}{g}.
-\]
-Since $g(z_0)\ne0$, $g'/g$ is holomorphic near $z_0$. Hence
-\[
- \boxed{\operatorname{Res}_{z_0}\Bigl(\frac{f'}{f}\Bigr)
- =m=\operatorname{ord}_{z_0}(f).}
-\]
-
-\section{The argument principle}
-% Handwritten Lecture 24, pages 2--3.
-Combining this observation with the residue theorem:
-
-\begin{theorem}\label{thm:log-derivative}
-Let $U$ be open and $f$ meromorphic on $U$ with finitely many zeros and
-poles $z_1,\dots,z_n$. Let $\gamma$ be a closed curve in
-$U\setminus\{z_1,\dots,z_n\}$ that is null-homotopic in $U$. Then
-\[
- \int_\gamma\frac{f'}{f}=2\pi i\sum_{j=1}^{n}w(\gamma,z_j)\,
- \operatorname{ord}_{z_j}(f).
+ \boxed{\displaystyle\int_\gamma f(z)\,dz
+ =2\pi i\sum_{j=1}^{n}w(\gamma,z_j)\operatorname{Res}_{z_j}(f).}
 \]
 \end{theorem}
-\begin{proof}
-On $U\setminus\{z_1,\dots,z_n\}$, $f$ is holomorphic and nonvanishing, so
-$f'/f$ is holomorphic there. At each $z_j$ it has residue
-$\operatorname{ord}_{z_j}(f)$ by the computation above. Apply the residue
-theorem to $f'/f$.
-\end{proof}
+Here $\operatorname{Res}_{z_j}(f)$ is the coefficient $a_{-1}$ of
+$(z-z_j)^{-1}$ in the Laurent expansion of $f$ at $z_j$, and
+$w(\gamma,z_j)=\frac{1}{2\pi i}\int_\gamma\frac{dz}{z-z_j}$ is the winding
+number. When $\gamma$ is a simple closed curve traversed counterclockwise,
+$\int_\gamma f$ is $2\pi i$ times the sum of the residues inside $\gamma$.
+To use the theorem we need efficient ways to compute residues without
+writing out the whole Laurent series.
 
-\begin{example}
-Let $f(z)=\dfrac{(z-1)^2}{(z+2)^3}$, with a zero of order $2$ at $1$ and a
-pole of order $3$ at $-2$. For the circle $|z|=3$, both points are inside
-and $\int f'/f=2\pi i(2-3)=-2\pi i$. For $|z|=\tfrac32$, only $1$ is inside
-and $\int f'/f=4\pi i$. Directly,
-$f'/f=\frac{2}{z-1}-\frac{3}{z+2}$.
-\end{example}
+\section{Computing residues}
+% Handwritten Lecture 23, pages 3--4.
+A pole of order $1$ is called a \emph{simple pole}. Two tricks handle most
+simple poles.
 
-Choosing $\gamma$ to be a circle gives the following.
-
-\begin{corollary}[Argument principle]\label{cor:argument}
-Let $C$ be a positively oriented circle bounding the open disc $D$, and
-let $f$ be meromorphic on an open set $W\supseteq\overline D$, with finitely
-many zeros and poles in $W$, none on $C$. Then
+\begin{proposition}\label{prop:res-product}
+If $f$ has a simple pole at $z_0$ and $g$ is holomorphic at $z_0$, then
 \[
- \boxed{\frac{1}{2\pi i}\int_C\frac{f'}{f}
- =\#\{\text{zeros of $f$ in $D$}\}-\#\{\text{poles of $f$ in $D$}\},}
+ \operatorname{Res}_{z_0}(fg)=g(z_0)\operatorname{Res}_{z_0}(f).
 \]
-where zeros and poles are counted with multiplicity (that is, with their
-orders).
-\end{corollary}
+\end{proposition}
 \begin{proof}
-Let $D=D(c,r)$. By compactness of $\overline D$ there is $\rho>r$ with
-$D(c,\rho)\subseteq W$. Apply Theorem~\ref{thm:log-derivative} on the
-convex, hence simply connected, set $U=D(c,\rho)$. It remains to note that
-$w(C,\alpha)=1$ for $\alpha\in D$ (Cauchy's formula with $f=1$) and
-$w(C,\alpha)=0$ for $|\alpha-c|>r$ (since $1/(z-\alpha)$ is holomorphic on
-the disc $D(c,|\alpha-c|)$, which contains $C$).
+Write $f=\frac{a_{-1}}{z-z_0}+a_0+a_1(z-z_0)+\cdots$ and
+$g=b_0+b_1(z-z_0)+\cdots$ with $b_0=g(z_0)$. Multiplying,
+\[
+ fg=\frac{a_{-1}b_0}{z-z_0}+(\text{power series in }z-z_0),
+\]
+so $\operatorname{Res}_{z_0}(fg)=a_{-1}b_0=g(z_0)\operatorname{Res}_{z_0}(f)$.
 \end{proof}
 
+\begin{proposition}\label{prop:res-simple-zero}
+Let $f$ be holomorphic near $z_0$ with $f(z_0)=0$ and $f'(z_0)\ne0$. Then
+$1/f$ has a simple pole at $z_0$, and
+\[
+ \operatorname{Res}_{z_0}\Bigl(\frac1f\Bigr)=\frac{1}{f'(z_0)}.
+\]
+\end{proposition}
+\begin{proof}
+Expand $f(z)=a_0+a_1(z-z_0)+a_2(z-z_0)^2+\cdots$, where $a_0=f(z_0)=0$ and
+$a_1=f'(z_0)\ne0$. Then
+\[
+ f(z)=a_1(z-z_0)\,h(z),\qquad
+ h(z)=1+\frac{a_2}{a_1}(z-z_0)+\cdots,
+\]
+and $h$ is holomorphic at $z_0$ with $h(z_0)=1$, hence nonzero near $z_0$.
+So $1/h$ is holomorphic near $z_0$ with $1/h=1+b_1(z-z_0)+\cdots$, and
+\[
+ \frac1f=\frac{1}{a_1}\cdot\frac{1}{z-z_0}\cdot\frac1h
+ =\frac{1}{a_1}\,\frac{1}{z-z_0}+(\text{power series in }z-z_0).
+\]
+Thus the pole is simple with residue $1/a_1=1/f'(z_0)$.
+\end{proof}
+Combining the two propositions: if $g$ is holomorphic at $z_0$, $f(z_0)=0$
+and $f'(z_0)\ne0$, then
+$\operatorname{Res}_{z_0}(g/f)=g(z_0)/f'(z_0)$.
+
+\begin{example}[A square contour]
+% Handwritten page 4 writes z_1 = 1 + i\sqrt2; the roots are -1 \pm i\sqrt2.
+Let $p(z)=z^2+2z+3=(z-z_1)(z-z_2)$ with
+\[
+ z_1=-1+i\sqrt2,\qquad z_2=-1-i\sqrt2,
+\]
+and let $C$ be the boundary of the square centred at $0$ with side
+length $8$, traversed counterclockwise. Both roots lie inside $C$, so
+$w(C,z_1)=w(C,z_2)=1$ and, by Proposition~\ref{prop:res-simple-zero} with
+$p'(z)=2z+2$,
+\[
+ \int_C\frac{dz}{p(z)}
+ =2\pi i\left(\frac{1}{p'(z_1)}+\frac{1}{p'(z_2)}\right)
+ =2\pi i\left(\frac{1}{2i\sqrt2}-\frac{1}{2i\sqrt2}\right)=0.
+\]
 \begin{lecturefigure}
-\begin{tikzpicture}[scale=0.8]
- \draw[thick] plot[smooth cycle,tension=0.8] coordinates
- {(-3,-0.4) (-2.6,1.3) (-0.6,1.7) (1.6,1.5) (3,0.4)
-  (2.4,-1.3) (0,-1.7) (-2,-1.4)};
- \node at (3,1.2) {$U$};
+\begin{tikzpicture}[scale=0.4,>=stealth]
+ \draw[gray,->] (-5,0)--(5.2,0);
+ \draw[gray,->] (0,-5)--(0,5.2);
  \draw[courseblue,thick,postaction={decorate},decoration={markings,
-  mark=at position 0.2 with {\arrow{>}}}] (-1,0) circle(1);
- \node[courseblue] at (-0.1,0.95) {$C$};
- \node[exerciseframe] at (-1.4,0.3) {$\times$};
- \node[exerciseframe] at (-0.7,-0.4) {$\times$};
- \node[ForestGreen] at (-1.1,-0.5) {$\circ$};
- \node[exerciseframe] at (0.6,0.5) {$\times$};
- \node[ForestGreen] at (1.5,-0.3) {$\circ$};
- \node[exerciseframe] at (2.2,0.6) {$\times$};
- \node[right,align=left] at (3.6,0)
- {$\times$ zeros, $\circ$ poles;\\ only those inside $C$ count.};
+  mark=at position 0.06 with {\arrow{>}},mark=at position 0.56 with {\arrow{>}}}]
+  (4,-4)--(4,4)--(-4,4)--(-4,-4)--cycle;
+ \node[exerciseframe] at (-1,1.414) {$\times$};
+ \node[exerciseframe] at (-1,-1.414) {$\times$};
+ \node[exerciseframe,left] at (-1.2,1.414) {$z_1$};
+ \node[exerciseframe,left] at (-1.2,-1.414) {$z_2$};
+ \node[below right] at (4,0) {$4$};
+ \node[courseblue] at (4.7,3.3) {$C$};
 \end{tikzpicture}
 \end{lecturefigure}
-
-\begin{remark}[Why ``argument'']
-If $C$ is parametrized by $\gamma(t)$, $0\leq t\leq2\pi$, then
-$\int_C f'/f=\int_0^{2\pi}\frac{(f\circ\gamma)'(t)}{f(\gamma(t))}\,dt
-=\int_{f\circ C}\frac{dw}{w}$. So the left side of the argument principle
-is $w(f\circ C,0)$: the number of times the image curve $f\circ C$ winds
-around $0$, i.e.\ the total change in $\arg f(z)$ around $C$, divided by
-$2\pi$.
-\end{remark}
-
-\section{Rouch\'e's theorem}
-% Handwritten Lecture 24, pages 3--5.
-\begin{theorem}[Rouch\'e's theorem]\label{thm:rouche}
-Let $f$ and $g$ be holomorphic on an open set containing a closed disc
-$\overline D$ with boundary circle $C$, and suppose
-\[
- |f(z)|>|g(z)|\qquad\text{for all }z\in C.
-\]
-Then $f$ and $f+g$ have the same number of zeros in $D$, counted with
-multiplicity.
-\end{theorem}
-Note that the hypothesis forces $f\ne0$ on $C$. Think of $g$ as a
-perturbation that is small on $C$: it does not change the number of zeros
-inside.
-
-\begin{example}
-How many zeros does $P(z)=z^8-5z^3+z-2$ have in the unit disc? Write
-\[
- P(z)=\underbrace{-5z^3}_{f}+\underbrace{z^8+z-2}_{g}.
-\]
-On $|z|=1$ we have $|f|=5$ and $|g|\leq1+1+2=4<5$. The function $-5z^3$ has
-a zero of order $3$ at $0$ and no others. By Rouch\'e's theorem, \emph{$P$
-has exactly $3$ zeros in the unit disc}.
 \end{example}
 
-\begin{proof}[Proof of Theorem~\ref{thm:rouche}]
-Let $D=D(c,r)$, and choose $\rho>r$ so that $f,g$ are holomorphic on
-$D(c,\rho)$. Consider the ``deformations''
-\[
- f_t=f+tg,\qquad t\in[0,1],
-\]
-so that $f_0=f$ and $f_1=f+g$. Let $n_t$ be the number of zeros of $f_t$ in
-$D$. We want to show $n_0=n_1$.
-
-\textbf{$f_t$ has no zeros on $C$.} If $f_t(z)=0$ with $z\in C$, then
-$|f(z)|=t|g(z)|\leq|g(z)|$, contradicting $|g|<|f|$ on $C$. More
-quantitatively, $\mu:=\min_C(|f|-|g|)>0$ by compactness, and
-$|f_t|\geq|f|-|g|\geq\mu$ on $C$.
-
-\textbf{$n_t$ is given by the argument principle.} Since $f_t$ is not
-identically zero on the connected set $D(c,\rho)$, Lemma~\ref{lem:zeros}
-shows that it has finitely many zeros in the open disc $D(c,\rho')$ for any
-$r<\rho'<\rho$. Since $f_t$ is holomorphic, it has no poles, so
-Corollary~\ref{cor:argument} gives
-\[
- n_t=\frac{1}{2\pi i}\int_C\frac{f_t'}{f_t}.
-\]
-
-\textbf{$t\mapsto n_t$ is continuous.} For $s,t\in[0,1]$, expanding
-$(f'+sg')(f+tg)-(f'+tg')(f+sg)$ gives
-\[
- \frac{f_s'}{f_s}-\frac{f_t'}{f_t}
- =\frac{f_s'f_t-f_t'f_s}{f_sf_t}
- =\frac{(t-s)\bigl(f'g-fg'\bigr)}{f_sf_t}.
-\]
-With $K=\max_C|f'g-fg'|$, the estimation lemma yields
-\[
- |n_s-n_t|\leq\frac{1}{2\pi}\operatorname{Length}(C)\,
- \sup_{z\in C}\left|\frac{f_s'}{f_s}-\frac{f_t'}{f_t}\right|
- \leq\frac{1}{2\pi}\cdot2\pi r\cdot\frac{K}{\mu^2}\,|t-s|
- \longrightarrow0\quad(s\to t).
-\]
-
-\textbf{Conclusion.} A continuous integer-valued function on the connected
-interval $[0,1]$ is constant. Hence $n_0=n_1$.
-\end{proof}
-
 \begin{exercise}
-Use Rouch\'e's theorem to show that $z^4+6z+3$ has exactly one zero in
-$|z|<1$ and all four of its zeros in $|z|<2$. (Compare with $6z$ on
-$|z|=1$ and with $z^4$ on $|z|=2$.)
+Show that if $f$ has a pole of order $m$ at $z_0$, then
+\[
+ \operatorname{Res}_{z_0}(f)=\frac{1}{(m-1)!}\lim_{z\to z_0}
+ \frac{d^{m-1}}{dz^{m-1}}\Bigl[(z-z_0)^mf(z)\Bigr].
+\]
+Use it to compute $\operatorname{Res}_0\bigl(e^z/z^3\bigr)$, and check your
+answer against the Laurent series.
 \end{exercise}
 
-\begin{exercise}
-Give a second proof of the fundamental theorem of algebra: if
-$P(z)=z^n+a_{n-1}z^{n-1}+\cdots+a_0$, compare $P$ with $z^n$ on a large
-circle.
-\end{exercise}
+\section{Trigonometric integrals}
+% Handwritten Lecture 23, pages 5--6. The handwritten substitution uses
+% \bar z; on the unit circle \bar z = 1/z, which is what makes the
+% integrand holomorphic. The example on page 6 is completed here.
+Let $Q(x,y)=P(x,y)/R(x,y)$ be a rational function of two real variables
+($P,R$ polynomials), and suppose $R(\cos\theta,\sin\theta)\ne0$ for all
+$\theta$. An integral of the form
+\[
+ \int_0^{2\pi}Q(\cos\theta,\sin\theta)\,d\theta
+\]
+is called a \emph{trigonometric integral}. For example,
+\[
+ \int_0^{2\pi}\frac{\cos^2\theta-\sin^2\theta+\cos\theta\sin\theta}
+ {3-\sin\theta}\,d\theta
+ \qquad\text{has}\qquad
+ Q(x,y)=\frac{x^2-y^2+xy}{3-y}.
+\]
 
-\section{The open mapping theorem}
-% Handwritten Lecture 24, pages 5--6. The handwritten statement omits that
-% the domain is connected; it is needed (a function can be constant on one
-% component and not another). The handwritten G is corrected to w_0 - w.
-\begin{theorem}[Open mapping theorem]\label{thm:open-mapping}
-Let $\Omega$ be a connected open set and $f$ holomorphic and nonconstant
-on $\Omega$. If $U\subseteq\Omega$ is open, then $f(U)$ is open.
-\end{theorem}
+On the unit circle $z=e^{i\theta}=\cos\theta+i\sin\theta$ we have
+$\bar z=e^{-i\theta}=1/z$, so
+\[
+ \cos\theta=\frac{z+\bar z}{2}=\frac12\Bigl(z+\frac1z\Bigr),\qquad
+ \sin\theta=\frac{z-\bar z}{2i}=\frac{1}{2i}\Bigl(z-\frac1z\Bigr).
+\]
+Parametrizing the unit circle $C$ by $\gamma(\theta)=e^{i\theta}$, with
+$\gamma'(\theta)=ie^{i\theta}$, we get
+\[
+ \int_C Q\Bigl(\tfrac12\bigl(z+\tfrac1z\bigr),\tfrac1{2i}\bigl(z-\tfrac1z\bigr)\Bigr)
+ \frac{dz}{iz}
+ =\int_0^{2\pi}Q(\cos\theta,\sin\theta)\,\frac{ie^{i\theta}}{ie^{i\theta}}\,d\theta
+ =\int_0^{2\pi}Q(\cos\theta,\sin\theta)\,d\theta.
+\]
+Writing $1/z$ rather than $\bar z$ is essential: the integrand on the left
+is then a rational function of $z$, and the residue theorem applies to it
+on the disc $|z|<1+\epsilon$.
+
+\begin{example}
+Let $a>1$ be real. We compute $\displaystyle\int_0^{2\pi}\frac{d\theta}{a+\sin\theta}$.
+Here $Q(x,y)=1/(a+y)$, and
+\[
+ \frac{1}{a+\frac{1}{2i}(z-\frac1z)}\cdot\frac{1}{iz}
+ =\frac{2iz}{z^2+2iaz-1}\cdot\frac{1}{iz}
+ =\frac{2}{z^2+2iaz-1}.
+\]
+The roots of $z^2+2iaz-1$ are
+\[
+ z_\pm=i\bigl(-a\pm\sqrt{a^2-1}\bigr).
+\]
+Since $z_+z_-=-1$ and $|z_-|=a+\sqrt{a^2-1}>1$, only $z_+$ lies inside the
+unit circle. By Proposition~\ref{prop:res-simple-zero},
+\[
+ \operatorname{Res}_{z_+}\frac{2}{z^2+2iaz-1}=\frac{2}{2z_++2ia}
+ =\frac{1}{i\sqrt{a^2-1}}.
+\]
+Therefore
+\[
+ \boxed{\int_0^{2\pi}\frac{d\theta}{a+\sin\theta}
+ =2\pi i\cdot\frac{1}{i\sqrt{a^2-1}}=\frac{2\pi}{\sqrt{a^2-1}}\qquad(a>1).}
+\]
+As a check, for large $a$ the integrand is close to $1/a$ and the answer
+is close to $2\pi/a$.
+\end{example}
 
 \begin{lecturefigure}
 \begin{tikzpicture}[scale=0.8,>=stealth]
- \draw[thick] plot[smooth cycle,tension=0.8] coordinates
- {(-2.6,-0.5) (-2.2,1.2) (-0.4,1.5) (1.2,1.1) (1.6,-0.4) (0,-1.4) (-1.8,-1.3)};
- \node at (1.7,1.1) {$\Omega$};
- \fill[lightblue] (-0.6,0) circle(0.8);
- \draw[courseblue,thick] (-0.6,0) circle(0.8);
- \node[courseblue] at (-1.25,0.75) {$U$};
- \draw[exerciseframe] (-0.45,0.1) circle(0.4);
- \fill (-0.45,0.1) circle(1.5pt) node[below]{$z_0$};
- \draw[->,thick] (2.2,0.2) .. controls (3,0.8) and (3.8,0.8) .. (4.5,0.2)
-  node[midway,above]{$f$};
- \begin{scope}[xshift=6cm]
-  \fill[lightblue] plot[smooth cycle,tension=0.8] coordinates
-   {(-1,-0.3) (-0.6,0.8) (0.6,0.9) (1.1,0) (0.4,-0.9) (-0.6,-0.8)};
-  \draw[courseblue,thick] plot[smooth cycle,tension=0.8] coordinates
-   {(-1,-0.3) (-0.6,0.8) (0.6,0.9) (1.1,0) (0.4,-0.9) (-0.6,-0.8)};
-  \node[courseblue] at (1.3,0.8) {$f(U)$};
-  \draw[exerciseframe] (0,0) circle(0.35);
-  \fill (0,0) circle(1.5pt) node[below]{$w_0$};
-  \node[exerciseframe,right] at (0.35,-0.35) {$\epsilon$};
- \end{scope}
+ \draw[gray,->] (-2,0)--(2,0);
+ \draw[gray,->] (0,-3.2)--(0,1.6);
+ \draw[courseblue,thick,postaction={decorate},decoration={markings,
+  mark=at position 0.1 with {\arrow{>}}}] (1.2,0) arc(0:360:1.2);
+ \node[exerciseframe] at (0,-0.45) {$\times$};
+ \node[exerciseframe,right] at (0.1,-0.45) {$z_+$};
+ \node[exerciseframe] at (0,-2.75) {$\times$};
+ \node[exerciseframe,right] at (0.1,-2.75) {$z_-$};
+ \node[courseblue] at (1.2,1.05) {$C$};
+ \node[right,align=left] at (2.2,-0.6)
+ {$a=1.6$: $z_+\approx-0.35i$ inside,\\ $z_-\approx-2.85i$ outside.};
 \end{tikzpicture}
-
-{\small Every $w$ within $\epsilon$ of $w_0=f(z_0)$ is attained in the small
-disc around $z_0$.}
 \end{lecturefigure}
 
+\begin{exercise}
+Evaluate the trigonometric integral
+$\displaystyle\int_0^{2\pi}\frac{\cos^2\theta-\sin^2\theta+\cos\theta\sin\theta}{3-\sin\theta}\,d\theta$
+from the beginning of this section.
+\end{exercise}
+
+\section{Improper integrals over the real line}
+% Handwritten Lecture 23, pages 7--8. The handwritten notes split
+% [-R,R] into [-R,0] and [0,R]; here they are combined. The example on
+% page 8 is completed here.
+We next compute integrals
+\[
+ \int_{-\infty}^{\infty}f(x)\,dx=\lim_{R\to\infty}\int_{-R}^{R}f(x)\,dx,
+\]
+where $f(x)$ is the restriction to $\R$ of a function $f(z)$ that is
+holomorphic on a half-plane $\{\Imag z>-\epsilon\}$ except for finitely
+many poles, none of which lie on the real axis. (This holds, for
+example, for a rational function with no real poles.)
+
+Let $H=\{z:\Imag z>0\}$ be the upper half-plane. For $R>0$ let $\gamma_R$
+be the closed curve consisting of the segment $[-R,R]$ followed by the
+semicircle $C_R(t)=Re^{it}$, $0\leq t\leq\pi$.
+
+\begin{lecturefigure}
+\begin{tikzpicture}[scale=0.85,>=stealth]
+ \draw[gray,->] (-3,0)--(3.2,0);
+ \draw[gray,->] (0,-0.4)--(0,2.9);
+ \draw[courseblue,thick,postaction={decorate},decoration={markings,
+  mark=at position 0.5 with {\arrow{>}}}] (-2.4,0)--(2.4,0);
+ \draw[ForestGreen,thick,postaction={decorate},decoration={markings,
+  mark=at position 0.5 with {\arrow{>}}}] (2.4,0) arc(0:180:2.4);
+ \foreach \p in {(-1,0.7),(0.6,1.3),(1.3,0.5),(-0.4,1.7)}
+  \node[exerciseframe] at \p {$\times$};
+ \node[exerciseframe] at (0.8,-0.35) {$\times$};
+ \node[below] at (-2.4,0) {$-R$};
+ \node[below] at (2.4,0) {$R$};
+ \node[ForestGreen] at (2.25,1.75) {$C_R$};
+ \node[right,align=left] at (3.4,1.1)
+ {poles in $H$ inside $\gamma_R$\\ once $R$ is large;\\ poles below $\R$ are ignored.};
+\end{tikzpicture}
+\end{lecturefigure}
+
+The half-plane $\{\Imag z>-\epsilon\}$ is convex, hence simply connected.
+Once $R$ exceeds the moduli of all poles $z_j$ in $H$, each such pole has
+$w(\gamma_R,z_j)=1$, while any pole below the real axis lies outside
+$\gamma_R$ and has winding number $0$. The residue theorem gives
+\[
+ \int_{-R}^{R}f(x)\,dx+\int_{C_R}f(z)\,dz
+ =\int_{\gamma_R}f
+ =2\pi i\sum_{z_j\in H}\operatorname{Res}_{z_j}(f).
+\]
+It remains to show that the semicircle contributes nothing in the limit.
+
+\begin{theorem}\label{thm:improper}
+Let $f$ be as above, and suppose there are $B>0$ and $R_0>0$ with
+\[
+ |f(z)|\leq\frac{B}{|z|^2}\qquad(\Imag z\geq0,\ |z|\geq R_0).
+\]
+Then
+\[
+ \boxed{\displaystyle\int_{-\infty}^{\infty}f(x)\,dx
+ =2\pi i\sum_{z_j\in H}\operatorname{Res}_{z_j}(f),}
+\]
+the sum being over the poles of $f$ in the upper half-plane.
+\end{theorem}
 \begin{proof}
-The proof follows from Rouch\'e's theorem. Let $w_0\in f(U)$, say
-$w_0=f(z_0)$ with $z_0\in U$. We want to show that every $w$ near $w_0$
-also lies in the image $f(U)$. Decompose
+The bound shows $\int_{-\infty}^\infty|f(x)|\,dx<\infty$, so the improper
+integral exists and equals $\lim_{R\to\infty}\int_{-R}^Rf$. For
+$R\geq R_0$, the estimation lemma gives
 \[
- f(z)-w=\underbrace{f(z)-w_0}_{F(z)}+\underbrace{w_0-w}_{G(z)}.
+ \left|\int_{C_R}f\right|
+ \leq\operatorname{Length}(C_R)\,\|f\|_{C_R}
+ \leq\pi R\cdot\frac{B}{R^2}=\frac{\pi B}{R}\longrightarrow0.
 \]
-The function $F$ has a zero at $z=z_0$. It is not identically zero on
-$\Omega$, since $f$ is nonconstant, so by Lemma~\ref{lem:zeros} the zero is
-isolated: there is $\delta>0$ with $\overline{D(z_0,\delta)}\subseteq U$ and
-$F(z)\ne0$ for $0<|z-z_0|\leq\delta$. On the compact circle
-$C_\delta=\{|z-z_0|=\delta\}$, $|F|$ has a positive minimum; pick
-$\epsilon>0$ with
-\[
- |F(z)|=|f(z)-w_0|>\epsilon\qquad\text{for }z\in C_\delta.
-\]
-Now if $|w-w_0|<\epsilon$, then $|F(z)|>\epsilon>|w-w_0|=|G(z)|$ for
-$z\in C_\delta$. By Rouch\'e's theorem, $F+G=f-w$ has as many zeros in
-$D(z_0,\delta)$ as $F$, which has at least one (at $z_0$). So $w=f(z)$ for
-some $z\in D(z_0,\delta)\subseteq U$. Thus $D(w_0,\epsilon)\subseteq f(U)$,
-and $f(U)$ is open.
+Letting $R\to\infty$ in the identity above gives the result.
 \end{proof}
 
-\begin{exercise}[Maximum modulus principle]
-Let $f$ be holomorphic and nonconstant on a connected open set $\Omega$.
-Use the open mapping theorem to show that $|f|$ has no local maximum in
-$\Omega$.
+\begin{remark}
+The same argument works if $|f(z)|\leq B/|z|^{1+a}$ for some $a>0$: the
+semicircle integral is then at most $\pi B/R^a$.
+\end{remark}
+
+\begin{example}
+We compute $\displaystyle\int_{-\infty}^{\infty}\frac{dx}{x^4+1}$, using
+$f(z)=1/(z^4+1)$. For $|z|\geq2$ we have $|z^4+1|\geq|z|^4-1\geq|z|^4/2$,
+so $|f(z)|\leq2/|z|^4\leq1/(2|z|^2)$ and Theorem~\ref{thm:improper} applies.
+The poles are the fourth roots of $-1$, namely $e^{i\pi/4}$,
+$e^{3i\pi/4}$, $e^{5i\pi/4}$, $e^{7i\pi/4}$; the first two lie in $H$.
+At each pole $z_0$, Proposition~\ref{prop:res-simple-zero} gives
+\[
+ \operatorname{Res}_{z_0}f=\frac{1}{4z_0^3}=\frac{z_0}{4z_0^4}=-\frac{z_0}{4}.
+\]
+Since $e^{i\pi/4}+e^{3i\pi/4}=i\sqrt2$,
+\[
+ \boxed{\int_{-\infty}^{\infty}\frac{dx}{x^4+1}
+ =2\pi i\cdot\Bigl(-\frac{i\sqrt2}{4}\Bigr)=\frac{\pi}{\sqrt2}.}
+\]
+\end{example}
+
+\begin{exercise}
+Use Theorem~\ref{thm:improper} to show that
+$\displaystyle\int_{-\infty}^{\infty}\frac{dx}{(x^2+1)^2}=\frac{\pi}{2}$.
 \end{exercise}
 
 \end{document}
