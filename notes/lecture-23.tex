@@ -80,6 +80,7 @@
   enhanced,
   colback=lightyellow,
   colframe=warningyellow,
+  before upper={\setlength{\parskip}{0.5em}},
   boxrule=0.7pt,
   arc=2pt,
   left=6pt,
@@ -162,13 +163,84 @@
 % Handwritten pages 3--8 (computing residues, trigonometric and improper
 % integrals) are now Lecture 24.
 In Lecture~22 we proved that a function holomorphic on an annulus has a
-Laurent expansion. We begin today by computing $\int_C z^n\,dz$ for every
-integer $n$, which explains why the coefficient $a_{-1}$ plays a special
-role. We then use Laurent series to classify isolated singularities.
+Laurent expansion. We begin today by recalling how to expand about points
+other than $0$, with a worked example. We then compute $\int_C z^n\,dz$ for
+every integer $n$, which explains why the coefficient $a_{-1}$ plays a
+special role. Next we use Laurent series to classify isolated singularities.
 Finally, we use the coefficient $a_{-1}$, the \emph{residue}, to evaluate
 contour integrals around several singularities at once: this is the
 residue theorem. Next time we learn to compute residues and apply the
 residue theorem to real integrals.
+
+\section{Laurent series about other points}\label{sec:other-points}
+% Moved here from the end of Lecture 22 (handwritten Lecture 21, pages 3--4).
+We do not need to centre Laurent series at $0$. Applying Corollary~2.2 of
+Lecture~22 to $w\mapsto f(z_0+w)$: if $f$ is holomorphic on
+$\{r<|z-z_0|<R\}$, then
+\begin{equation}
+ f(z)=\sum_{n=-\infty}^{\infty}a_n(z-z_0)^n,\qquad
+ a_n=\frac{1}{2\pi i}\int_{|\zeta-z_0|=\rho}
+ \frac{f(\zeta)}{(\zeta-z_0)^{n+1}}\,d\zeta\quad(r<\rho<R).
+\end{equation}
+As before, by uniqueness (Lecture~22, Proposition~2.3) any method of
+producing such a series, such as partial fractions and geometric series,
+gives the Laurent expansion.
+
+\begin{example}\label{ex:zz1}
+Let $f(z)=\dfrac{1}{z(z-1)}$, holomorphic on $\C\setminus\{0,1\}$. By
+partial fractions,
+\begin{equation}
+ \frac{1}{z(z-1)}=\frac{1}{z-1}-\frac1z.
+\end{equation}
+\begin{itemize}
+ \item \textbf{About $z=0$, on $0<|z|<1$.} Here $-1/z$ is already a Laurent
+ series, and $\frac{1}{z-1}=-(1+z+z^2+\cdots)$ for $|z|<1$. So
+ \begin{equation}
+  f(z)=-\frac1z-1-z-z^2-\cdots\qquad(0<|z|<1).
+ \end{equation}
+ \item \textbf{About $z=0$, on $|z|>1$.} Now
+ $\frac{1}{z-1}=\frac1z+\frac1{z^2}+\frac1{z^3}+\cdots$
+ (Example~3.3 of Lecture~21), so
+ \begin{equation}
+  f(z)=\frac1{z^2}+\frac1{z^3}+\cdots\qquad(|z|>1).
+ \end{equation}
+ \item \textbf{About $z=1$, on $0<|z-1|<1$.}
+ % Handwritten page 4 writes +(1+(1-z)+(1-z)^2+...); the sign is corrected.
+ The first term is already a power of $z-1$. For the second,
+ \begin{equation}
+  \frac1z=\frac{1}{1+(z-1)}=1-(z-1)+(z-1)^2-\cdots
+  =\sum_{n\geq0}(1-z)^n\qquad(|z-1|<1).
+ \end{equation}
+ Therefore
+ \begin{equation}
+  f(z)=\frac{1}{z-1}-1+(z-1)-(z-1)^2+\cdots\qquad(0<|z-1|<1).
+ \end{equation}
+\end{itemize}
+\begin{lecturefigure}
+\begin{tikzpicture}[scale=0.8]
+ \fill[lightpink] (0,0) circle(1.2);
+ \draw[thick] (0,0) circle(1.2);
+ \draw[ForestGreen,thick,dashed] (1.2,0) circle(1.2);
+ \draw[gray,->] (-2,0)--(3,0);
+ \draw[gray,->] (0,-1.6)--(0,1.6);
+ \draw[thick] (0,0) node{$\times$};
+ \draw[thick] (1.2,0) node{$\times$};
+ \node[below left] at (0,0){$0$};
+ \node[below right] at (1.2,0){$1$};
+\end{tikzpicture}
+
+{\small Shaded: $0<|z|<1$; outside the solid circle: $|z|>1$;
+inside the {\color{ForestGreen}dashed} circle: $0<|z-1|<1$.}
+\end{lecturefigure}
+In each punctured-disc expansion, the coefficient of $(z-z_0)^{-1}$ is $-1$
+at $z_0=0$ and $+1$ at $z_0=1$. These will turn out to be the
+\emph{residues} of $f$ (Section~\ref{sec:winding}).
+\end{example}
+
+\begin{exercise}
+Find the Laurent expansion of $\dfrac{1}{z(z-1)}$ about $z=1$ on the
+region $|z-1|>1$.
+\end{exercise}
 
 \section{Integrating powers of $z$}
 % Added at the start of Lecture 23.
@@ -178,24 +250,24 @@ integer power of $z$ around a circle.
 \begin{proposition}\label{prop:powers}
 Let $z_0\in\C$, $\rho>0$, and let $C(t)=z_0+\rho e^{it}$, $0\leq t\leq2\pi$.
 For every $n\in\Z$,
-\[
+\begin{equation}
  \boxed{\int_C(z-z_0)^n\,dz=
  \begin{cases}2\pi i,&n=-1,\\[2pt] 0,&n\ne-1.\end{cases}}
-\]
+\end{equation}
 In particular, $\int_{|z|=\rho}z^n\,dz=2\pi i$ if $n=-1$ and $0$ otherwise.
 \end{proposition}
 \begin{proof}
 On $C$ we have $z-z_0=\rho e^{it}$ and $dz=i\rho e^{it}\,dt$, so
-\[
+\begin{equation}
  \int_C(z-z_0)^n\,dz=\int_0^{2\pi}\rho^ne^{int}\,i\rho e^{it}\,dt
  =i\rho^{n+1}\int_0^{2\pi}e^{i(n+1)t}\,dt.
-\]
+\end{equation}
 If $n=-1$, the integrand is $1$ and the integral is $i\cdot2\pi=2\pi i$. If
 $n\ne-1$, then
-\[
+\begin{equation}
  \int_0^{2\pi}e^{i(n+1)t}\,dt=\left[\frac{e^{i(n+1)t}}{i(n+1)}\right]_0^{2\pi}
  =\frac{1-1}{i(n+1)}=0.\qedhere
-\]
+\end{equation}
 \end{proof}
 
 \begin{remark}[Primitives]
@@ -214,9 +286,9 @@ of Section~\ref{sec:winding}.
 Suppose $f(z)=\sum_{n\in\Z}a_n(z-z_0)^n$, with the series converging
 uniformly on the circle $C$ above. This holds, for example, when $f$ is
 holomorphic on an annulus $r<|z-z_0|<R$ with $r<\rho<R$ (Lecture~22). Then
-\[
+\begin{equation}
  \frac{1}{2\pi i}\int_Cf(z)\,dz=a_{-1}.
-\]
+\end{equation}
 \end{corollary}
 \begin{proof}
 Integrate term by term (Lecture~20, Corollary~2.2). By
@@ -240,9 +312,9 @@ singularity at $z_0$, choose $\rho>0$ with $D(z_0,\rho)\subseteq U$. Then $f$
 is holomorphic on the punctured disc $\{0<|z-z_0|<\rho\}$, an annulus with
 inner radius $0$, so Corollary~2.2 of Lecture~22 gives a Laurent
 expansion
-\[
+\begin{equation}
  f(z)=\sum_{n=-\infty}^{\infty}a_n(z-z_0)^n\qquad(0<|z-z_0|<\rho).
-\]
+\end{equation}
 By uniqueness of Laurent expansions (Lecture~22, Proposition~2.3), the coefficients depend only on $f$ near
 $z_0$, not on $\rho$.
 
@@ -287,7 +359,7 @@ Some examples of each type:
  removable singularity at $0$; setting its value at $0$ to be $1$ gives an
  entire function.
  \item $\dfrac{1}{z(z-1)}$ has poles of order $1$ at $0$ and at $1$, by
- the expansions computed in Lecture~22.
+ the expansions in Example~\ref{ex:zz1}.
  \item $\dfrac{1}{z^2}$ has a pole of order $2$ at $0$.
  \item $e^{1/z}=\displaystyle\sum_{n\geq0}\frac{1}{n!}z^{-n}$ has an
  essential singularity at $0$.
@@ -313,9 +385,9 @@ $\alpha$ in the counterclockwise direction. Analytically:
 
 \begin{definition}
 The \emph{winding number} of $\gamma$ around $\alpha$ is
-\[
+\begin{equation}
  w(\gamma,\alpha)=\frac{1}{2\pi i}\int_\gamma\frac{dz}{z-\alpha}.
-\]
+\end{equation}
 \end{definition}
 In Lecture~22 we wrote $n(\gamma,\alpha)$ for the same quantity. For the
 circle $C(t)=\alpha+\rho e^{it}$, $0\leq t\leq2\pi$, we have
@@ -327,10 +399,10 @@ $w(\gamma,\alpha)$ is an integer.
 \begin{proof}
 Put $h(t)=\int_a^t\frac{\gamma'(s)}{\gamma(s)-\alpha}\,ds$, so that
 $h(b)=2\pi i\,w(\gamma,\alpha)$. Away from the finitely many corners,
-\[
+\begin{equation}
  \frac{d}{dt}\Bigl[(\gamma(t)-\alpha)e^{-h(t)}\Bigr]
  =\gamma'(t)e^{-h(t)}-(\gamma(t)-\alpha)\frac{\gamma'(t)}{\gamma(t)-\alpha}e^{-h(t)}=0.
-\]
+\end{equation}
 The bracket is continuous, so it is constant on $[a,b]$. Comparing $t=a$
 and $t=b$ and using $\gamma(a)=\gamma(b)$ gives $e^{-h(b)}=1$, so
 $h(b)\in2\pi i\Z$.
@@ -378,10 +450,10 @@ $w(\gamma,z_1)=w(\gamma,z_2)=1$, $w(\gamma,z_3)=0$.}
 Suppose $f$ has an isolated singularity at $z_0$, with Laurent expansion
 $f(z)=\sum_{n\in\Z}a_n(z-z_0)^n$ on $0<|z-z_0|<\rho$. The \emph{residue}
 of $f$ at $z_0$ is
-\[
+\begin{equation}
  \operatorname{Res}_{z_0}(f)=a_{-1}
  =\frac{1}{2\pi i}\int_{|z-z_0|=r}f(z)\,dz\qquad(0<r<\rho).
-\]
+\end{equation}
 The \emph{principal part} of $f$ at $z_0$ is
 $f_-(z)=\sum_{n<0}a_n(z-z_0)^n$.
 \end{definition}
@@ -398,58 +470,166 @@ $f$ be holomorphic on $U\setminus\{z_1,\dots,z_n\}$. Let $\gamma$ be a closed
 piecewise $C^1$ curve in $U\setminus\{z_1,\dots,z_n\}$ that is
 null-homotopic in $U$ (for instance, any such curve when $U$ is simply
 connected). Then
-\[
+\begin{equation}\label{eq:residue-thm}
  \boxed{\displaystyle\int_\gamma f(z)\,dz
  =2\pi i\sum_{j=1}^{n}w(\gamma,z_j)\operatorname{Res}_{z_j}(f).}
-\]
+\end{equation}
 \end{theorem}
 
 \begin{warning}
 Some hypothesis on $\gamma$ relative to $U$ is needed. On
 $U=\C\setminus\{0\}$ the function $f(z)=1/z$ has no singularities at all,
-yet $\int_{|z|=1}dz/z=2\pi i$. The unit circle is not null-homotopic in $U$.
+yet $\int_{|z|=1}dz/z=2\pi i$. So with no points $z_j$ the right side of
+\eqref{eq:residue-thm} is the empty sum $0$, and the formula fails. The
+unit circle is not null-homotopic in $U$: it goes around the hole at $0$,
+and $0$ is not a point of $U$, so the theorem has no term for it.
+
+The fix is to put the point back into $U$ and list it as a singularity.
+Take $U=\C$, $n=1$ and $z_1=0$, so that $f=1/z$ is holomorphic on
+$U\setminus\{z_1\}=\C\setminus\{0\}$, exactly as before. Now $U=\C$ is
+simply connected, so the unit circle \emph{is} null-homotopic in $U$ (it
+contracts to a point through $0$), and the theorem applies. Since $1/z$ is
+its own Laurent expansion at $0$, $\operatorname{Res}_0(1/z)=1$, and
+$w(\gamma,0)=1$, so
+\begin{equation}
+ \int_{|z|=1}\frac{dz}{z}=2\pi i\cdot w(\gamma,0)\cdot\operatorname{Res}_0
+ \Bigl(\frac1z\Bigr)=2\pi i,
+\end{equation}
+which is correct. The function and the curve are the same; what changed
+is that the point $0$ that $\gamma$ winds around is now recorded as one
+of the $z_j$, so its contribution appears on the right. In the proof, this
+is the difference between $g=f$ (not holomorphic across $0$, so Cauchy's
+theorem cannot be applied) and $g=f-\frac1z=0$ (holomorphic on all of
+$\C$).
+
+In general, the hypothesis guarantees that every point $\gamma$ winds
+around is either a point of $U$ where $f$ is holomorphic, or one of the
+listed singularities $z_j$; it cannot be a hole in $U$.
 \end{warning}
 
 \begin{proof}
 Let $f_-^{(j)}$ be the principal part of $f$ at $z_j$, so near $z_j$
-\[
+\begin{equation}
  f(z)=f_-^{(j)}(z)+f_+^{(j)}(z),
-\]
+\end{equation}
 where $f_-^{(j)}$ involves only negative powers of $z-z_j$ and $f_+^{(j)}$
 is a power series, holomorphic near $z_j$. Define
-\[
+\begin{equation}
  g(z)=f(z)-\sum_{j=1}^{n}f_-^{(j)}(z),
-\]
+\end{equation}
 that is, subtract the principal parts at $z_1,\dots,z_n$.
 
 \textbf{Claim: $g$ extends to a holomorphic function on $U$.} Each
-$f_-^{(k)}$ is holomorphic on $\C\setminus\{z_k\}$, so $g$ is holomorphic on
-$U\setminus\{z_1,\dots,z_n\}$. Near $z_j$,
-\[
- g=f_+^{(j)}-\sum_{k\ne j}f_-^{(k)},
-\]
-which is holomorphic at $z_j$. So the singularity of $g$ at each $z_j$ is
-removable, and $g$ extends.
+$f_-^{(k)}$ is holomorphic on $\C\setminus\{z_k\}$ (Section~\ref{sec:winding}),
+so $g$ is holomorphic on $U\setminus\{z_1,\dots,z_n\}$. It remains to
+understand $g$ near each $z_j$. Fix $j$ and choose $\rho_j>0$ so that $f$ has
+its Laurent expansion $f=f_-^{(j)}+f_+^{(j)}$ on $0<|z-z_j|<\rho_j$, and so
+that this disc contains no other $z_k$. On this punctured disc,
+\begin{equation}\label{eq:g-near-zj}
+ g=f-f_-^{(j)}-\sum_{k\ne j}f_-^{(k)}
+  =f_+^{(j)}-\sum_{k\ne j}f_-^{(k)}.
+\end{equation}
+Every term on the right is holomorphic on the \emph{whole} disc
+$|z-z_j|<\rho_j$, including its centre:
+\begin{itemize}
+ \item $f_+^{(j)}=\sum_{n\geq0}a_n^{(j)}(z-z_j)^n$ is an ordinary power
+ series. It converges on the punctured disc, so its radius of convergence
+ is at least $\rho_j$; in particular it converges at $z_j$ too, with value
+ $a_0^{(j)}$. A power series is holomorphic inside its disc of convergence
+ (Lecture~20), so $f_+^{(j)}$ is holomorphic at $z_j$.
+ \item For $k\ne j$, $f_-^{(k)}$ is holomorphic on $\C\setminus\{z_k\}$, and
+ $z_j\ne z_k$. Its only singularity is at its own point $z_k$, which lies
+ outside the disc.
+\end{itemize}
+So the right side of \eqref{eq:g-near-zj} is a function $h_j$, holomorphic
+on $|z-z_j|<\rho_j$, that agrees with $g$ away from $z_j$. Subtracting
+$f_-^{(j)}$ has removed the bad part of $f$ at $z_j$, while the other
+principal parts do no harm there. Setting
+\begin{equation}
+ g(z_j):=h_j(z_j)=a_0^{(j)}-\sum_{k\ne j}f_-^{(k)}(z_j)
+\end{equation}
+makes $g$ holomorphic at $z_j$: the singularity is removable. Doing this
+for each $j=1,\dots,n$ extends $g$ to a holomorphic function on $U$.
+
+\begin{lecturefigure}
+\begin{tikzpicture}[scale=0.7,>=stealth]
+ \def\Ublob{plot[smooth cycle,tension=0.8] coordinates
+   {(-2.3,-0.5) (-2,1.1) (-0.3,1.5) (1.6,1.3) (2.4,0.1)
+    (1.6,-1.3) (-0.4,-1.4)}}
+ \def\gam{plot[smooth cycle,tension=0.8] coordinates
+   {(-1.6,0.1) (-1,0.8) (0,0.6) (0.9,0.5) (1.1,-0.4) (0.2,-0.9) (-1,-0.6)}}
+ % Panel 1: f
+ \begin{scope}
+  \fill[lightblue] \Ublob; \draw[thick] \Ublob;
+  \node at (-2.3,1.4) {$U$};
+  \draw[courseblue,thick,postaction={decorate},decoration={markings,
+   mark=at position 0.25 with {\arrow{<}}}] \gam;
+  \node[courseblue] at (-0.2,0.95) {$\gamma$};
+  \node[exerciseframe] at (-0.8,0.1) {$\times$};
+  \node[exerciseframe,left,font=\small] at (-0.85,0.1) {$z_1$};
+  \node[exerciseframe] at (0.5,-0.3) {$\times$};
+  \node[exerciseframe,left,font=\small] at (0.45,-0.3) {$z_2$};
+  \node[exerciseframe] at (1.75,0.4) {$\times$};
+  \node[exerciseframe,below,font=\small] at (1.75,0.3) {$z_3$};
+  \node[align=center,font=\small,anchor=north] at (0,-1.5) {$f$, singular at $z_1,z_2,z_3$};
+ \end{scope}
+ \draw[->,thick] (2.75,0)--(4.65,0);
+ \node[font=\small] at (3.7,0.45) {subtract};
+ \node[font=\small] at (3.7,-0.5) {$\sum_j f_-^{(j)}$};
+ % Panel 2: g
+ \begin{scope}[shift={(7.3,0)}]
+  \fill[lightgreen] \Ublob; \draw[thick] \Ublob;
+  \node at (-2.3,1.4) {$U$};
+  \draw[courseblue,thick,postaction={decorate},decoration={markings,
+   mark=at position 0.25 with {\arrow{<}}}] \gam;
+  \draw[courseblue,dashed,scale=0.6] \gam;
+  \draw[courseblue,dashed,scale=0.25] \gam;
+  \fill[courseblue] (0,0) circle(1.5pt);
+  \foreach \p in {(-0.8,0.1),(0.5,-0.3),(1.75,0.4)}{
+   \fill[ForestGreen] \p circle(2.2pt);}
+  \node[align=center,font=\small,anchor=north] at (0,-1.5)
+   {$g$ holomorphic on $U$,\\ $\gamma$ contracts: $\int_\gamma g=0$};
+ \end{scope}
+ \node[font=\Large] at (10.95,0) {$+$};
+ % Panel 3: one principal part
+ \begin{scope}[shift={(14.6,0)}]
+  \draw[gray!60,dashed] (-2.1,-1.4) rectangle (2.1,1.4);
+  \node[gray,font=\small] at (1.75,1.1) {$\C$};
+  \draw[courseblue,thick,postaction={decorate},decoration={markings,
+   mark=at position 0.25 with {\arrow{<}}}] \gam;
+  \node[exerciseframe] at (-0.8,0.1) {$\times$};
+  \node[exerciseframe,left,font=\small] at (-0.85,0.1) {$z_j$};
+  \node[align=center,font=\small,anchor=north] at (0,-1.5)
+   {$\int_\gamma f_-^{(j)}=$\\ $\operatorname{Res}_{z_j}(f)\cdot2\pi i\,w(\gamma,z_j)$};
+ \end{scope}
+\end{tikzpicture}
+
+{\small Left: $f$ on $U$. Middle: subtracting the principal parts removes
+every singularity, and $\gamma$ contracts to a point in $U$, so
+$\int_\gamma g=0$. Right: what is left is $\int_\gamma$ of the principal
+parts. Each $f_-^{(j)}$ is holomorphic on all of $\C\setminus\{z_j\}$, and
+only its $1/(z-z_j)$ term contributes.}
+\end{lecturefigure}
 
 By the null-homotopy corollary of Lecture~18, $\int_\gamma g=0$, that is,
-\[
+\begin{equation}
  \int_\gamma f=\sum_{j=1}^{n}\int_\gamma f_-^{(j)}.
-\]
+\end{equation}
 Now write
-\[
+\begin{equation}
  f_-^{(j)}(z)=\frac{a_{-1}^{(j)}}{z-z_j}+\frac{a_{-2}^{(j)}}{(z-z_j)^2}+\cdots.
-\]
+\end{equation}
 Since $\gamma$ stays a positive distance $\delta$ from $z_j$, the series
 converges uniformly on $\gamma$ (it is a power series in $1/(z-z_j)$, and
 $|1/(z-z_j)|\leq1/\delta$ there). We may therefore integrate term by term
 (Lecture~20, Corollary~2.2). For $k\geq2$, $(z-z_j)^{-k}$ has the primitive
 $(z-z_j)^{1-k}/(1-k)$ on $\C\setminus\{z_j\}$, so its integral over the
 closed curve $\gamma$ vanishes. Only the first term survives:
-\[
+\begin{equation}
  \int_\gamma f_-^{(j)}
  =\underbrace{a_{-1}^{(j)}}_{\operatorname{Res}_{z_j}(f)}
  \underbrace{\int_\gamma\frac{dz}{z-z_j}}_{2\pi i\,w(\gamma,z_j)}.
-\]
+\end{equation}
 Summing over $j$ proves the theorem.
 \end{proof}
 

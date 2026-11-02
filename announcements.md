@@ -11,6 +11,9 @@
 # The site sorts by date and shows the newest first, so old announcements
 # stay on the page as a running log.
 
+## 2026-11-01
+[Review problems](exams/midterm-2-review-problems.pdf) and [solutions](exams/midterm-2-review-problems-solutions.pdf) for Midterm 2 (Friday, November 6) are posted under [Midterm 2](#midterm2).
+
 ## 2026-10-27
 The [coverage sheet](exams/midterm-2-coverage.pdf) for Midterm 2 (Friday, November 6) is posted under [Midterm 2](#midterm2).
 
