@@ -1,0 +1,236 @@
+\documentclass[12pt,reqno]{amsart}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathptmx}
+\usepackage[scaled=0.90]{helvet}
+\usepackage{courier}
+\usepackage[T1]{fontenc}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\pagestyle{plain}
+
+\setlength{\oddsidemargin}{0cm}
+\setlength{\evensidemargin}{0cm}
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\footskip}{.3in}
+\setlength{\textheight}{9.2in}
+\setlength{\textwidth}{6.5in}
+\setlength{\parindent}{0pt}
+\setlist[enumerate,1]{leftmargin=*,itemsep=1.1em}
+\setlist[enumerate,2]{label=(\alph*),leftmargin=1.7em,itemsep=.45em,topsep=.4em}
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+
+\title{Problem Set 4: Solutions \\ MATH 411: Honors Complex Variables, Fall 2026}
+\date{last compiled: \today}
+
+% Coverage: Laurent series and Laurent expansions (Lectures 21--22),
+% ahead of Midterm 2 on Fri, Nov. 6. Problems on isolated singularities,
+% residues, the residue theorem, evaluating integrals, the argument
+% principle, Rouche's theorem, and the open mapping theorem (Lectures 23--25)
+% were moved to Problem Set 5 on Nov. 1, 2026.
+% Suggested completion date: Wednesday, November 4, 2026.
+% Sources (paths relative to the course workspace):
+% 1: moved from Problem Set 3, problem 7
+%    (originally Old Homework/Homework/Homework5_Fall2021.tex, 3--4).
+% 2--3: Old Homework/Homework/Homework6_Fall2021.tex, 1 and 4 (hints
+%    added).
+
+\usepackage[most]{tcolorbox}
+\definecolor{solblue}{RGB}{232,243,252}
+\definecolor{solframe}{RGB}{120,170,215}
+\newenvironment{solution}
+  {\par\smallskip\begin{tcolorbox}[breakable,enhanced,colback=solblue,colframe=solframe,
+   boxrule=0.5pt,arc=2pt,left=6pt,right=6pt,top=4pt,bottom=4pt]\setlength{\abovedisplayskip}{7pt}\setlength{\belowdisplayskip}{7pt}\noindent\textbf{Solution.}}
+  {\hfill$\square$\end{tcolorbox}\par\medskip}
+\usepackage{needspace}
+\widowpenalty=10000
+\clubpenalty=10000
+\raggedbottom
+
+% Solution 1 follows Old Homework/Homework/hwk3.tex, problems 7--8,
+% and Homework5_Fall2021solutions.pdf, problems 3--4; the intermediate
+% exterior-series typo is corrected and convergence is made explicit.
+% Solution 2's alternative follows Homework6_Fall2021solutions.tex, 1,
+% correcting the contour radius, product inequality, and equality case.
+% The main proof of 2 follows the current power-sum hint without Rouche.
+% Solution 3 is supplied here; the old solutions left it unanswered.
+
+\begin{document}
+\maketitle
+
+Unless stated otherwise, closed curves are oriented counterclockwise.
+
+\begin{enumerate}
+
+\item \textbf{Laurent expansions.}
+\begin{enumerate}
+\item Find a series in integer powers of $z$ representing
+\[
+ f(z)=\frac{1}{(z-1)(z-2)}
+\]
+in each of the regions $|z|<1$, $1<|z|<2$, and $|z|>2$.
+Justify convergence in each region.
+\item Find the first four nonzero terms of the Laurent expansion of
+\[
+ \frac{e^z}{z(1+z^2)}
+\]
+valid for $0<|z|<1$.
+\end{enumerate}
+
+
+\begin{solution}
+\noindent (a) Note that
+\[
+\frac{1}{(z-1)(z-2)}=\frac{1}{z-2}-\frac{1}{z-1}.
+\]
+For $|z|<1$, expand both fractions in nonnegative powers of $z$:
+\[
+\boxed{f(z)=-\frac12\sum_{m=0}^\infty\left(\frac z2\right)^m
++\sum_{m=0}^\infty z^m
+=\sum_{m=0}^\infty\left(1-\frac{1}{2^{m+1}}\right)z^m.}
+\]
+For $1<|z|<2$, write $-1/(z-1)=-z^{-1}/(1-1/z)$; the previous
+expansion of $1/(z-2)$ still holds. Thus
+\[
+\boxed{f(z)=-\sum_{m=0}^\infty\frac{1}{z^{m+1}}
+-\sum_{m=0}^\infty\frac{z^m}{2^{m+1}},\qquad 1<|z|<2.}
+\]
+For $|z|>2$, the same expansion of $-1/(z-1)$ holds, but now
+\[
+\frac{1}{z-2}=\frac1z\frac{1}{1-2/z}
+=\sum_{m=0}^\infty\frac{2^m}{z^{m+1}}.
+\]
+Subtracting the two series gives
+\[
+\boxed{f(z)=\sum_{m=0}^\infty\frac{2^m-1}{z^{m+1}},\qquad |z|>2.}
+\]
+In the three regions the respective geometric ratios are $z,z/2$;
+$1/z,z/2$; and $1/z,2/z$. Their moduli are strictly less than $1$.
+All series therefore converge absolutely in the stated regions and
+uniformly on compact subsets, justifying the additions and subtractions.
+
+\medskip
+\noindent (b) Multiply the expansions:
+\begin{align*}
+\frac{e^z}{z(1+z^2)}
+&=\frac1z\left(1+z+\frac{z^2}{2!}+\frac{z^3}{3!}+\cdots\right)
+          \left(1-z^2+z^4-\cdots\right)\\
+&=\boxed{\frac1z+1-\frac z2-\frac56z^2+O(z^3).}
+\end{align*}
+These are the first four nonzero terms. The exponential series converges
+absolutely everywhere, and the geometric series does so for $|z|<1$.
+Their product is therefore valid for $0<|z|<1$.
+\end{solution}
+
+\needspace{12\baselineskip}
+\item \textbf{Roots of a trinomial.}
+Let $a\in\C$ and let $n\geq2$ be an integer. Prove that the equation
+\[
+ 1+z+az^n=0
+\]
+has at least one root in the closed disc $|z|\leq2$.
+\emph{Hint:} For $a\neq0$, the reciprocals $w_j=1/z_j$ of the roots are
+the roots of $w^n+w^{n-1}+a$. Compute the power sums
+$\sum_j w_j^{k}$ for $1\leq k\leq n-1$.
+
+
+\begin{solution}
+If $a=0$, take $z=-1$. Otherwise, let $z_1,\ldots,z_n$ be the nonzero
+roots, counted with multiplicity, and put $w_j=1/z_j$.
+Factoring $P(t)=1+t+at^n$ and comparing constant terms gives
+\[
+P(t)=\prod_{j=1}^n(1-w_jt).
+\]
+Taking the logarithmic derivative and expanding for sufficiently small
+$|t|$, we find
+\[
+-\frac{tP'(t)}{P(t)}
+=\sum_{j=1}^n\frac{w_jt}{1-w_jt}
+=\sum_{k=1}^\infty\left(\sum_{j=1}^n w_j^k\right)t^k.
+\]
+On the other hand,
+\[
+-\frac{tP'(t)}{P(t)}
+=-\frac{t+nat^n}{1+t+at^n}
+=-\frac{t}{1+t}+O(t^n)
+=\sum_{k=1}^{n-1}(-1)^k t^k+O(t^n).
+\]
+Comparing coefficients through degree $n-1$ gives
+\[
+\boxed{\sum_{j=1}^n w_j^k=(-1)^k\qquad(1\leq k\leq n-1).}
+\]
+If all $|z_j|>2$, then all $|w_j|<1/2$. Taking $k=n-1$ gives
+\[
+1=\left|\sum_{j=1}^n w_j^{n-1}\right|
+\leq\sum_{j=1}^n|w_j|^{n-1}
+<\frac{n}{2^{n-1}}\leq1,
+\]
+a contradiction. Here $n\leq2^{n-1}$ for $n\geq2$, as follows by
+induction from $2=2^1$ and $n+1\leq2n$.
+Thus at least one root satisfies $|z_j|\leq2$.
+\end{solution}
+
+\needspace{20\baselineskip}
+\begin{solution}
+\textit{Alternative from the previous homework solutions, using
+Rouch\'e's theorem (a later topic).}
+Write $F(z)=1+z+az^n$ and $G(z)=z+az^n$.
+If $|a|<2^{-n}$, then on $|z|=2$,
+\[
+|G(z)|=2|1+az^{n-1}|
+\geq2(1-|a|2^{n-1})>1=|F(z)-G(z)|.
+\]
+Rouch\'e's theorem implies that $F$ and $G$ have the same number of
+zeros in $|z|<2$. Since $G(0)=0$, $F$ has at least one such zero.
+
+If $|a|\geq2^{-n}$, factor
+$F(z)=a(z-z_1)\cdots(z-z_n)$. Comparing constant terms gives
+\[
+|z_1|\cdots|z_n|=\frac1{|a|}\leq2^n.
+\]
+The roots cannot all have modulus greater than $2$, which proves the
+claim, including the case $|a|=2^{-n}$.
+\end{solution}
+
+\needspace{12\baselineskip}
+\item \textbf{No holomorphic extension of $1/z$.}
+Show that there is no function $f$ that is holomorphic on the open unit
+disc, extends continuously to the closed unit disc, and satisfies
+$f(z)=1/z$ for $|z|=1$.
+
+
+\begin{solution}
+Suppose such a function $f$ existed. For $0<r<1$, Cauchy's theorem
+applies on the circle $|z|=r$, giving
+\[
+0=\int_{|z|=r} f(z)\,dz
+ =\int_0^{2\pi} f(re^{it})\,ire^{it}\,dt.
+\]
+We now justify passing to the boundary as $r\uparrow1$.
+The continuous extension of $f$ to the compact closed unit disc is
+uniformly continuous and bounded. Hence
+\[
+\sup_{0\leq t\leq2\pi}|f(re^{it})-f(e^{it})|\longrightarrow0.
+\]
+If $M=\max_{|z|\leq1}|f(z)|$, then
+\begin{align*}
+&\left|\int_0^{2\pi} f(re^{it})\,ire^{it}\,dt
+ -\int_0^{2\pi} f(e^{it})\,ie^{it}\,dt\right|\\
+&\hspace{1em}\leq 2\pi\left(
+ r\sup_t|f(re^{it})-f(e^{it})|+(1-r)M\right)
+ \longrightarrow0.
+\end{align*}
+But the boundary condition $f(e^{it})=e^{-it}$ gives
+\[
+\int_0^{2\pi} f(e^{it})\,ie^{it}\,dt
+=\int_0^{2\pi}i\,dt=2\pi i,
+\]
+contradicting the fact that every inner-circle integral is zero.
+Thus no such holomorphic function exists.
+\end{solution}
+
+\end{enumerate}
+\end{document}
