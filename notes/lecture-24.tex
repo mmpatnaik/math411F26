@@ -67,6 +67,18 @@
   bottom=5pt
 }
 
+\tcolorboxenvironment{corollary}{
+  enhanced,
+  colback=lightblue,
+  colframe=courseblue,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
 \tcolorboxenvironment{remark}{
   enhanced,
   colback=remarkbg,
@@ -158,14 +170,13 @@
 \tableofcontents
 \vspace{0.45em}
 
-% Sources: handwritten Lecture 23, Nov. 4, pages 3--8 (moved here from the
+% Sources: handwritten Lecture 23, Nov. 4, pages 3--6 (moved here from the
 % typed Lecture 23): tricks for computing residues, a square-contour
-% example, trigonometric integrals, improper integrals. Added: the
-% completed computations of the two examples left open on pages 6 and 8.
+% example, and trigonometric integrals. The example on page 6 is completed
+% here. Improper integrals (pages 7--8) are covered in Lecture 25.
 In Lecture~23 we proved the residue theorem. Today we develop practical
-tools for computing residues, and then apply the residue theorem to two
-classes of real integrals: trigonometric integrals over $[0,2\pi]$ and
-improper integrals over the real line.
+tools for computing residues and apply the theorem to trigonometric
+integrals over $[0,2\pi]$.
 
 \section{Recall: the residue theorem}
 \begin{theorem}[Residue theorem; Lecture~23, Theorem~4.1]\label{thm:residue}
@@ -228,9 +239,11 @@ So $1/h$ is holomorphic near $z_0$ with $1/h=1+b_1(z-z_0)+\cdots$, and
 \]
 Thus the pole is simple with residue $1/a_1=1/f'(z_0)$.
 \end{proof}
+\begin{corollary}
 Combining the two propositions: if $g$ is holomorphic at $z_0$, $f(z_0)=0$
 and $f'(z_0)\ne0$, then
 $\operatorname{Res}_{z_0}(g/f)=g(z_0)/f'(z_0)$.
+\end{corollary}
 
 \begin{example}[A square contour]
 % Handwritten page 4 writes z_1 = 1 + i\sqrt2; the roots are -1 \pm i\sqrt2.
@@ -275,6 +288,10 @@ answer against the Laurent series.
 \end{exercise}
 
 \section{Trigonometric integrals}
+\enlargethispage{\baselineskip}
+\begingroup
+\setlength{\abovedisplayskip}{7pt plus 2pt minus 2pt}
+\setlength{\belowdisplayskip}{7pt plus 2pt minus 2pt}
 % Handwritten Lecture 23, pages 5--6. The handwritten substitution uses
 % \bar z; on the unit circle \bar z = 1/z, which is what makes the
 % integrand holomorphic. The example on page 6 is completed here.
@@ -338,7 +355,7 @@ is close to $2\pi/a$.
 \end{example}
 
 \begin{lecturefigure}
-\begin{tikzpicture}[scale=0.8,>=stealth]
+\begin{tikzpicture}[scale=0.6,>=stealth]
  \draw[gray,->] (-2,0)--(2,0);
  \draw[gray,->] (0,-3.2)--(0,1.6);
  \draw[courseblue,thick,postaction={decorate},decoration={markings,
@@ -358,103 +375,6 @@ Evaluate the trigonometric integral
 $\displaystyle\int_0^{2\pi}\frac{\cos^2\theta-\sin^2\theta+\cos\theta\sin\theta}{3-\sin\theta}\,d\theta$
 from the beginning of this section.
 \end{exercise}
-
-\section{Improper integrals over the real line}
-% Handwritten Lecture 23, pages 7--8. The handwritten notes split
-% [-R,R] into [-R,0] and [0,R]; here they are combined. The example on
-% page 8 is completed here.
-We next compute integrals
-\[
- \int_{-\infty}^{\infty}f(x)\,dx=\lim_{R\to\infty}\int_{-R}^{R}f(x)\,dx,
-\]
-where $f(x)$ is the restriction to $\R$ of a function $f(z)$ that is
-holomorphic on a half-plane $\{\Imag z>-\epsilon\}$ except for finitely
-many poles, none of which lie on the real axis. (This holds, for
-example, for a rational function with no real poles.)
-
-Let $H=\{z:\Imag z>0\}$ be the upper half-plane. For $R>0$ let $\gamma_R$
-be the closed curve consisting of the segment $[-R,R]$ followed by the
-semicircle $C_R(t)=Re^{it}$, $0\leq t\leq\pi$.
-
-\begin{lecturefigure}
-\begin{tikzpicture}[scale=0.85,>=stealth]
- \draw[gray,->] (-3,0)--(3.2,0);
- \draw[gray,->] (0,-0.4)--(0,2.9);
- \draw[courseblue,thick,postaction={decorate},decoration={markings,
-  mark=at position 0.5 with {\arrow{>}}}] (-2.4,0)--(2.4,0);
- \draw[ForestGreen,thick,postaction={decorate},decoration={markings,
-  mark=at position 0.5 with {\arrow{>}}}] (2.4,0) arc(0:180:2.4);
- \foreach \p in {(-1,0.7),(0.6,1.3),(1.3,0.5),(-0.4,1.7)}
-  \node[exerciseframe] at \p {$\times$};
- \node[exerciseframe] at (0.8,-0.35) {$\times$};
- \node[below] at (-2.4,0) {$-R$};
- \node[below] at (2.4,0) {$R$};
- \node[ForestGreen] at (2.25,1.75) {$C_R$};
- \node[right,align=left] at (3.4,1.1)
- {poles in $H$ inside $\gamma_R$\\ once $R$ is large;\\ poles below $\R$ are ignored.};
-\end{tikzpicture}
-\end{lecturefigure}
-
-The half-plane $\{\Imag z>-\epsilon\}$ is convex, hence simply connected.
-Once $R$ exceeds the moduli of all poles $z_j$ in $H$, each such pole has
-$w(\gamma_R,z_j)=1$, while any pole below the real axis lies outside
-$\gamma_R$ and has winding number $0$. The residue theorem gives
-\[
- \int_{-R}^{R}f(x)\,dx+\int_{C_R}f(z)\,dz
- =\int_{\gamma_R}f
- =2\pi i\sum_{z_j\in H}\operatorname{Res}_{z_j}(f).
-\]
-It remains to show that the semicircle contributes nothing in the limit.
-
-\begin{theorem}\label{thm:improper}
-Let $f$ be as above, and suppose there are $B>0$ and $R_0>0$ with
-\[
- |f(z)|\leq\frac{B}{|z|^2}\qquad(\Imag z\geq0,\ |z|\geq R_0).
-\]
-Then
-\[
- \boxed{\displaystyle\int_{-\infty}^{\infty}f(x)\,dx
- =2\pi i\sum_{z_j\in H}\operatorname{Res}_{z_j}(f),}
-\]
-the sum being over the poles of $f$ in the upper half-plane.
-\end{theorem}
-\begin{proof}
-The bound shows $\int_{-\infty}^\infty|f(x)|\,dx<\infty$, so the improper
-integral exists and equals $\lim_{R\to\infty}\int_{-R}^Rf$. For
-$R\geq R_0$, the estimation lemma gives
-\[
- \left|\int_{C_R}f\right|
- \leq\operatorname{Length}(C_R)\,\|f\|_{C_R}
- \leq\pi R\cdot\frac{B}{R^2}=\frac{\pi B}{R}\longrightarrow0.
-\]
-Letting $R\to\infty$ in the identity above gives the result.
-\end{proof}
-
-\begin{remark}
-The same argument works if $|f(z)|\leq B/|z|^{1+a}$ for some $a>0$: the
-semicircle integral is then at most $\pi B/R^a$.
-\end{remark}
-
-\begin{example}
-We compute $\displaystyle\int_{-\infty}^{\infty}\frac{dx}{x^4+1}$, using
-$f(z)=1/(z^4+1)$. For $|z|\geq2$ we have $|z^4+1|\geq|z|^4-1\geq|z|^4/2$,
-so $|f(z)|\leq2/|z|^4\leq1/(2|z|^2)$ and Theorem~\ref{thm:improper} applies.
-The poles are the fourth roots of $-1$, namely $e^{i\pi/4}$,
-$e^{3i\pi/4}$, $e^{5i\pi/4}$, $e^{7i\pi/4}$; the first two lie in $H$.
-At each pole $z_0$, Proposition~\ref{prop:res-simple-zero} gives
-\[
- \operatorname{Res}_{z_0}f=\frac{1}{4z_0^3}=\frac{z_0}{4z_0^4}=-\frac{z_0}{4}.
-\]
-Since $e^{i\pi/4}+e^{3i\pi/4}=i\sqrt2$,
-\[
- \boxed{\int_{-\infty}^{\infty}\frac{dx}{x^4+1}
- =2\pi i\cdot\Bigl(-\frac{i\sqrt2}{4}\Bigr)=\frac{\pi}{\sqrt2}.}
-\]
-\end{example}
-
-\begin{exercise}
-Use Theorem~\ref{thm:improper} to show that
-$\displaystyle\int_{-\infty}^{\infty}\frac{dx}{(x^2+1)^2}=\frac{\pi}{2}$.
-\end{exercise}
+\endgroup
 
 \end{document}
