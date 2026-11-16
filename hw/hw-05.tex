@@ -21,7 +21,8 @@
 
 \title{Problem Set 5 \\ MATH 411: Honors Complex Variables, Fall 2026}
 
-% New exercises patterned after Fall 2021 Homeworks 5 and 6.
+% Combines new exercises with those moved from Homework 4 to the November 1 draft.
+% Problems follow the sequence of topics in Lectures 23--25.
 % Coverage: Lectures 23--25.
 
 \begin{document}
@@ -33,6 +34,18 @@ contours are oriented counterclockwise.
 
 \begin{enumerate}
 
+\item \textbf{Residues at the origin.}
+Find the residue at $0$ of each of the following.
+\begin{enumerate}
+\item $\dfrac{2z+1}{z(z^3-5)}$
+\item $\dfrac{e^z}{z^4}$
+\item $\dfrac{e^z}{\sin z}$
+\end{enumerate}
+Also find the residue at $z=1$ of
+\[
+ \frac{(z^3-1)(z+2)}{(z^4-1)^2}.
+\]
+
 \item \textbf{Contour integrals by residues.}
 Locate and classify the isolated singularities of the integrand, then
 evaluate
@@ -41,12 +54,47 @@ evaluate
  \qquad\text{for }r=1\text{ and }r=3.
 \]
 
+\item \textbf{Contour integrals by residues.}
+\begin{enumerate}
+\item Evaluate
+\[
+ \int_C\frac{dz}{z^2-3z+5},
+\]
+where $C$ is the boundary of the rectangle with vertices
+$0,\ 10,\ 10+4i,\ 4i$, oriented \emph{clockwise}.
+\item Evaluate
+\[
+ \int_C\frac{1+z}{1-\sin z}\,dz,
+\]
+where $C$ is the circle $|z|=8$. \emph{Hint:} First find all complex
+solutions of $\sin z=1$ and determine the order of each zero of
+$1-\sin z$.
+\end{enumerate}
+
 \item \textbf{A trigonometric integral.}
 Use the substitution $z=e^{it}$ and the residue theorem to evaluate
 \[
  \int_0^{2\pi}\frac{\cos(2t)}{5-4\cos t}\,dt.
 \]
 \emph{Hint.} Write $\cos(2t)=\operatorname{Re}(e^{2it})$.
+
+\item \textbf{A trigonometric integral.}
+Show that
+\[
+ \int_0^{2\pi}\frac{dt}{(5-3\sin t)^2}=\frac{5\pi}{32}.
+\]
+
+\item \textbf{Rational integrals over the real line.}
+\begin{enumerate}
+\item Show that
+\[
+ \int_0^\infty\frac{x^2}{x^6+1}\,dx=\frac{\pi}{6}.
+\]
+\item For $a,b>0$, show that
+\[
+ \int_0^\infty\frac{dx}{(x^2+a^2)(x^2+b^2)}=\frac{\pi}{2ab(a+b)}.
+\]
+\end{enumerate}
 
 \item \textbf{An improper integral.}
 For $a>0$, use an upper-half-plane contour to evaluate
@@ -55,6 +103,50 @@ For $a>0$, use an upper-half-plane contour to evaluate
 \]
 Give an explicit bound for the integral of $e^{iaz}/(z^2+4)^2$
 over the semicircular arc $|z|=R$, $\operatorname{Im}z\geq0$, for $R>2$.
+
+\item \textbf{A Fourier-type integral.}
+For $a,b>0$ with $a\neq b$, show that
+\[
+ \int_{-\infty}^{\infty}\frac{\cos x}{(x^2+a^2)(x^2+b^2)}\,dx
+ =\frac{\pi}{a^2-b^2}\left(\frac{e^{-b}}{b}-\frac{e^{-a}}{a}\right).
+\]
+
+\item \textbf{An integral with a logarithm.}
+Show that
+\[
+ \int_0^\infty\frac{(\log x)^2}{1+x^2}\,dx=\frac{\pi^3}{8}.
+\]
+\emph{Hint:} Use a branch of $\log z$ on $\C$ minus the negative
+imaginary axis, and integrate $(\log z)^2/(1+z^2)$ around the boundary
+of the region $\{\delta\leq|z|\leq R,\ \operatorname{Im}z\geq0\}$
+(Lang, \S VI.2, Exercise 14(a)). You may use
+$\int_0^\infty dx/(1+x^2)=\pi/2$.
+
+\item \textbf{The Gaussian integral via residues.}
+Prove that
+\[
+ \int_{-\infty}^{\infty}e^{-x^2}\,dx=\sqrt{\pi}
+\]
+by integrating
+\[
+ f(z)=\frac{e^{-z^2}}{1+e^{-2az}},\qquad a=e^{\pi i/4}\sqrt{\pi},
+\]
+around the parallelogram with vertices $-R,\ R,\ R+a,\ -R+a$ and then
+letting $R\to\infty$. \emph{Hint:} Check that $f(z)-f(z+a)=e^{-z^2}$.
+
+\item \textbf{Logarithmic derivatives.}
+\begin{enumerate}
+\item Show that the association $f\mapsto f'/f$ (for $f$ holomorphic
+and nonvanishing) sends products to sums.
+\item If $P(z)=(z-a_1)\cdots(z-a_n)$, where $a_1,\dots,a_n\in\C$ are
+the roots of $P$ (listed with multiplicity), compute $P'/P$.
+\item Let $\gamma$ be a closed path on which $P$ has no roots. Show
+that
+\[
+ \frac{1}{2\pi i}\int_\gamma\frac{P'(z)}{P(z)}\,dz
+ = W(\gamma,a_1)+\cdots+W(\gamma,a_n).
+\]
+\end{enumerate}
 
 \item \textbf{The argument principle.}
 For each $r>0$, let $C_r$ be the circle $|z|=r$. Consider
@@ -68,6 +160,13 @@ $n_7$ of the image curves of $C_2$ and $C_7$ under $F$ about $0$.
 What does $n_7-n_2$ count in the annulus $2<|z|<7$?
 \end{enumerate}
 
+\item \textbf{Counting zeros with Rouch\'e's theorem.}
+How many zeros, counted with multiplicity, does
+\[
+ f(z)=z^5+5z^3+z^2+z+1
+\]
+have in the closed annulus $1\leq|z|\leq2$?
+
 \item \textbf{Rouch\'e's theorem.}
 \begin{enumerate}
 \item Let $a\in\C$ with $|a|\leq2$. Show that
@@ -80,6 +179,19 @@ every complex polynomial of degree $n\geq1$ has exactly $n$ zeros in
 $\C$, counted with multiplicity. \emph{Hint.} Compare the polynomial
 with its leading term on a sufficiently large circle.
 \end{enumerate}
+
+\item \textbf{Images of the unit disc.}
+Let $f$ be nonconstant and holomorphic on an open set containing the
+closed unit disc $\overline{D}=\{|z|\leq1\}$, and let $D=\{|z|<1\}$.
+\begin{enumerate}
+\item Suppose $|f(z)|=1$ whenever $|z|=1$. Show that $f(D)$ contains
+the open unit disc.
+\item Suppose instead that $|f(z)|\geq1$ whenever $|z|=1$, and that
+$|f(z_0)|<1$ for some $z_0\in D$. Show that $f(D)$ contains the open
+unit disc.
+\end{enumerate}
+\emph{Hint:} For $|w|<1$, compare the number of zeros of $f$ and of
+$f-w$ in $D$.
 
 \item \textbf{The open mapping theorem.}
 Let $U\subseteq\C$ be a bounded domain and let $f$ be continuous on
