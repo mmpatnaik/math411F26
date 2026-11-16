@@ -1,0 +1,94 @@
+\documentclass[12pt,reqno]{amsart}
+\usepackage{amsmath,amssymb}
+\usepackage{mathptmx}
+\usepackage[T1]{fontenc}
+\usepackage{enumitem}
+\pagestyle{plain}
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\footskip}{.3in}
+\setlength{\textheight}{9.2in}
+\setlength{\textwidth}{6.5in}
+\setlength{\parindent}{0pt}
+\setlist[enumerate,1]{leftmargin=*,itemsep=.9em}
+\setlist[enumerate,2]{label=(\alph*),leftmargin=1.7em,itemsep=.3em,topsep=.25em}
+
+\newcommand{\C}{\mathbb{C}}
+
+\title{Problem Set 5 \\ MATH 411: Honors Complex Variables, Fall 2026}
+
+% New exercises patterned after Fall 2021 Homeworks 5 and 6.
+% Coverage: Lectures 23--25.
+
+\begin{document}
+\maketitle
+
+These are practice problems and are not to be turned in. Justify your
+answers and all limiting arguments. Unless stated otherwise, closed
+contours are oriented counterclockwise.
+
+\begin{enumerate}
+
+\item \textbf{Contour integrals by residues.}
+Locate and classify the isolated singularities of the integrand, then
+evaluate
+\[
+ \int_{|z|=r}\frac{e^z-1}{z^3(z-2)}\,dz
+ \qquad\text{for }r=1\text{ and }r=3.
+\]
+
+\item \textbf{A trigonometric integral.}
+Use the substitution $z=e^{it}$ and the residue theorem to evaluate
+\[
+ \int_0^{2\pi}\frac{\cos(2t)}{5-4\cos t}\,dt.
+\]
+\emph{Hint.} Write $\cos(2t)=\operatorname{Re}(e^{2it})$.
+
+\item \textbf{An improper integral.}
+For $a>0$, use an upper-half-plane contour to evaluate
+\[
+ \int_{-\infty}^{\infty}\frac{\cos(ax)}{(x^2+4)^2}\,dx.
+\]
+Give an explicit bound for the integral of $e^{iaz}/(z^2+4)^2$
+over the semicircular arc $|z|=R$, $\operatorname{Im}z\geq0$, for $R>2$.
+
+\item \textbf{The argument principle.}
+For each $r>0$, let $C_r$ be the circle $|z|=r$. Consider
+\[
+ F(z)=\frac{(e^z-1)^2}{z^3(z-1)^2(z-3)}.
+\]
+\begin{enumerate}
+\item Find all zeros and poles of $F$ in $|z|<7$, with their orders.
+\item Use the argument principle to find the winding numbers $n_2$ and
+$n_7$ of the image curves of $C_2$ and $C_7$ under $F$ about $0$.
+What does $n_7-n_2$ count in the annulus $2<|z|<7$?
+\end{enumerate}
+
+\item \textbf{Rouch\'e's theorem.}
+\begin{enumerate}
+\item Let $a\in\C$ with $|a|\leq2$. Show that
+$P_a(z)=z^6-6z^2+az+1$ has no zeros on $|z|=1$ or $|z|=2$.
+How many zeros, counted with multiplicity, lie in each of the regions
+$|z|<1$, $1<|z|<2$, and $|z|>2$? Justify the counts using
+Rouch\'e's theorem.
+\item Use Rouch\'e's theorem to prove the Fundamental Theorem of Algebra:
+every complex polynomial of degree $n\geq1$ has exactly $n$ zeros in
+$\C$, counted with multiplicity. \emph{Hint.} Compare the polynomial
+with its leading term on a sufficiently large circle.
+\end{enumerate}
+
+\item \textbf{The open mapping theorem.}
+Let $U\subseteq\C$ be a bounded domain and let $f$ be continuous on
+$\overline U$ and holomorphic and nonconstant on $U$.
+\begin{enumerate}
+\item Use the open mapping theorem and compactness to prove that
+$\partial(f(U))\subseteq f(\partial U)$.
+\item For $U=\{z:|z-1|<2\}$ and $f(z)=z^2$, show that the inclusion is strict.
+\end{enumerate}
+
+\end{enumerate}
+\end{document}
