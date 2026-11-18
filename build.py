@@ -17,9 +17,6 @@ if SITE.exists():
     shutil.rmtree(SITE)
 SITE.mkdir()
 
-# Keep these handouts out of the published site until they are ready.
-UNPUBLISHED_PDFS = {"notes/lecture-25.pdf"}
-
 html = (ROOT / "index.html").read_text(encoding="utf-8")
 linked = []
 SYLLABUS_URL = (
@@ -33,7 +30,7 @@ def link_cell(attr, pdf_path_for):
     def repl(m):
         num = m.group(1)
         rel = pdf_path_for(num)
-        if rel not in UNPUBLISHED_PDFS and (ROOT / rel).exists():
+        if (ROOT / rel).exists():
             linked.append(rel)
             return f'<td {attr}="{num}"><a href="{rel}">PDF</a></td>'
         return m.group(0)
@@ -167,10 +164,7 @@ for folder in ("notes", "hw", "exams"):
     src = ROOT / folder
     if not src.is_dir():
         continue
-    pdfs = sorted(
-        pdf for pdf in src.glob("*.pdf")
-        if pdf.relative_to(ROOT).as_posix() not in UNPUBLISHED_PDFS
-    )
+    pdfs = sorted(src.glob("*.pdf"))
     if pdfs:
         (SITE / folder).mkdir(exist_ok=True)
         for pdf in pdfs:
