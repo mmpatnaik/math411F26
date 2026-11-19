@@ -1,0 +1,400 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{mathrsfs}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{decorations.markings,patterns}
+\usepackage{enumitem}
+\usepackage{tocloft}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{courseblue}{HTML}{1F4E79}
+\definecolor{lightblue}{HTML}{EAF2F8}
+\definecolor{lightgreen}{HTML}{EAF7EA}
+\definecolor{lightpink}{HTML}{FCE8EF}
+\definecolor{lightyellow}{HTML}{FFF8D6}
+\definecolor{warningyellow}{HTML}{D6A000}
+\definecolor{exercisebg}{HTML}{FDEAEA}
+\definecolor{exerciseframe}{HTML}{B54040}
+\definecolor{examplebg}{HTML}{F4FAFE}
+\definecolor{exampleframe}{HTML}{85C1E9}
+\definecolor{darkgray}{HTML}{333333}
+\definecolor{lightorange}{HTML}{FDEBD8}
+\definecolor{orangeframe}{HTML}{E08A3C}
+\definecolor{remarkbg}{HTML}{F3EEFB}
+\definecolor{remarkframe}{HTML}{9B7FC9}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlist[itemize]{topsep=0.25em,itemsep=0.15em}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheoremstyle{boldremark}
+  {3pt}{3pt}{\normalfont}{}{\bfseries}{.}{.5em}
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}
+\theoremstyle{boldremark}
+\newtheorem*{remark}{Remark}
+\theoremstyle{remark}
+\newtheorem*{fact}{Fact}
+\newtheorem*{warning}{Warning}
+
+\tcolorboxenvironment{definition}{
+  enhanced,
+  unbreakable,
+  colback=lightgreen,
+  colframe=ForestGreen,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{remark}{
+  enhanced,
+  colback=remarkbg,
+  colframe=remarkframe,
+  before upper={\setlength{\parskip}{0.5em}},
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{warning}{
+  enhanced,
+  colback=lightyellow,
+  colframe=warningyellow,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{exercise}{
+  enhanced,
+  colback=exercisebg,
+  colframe=exerciseframe,
+  boxrule=1pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\tcolorboxenvironment{example}{
+  enhanced,
+  colback=examplebg,
+  colframe=exampleframe,
+  boxrule=0.7pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\numberwithin{equation}{section}
+
+\newcommand{\be}{\begin{eqnarray}}
+\newcommand{\ee}{\end{eqnarray}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\DeclareMathOperator{\Hol}{\mathcal{H}\mathrm{ol}}
+\DeclareMathOperator{\Real}{Re}
+\DeclareMathOperator{\Imag}{Im}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\CT}{\C[[T]]}
+\newcommand{\CLT}{\C((T))}
+\tcbset{breakable}
+% Compact spacing around diagrams; keep the main text at 11pt.
+\newenvironment{lecturefigure}
+ {\par\addvspace{0.25em}\begingroup\setlength{\parskip}{0pt}\centering}
+ {\par\endgroup\addvspace{0.25em}}
+\begin{document}
+
+\begin{center}
+  \colorbox{lightblue}{%
+    \begin{minipage}{0.94\textwidth}
+      \vspace{0.55em}
+      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr}
+        {\color{courseblue}\bfseries\LARGE Lecture 27} &
+        {\color{courseblue}\bfseries\LARGE MATH 411}\\[0.35em]
+        \textbf{Fall 2026} & \textbf{Date: Nov 20, 2026}\\
+        & \textbf{Instructor: Manish Patnaik}
+      \end{tabular*}
+      \vspace{0.45em}
+    \end{minipage}}
+\end{center}
+
+\setcounter{tocdepth}{1}
+\tableofcontents
+\vspace{0.45em}
+
+% Opening section from Lecture 26, Section 5 (handwritten Lecture 25).
+\section{Analytic isomorphisms}
+\begin{definition}[Analytic isomorphism]
+Let $U,V\subseteq\C$ be open. An \emph{analytic isomorphism} from $U$ to $V$
+is a bijective holomorphic map $f:U\to V$ whose inverse $g:V\to U$ is also
+holomorphic. Equivalently,
+\[
+ g\circ f=\operatorname{id}_U,\qquad
+ f\circ g=\operatorname{id}_V.
+\]
+We say $U$ and $V$ are \emph{analytically isomorphic} and write $U\cong V$.
+The term \emph{biholomorphic} has the same meaning.
+\end{definition}
+
+\begin{proposition}\label{prop:analytic-inverse}
+Let $U\subseteq\C$ be open and let $f$ be an injective holomorphic function
+on $U$. Then $V=f(U)$ is open, and $f:U\to V$ is an analytic isomorphism.
+Moreover,
+\[
+ f'(z)\ne0\quad(z\in U),\qquad
+ (f^{-1})'(w)=\frac{1}{f'(f^{-1}(w))}\quad(w\in V).
+\]
+\end{proposition}
+We prove this in two steps. First, injectivity forces the derivative to
+be nonzero. Then we use a difference quotient to show that the inverse
+is holomorphic.
+
+\subsection{An injective holomorphic map has nonvanishing derivative}
+\begin{proof}[Proof of the first step]
+Suppose, for a contradiction, that $f'(z_0)=0$ at some $z_0\in U$.
+Injectivity implies that $f$ is nonconstant on the connected component
+containing $z_0$. Its Taylor expansion therefore has the form
+\[
+ f(z)=f(z_0)+a(z-z_0)^k+G(z),\qquad a\ne0,\quad k\geq2,
+\]
+where $G$ vanishes to order at least $k+1$ at $z_0$.
+The derivative $f'$ is not identically zero on this component (otherwise
+$f$ would be constant there). Its zero at $z_0$ is isolated. We can thus
+choose $r>0$ small enough that $\overline{D(z_0,r)}\subseteq U$,
+\[
+ f'(z)\ne0\quad\text{for }0<|z-z_0|\leq r,
+ \qquad |G(z)|<\frac{|a|}{4}r^k\quad\text{on }|z-z_0|=r.
+\]
+The second inequality follows from $G(z)=(z-z_0)^{k+1}H(z)$ with $H$
+holomorphic near $z_0$: the extra factor $r$ makes $G$ small compared
+with $ar^k$.
+
+Choose a nonzero $\eta\in\C$ with $|\eta|<|a|r^k/4$, and write
+\[
+ f(z)-f(z_0)-\eta
+ =\underbrace{a(z-z_0)^k-\eta}_{F(z)}+G(z).
+\]
+On $|z-z_0|=r$,
+\[
+ |F(z)|\geq|a|r^k-|\eta|>\frac{3|a|}{4}r^k>|G(z)|.
+\]
+The equation $F(z)=0$ is $(z-z_0)^k=\eta/a$. It has exactly $k$ distinct
+solutions, all in $D(z_0,r)$, since $0<|\eta/a|<r^k$.
+By Rouch\'e's theorem, $f(z)-f(z_0)-\eta$ has exactly $k$ zeros in this
+disc, counted with multiplicity.
+
+None of these zeros equals $z_0$, because $\eta\ne0$. At every such zero
+$z$, the derivative is $f'(z)\ne0$ by our choice of $r$. Hence every zero
+is simple. There are therefore $k\geq2$ \emph{distinct} points with the
+same image $f(z_0)+\eta$, contradicting injectivity. Thus $f'$ never
+vanishes on $U$.
+\end{proof}
+
+\begin{exercise}[The remainder estimate]
+With the notation above, write $G(z)=(z-z_0)^{k+1}H(z)$ and bound $H$ on
+a fixed small closed disc. Verify that, after shrinking $r$,
+$|G(z)|<|a|r^k/4$ on $|z-z_0|=r$.
+\end{exercise}
+
+\subsection{The inverse is holomorphic}
+\begin{proof}[Completion of the proof of Proposition~\ref{prop:analytic-inverse}]
+On each connected component of $U$, $f$ is nonconstant, since it is
+injective. The open mapping theorem on these components shows that
+$f$ sends every open subset of $U$ to an open subset of $\C$. In
+particular, $V=f(U)$ is open.
+
+Let $g=f^{-1}:V\to U$. Since $f$ is open, $g$ is continuous: for every
+open $A\subseteq U$, the inverse image $g^{-1}(A)=f(A)$ is open in $V$.
+Fix $w_0\in V$ and set $z_0=g(w_0)$. If $w\ne w_0$ and $z=g(w)$, then
+$z\ne z_0$, and
+\[
+ \frac{g(w)-g(w_0)}{w-w_0}
+ =\frac{z-z_0}{f(z)-f(z_0)}
+ =\frac{1}{\displaystyle\frac{f(z)-f(z_0)}{z-z_0}}.
+\]
+As $w\to w_0$, continuity of $g$ gives $z\to z_0$. The denominator tends
+to $f'(z_0)\ne0$, so
+\[
+ g'(w_0)=\frac{1}{f'(z_0)}=\frac{1}{f'(g(w_0))}.
+\]
+Thus $g$ is complex differentiable at every point of the open set $V$,
+hence holomorphic, proving the proposition.
+\end{proof}
+
+\begin{remark}[Why continuity comes first]
+The formal chain rule applied to $g(f(z))=z$ suggests
+$g'(f(z))f'(z)=1$. To prove that $g'$ exists, we first use the open mapping
+theorem to obtain continuity of $g$, and then take the difference
+quotient above.
+\end{remark}
+
+% Handwritten Lecture 26, Nov. 21, pp. 1--3.
+\section{Schwarz's lemma}
+Given open sets $U$ and $V$, we can ask whether there is an analytic
+isomorphism $U\to V$. When $V=U$, we can ask for \emph{all} such maps.
+An analytic isomorphism from $U$ to itself is called an
+\emph{automorphism} of $U$. We will determine the automorphisms of the
+unit disc $D=\{z\in\C:|z|<1\}$, beginning with maps that fix the origin.
+
+\begin{lemma}[Schwarz's lemma]\label{lem:schwarz}
+Let $f:D\to D$ be holomorphic with $f(0)=0$. Then
+\[
+ |f(z)|\leq |z|\quad(z\in D),\qquad |f'(0)|\leq 1.
+\]
+If $|f(z_0)|=|z_0|$ for some $z_0\in D\setminus\{0\}$, or if
+$|f'(0)|=1$, then $f$ is a rotation: there is a $\varphi\in\R$ such
+that $f(z)=e^{i\varphi}z$ for every $z\in D$.
+\end{lemma}
+\begin{proof}
+Since $f(0)=0$, its Taylor series starts with
+$f(z)=a_1z+a_2z^2+\cdots$. Thus $g(z)=f(z)/z$ extends holomorphically
+across $0$ by taking $g(0)=a_1=f'(0)$.
+
+Fix $0<r<1$ and let $D_r=\{z:|z|<r\}$. On the circle $|z|=r$ we have
+\[
+ |g(z)|=\frac{|f(z)|}{r}\leq\frac{1}{r}.
+\]
+Since $\overline{D_r}\subset D$, the maximum modulus principle gives
+the same bound throughout $D_r$.
+\begin{lecturefigure}
+\begin{tikzpicture}[>=stealth,scale=0.9,font=\small]
+ \draw[thick] (0,0) circle (1.25);
+ \filldraw[fill=lightblue,draw=courseblue,thick] (0,0) circle (0.80);
+ \draw[courseblue] (0,0) -- (150:0.80) node[midway,below left,inner sep=1pt] {$r$};
+ \draw (0,0) -- (-20:1.25) node[pos=0.74,below] {$1$};
+ \fill (0,0) circle (1.3pt) node[below left] {$0$};
+ \node[courseblue] at (0.18,0.48) {$D_r$};
+\end{tikzpicture}
+
+{\small The bound on $|z|=r$ controls $g$ on the shaded disc.}
+\end{lecturefigure}
+For a fixed $z\in D$, we may choose any $r$ with $|z|<r<1$.
+Letting $r$ tend to $1$ gives $|g(z)|\leq1$. Hence $|f(z)|\leq|z|$,
+and evaluating at $0$ gives $|f'(0)|=|g(0)|\leq1$.
+
+If $|f(z_0)|=|z_0|$ at a nonzero $z_0$, then $|g(z_0)|=1$.
+If $|f'(0)|=1$, then $|g(0)|=1$. In either case $|g|$ attains its
+maximum inside $D$. By the maximum modulus principle, $g$ is a
+constant of modulus $1$, say $e^{i\varphi}$. Thus $f(z)=e^{i\varphi}z$.
+\end{proof}
+
+% Handwritten Lecture 26, pp. 4--7.
+\section{Automorphisms of the unit disc}
+Write $\operatorname{Aut}(D)$ for the group of analytic automorphisms
+of $D$ under composition. The rotations $r_\varphi(z)=e^{i\varphi}z$
+belong to this group, with inverse $r_{-\varphi}$. To move the origin
+to another point of $D$, we use the following maps.
+
+\begin{proposition}\label{prop:disc-involution}
+For each $\alpha\in D$, the map
+\[
+ \psi_\alpha(z)=\frac{\alpha-z}{1-\overline\alpha z}
+\]
+is an automorphism of $D$ that interchanges $0$ and $\alpha$ and is its
+own inverse.
+\end{proposition}
+\begin{proof}
+The denominator is nonzero on $\overline D$ since
+$|\overline\alpha z|\leq|\alpha|<1$ there. Thus $\psi_\alpha$ is
+holomorphic on a neighborhood of $\overline D$. Substitution gives
+$\psi_\alpha(0)=\alpha$ and $\psi_\alpha(\alpha)=0$.
+
+On $|z|=1$, the identity $1-\overline\alpha z=z\,\overline{(z-\alpha)}$
+gives $|1-\overline\alpha z|=|z-\alpha|$. Hence $|\psi_\alpha|=1$
+on the boundary. The map is nonconstant (for $\alpha=0$ it is $-z$,
+and otherwise it interchanges two distinct points). The maximum modulus
+principle now gives $|\psi_\alpha(z)|<1$ throughout $D$.
+
+It remains to check the inverse. For $z\in D$, clearing the common
+denominator $1-\overline\alpha z$ gives
+\[
+ \psi_\alpha(\psi_\alpha(z))
+ =\frac{\alpha(1-\overline\alpha z)-(\alpha-z)}
+        {(1-\overline\alpha z)-\overline\alpha(\alpha-z)}
+ =\frac{(1-|\alpha|^2)z}{1-|\alpha|^2}=z.
+\]
+Thus $\psi_\alpha:D\to D$ is bijective with holomorphic inverse
+$\psi_\alpha$.
+\end{proof}
+
+\begin{theorem}[Automorphisms of the unit disc]
+Every $f\in\operatorname{Aut}(D)$ has the form
+\[
+ \boxed{\displaystyle f(z)=e^{i\varphi}
+       \frac{\alpha-z}{1-\overline\alpha z}}
+ \qquad (\alpha\in D,\ \varphi\in\R).
+\]
+Conversely, every map of this form is an automorphism of $D$.
+\end{theorem}
+\begin{proof}
+Choose $\alpha=f^{-1}(0)$. The automorphism $g=f\circ\psi_\alpha$
+fixes $0$, since $g(0)=f(\alpha)=0$. Its inverse fixes $0$ as well.
+Applying Schwarz's lemma to $g$ at $z$ and to $g^{-1}$ at $g(z)$ gives
+\[
+ |g(z)|\leq|z|=|g^{-1}(g(z))|\leq |g(z)|.
+\]
+Hence $|g(z)|=|z|$ throughout $D$. By the equality case of Schwarz's
+lemma, $g=r_\varphi$ for some $\varphi\in\R$. Composing on the right
+with $\psi_\alpha$ gives $f=r_\varphi\circ\psi_\alpha$. Conversely,
+this composition is an automorphism because both factors are.
+\end{proof}
+
+\begin{corollary}
+An automorphism of $D$ that fixes $0$ is a rotation.
+\end{corollary}
+
+\begin{remark}[Transporting automorphisms]
+The Riemann mapping theorem gives an analytic isomorphism $h:U\to D$
+for every nonempty simply connected domain $U\subsetneq\C$. Once such
+an $h$ is chosen, each automorphism $A$ of $D$ gives an automorphism
+$h^{-1}\circ A\circ h$ of $U$. Every automorphism $B$ of $U$ arises
+in this way by taking $A=h\circ B\circ h^{-1}$.
+\begin{lecturefigure}
+\begin{tikzpicture}[>=stealth,baseline=(current bounding box.center)]
+ \node (d1) at (0,1.1) {$D$}; \node (d2) at (3.6,1.1) {$D$};
+ \node (u1) at (0,0) {$U$};    \node (u2) at (3.6,0) {$U$};
+ \draw[->] (u1) -- node[left] {$h$} (d1);
+ \draw[->] (d1) -- node[above] {$A$} (d2);
+ \draw[->] (d2) -- node[right] {$h^{-1}$} (u2);
+ \draw[->,courseblue] (u1) -- node[below] {$h^{-1}\circ A\circ h$} (u2);
+\end{tikzpicture}
+\end{lecturefigure}
+\end{remark}
+
+\end{document}
