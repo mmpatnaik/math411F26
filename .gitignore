@@ -3,6 +3,10 @@ _site/
 notes/*.pdf
 hw/*.pdf
 
+# Local lecture review drafts
+/output/pdf/lecture-drafts/
+/output/pdf/math411-lectures-28-34-review.pdf
+
 # LaTeX intermediates
 *.aux
 *.log
