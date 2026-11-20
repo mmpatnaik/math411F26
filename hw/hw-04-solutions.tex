@@ -56,7 +56,7 @@
 % Solution 2's alternative follows Homework6_Fall2021solutions.tex, 1,
 % correcting the contour radius, product inequality, and equality case.
 % The main proof of 2 follows the current power-sum hint without Rouche.
-% Solution 3 is supplied here; the old solutions left it unanswered.
+% Solution 3 follows the handwritten Homework 6 Solutions.pdf (2021), pp. 3--4.
 
 \begin{document}
 \maketitle
@@ -203,33 +203,22 @@ $f(z)=1/z$ for $|z|=1$.
 
 
 \begin{solution}
-Suppose such a function $f$ existed. For $0<r<1$, Cauchy's theorem
-applies on the circle $|z|=r$, giving
+Suppose such a function $f$ existed and put $g(z)=zf(z)$. Then $g$
+is holomorphic on the open disc and continuous on the closed disc.
+At the centre $g(0)=0$, whereas on the unit circle $g(z)=1$.
+By the mean value property, for every $0<r<1$,
 \[
-0=\int_{|z|=r} f(z)\,dz
- =\int_0^{2\pi} f(re^{it})\,ire^{it}\,dt.
+ 0=g(0)=\frac{1}{2\pi}\int_0^{2\pi}g(re^{it})\,dt.
 \]
-We now justify passing to the boundary as $r\uparrow1$.
-The continuous extension of $f$ to the compact closed unit disc is
-uniformly continuous and bounded. Hence
+We claim that the same formula holds at $r=1$. Indeed, $g$ is
+uniformly continuous on the closed disc, and $|re^{it}-e^{it}|=1-r$
+for every $t$. Thus
 \[
-\sup_{0\leq t\leq2\pi}|f(re^{it})-f(e^{it})|\longrightarrow0.
+\left|\frac{1}{2\pi}\int_0^{2\pi}
+   \bigl(g(re^{it})-g(e^{it})\bigr)\,dt\right|
+\leq \sup_t |g(re^{it})-g(e^{it})| \longrightarrow 0
 \]
-If $M=\max_{|z|\leq1}|f(z)|$, then
-\begin{align*}
-&\left|\int_0^{2\pi} f(re^{it})\,ire^{it}\,dt
- -\int_0^{2\pi} f(e^{it})\,ie^{it}\,dt\right|\\
-&\hspace{1em}\leq 2\pi\left(
- r\sup_t|f(re^{it})-f(e^{it})|+(1-r)M\right)
- \longrightarrow0.
-\end{align*}
-But the boundary condition $f(e^{it})=e^{-it}$ gives
-\[
-\int_0^{2\pi} f(e^{it})\,ie^{it}\,dt
-=\int_0^{2\pi}i\,dt=2\pi i,
-\]
-contradicting the fact that every inner-circle integral is zero.
-Thus no such holomorphic function exists.
+as $r\uparrow1$. But the boundary average is $1$, contradicting $g(0)=0$.
 \end{solution}
 
 \end{enumerate}
