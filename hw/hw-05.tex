@@ -1,4 +1,4 @@
-\documentclass[12pt,reqno]{amsart}
+\documentclass[11pt,reqno]{amsart}
 \usepackage{amsmath,amssymb}
 \usepackage{mathptmx}
 \usepackage[T1]{fontenc}
@@ -25,6 +25,88 @@
 % Problems follow the sequence of topics in Lectures 23--25.
 % Coverage: Lectures 23--25.
 
+% Contours are schematic. Arrowheads indicate the direction of integration.
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,decorations.markings}
+\definecolor{contourink}{RGB}{25,72,106}
+\tikzset{
+  contour diagram/.style={x=0.82cm,y=0.82cm,font=\footnotesize,
+    line cap=round,line join=round},
+  complex axis/.style={gray!65,thin,-{Stealth[length=3pt]}},
+  oriented/.style={draw=contourink,line width=1pt,
+    decoration={markings,mark=at position #1 with
+    {\arrow{Stealth[length=4.8pt,width=4.3pt]}}},postaction={decorate}},
+  oriented/.default=.54,
+  axis label/.style={font=\scriptsize,text=black!65,inner sep=1pt}}
+\newcommand{\withcontour}[2]{\par\smallskip\noindent
+  \begin{minipage}[c]{.675\linewidth}#1\end{minipage}\hfill
+  \begin{minipage}[c]{.315\linewidth}\centering #2\end{minipage}\par\smallskip}
+\newcommand{\circleaxes}{%
+  \draw[complex axis] (-1.48,0)--(1.65,0) node[right,axis label] {$\Re$};
+  \draw[complex axis] (0,-1.28)--(0,1.49) node[above,axis label] {$\Im$};
+  \node[below left,axis label] at (0,0) {$0$};}
+\newcommand{\onecircle}[1]{\begin{tikzpicture}[contour diagram]
+  \circleaxes
+  \draw[oriented=.14] (1,0) arc[start angle=0,end angle=360,radius=1];
+  \node[below right,inner sep=1pt] at (1,0) {$#1$};
+\end{tikzpicture}}
+\newcommand{\twocircles}[2]{\begin{tikzpicture}[contour diagram]
+  \circleaxes
+  \draw[oriented=.14] (1.08,0) arc[start angle=0,end angle=360,radius=1.08];
+  \draw[oriented=.37] (.47,0) arc[start angle=0,end angle=360,radius=.47];
+  \node[below right,inner sep=1pt] at (1.08,0) {$#2$};
+  \node[above right,inner sep=1pt] at (.47,0) {$#1$};
+\end{tikzpicture}}
+\newcommand{\clockwiserectangle}{\begin{tikzpicture}[contour diagram]
+  \draw[complex axis] (-.48,0)--(3.0,0);
+  \draw[complex axis] (0,-.35)--(0,1.62);
+  \draw[oriented] (0,0)--(0,1.05);
+  \draw[oriented] (0,1.05)--(2.6,1.05);
+  \draw[oriented] (2.6,1.05)--(2.6,0);
+  \draw[oriented] (2.6,0)--(0,0);
+  \node[below left] at (0,0) {$0$}; \node[below] at (2.6,0) {$10$};
+  \node[above left] at (0,1.05) {$4i$};
+  \node[above] at (2.6,1.05) {$10+4i$};
+\end{tikzpicture}}
+\newcommand{\uppersemicircle}{\begin{tikzpicture}[contour diagram]
+  \draw[complex axis] (-1.76,0)--(1.83,0);
+  \draw[complex axis] (0,-.25)--(0,1.7) node[above,axis label] {$\Im$};
+  \draw[oriented=.7] (-1.37,0)--(1.37,0);
+  \draw[oriented=.69] (1.37,0) arc[start angle=0,end angle=180,radius=1.37];
+  \node[below] at (-1.37,0) {$-R$}; \node[below] at (1.37,0) {$R$};
+  \node[below left,axis label] at (0,0) {$0$};
+  \node[above right,inner sep=1pt] at (.94,1.02) {$S_R$};
+\end{tikzpicture}}
+\newcommand{\indentedsemicircle}{\begin{tikzpicture}[contour diagram]
+  \draw[complex axis] (-1.83,0)--(1.88,0);
+  \draw[complex axis] (0,-.3)--(0,1.72);
+  \draw[oriented] (-1.48,0)--(-.48,0);
+  \draw[oriented=.53] (-.48,0) arc[start angle=180,end angle=0,radius=.48];
+  \draw[oriented] (.48,0)--(1.48,0);
+  \draw[oriented=.72] (1.48,0) arc[start angle=0,end angle=180,radius=1.48];
+  \foreach \x/\lab in {-1.48/{-R},-.48/{-\delta},.48/{\delta},1.48/{R}}
+    \node[below,font=\scriptsize] at (\x,0) {$\lab$};
+\end{tikzpicture}}
+\newcommand{\gaussiancontour}{\begin{tikzpicture}[contour diagram]
+  \draw[complex axis] (-1.55,0)--(1.95,0);
+  \draw[complex axis] (0,-.28)--(0,1.46);
+  \coordinate (a) at (-1.05,0); \coordinate (b) at (1.05,0);
+  \coordinate (c) at (1.85,.8); \coordinate (d) at (-.25,.8);
+  \draw[oriented] (a)--(b); \draw[oriented] (b)--(c);
+  \draw[oriented] (c)--(d); \draw[oriented] (d)--(a);
+  \node[below] at (a) {$-R$}; \node[below] at (b) {$R$};
+  \node[above right,inner sep=1pt] at (c) {$R+a$};
+  \node[above left,inner sep=1pt] at (d) {$-R+a$};
+\end{tikzpicture}}
+\newcommand{\samplepath}{\begin{tikzpicture}[contour diagram]
+  \draw[oriented=.2] (1.2,0) .. controls (1.55,.72) and (.21,1.13) .. (-.45,.74)
+    .. controls (-1.02,.50) and (-1.64,.31) .. (-1.29,-.18)
+    .. controls (-.83,-.86) and (.83,-.68) .. (1.2,0);
+  \node[above] at (.37,.86) {$\gamma$};
+  \fill (-.43,.19) circle (1.4pt) node[below] {$a_1$};
+  \fill (1.37,-.51) circle (1.4pt) node[below] {$a_2$};
+\end{tikzpicture}\par{\scriptsize One possible path}}
+
 \begin{document}
 \maketitle
 
@@ -49,45 +131,73 @@ Also find the residue at $z=1$ of
 \]
 
 \item \textbf{Contour integrals by residues.}
+\withcontour{%
 Locate and classify the isolated singularities of the integrand, then
 evaluate
 \[
  \int_{|z|=r}\frac{e^z-1}{z^3(z-2)}\,dz
  \qquad\text{for }r=1\text{ and }r=3.
-\]
+\]%
+}{\twocircles{1}{3}}
+
 
 \item \textbf{Contour integrals by residues.}
 \begin{enumerate}
-\item Evaluate
+\item \withcontour{%
+Evaluate
 \[
  \int_C\frac{dz}{z^2-3z+5},
 \]
 where $C$ is the boundary of the rectangle with vertices
-$0,\ 10,\ 10+4i,\ 4i$, oriented \emph{clockwise}.
-\item Evaluate
+$0,\ 10,\ 10+4i,\ 4i$, oriented \emph{clockwise}.%
+}{\clockwiserectangle}
+\item \withcontour{%
+Evaluate
 \[
  \int_C\frac{1+z}{1-\sin z}\,dz,
 \]
 where $C$ is the circle $|z|=8$. \emph{Hint:} First find all complex
 solutions of $\sin z=1$ and determine the order of each zero of
-$1-\sin z$.
+$1-\sin z$.%
+}{\onecircle{8}}
 \end{enumerate}
 
+\newpage
 \item \textbf{A trigonometric integral.}
+\emph{Reminder for Questions 4 and 5.}
+As $t$ runs from $0$ to $2\pi$, the point $z=e^{it}$ traverses the unit
+circle once counterclockwise. Since $e^{-it}=z^{-1}$ and $dz=iz\,dt$,
+any rational function $R(\cos t,\sin t)$ whose denominator is nonzero
+along the circle satisfies
+\[
+ \int_0^{2\pi} R(\cos t,\sin t)\,dt
+ =\oint_{|z|=1}
+ R\!\left(\frac{z+z^{-1}}{2},\frac{z-z^{-1}}{2i}\right)
+ \frac{dz}{iz}.
+\]
+The residue theorem evaluates the right side using the poles inside $|z|<1$.
+
+\smallskip
+\withcontour{%
 Use the substitution $z=e^{it}$ and the residue theorem to evaluate
 \[
  \int_0^{2\pi}\frac{\cos(2t)}{5-4\cos t}\,dt.
 \]
-\emph{Hint.} Write $\cos(2t)=\operatorname{Re}(e^{2it})$.
+\emph{Hint.} Write $\cos(2t)=\operatorname{Re}(e^{2it})$.%
+}{\onecircle{1}}
+
 
 \item \textbf{A trigonometric integral.}
+\withcontour{%
 Show that
 \[
  \int_0^{2\pi}\frac{dt}{(5-3\sin t)^2}=\frac{5\pi}{32}.
-\]
+\]%
+}{\onecircle{1}}
 
-\newpage
+
 \item \textbf{Rational integrals over the real line.}
+\withcontour{%
 \begin{enumerate}
 \item Show that
 \[
@@ -97,24 +207,34 @@ Show that
 \[
  \int_0^\infty\frac{dx}{(x^2+a^2)(x^2+b^2)}=\frac{\pi}{2ab(a+b)}.
 \]
-\end{enumerate}
+\end{enumerate}%
+}{\uppersemicircle}
+
 
 \item \textbf{An improper integral.}
+\withcontour{%
 For $a>0$, use an upper-half-plane contour to evaluate
 \[
  \int_{-\infty}^{\infty}\frac{\cos(ax)}{(x^2+4)^2}\,dx.
 \]
 Give an explicit bound for the integral of $e^{iaz}/(z^2+4)^2$
-over the semicircular arc $|z|=R$, $\operatorname{Im}z\geq0$, for $R>2$.
+over the semicircular arc $|z|=R$, $\operatorname{Im}z\geq0$, for $R>2$.%
+}{\uppersemicircle}
 
+
+\newpage
 \item \textbf{A Fourier-type integral.}
+\withcontour{%
 For $a,b>0$ with $a\neq b$, show that
 \[
  \int_{-\infty}^{\infty}\frac{\cos x}{(x^2+a^2)(x^2+b^2)}\,dx
  =\frac{\pi}{a^2-b^2}\left(\frac{e^{-b}}{b}-\frac{e^{-a}}{a}\right).
-\]
+\]%
+}{\uppersemicircle}
+
 
 \item \textbf{An integral with a logarithm.}
+\withcontour{%
 Show that
 \[
  \int_0^\infty\frac{(\log x)^2}{1+x^2}\,dx=\frac{\pi^3}{8}.
@@ -123,9 +243,12 @@ Show that
 imaginary axis, and integrate $(\log z)^2/(1+z^2)$ around the boundary
 of the region $\{\delta\leq|z|\leq R,\ \operatorname{Im}z\geq0\}$
 (Lang, \S VI.2, Exercise 14(a)). You may use
-$\int_0^\infty dx/(1+x^2)=\pi/2$.
+$\int_0^\infty dx/(1+x^2)=\pi/2$.%
+}{\indentedsemicircle}
+
 
 \item \textbf{The Gaussian integral via residues.}
+\withcontour{%
 Prove that
 \[
  \int_{-\infty}^{\infty}e^{-x^2}\,dx=\sqrt{\pi}
@@ -135,27 +258,34 @@ by integrating
  f(z)=\frac{e^{-z^2}}{1+e^{-2az}},\qquad a=e^{\pi i/4}\sqrt{\pi},
 \]
 around the parallelogram with vertices $-R,\ R,\ R+a,\ -R+a$ and then
-letting $R\to\infty$. \emph{Hint:} Check that $f(z)-f(z+a)=e^{-z^2}$.
+letting $R\to\infty$. \emph{Hint:} Check that $f(z)-f(z+a)=e^{-z^2}$.%
+}{\gaussiancontour}
 
+
+\newpage
 \item \textbf{Logarithmic derivatives.}
 \begin{enumerate}
 \item Show that the association $f\mapsto f'/f$ (for $f$ holomorphic
 and nonvanishing) sends products to sums.
 \item If $P(z)=(z-a_1)\cdots(z-a_n)$, where $a_1,\dots,a_n\in\C$ are
 the roots of $P$ (listed with multiplicity), compute $P'/P$.
-\item Let $\gamma$ be a closed path on which $P$ has no roots. Show
+\item \withcontour{%
+Let $\gamma$ be a closed path on which $P$ has no roots. Show
 that
 \[
  \frac{1}{2\pi i}\int_\gamma\frac{P'(z)}{P(z)}\,dz
  = W(\gamma,a_1)+\cdots+W(\gamma,a_n).
-\]
+\]%
+}{\samplepath}
 \end{enumerate}
 
 \item \textbf{The argument principle.}
+\withcontour{%
 For each $r>0$, let $C_r$ be the circle $|z|=r$. Consider
 \[
  F(z)=\frac{(e^z-1)^2}{z^3(z-1)^2(z-3)}.
-\]
+\]%
+}{\twocircles{2}{7}}
 \begin{enumerate}
 \item Find all zeros and poles of $F$ in $|z|<7$, with their orders.
 \item Use the argument principle to find the winding numbers $n_2$ and
