@@ -181,31 +181,46 @@ Moreover,
  (f^{-1})'(w)=\frac{1}{f'(f^{-1}(w))}\quad(w\in V).
 \]
 \end{proposition}
+
+\begin{remark} This result fails over $\R$! Here is a simple example: consider $f(x)=x^3$ on $\R$. It is a bijection with inverse $g(y) = \sqrt[3]{y}$. Now $f'(0)=0$ and this causes the inverse $g(y)$ to be non-differentiable at $0$, since
+		$g(y)/y=|y|^{-2/3}\to+\infty$ as $y\to0$.
+
+		What is true is that that for an injective differentiable $f$ on an open subset of $\R$, the
+		inverse is differentiable at $f(x_0)$ exactly when $f'(x_0)\ne0$.
+		So, for a differentiable inverse on the whole image, we would need to require $f'$ to be
+		nowhere zero. This is what follows for free in the holomorphic case.
+
+\end{remark}
 We prove this in two steps. First, injectivity forces the derivative to
 be nonzero. Then we use a difference quotient to show that the inverse
-is holomorphic.
+is holomorphic (this mimics the proof from the real case.)
 
 \subsection{An injective holomorphic map has nonvanishing derivative}
-\begin{proof}[Proof of the first step]
+
 Suppose, for a contradiction, that $f'(z_0)=0$ at some $z_0\in U$.
 Injectivity implies that $f$ is nonconstant on the connected component
-containing $z_0$. Its Taylor expansion therefore has the form
+containing $z_0$. Its analytic expansion therefore has the form
 \[
  f(z)=f(z_0)+a(z-z_0)^k+G(z),\qquad a\ne0,\quad k\geq2,
 \]
 where $G$ vanishes to order at least $k+1$ at $z_0$.
 The derivative $f'$ is not identically zero on this component (otherwise
-$f$ would be constant there). Its zero at $z_0$ is isolated. We can thus
+$f$ would be constant there), and hence its zero at $z_0$ is isolated. We can thus
 choose $r>0$ small enough that $\overline{D(z_0,r)}\subseteq U$,
 \[
- f'(z)\ne0\quad\text{for }0<|z-z_0|\leq r,
- \qquad |G(z)|<\frac{|a|}{4}r^k\quad\text{on }|z-z_0|=r.
+ f'(z)\ne0\quad\text{for }0<|z-z_0|\leq r.
 \]
-The second inequality follows from $G(z)=(z-z_0)^{k+1}H(z)$ with $H$
-holomorphic near $z_0$: the extra factor $r$ makes $G$ small compared
-with $ar^k$.
+Moreover, on the boundary $|z-z_0|=r$ of this same disc, by choosing $r$
+perhaps even smaller, we have
+\[
+ |G(z)| < \frac{|a|}{4}r^k.
+\]
+Indeed, since $G(z)=(z-z_0)^{k+1}H(z)$ with $H$
+holomorphic near $z_0$, choose a bound $M>0$ for $|H|$ on a fixed small
+closed disc about $z_0$. Then $|G(z)|\leq Mr^{k+1}$ on the circle of
+radius $r$ inside this disc, and the inequality follows for $r<|a|/(4M)$.
 
-Choose a nonzero $\eta\in\C$ with $|\eta|<|a|r^k/4$, and write
+We will now use Rouch\'e to contradict injectivity of $f$ as follows: choose a nonzero $\eta\in\C$ with $|\eta|<|a|r^k/4$, and write
 \[
  f(z)-f(z_0)-\eta
  =\underbrace{a(z-z_0)^k-\eta}_{F(z)}+G(z).
@@ -219,12 +234,49 @@ solutions, all in $D(z_0,r)$, since $0<|\eta/a|<r^k$.
 By Rouch\'e's theorem, $f(z)-f(z_0)-\eta$ has exactly $k$ zeros in this
 disc, counted with multiplicity.
 
+\begin{lecturefigure}
+\begin{minipage}{\linewidth}
+\centering
+\begin{tikzpicture}[>=stealth,font=\small]
+ \foreach \x in {0,4.1,8.2} {
+  \filldraw[fill=lightblue,draw=courseblue,thick] (\x,0) circle (1.02);
+ }
+ \node[above] at (0,1.09) {$a(z-z_0)^3$};
+ \node[above] at (4.1,1.09) {$F(z)$};
+ \node[above] at (8.2,1.09) {$F(z)+G(z)$};
+ \draw[->] (1.17,0) -- node[above] {subtract $\eta$} (2.93,0);
+ \draw[->] (5.27,0) -- node[above] {add $G$} (7.03,0);
+
+ \fill[courseblue] (0,0) circle (2pt) node[below] {$z_0$};
+ \node[below] at (0,-1.02) {triple zero};
+ \begin{scope}[xshift=4.1cm]
+  \draw[courseblue!65,dashed] (0,0) circle (0.58);
+  \draw[fill=white] (0,0) circle (1.5pt) node[below right] {$z_0$};
+  \foreach \angle in {18,138,258} {
+   \fill[courseblue] (\angle:0.58) circle (2pt);
+  }
+  \node[below] at (0,-1.02) {three model zeros};
+ \end{scope}
+ \begin{scope}[xshift=8.2cm]
+  \draw[fill=white] (0,0) circle (1.5pt) node[below right] {$z_0$};
+  \foreach \point in {(0.62,0.24),(-0.45,0.39),(-0.09,-0.64)} {
+   \fill[courseblue] \point circle (2pt);
+  }
+  \node[below] at (0,-1.02) {three zeros by Rouch\'e};
+ \end{scope}
+\end{tikzpicture}
+\par\smallskip
+{\small Each panel shows $D(z_0,r)$ for $k=3$. Filled dots mark zeros.
+The last panel is schematic.}
+\end{minipage}
+\end{lecturefigure}
+
 None of these zeros equals $z_0$, because $\eta\ne0$. At every such zero
 $z$, the derivative is $f'(z)\ne0$ by our choice of $r$. Hence every zero
 is simple. There are therefore $k\geq2$ \emph{distinct} points with the
 same image $f(z_0)+\eta$, contradicting injectivity. Thus $f'$ never
 vanishes on $U$.
-\end{proof}
+
 
 \begin{exercise}[The remainder estimate]
 With the notation above, write $G(z)=(z-z_0)^{k+1}H(z)$ and bound $H$ on
@@ -233,7 +285,6 @@ $|G(z)|<|a|r^k/4$ on $|z-z_0|=r$.
 \end{exercise}
 
 \subsection{The inverse is holomorphic}
-\begin{proof}[Completion of the proof of Proposition~\ref{prop:analytic-inverse}]
 On each connected component of $U$, $f$ is nonconstant, since it is
 injective. The open mapping theorem on these components shows that
 $f$ sends every open subset of $U$ to an open subset of $\C$. In
@@ -255,7 +306,7 @@ to $f'(z_0)\ne0$, so
 \]
 Thus $g$ is complex differentiable at every point of the open set $V$,
 hence holomorphic, proving the proposition.
-\end{proof}
+
 
 \begin{remark}[Why continuity comes first]
 The formal chain rule applied to $g(f(z))=z$ suggests
@@ -287,9 +338,9 @@ $f(z)=a_1z+a_2z^2+\cdots$. Thus $g(z)=f(z)/z$ extends holomorphically
 across $0$ by taking $g(0)=a_1=f'(0)$.
 
 Fix $0<r<1$ and let $D_r=\{z:|z|<r\}$. On the circle $|z|=r$ we have
-\[
+\be{} \label{g:bd}
  |g(z)|=\frac{|f(z)|}{r}\leq\frac{1}{r}.
-\]
+\ee
 Since $\overline{D_r}\subset D$, the maximum modulus principle gives
 the same bound throughout $D_r$.
 \begin{lecturefigure}
@@ -305,7 +356,7 @@ the same bound throughout $D_r$.
 {\small The bound on $|z|=r$ controls $g$ on the shaded disc.}
 \end{lecturefigure}
 For a fixed $z\in D$, we may choose any $r$ with $|z|<r<1$.
-Letting $r$ tend to $1$ gives $|g(z)|\leq1$. Hence $|f(z)|\leq|z|$,
+Letting $r$ tend to $1$ in \eqref{g:bd} gives $|g(z)|\leq1$. Hence $|f(z)|\leq|z|$,
 and evaluating at $0$ gives $|f'(0)|=|g(0)|\leq1$.
 
 If $|f(z_0)|=|z_0|$ at a nonzero $z_0$, then $|g(z_0)|=1$.
@@ -321,7 +372,7 @@ of $D$ under composition. The rotations $r_\varphi(z)=e^{i\varphi}z$
 belong to this group, with inverse $r_{-\varphi}$. To move the origin
 to another point of $D$, we use the following maps.
 
-\begin{proposition}\label{prop:disc-involution}
+\begin{proposition}[Blaschke factors]\label{prop:disc-involution}
 For each $\alpha\in D$, the map
 \[
  \psi_\alpha(z)=\frac{\alpha-z}{1-\overline\alpha z}
@@ -329,6 +380,13 @@ For each $\alpha\in D$, the map
 is an automorphism of $D$ that interchanges $0$ and $\alpha$ and is its
 own inverse.
 \end{proposition}
+
+\begin{remark}
+	These maps appeared in Homework~1, Problem~4, with $w$ in place of
+	$\alpha$. In part~(b), computing $F\circ F$ was the hint for proving
+	bijectivity.
+\end{remark}
+
 \begin{proof}
 The denominator is nonzero on $\overline D$ since
 $|\overline\alpha z|\leq|\alpha|<1$ there. Thus $\psi_\alpha$ is
@@ -352,6 +410,8 @@ denominator $1-\overline\alpha z$ gives
 Thus $\psi_\alpha:D\to D$ is bijective with holomorphic inverse
 $\psi_\alpha$.
 \end{proof}
+
+
 
 \begin{theorem}[Automorphisms of the unit disc]
 Every $f\in\operatorname{Aut}(D)$ has the form
