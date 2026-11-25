@@ -2,7 +2,7 @@
 #
 # Add a new entry at the TOP of this file. Format:
 #
-#   ## YYYY-MM-DD
+#   ## YYYY-MM-DD (append [important] to highlight a notice in red)
 #   The text of the announcement. Blank lines start a new paragraph.
 #
 # Supported formatting: **bold**, *italic*, [link text](https://example.com).
@@ -10,6 +10,9 @@
 #
 # The site sorts by date and shows the newest first, so old announcements
 # stay on the page as a running log.
+
+## 2026-11-25 [important]
+**No class on Monday, December 7.**
 
 ## 2026-11-01
 [Review problems](exams/midterm-2-review-problems.pdf) and [solutions](exams/midterm-2-review-problems-solutions.pdf) for Midterm 2 (Friday, November 6) are posted under [Midterm 2](#midterm2).

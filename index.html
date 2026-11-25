@@ -15,6 +15,7 @@
     --accent: #1f6e46;
     --accent-ink: #0f4029;
     --accent-soft: #e4eee7;
+    --notice-red: #a32026;
     --gold: #a5761f;
     --gold-soft: #f4ead2;
     --line: #d7ded8;
@@ -32,6 +33,7 @@
       --accent: #5cb885;
       --accent-ink: #bfe8d2;
       --accent-soft: #1a2a1f;
+      --notice-red: #ff8f91;
       --gold: #dcae55;
       --gold-soft: #2c2416;
       --line: #263029;
@@ -49,6 +51,7 @@
     --accent: #5cb885;
     --accent-ink: #bfe8d2;
     --accent-soft: #1a2a1f;
+    --notice-red: #ff8f91;
     --gold: #dcae55;
     --gold-soft: #2c2416;
     --line: #263029;
@@ -265,6 +268,8 @@
   .announce.latest time { color: var(--accent-ink); }
   .announce p { margin: 0; color: var(--ink-soft); font-size: 0.95rem; }
   .announce p + p { margin-top: 0.6rem; }
+  .announce.important { border-left-color: var(--notice-red); }
+  .announce.important p, .no-class { color: var(--notice-red); }
   .announce-history summary {
     width: fit-content;
     padding: 0.65rem 0;
@@ -472,7 +477,7 @@
             <tr><td class="num">31</td><td class="num">Mon, Nov 30</td><td>Gamma and zeta functions; analytic continuation</td><td>Ch. 15</td><td data-lecture="31">&#8212;</td></tr>
             <tr><td class="num">32</td><td class="num">Wed, Dec 2</td><td>Analytic continuation; the zeta function and primes</td><td>Ch. 16</td><td data-lecture="32">&#8212;</td></tr>
             <tr><td class="num">33</td><td class="num">Fri, Dec 4</td><td>Prime number theorem I</td><td>Ch. 16</td><td data-lecture="33">&#8212;</td></tr>
-            <tr><td class="num">34</td><td class="num">Mon, Dec 7</td><td>Prime number theorem II</td><td>Ch. 16</td><td data-lecture="34">&#8212;</td></tr>
+            <tr><td class="num">&#8212;</td><td class="num">Mon, Dec 7</td><td><strong class="no-class">No class</strong></td><td>&#8212;</td><td>&#8212;</td></tr>
           </tbody>
         </table>
       </div>

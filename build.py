@@ -76,26 +76,28 @@ def inline(text):
 
 
 def parse_announcements(path):
-    """Return [(date, [paragraph, ...]), ...] newest first."""
+    """Return (date, important, paragraphs) entries newest first."""
     if not path.exists():
         return []
     entries, current = [], None
     for line in path.read_text(encoding="utf-8").splitlines():
-        heading = re.match(r"##\s*(\d{4})-(\d{2})-(\d{2})\s*$", line)
+        heading = re.match(r"##\s*(\d{4}-\d{2}-\d{2})(?:\s+(\[important\]))?\s*$", line)
         if heading:
-            current = (date(*map(int, heading.groups())), [])
+            posted, important = heading.groups()
+            current = (date.fromisoformat(posted), bool(important), [])
             entries.append(current)
             continue
         if line.startswith("#") or current is None:
             continue
+        paragraphs = current[2]
         if line.strip():
-            if current[1] and current[1][-1] is not None:
-                current[1][-1] += " " + line.strip()
+            if paragraphs and paragraphs[-1] is not None:
+                paragraphs[-1] += " " + line.strip()
             else:
-                current[1].append(line.strip())
-        elif current[1]:
-            current[1].append(None)          # paragraph break marker
-    cleaned = [(d, [p for p in paras if p]) for d, paras in entries]
+                paragraphs.append(line.strip())
+        elif paragraphs:
+            paragraphs.append(None)          # paragraph break marker
+    cleaned = [(d, important, [p for p in paras if p]) for d, important, paras in entries]
     return sorted(cleaned, key=lambda e: e[0], reverse=True)
 
 
@@ -103,8 +105,10 @@ announcements = parse_announcements(ROOT / "announcements.md")
 
 if announcements:
     def render_announcement(entry, latest=False):
-        when, paragraphs = entry
+        when, important, paragraphs = entry
         cls = "announce latest" if latest else "announce"
+        if important:
+            cls += " important"
         body = "\n        ".join(f"<p>{inline(p)}</p>" for p in paragraphs)
         return (
             f'      <div class="{cls}">\n'
