@@ -13,7 +13,7 @@
 \usepackage{tikz}
 \usetikzlibrary{decorations.markings,patterns}
 \usepackage{pgfplots}
-\pgfplotsset{compat=1.18}
+\pgfplotsset{compat=1.17}
 \usepackage{enumitem}
 \usepackage{tocloft}
 \usepackage[hidelinks]{hyperref}
@@ -1077,118 +1077,119 @@ $|c^2+(x+iy)^2|\geq c^2-a^2+x^2$.
 \end{example}
 
 
-\section{Contour shifting and exponential decay}
-
-\begin{theorem}[Shifting the Fourier integral]\label{thm:shift}
-Let $f\in\mathcal F_a$ with constant $A$. For $|y|<a$ and $\xi\in\R$,
-\begin{equation}\label{eq:shift}
- \widehat f(\xi)=\int_{-\infty}^{\infty}
- f(x+iy)e^{-2\pi i(x+iy)\xi}\,dx .
-\end{equation}
-In particular, for $0\leq b<a$,
-\[
- |\widehat f(\xi)|\leq\pi A e^{-2\pi b|\xi|}.
-\]
-\end{theorem}
-
-\begin{lecturefigure}
-\begin{minipage}{\linewidth}\centering
-\begin{tikzpicture}[>=stealth,font=\small,
- midarrow/.style={postaction={decorate},decoration={markings,mark=at position .50 with {\arrow{>}}}}]
- % Holomorphic strip S_a
- \fill[lightblue] (-3.65,-1.32) rectangle (3.65,1.32);
- \draw[courseblue,dashed] (-3.65,1.32) -- (3.65,1.32) node[right,text=courseblue] {$\Imag z=a$};
- \draw[courseblue,dashed] (-3.65,-1.32) -- (3.65,-1.32) node[right,text=courseblue] {$\Imag z=-a$};
- \node[text=courseblue] at (-3.22,1.04) {$S_a$};
- % Original contour: real line
- \draw[cayleyblue,very thick,midarrow] (-3.65,0) -- (3.65,0) node[right,text=cayleyblue] {$\Imag z=0$ ($\R$)};
- % Shifted contour up: Im z = +b (for xi < 0)
- \draw[cayleyteal,very thick,midarrow] (-3.65,0.78) -- (3.65,0.78) node[right,text=cayleyteal] {$\Imag z=+b$};
- % Shifted contour down: Im z = -b (for xi > 0)
- \draw[cayleyorange,very thick,midarrow] (-3.65,-0.78) -- (3.65,-0.78) node[right,text=cayleyorange] {$\Imag z=-b$};
- % Vertical shift arrows
- \draw[->,cayleyteal,thick] (-1.65,0.08) -- (-1.65,0.70);
- \draw[->,cayleyteal,thick] (1.05,0.08) -- (1.05,0.70)
-  node[midway,right,xshift=2pt,font=\scriptsize,text=cayleyteal] {shift up ($\xi<0$)};
- \draw[->,cayleyorange,thick] (-1.65,-0.08) -- (-1.65,-0.70);
- \draw[->,cayleyorange,thick] (1.05,-0.08) -- (1.05,-0.70)
-  node[midway,right,xshift=2pt,font=\scriptsize,text=cayleyorange] {shift down ($\xi>0$)};
-\end{tikzpicture}
-
-\vspace{0.15em}
-{\small The line of integration $\R$ (blue) can be shifted vertically to any
-height $y\in(-a,a)$ inside $S_a$ without changing $\widehat f(\xi)$. Shifting
-down to $-b$ for $\xi>0$ (orange) or up to $+b$ for $\xi<0$ (teal) yields
-the exponential decay factor $|e^{-2\pi i(x+iy)\xi}|=e^{-2\pi b|\xi|}$.}
-\end{minipage}
-\end{lecturefigure}
-
-\begin{proof}
-For fixed $\xi\in\R$, the function $g(z)=f(z)e^{-2\pi i z\xi}$ is
-holomorphic on $S_a$. Take the rectangle with horizontal edges at
-heights $0$ and $y$ and vertical edges at $x=\pm R$. By Cauchy's theorem,
-the integral around this rectangle vanishes.
-
-\begin{lecturefigure}
-\begin{tikzpicture}[>=stealth,font=\small,
- midarrow/.style={postaction={decorate},decoration={markings,mark=at position .55 with {\arrow{>}}}}]
- \fill[lightblue] (-3.05,-1.28) rectangle (3.05,1.08);
- \draw[courseblue,dashed] (-3.05,1.08) -- (3.05,1.08) node[right] {$a$};
- \draw[courseblue,dashed] (-3.05,-1.28) -- (3.05,-1.28) node[right] {$-a$};
- \draw (-3.05,0.52) -- (3.05,0.52) node[right] {$0$};
- \draw[courseblue,thick,midarrow] (-2.14,0.52) -- (2.14,0.52);
- \draw[courseblue,thick,midarrow] (2.14,0.52) -- (2.14,-0.72);
- \draw[courseblue,thick,midarrow] (2.14,-0.72) -- (-2.14,-0.72);
- \draw[courseblue,thick,midarrow] (-2.14,-0.72) -- (-2.14,0.52);
- \node[above] at (-2.14,0.52) {$-R$}; \node[above] at (2.14,0.52) {$R$};
- \node[right] at (3.05,-0.72) {$-b$};
-\end{tikzpicture}
-
-{\small The contour for a shift to $y=-b$.}
-\end{lecturefigure}
-
-For $y<0$ (as shown above for $y=-b$), traversing the rectangle clockwise
-orients the top edge along $\R$ from left to right and the bottom edge at
-height $y$ from right to left:
-\[
- \int_{\text{top}} g(z)\,dz
-  = \int_{-R}^{R} f(x)e^{-2\pi ix\xi}\,dx,
- \qquad
- \int_{\text{bottom}} g(z)\,dz
-  = -\int_{-R}^{R} f(x+iy)e^{-2\pi i(x+iy)\xi}\,dx.
-\]
-(When $y>0$, the roles of the top and bottom edges reverse, and traversing
-counterclockwise produces the same two horizontal integrals with the same
-signs.) Cauchy's theorem therefore gives
-\[
- \int_{-R}^{R} f(x)e^{-2\pi ix\xi}\,dx
- - \int_{-R}^{R} f(x+iy)e^{-2\pi i(x+iy)\xi}\,dx
- + \int_{\text{vertical edges}} g(z)\,dz = 0.
-\]
-
-Along a vertical edge $z=\pm R+it$ between heights $0$ and $y$,
-\[
- |g(z)|\leq\frac{A}{1+R^2}e^{2\pi|y\xi|}.
-\]
-The length of each edge is $|y|$, so both vertical integrals tend to zero
-as $R\to\infty$. Both horizontal integrals converge absolutely by
-moderate decay, so letting $R\to\infty$ gives \eqref{eq:shift}.
-
-For $\xi>0$ set $y=-b$, and for $\xi<0$ set $y=b$. In either case
-$|e^{-2\pi i(x+iy)\xi}|=e^{-2\pi b|\xi|}$. The same bound holds at
-$\xi=0$ and for $b=0$ by direct integration on the real axis.
-\end{proof}
-
-
-\section{Fourier inversion}
-
-\begin{theorem}[Fourier inversion on $\mathcal F$]\label{thm:fourier-inversion}
-If $f\in\mathcal F$, then for every $x\in\R$,
-\[
- f(x)=\int_{-\infty}^{\infty}\widehat f(\xi)e^{2\pi ix\xi}\,d\xi.
-\]
-The integral on the right converges absolutely.
-\end{theorem}
+% Moved to Lecture 30.
+%\section{Contour shifting and exponential decay}
+%
+%\begin{theorem}[Shifting the Fourier integral]\label{thm:shift}
+%Let $f\in\mathcal F_a$ with constant $A$. For $|y|<a$ and $\xi\in\R$,
+%\begin{equation}\label{eq:shift}
+% \widehat f(\xi)=\int_{-\infty}^{\infty}
+% f(x+iy)e^{-2\pi i(x+iy)\xi}\,dx .
+%\end{equation}
+%In particular, for $0\leq b<a$,
+%\[
+% |\widehat f(\xi)|\leq\pi A e^{-2\pi b|\xi|}.
+%\]
+%\end{theorem}
+%
+%\begin{lecturefigure}
+%\begin{minipage}{\linewidth}\centering
+%\begin{tikzpicture}[>=stealth,font=\small,
+% midarrow/.style={postaction={decorate},decoration={markings,mark=at position .50 with {\arrow{>}}}}]
+% % Holomorphic strip S_a
+% \fill[lightblue] (-3.65,-1.32) rectangle (3.65,1.32);
+% \draw[courseblue,dashed] (-3.65,1.32) -- (3.65,1.32) node[right,text=courseblue] {$\Imag z=a$};
+% \draw[courseblue,dashed] (-3.65,-1.32) -- (3.65,-1.32) node[right,text=courseblue] {$\Imag z=-a$};
+% \node[text=courseblue] at (-3.22,1.04) {$S_a$};
+% % Original contour: real line
+% \draw[cayleyblue,very thick,midarrow] (-3.65,0) -- (3.65,0) node[right,text=cayleyblue] {$\Imag z=0$ ($\R$)};
+% % Shifted contour up: Im z = +b (for xi < 0)
+% \draw[cayleyteal,very thick,midarrow] (-3.65,0.78) -- (3.65,0.78) node[right,text=cayleyteal] {$\Imag z=+b$};
+% % Shifted contour down: Im z = -b (for xi > 0)
+% \draw[cayleyorange,very thick,midarrow] (-3.65,-0.78) -- (3.65,-0.78) node[right,text=cayleyorange] {$\Imag z=-b$};
+% % Vertical shift arrows
+% \draw[->,cayleyteal,thick] (-1.65,0.08) -- (-1.65,0.70);
+% \draw[->,cayleyteal,thick] (1.05,0.08) -- (1.05,0.70)
+%  node[midway,right,xshift=2pt,font=\scriptsize,text=cayleyteal] {shift up ($\xi<0$)};
+% \draw[->,cayleyorange,thick] (-1.65,-0.08) -- (-1.65,-0.70);
+% \draw[->,cayleyorange,thick] (1.05,-0.08) -- (1.05,-0.70)
+%  node[midway,right,xshift=2pt,font=\scriptsize,text=cayleyorange] {shift down ($\xi>0$)};
+%\end{tikzpicture}
+%
+%\vspace{0.15em}
+%{\small The line of integration $\R$ (blue) can be shifted vertically to any
+%height $y\in(-a,a)$ inside $S_a$ without changing $\widehat f(\xi)$. Shifting
+%down to $-b$ for $\xi>0$ (orange) or up to $+b$ for $\xi<0$ (teal) yields
+%the exponential decay factor $|e^{-2\pi i(x+iy)\xi}|=e^{-2\pi b|\xi|}$.}
+%\end{minipage}
+%\end{lecturefigure}
+%
+%\begin{proof}
+%For fixed $\xi\in\R$, the function $g(z)=f(z)e^{-2\pi i z\xi}$ is
+%holomorphic on $S_a$. Take the rectangle with horizontal edges at
+%heights $0$ and $y$ and vertical edges at $x=\pm R$. By Cauchy's theorem,
+%the integral around this rectangle vanishes.
+%
+%\begin{lecturefigure}
+%\begin{tikzpicture}[>=stealth,font=\small,
+% midarrow/.style={postaction={decorate},decoration={markings,mark=at position .55 with {\arrow{>}}}}]
+% \fill[lightblue] (-3.05,-1.28) rectangle (3.05,1.08);
+% \draw[courseblue,dashed] (-3.05,1.08) -- (3.05,1.08) node[right] {$a$};
+% \draw[courseblue,dashed] (-3.05,-1.28) -- (3.05,-1.28) node[right] {$-a$};
+% \draw (-3.05,0.52) -- (3.05,0.52) node[right] {$0$};
+% \draw[courseblue,thick,midarrow] (-2.14,0.52) -- (2.14,0.52);
+% \draw[courseblue,thick,midarrow] (2.14,0.52) -- (2.14,-0.72);
+% \draw[courseblue,thick,midarrow] (2.14,-0.72) -- (-2.14,-0.72);
+% \draw[courseblue,thick,midarrow] (-2.14,-0.72) -- (-2.14,0.52);
+% \node[above] at (-2.14,0.52) {$-R$}; \node[above] at (2.14,0.52) {$R$};
+% \node[right] at (3.05,-0.72) {$-b$};
+%\end{tikzpicture}
+%
+%{\small The contour for a shift to $y=-b$.}
+%\end{lecturefigure}
+%
+%For $y<0$ (as shown above for $y=-b$), traversing the rectangle clockwise
+%orients the top edge along $\R$ from left to right and the bottom edge at
+%height $y$ from right to left:
+%\[
+% \int_{\text{top}} g(z)\,dz
+%  = \int_{-R}^{R} f(x)e^{-2\pi ix\xi}\,dx,
+% \qquad
+% \int_{\text{bottom}} g(z)\,dz
+%  = -\int_{-R}^{R} f(x+iy)e^{-2\pi i(x+iy)\xi}\,dx.
+%\]
+%(When $y>0$, the roles of the top and bottom edges reverse, and traversing
+%counterclockwise produces the same two horizontal integrals with the same
+%signs.) Cauchy's theorem therefore gives
+%\[
+% \int_{-R}^{R} f(x)e^{-2\pi ix\xi}\,dx
+% - \int_{-R}^{R} f(x+iy)e^{-2\pi i(x+iy)\xi}\,dx
+% + \int_{\text{vertical edges}} g(z)\,dz = 0.
+%\]
+%
+%Along a vertical edge $z=\pm R+it$ between heights $0$ and $y$,
+%\[
+% |g(z)|\leq\frac{A}{1+R^2}e^{2\pi|y\xi|}.
+%\]
+%The length of each edge is $|y|$, so both vertical integrals tend to zero
+%as $R\to\infty$. Both horizontal integrals converge absolutely by
+%moderate decay, so letting $R\to\infty$ gives \eqref{eq:shift}.
+%
+%For $\xi>0$ set $y=-b$, and for $\xi<0$ set $y=b$. In either case
+%$|e^{-2\pi i(x+iy)\xi}|=e^{-2\pi b|\xi|}$. The same bound holds at
+%$\xi=0$ and for $b=0$ by direct integration on the real axis.
+%\end{proof}
+%
+%
+%\section{Fourier inversion}
+%
+%\begin{theorem}[Fourier inversion on $\mathcal F$]\label{thm:fourier-inversion}
+%If $f\in\mathcal F$, then for every $x\in\R$,
+%\[
+% f(x)=\int_{-\infty}^{\infty}\widehat f(\xi)e^{2\pi ix\xi}\,d\xi.
+%\]
+%The integral on the right converges absolutely.
+%\end{theorem}
 %
 %\begin{exercise}[An exponential integral]
 %For $A>0$ and $B\in\R$, verify directly that
