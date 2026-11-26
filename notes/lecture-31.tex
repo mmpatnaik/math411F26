@@ -406,8 +406,10 @@ each term satisfies $|n^{-s}|=n^{-\sigma}\leq n^{-\sigma_0}$, and
 $\sum_{n=1}^{\infty} n^{-\sigma_0}<\infty$. By the Weierstrass $M$-test,
 the partial sums $\sum_{n=1}^{N} n^{-s}$ converge uniformly on
 $\{\Real s \geq \sigma_0\}$, and hence uniformly on every compact subset of
-$\{\Real s > 1\}$. Since each term $s\mapsto n^{-s}=e^{-s\log n}$ is
-entire, the uniform limit $\zeta(s)$ is holomorphic on $\{\Real s > 1\}$.
+$\{\Real s > 1\}$. Since each term $s\mapsto n^{-s}=e^{-s\log n}$ is entire, uniform
+convergence on closed rectangles together with Morera's theorem
+(Lecture~21) and Proposition~2.1 of Lecture~20 shows that the limit
+$\zeta(s)$ is holomorphic on $\{\Real s > 1\}$.
 \end{proof}
 
 Over the next two lectures we will establish two fundamental facts about
@@ -499,12 +501,14 @@ depending on a complex parameter define a holomorphic function?}
 \end{enumerate}
 More generally, if $I\subseteq\R$ is any interval (possibly open or
 unbounded at one or both ends, such as $I=(0,\infty)$), we say that
-$\int_I f(t,z)\,dt$ is \emph{uniformly integrable} for $z\in K$ if for an
-increasing exhaustion of $I$ by compact subintervals
+$\int_I f(t,z)\,dt$ is \emph{uniformly integrable} for $z\in K$ if for
+every $\varepsilon>0$ there exists a compact subinterval $J_0\subset I$
+such that $\bigl|\int_J f(t,z)\,dt\bigr|<\varepsilon$ for every compact
+subinterval $J\subset I\setminus J_0$ and all $z\in K$ (equivalently, for
+every increasing exhaustion of $I$ by compact subintervals
 $I_1\subseteq I_2\subseteq\cdots\subset I$ with $\bigcup_{n=1}^{\infty}I_n=I$,
 the truncated integrals $F_n(z)=\int_{I_n} f(t,z)\,dt$ converge uniformly
-for $z\in K$ (equivalently, the tails of the integral near every open or
-infinite endpoint of $I$ vanish uniformly for $z\in K$).
+for $z\in K$).
 \end{definition}
 
 \begin{lemma}[Holomorphicity of parameter-dependent integrals]\label{lem:hol-integral}

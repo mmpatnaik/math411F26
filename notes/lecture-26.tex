@@ -311,7 +311,7 @@ $\overline D$ with boundary circle $C$, and suppose
  |f(z)|>|g(z)|\qquad\text{for all }z\in C.
 \]
 Then $f$ and $f+g$ have the same number of zeros in $D$, counted with
-multiplicity.
+multiplicity. A zero of order $m$ contributes $m$ to this count.
 \end{theorem}
 
 \begin{remark}
@@ -319,7 +319,7 @@ multiplicity.
 \begin{enumerate}[leftmargin=*,nosep]
 \item Note that the hypothesis forces $f\ne0$ on $C$. Think of $g$ as a
 perturbation that is small on $C$: it does not change the number of zeros
-inside.
+inside, counted with multiplicity.
 \item The circle $C$ may be replaced by any piecewise continuously differentiable
 simple closed curve. Let $D$ be its interior. If $f$ and $g$ are holomorphic
 on a neighborhood of $\overline D$ and $|g(z)|<|f(z)|$ at every point of
@@ -335,7 +335,7 @@ $D(c,\rho)$. Consider the ``deformations''
  f_t=f+tg,\qquad t\in[0,1],
 \]
 so that $f_0=f$ and $f_1=f+g$. Let $n_t$ be the number of zeros of $f_t$ in
-$D$. We want to show $n_0=n_1$.
+$D$, counted with multiplicity. We want to show $n_0=n_1$.
 
 \textbf{$f_t$ has no zeros on $C$.} If $f_t(z)=0$ with $z\in C$, then
 $|f(z)|=t|g(z)|\leq|g(z)|$, contradicting $|g|<|f|$ on $C$. 
@@ -373,13 +373,14 @@ interval $[0,1]$ is constant. Hence $n_0=n_1$.
 \end{proof}
 
 \begin{example}
-How many zeros does $P(z)=z^8-5z^3+z-2$ have in the unit disc? Write
+How many zeros, counted with multiplicity, does $P(z)=z^8-5z^3+z-2$ have
+in the unit disc? Write
 \[
  P(z)=\underbrace{-5z^3}_{f}+\underbrace{z^8+z-2}_{g}.
 \]
-On $|z|=1$ we have $|f|=5$ and $|g|\leq1+1+2=4<5$. The function $-5z^3$ has
-a zero of order $3$ at $0$ and no others. By Rouch\'e's theorem, \emph{$P$
-has exactly $3$ zeros in the unit disc}.
+On $|z|=1$, $|f|=5$ and $|g|\leq1+1+2=4<5$. The only zero of $-5z^3$ is
+at $0$, of order $3$. By Rouch\'e's theorem, the zeros of $P$ in the unit
+disc have total multiplicity $3$.
 \end{example}
 
 \section{The open mapping theorem}
@@ -437,8 +438,8 @@ $\epsilon>0$ with
  |F(z)|=|f(z)-w_0|>\epsilon\qquad\text{for }z\in C_\delta.
 \]
 Now if $|w-w_0|<\epsilon$, then $|F(z)|>\epsilon>|w-w_0|=|G(z)|$ for
-$z\in C_\delta$. By Rouch\'e's theorem, $F+G=f-w$ has as many zeros in
-$D(z_0,\delta)$ as $F$, which has at least one (at $z_0$). So $w=f(z)$ for
+$z\in C_\delta$. Since $F$ has a zero at $z_0$, Rouch\'e's theorem gives at
+least one zero of $F+G=f-w$ in $D(z_0,\delta)$. So $w=f(z)$ for
 some $z\in D(z_0,\delta)\subseteq U$. Thus $D(w_0,\epsilon)\subseteq f(U)$,
 and $f(U)$ is open.
 \end{proof}

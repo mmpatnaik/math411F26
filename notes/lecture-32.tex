@@ -293,7 +293,7 @@ uniquely as a product of prime powers. Hence as $(a_1,\dots,a_N)$ runs over
 all $N$-tuples of nonnegative integers, the products
 $p_1^{a_1}\cdots p_N^{a_N}$ hit each positive integer in the set
 \[
- S_N = \{n\in\N : \text{every prime factor of } n \text{ belongs to }
+ S_N = \{n\in\Z_{\geq 1} : \text{every prime factor of } n \text{ belongs to }
         \{p_1,\dots,p_N\}\}
 \]
 \emph{exactly once}. Therefore,
@@ -315,7 +315,7 @@ gives \eqref{eq:euler-product}.
 \begin{remark}[Euler's proof that there are infinitely many primes]
 In fact, the finite-product identity above already implies that there are
 infinitely many primes: if $\{p_1,\dots,p_N\}$ were the set of \emph{all}
-primes, then $S_N=\N$ and for every real $s>1$ we would have
+primes, then $S_N=\Z_{\geq 1}$ and for every real $s>1$ we would have
 $\sum_{n=1}^{\infty} n^{-s} = \prod_{j=1}^{N}(1-p_j^{-s})^{-1}$. Letting
 $s\to 1^+$, the right-hand side approaches the finite number
 $\prod_{j=1}^{N}(1-p_j^{-1})^{-1}$, whereas the left-hand side diverges to
