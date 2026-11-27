@@ -1,0 +1,135 @@
+\documentclass[12pt,reqno]{amsart}
+\usepackage{amsmath,amssymb}
+\usepackage{mathptmx}
+\usepackage[T1]{fontenc}
+\usepackage{enumitem}
+\pagestyle{plain}
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\footskip}{.3in}
+\setlength{\textheight}{9.2in}
+\setlength{\textwidth}{6.5in}
+\setlength{\parindent}{0pt}
+\setlist[enumerate,1]{leftmargin=*,itemsep=1.1em}
+\setlist[enumerate,2]{label=(\alph*),leftmargin=1.7em,itemsep=.4em,topsep=.3em}
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\title{Problem Set 6 \\ MATH 411: Honors Complex Variables, Fall 2026}
+
+% Coverage: Lectures 27--30 (analytic isomorphisms, Schwarz's lemma,
+% automorphisms of the disc, Fourier transform, and Poisson summation).
+% Sources:
+% 1--2: Old Homework/Homework/Homework7_Fall2021.tex, Q1
+%       (Lang, Complex Analysis, 4th ed., Ch. VII, Section 2, Exercises 1--2).
+% 3:    Old Homework/Homework/Homework7_Fall2021.tex, Q3
+%       (also Old Homework/Homework/hwk4.tex, Q9).
+% 4--5: Stein & Shakarchi, Complex Analysis, Ch. 4, Exercises 1 and 7.
+
+\begin{document}
+\maketitle
+
+These are practice problems and are not to be turned in. Justify your
+answers and all limiting arguments. Unless stated otherwise, closed
+contours are oriented counterclockwise.
+
+Suggested completion date: Friday, December 4, 2026.
+
+\begin{enumerate}
+
+\item \textbf{Fixed points of maps of the unit disc.}
+Let $D=\{z\in\C:|z|<1\}$ be the open unit disc, and let $f:D\to D$ be
+holomorphic. Prove that if there exist two distinct points $a,b\in D$
+that are fixed by $f$---that is, $f(a)=a$ and $f(b)=b$---then $f(z)=z$
+for all $z\in D$.
+\emph{Hint:} Conjugate $f$ by an analytic automorphism of $D$ sending
+$0$ to $a$, and apply Schwarz's lemma.
+
+
+\item \textbf{The Schwarz--Pick lemma.}
+Let $f:D\to D$ be a holomorphic map of the open unit disc into itself.
+Prove that for all $a\in D$,
+\[
+ \frac{|f'(a)|}{1-|f(a)|^2}\leq\frac{1}{1-|a|^2}.
+\]
+\emph{Hint:} Let $g$ be an analytic automorphism of $D$ with $g(0)=a$,
+and let $h$ be an analytic automorphism of $D$ with $h(f(a))=0$. Set
+$F=h\circ f\circ g$, compute $F'(0)$, and apply Schwarz's lemma.
+
+
+\item \textbf{The Joukowski map.}
+Consider the map $f(z)=z+1/z$.
+\begin{enumerate}
+\item Show that $f$ is an analytic isomorphism from the exterior of the
+closed unit disc, $U=\{z\in\C:|z|>1\}$, onto the slit plane
+$\C\setminus[-2,2]$.
+\item What is the image of the unit circle $\{|z|=1\}$ under $f$?
+\item In polar coordinates $z=re^{i\theta}$, write $w=f(z)=u+iv$.
+Verify that
+\[
+ u=\left(r+\frac{1}{r}\right)\cos\theta
+ \qquad\text{and}\qquad
+ v=\left(r-\frac{1}{r}\right)\sin\theta.
+\]
+Show that for each $c>1$, the circle $r=c$ maps onto an ellipse with
+semi-major axis $c+1/c$ and semi-minor axis $c-1/c$. Show also that
+each radial ray $\theta=c$ ($r>1$, with $\cos c\sin c\neq0$) maps onto
+one quarter of a hyperbola.
+\end{enumerate}
+
+
+
+\item \textbf{Uniqueness of the Fourier transform.}
+Suppose $f:\R\to\C$ is continuous and of moderate decrease (that is,
+$|f(x)|\leq A/(1+x^2)$ for some constant $A>0$ and all $x\in\R$), and
+suppose that its Fourier transform vanishes identically:
+\[
+ \widehat f(\xi)=\int_{-\infty}^{\infty}f(x)e^{-2\pi i x\xi}\,dx=0
+ \qquad\text{for all }\xi\in\R.
+\]
+Show that $f=0$ by completing the following outline.
+\begin{enumerate}
+\item For each fixed real number $t\in\R$, consider the two functions
+\[
+ A(z)=\int_{-\infty}^{t} f(x)e^{-2\pi i z(x-t)}\,dx
+ \qquad\text{and}\qquad
+ B(z)=-\int_{t}^{\infty} f(x)e^{-2\pi i z(x-t)}\,dx.
+\]
+Show that $A(\xi)=B(\xi)$ for all $\xi\in\R$.
+\item Prove that the function $F$ equal to $A$ in the closed upper
+half-plane $\{\operatorname{Im}z\geq 0\}$ and to $B$ in the lower
+half-plane $\{\operatorname{Im}z<0\}$ is entire and bounded, hence
+constant. In fact, show that $F=0$.
+\item Deduce that $f=0$.
+\end{enumerate}
+
+
+\item \textbf{A summation identity via Poisson summation.}
+Let $\tau\in\C$ satisfy $\operatorname{Im}\tau>0$, and let $k\geq 2$ be
+an integer.
+\begin{enumerate}
+\item Consider $f(z)=1/(\tau+z)^k$. Show that $f\in\mathcal{F}_a$
+for some $a>0$, compute its Fourier transform $\widehat f(\xi)$ for all
+$\xi\in\R$ using contour integration and residues, and apply the Poisson
+summation formula to prove that
+\[
+ \sum_{n=-\infty}^{\infty}\frac{1}{(\tau+n)^k}
+ =\frac{(-2\pi i)^k}{(k-1)!}\sum_{n=1}^{\infty} n^{k-1} e^{2\pi i n\tau}.
+\]
+\item Setting $k=2$, deduce that
+\[
+ \sum_{n=-\infty}^{\infty}\frac{1}{(\tau+n)^2}
+ =\frac{\pi^2}{\sin^2(\pi\tau)}
+\]
+for all $\tau\in\C$ with $\operatorname{Im}\tau>0$ (and hence, by
+analytic continuation, for all $\tau\in\C\setminus\Z$).
+\end{enumerate}
+
+\end{enumerate}
+\end{document}
